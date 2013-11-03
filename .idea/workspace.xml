@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d963983-16af-4a7c-a49c-bc2d51c7eb94" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgram.java" />
-      <change type="DELETED" beforePath="C:\Projects\git_scm\World_Wind_CEEM_Radar\.idea\libraries\scala_compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\git_scm\World_Wind_CEEM_Radar\.idea\libraries\scala_lib.xml" afterPath="" />
-      <change type="MOVED" beforePath="C:\Projects\git_scm\World_Wind_CEEM_Radar\src\ua\edu\odeku\ceem\mapRadar\TestScala.scala" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/CeemRadarApplicationTemplate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WorldWind.iml" afterPath="$PROJECT_DIR$/WorldWind.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-demo.bat" afterPath="$PROJECT_DIR$/run-demo.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="World_Wind_CEEM_Radar.iws" />
     <file path="/Dummy.txt" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383478125237" ignored="false" />
@@ -80,76 +72,7 @@
     <favorites_list name="World_Wind_CEEM_Radar" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="BulkDownload.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/BulkDownload.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="65" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#1694#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ApplicationTemplate.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/ApplicationTemplate.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="76" selection-start="1446" selection-end="1446" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#11262#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#4841#5655#0" expanded="false" />
-                <element signature="e#5640#5641#0" expanded="false" />
-                <element signature="method#insertBeforeCompass#0;class#ApplicationTemplate#0" expanded="false" />
-                <element signature="method#insertBeforePlacenames#0;class#ApplicationTemplate#0" expanded="false" />
-                <element signature="method#insertAfterPlacenames#0;class#ApplicationTemplate#0" expanded="false" />
-                <element signature="method#insertBeforeLayerName#0;class#ApplicationTemplate#0" expanded="false" />
-                <element signature="initializer##0;class#ApplicationTemplate#0" expanded="false" />
-                <element signature="e#10655#10811#0" expanded="false" />
-                <element signature="e#10796#10797#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CeemRadarApplicationTemplate.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/CeemRadarApplicationTemplate.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="280" column="29" selection-start="9909" selection-end="9917" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#insertBeforeCompass#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-                <element signature="method#insertBeforePlacenames#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-                <element signature="method#insertAfterPlacenames#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-                <element signature="method#insertBeforeLayerName#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PropertyProgram.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgram.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="50" selection-end="50" vertical-scroll-proportion="0.07715582">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AVKey.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/avlist/AVKey.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="232" column="17" selection-start="14502" selection-end="14502" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#32760#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -570,7 +493,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -590,7 +513,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21664888" sideWeight="0.7650334" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21664888" sideWeight="0.7650334" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23496659" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -760,35 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/BulkDownload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="65" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#1694#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/ApplicationTemplate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="76" selection-start="1446" selection-end="1446" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#11262#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4841#5655#0" expanded="false" />
-            <element signature="e#5640#5641#0" expanded="false" />
-            <element signature="method#insertBeforeCompass#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertBeforePlacenames#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertAfterPlacenames#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertBeforeLayerName#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="initializer##0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="e#10655#10811#0" expanded="false" />
-            <element signature="e#10796#10797#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/avlist/AVKey.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="232" column="17" selection-start="14502" selection-end="14502" vertical-scroll-proportion="0.0">
@@ -814,6 +708,26 @@
     <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="0" selection-start="50" selection-end="50" vertical-scroll-proportion="0.07715582">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/ApplicationTemplate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="76" selection-start="1446" selection-end="1446" vertical-scroll-proportion="0.6838124">
+          <folding>
+            <element signature="method#insertBeforeCompass#0;class#ApplicationTemplate#0" expanded="false" />
+            <element signature="method#insertBeforePlacenames#0;class#ApplicationTemplate#0" expanded="false" />
+            <element signature="method#insertAfterPlacenames#0;class#ApplicationTemplate#0" expanded="false" />
+            <element signature="method#insertBeforeLayerName#0;class#ApplicationTemplate#0" expanded="false" />
+            <element signature="initializer##0;class#ApplicationTemplate#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/BulkDownload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="65" selection-start="974" selection-end="974" vertical-scroll-proportion="0.30559757">
           <folding />
         </state>
       </provider>
