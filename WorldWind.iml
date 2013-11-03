@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="scala" name="Scala">
-      <configuration>
-        <option name="compilerLibraryLevel" value="Project" />
-        <option name="compilerLibraryName" value="scala-compiler" />
-      </configuration>
-    </facet>
-  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <exclude-exploded />
     <output url="file://$MODULE_DIR$/classes" />
@@ -23,8 +15,6 @@
     <orderEntry type="library" name="jogl" level="project" />
     <orderEntry type="library" name="gdal" level="project" />
     <orderEntry type="library" name="junit" level="project" />
-    <orderEntry type="library" name="scala-compiler" level="project" />
-    <orderEntry type="library" name="scala-lib" level="project" />
   </component>
 </module>
 
