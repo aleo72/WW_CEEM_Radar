@@ -5,6 +5,9 @@ doc/
 /classes
 /testClasses
 
+#dictionaries
+/.idea/dictionaries
+
 #Cache
 /MyCache
 
