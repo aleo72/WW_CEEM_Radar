@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="scala-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/akka-actors.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/diffutils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/jline.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/scala-actors-migration.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/scala-actors.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/scala-partest.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/scala-swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/scalap.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/lib/typesafe-config.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/src/fjbg-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/src/msil-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/src/scala-actors-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/src/scala-library-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala-lib/src/scala-partest-src.jar!/" />
+    </SOURCES>
+  </library>
+</component>
