@@ -5,6 +5,9 @@ doc/
 /classes
 /testClasses
 
+#Cache
+/MyCache
+
 # Click-Once directory
 publish/
 
