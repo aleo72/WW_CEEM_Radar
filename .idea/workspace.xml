@@ -2,17 +2,97 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d963983-16af-4a7c-a49c-bc2d51c7eb94" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/frames/AppCeemRadarFrame.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/panels/AppMainPanel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/CeemRadarApplicationTemplate.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgram.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/resource/ResourceString.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/utils/gui/VisibleUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings_en_EN.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings_ru_RU.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings_uk_UK.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WorldWind.iml" afterPath="$PROJECT_DIR$/WorldWind.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-demo.bat" afterPath="$PROJECT_DIR$/run-demo.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="World_Wind_CEEM_Radar.iws" />
     <file path="/Dummy.txt" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383478125237" ignored="false" />
     <file path="/README.txt" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383472163206" ignored="false" />
-    <file path="/.gitignore" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383479134212" ignored="false" />
+    <file path="/.gitignore" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383484661707" ignored="false" />
     <file path="/TestScala.scala" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383478480650" ignored="false" />
-    <file path="/a.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383480119968" ignored="false" />
+    <file path="/a.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486512779" ignored="false" />
     <file path="/sample.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383480110723" ignored="false" />
     <file path="/a.scala" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383480154384" ignored="false" />
-    <file path="/CeemRadarApplicationTemplate.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383483599951" ignored="false" />
+    <file path="/CeemRadarApplicationTemplate.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486750229" ignored="false" />
+    <file path="/PropertyProgram.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383493181577" ignored="false" />
+    <file path="/AppMainPanel.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383500706294" ignored="false" />
+    <file path="/VisibleUtils.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486311228" ignored="false" />
+    <file path="/a.dummy" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383485786875" ignored="false" />
+    <file path="/AppCeemRadarFrame.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383507568408" ignored="false" />
+    <file path="/File Header.txt.ft" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486672581" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/Airspaces.AirspacesController.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/TerrainProfiler.AppFrame.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/package-tree.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/SurfaceImageViewer.AppFrame.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/index-files/index-4.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/ExtrudedPolygonsFromShapefile.AppFrame.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/Wedges.AppFrame.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/gov/nasa/worldwindx/examples/package-frame.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/overview-tree.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/doc/serialized-form.html" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678286" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/view/AddAnimator.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/view/ViewSwitch.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwind/exception/WWAbsentRequirementException.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/tutorial/Cube.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/kml/KMLViewer.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/analytics/AnalyticSurfaceDemo.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/symbology/Symbology.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/symbology/TacticalGraphics.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/symbology/IconRetrieverUsage.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/symbology/TacticalSymbols.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/dataimport/InstallElevations.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/dataimport/ImportImagery.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/dataimport/InstallImageryAndElevationsDemo.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/dataimport/ImportElevations.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678287" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/dataimport/InstallImagery.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwind/util/WWUtil.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/elevations/RetrieveElevations.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/lineofsight/AbstractShapeIntersection.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/lineofsight/GridOfPoints.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/lineofsight/LinesOfSight.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/lineofsight/PolygonIntersection.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/lineofsight/ExtrudedPolygonIntersection.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwind/event/SelectListener.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/util/TreeControl.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678288" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/symbology/milstd2525/AllTacticalSymbols.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678579" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/applications/worldwindow/core/AppFrame.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678579" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/symbology/milstd2525/AllPointGraphics.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678579" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/applications/antenna/AntennaViewer.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678579" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/render/BrowserBalloonSizeTest.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678579" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/performance/PolygonsEverywhere.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/applications/eurogeoss/EuroGeossApp.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/render/BrowserBalloonTest.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/performance/ExtrudedPolygonsEverywhere.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/performance/PointPlacemarksEverywhere.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/performance/VeryManyPaths.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/performance/AirspacesEverywhere.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/src/gov/nasa/worldwindx/performance/EllipsoidsEverywhere.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/ogc/kml/StyleLocationTests.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/ogc/collada/ColladaViewer.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/ogc/collada/ColladaMovingModel.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/symbology/milstd2525/AllModifiers.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/symbology/milstd2525/Frames.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="$PROJECT_DIR$/test/gov/nasa/worldwind/util/TreeNativeSize.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383486678580" ignored="false" />
+    <file path="/source_string_fields.xml" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383491421604" ignored="false" />
+    <file path="/strings_ru_RU.properties" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383492236168" ignored="false" />
+    <file path="/strings_en_EN.properties" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383492274056" ignored="false" />
+    <file path="/ResourceString.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383499293456" ignored="false" />
+    <file path="/strings_uk_UK.properties" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383499055958" ignored="false" />
+    <file path="/fragment.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383505433658" ignored="false" />
+    <file path="/DynamicLayerPanelDisplay.java" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383505611129" ignored="false" />
+    <file path="/strings.properties" changelist="0d963983-16af-4a7c-a49c-bc2d51c7eb94" time="1383507602117" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,12 +144,91 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/gov/nasa/worldwind/layers/StarsLayer.java" line="295" class="gov.nasa.worldwind.layers.StarsLayer" package="gov.nasa.worldwind.layers">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/DynamicLayerPanelDisplay.java" line="156" class="gov.nasa.worldwindx.examples.DynamicLayerPanelDisplay.AppFrame$1" package="gov.nasa.worldwindx.examples">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/DynamicLayerPanelDisplay.java" line="72" class="gov.nasa.worldwindx.examples.DynamicLayerPanelDisplay.DynamicLayerPanel" package="gov.nasa.worldwindx.examples">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/DynamicLayerPanelDisplay.java" line="47" class="gov.nasa.worldwindx.examples.DynamicLayerPanelDisplay.DynamicLayerPanel" package="gov.nasa.worldwindx.examples">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/DynamicLayerPanelDisplay.java" line="87" class="gov.nasa.worldwindx.examples.DynamicLayerPanelDisplay.DynamicLayerPanel" package="gov.nasa.worldwindx.examples">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="World_Wind_CEEM_Radar" />
+    <favorites_list name="World_Wind_CEEM_Radar">
+      <favorite_root url="file://$PROJECT_DIR$/src/config/worldwind.xml" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+    </favorites_list>
   </component>
   <component name="FileEditorManager">
     <leaf />
@@ -90,13 +249,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/README.txt" />
-        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/TestScala.scala" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/ApplicationTemplate.java" />
+        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/utils/gui/InsertUtils.java" />
+        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/utils/gui/VisibleUtils.java" />
+        <option value="$PROJECT_DIR$/src/gov/nasa/worldwind/StereoOptionSceneController.java" />
         <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/CeemRadarApplicationTemplate.java" />
-        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgramm.java" />
+        <option value="$PROJECT_DIR$/src/configCeemRadar/source_string_fields.xml" />
+        <option value="$PROJECT_DIR$/src/configCeemRadar/sourceStringFields.xml" />
+        <option value="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings_en_EN.properties" />
         <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgram.java" />
+        <option value="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings_ru_RU.properties" />
+        <option value="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings_uk_UK.properties" />
+        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/resource/ResourceString.java" />
+        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/panels/AppMainPanel.java" />
+        <option value="$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/DynamicLayerPanelDisplay.java" />
+        <option value="$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/frames/AppCeemRadarFrame.java" />
+        <option value="$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings.properties" />
       </list>
     </option>
   </component>
@@ -105,6 +273,25 @@
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Spelling</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>SpellCheckingInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -131,7 +318,7 @@
       <abbreviatePackageNames />
       <autoscrollToSource />
       <autoscrollFromSource />
-      <sortByType ProjectPane="true" />
+      <sortByType ProjectPane="false" />
     </navigator>
     <panes>
       <pane id="PackagesPane" />
@@ -178,34 +365,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="CeemResourceBundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="mapRadar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="World_Wind_CEEM_Radar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="World_Wind_CEEM_Radar" />
+              <option name="myItemId" value="stringMessage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mapRadar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="Resource Bundle 'strings'" />
+              <option name="myItemType" value="com.intellij.lang.properties.projectView.ResourceBundleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -213,13 +382,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Scala" />
+    <property name="options.lastSelected" value="File.Encoding" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib-external/scala-lib/lib/typesafe-config.jar!/" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -232,73 +401,12 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="Application.ApplicationTemplate">
-    <configuration default="false" name="CacheLocationConfiguration" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="gov.nasa.worldwindx.examples.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="gov.nasa.worldwindx.examples.CacheLocationConfiguration" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="WorldWind" />
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="PlaceNames" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="gov.nasa.worldwindx.examples.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="gov.nasa.worldwindx.examples.PlaceNames" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="WorldWind" />
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Wedges" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="gov.nasa.worldwindx.examples.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="gov.nasa.worldwindx.examples.Wedges" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="WorldWind" />
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\git_scm\World_Wind_CEEM_Radar" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.CeemRadarApplicationTemplate">
     <configuration default="false" name="TestScala" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -329,6 +437,84 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="gov.nasa.worldwindx.examples.BulkDownload" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="WorldWind" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="CeemRadarApplicationTemplate" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="ua.edu.odeku.ceem.mapRadar.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="ua.edu.odeku.ceem.mapRadar.CeemRadarApplicationTemplate" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="WorldWind" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="DynamicLayerPanelDisplay" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="gov.nasa.worldwindx.examples.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="gov.nasa.worldwindx.examples.DynamicLayerPanelDisplay" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="WorldWind" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="LayerManagerApp" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="gov.nasa.worldwindx.examples.layermanager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="gov.nasa.worldwindx.examples.layermanager.LayerManagerApp" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -438,19 +624,19 @@
       <item index="0" class="java.lang.String" itemvalue="Application.ApplicationTemplate" />
       <item index="1" class="java.lang.String" itemvalue="Application.KMLViewer" />
       <item index="2" class="java.lang.String" itemvalue="Application.WMSLayerManager" />
-      <item index="3" class="java.lang.String" itemvalue="Application.CacheLocationConfiguration" />
-      <item index="4" class="java.lang.String" itemvalue="Application.PlaceNames" />
-      <item index="5" class="java.lang.String" itemvalue="Application.Wedges" />
-      <item index="6" class="java.lang.String" itemvalue="Application.TestScala" />
-      <item index="7" class="java.lang.String" itemvalue="Application.BulkDownload" />
+      <item index="3" class="java.lang.String" itemvalue="Application.TestScala" />
+      <item index="4" class="java.lang.String" itemvalue="Application.BulkDownload" />
+      <item index="5" class="java.lang.String" itemvalue="Application.CeemRadarApplicationTemplate" />
+      <item index="6" class="java.lang.String" itemvalue="Application.DynamicLayerPanelDisplay" />
+      <item index="7" class="java.lang.String" itemvalue="Application.LayerManagerApp" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.BulkDownload" />
-        <item index="1" class="java.lang.String" itemvalue="Application.TestScala" />
-        <item index="2" class="java.lang.String" itemvalue="Application.Wedges" />
-        <item index="3" class="java.lang.String" itemvalue="Application.PlaceNames" />
-        <item index="4" class="java.lang.String" itemvalue="Application.CacheLocationConfiguration" />
+        <item index="0" class="java.lang.String" itemvalue="Application.CeemRadarApplicationTemplate" />
+        <item index="1" class="java.lang.String" itemvalue="Application.LayerManagerApp" />
+        <item index="2" class="java.lang.String" itemvalue="Application.DynamicLayerPanelDisplay" />
+        <item index="3" class="java.lang.String" itemvalue="Application.BulkDownload" />
+        <item index="4" class="java.lang.String" itemvalue="Application.TestScala" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -463,6 +649,9 @@
     <option name="analysisUIOptions">
       <AnalysisUIOptions />
     </option>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value="ALPHA_COMPARATOR" />
   </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="true" SSL_PROTOCOLS="all">
     <option name="USER" value="" />
@@ -491,6 +680,26 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
@@ -498,26 +707,27 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46325168" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5113379" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17342582" sideWeight="0.53674835" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21664888" sideWeight="0.7650334" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23496659" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.226254" sideWeight="0.7939866" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20601337" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32977587" sideWeight="0.7650334" order="-1" side_tool="true" content_ui="tabs" x="1205" y="136" width="673" height="386" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -603,132 +813,138 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/config/worldwind.xml">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/WorldWindowImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="23" selection-start="1224" selection-end="1224" vertical-scroll-proportion="0.54923075">
+        <state line="233" column="51" selection-start="6821" selection-end="6821" vertical-scroll-proportion="-4.36">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/EGM96.dat">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/layers/StarsLayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="295" column="0" selection-start="9293" selection-end="9293" vertical-scroll-proportion="0.20378457">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/Earth/OpenStreetMap.xml">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/javax/swing/JCheckBox.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="30" selection-start="1104" selection-end="1104" vertical-scroll-proportion="-0.046153847">
+        <state line="260" column="28" selection-start="7647" selection-end="7647" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/Shapes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="19" selection-start="155" selection-end="155" vertical-scroll-proportion="0.4446154">
+        <state line="87" column="55" selection-start="3253" selection-end="3253" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#3948#3949#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/layermanager/LayerManagerPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="27" selection-start="848" selection-end="848" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#2372#2566#0" expanded="true" />
+            <element signature="e#2555#2556#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/panels/AppMainPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="40" selection-start="1096" selection-end="1096" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/Earth/EarthElevations2.xml">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/WorldWindowGLAutoDrawable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="42" selection-start="800" selection-end="800" vertical-scroll-proportion="0.41846153">
+        <state line="34" column="55" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/Earth/USGSUrbanAreaOrthoLayer.xml">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/layermanager/ElevationModelPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="33" selection-start="1014" selection-end="1014" vertical-scroll-proportion="-0.046153847">
+        <state line="31" column="44" selection-start="970" selection-end="970" vertical-scroll-proportion="0.22960725">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/layermanager/LayerAndElevationManagerPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="56" selection-start="1323" selection-end="1323" vertical-scroll-proportion="-3.5507693">
+        <state line="22" column="51" selection-start="660" selection-end="660" vertical-scroll-proportion="0.37966806">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/README.txt">
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/avlist/AVList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="70" column="35" selection-start="2633" selection-end="2633" vertical-scroll-proportion="0.33195022">
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/event/RenderingEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="36" selection-start="884" selection-end="884" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/layermanager/LayerManagerApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="33" selection-start="2286" selection-end="2286" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/DynamicLayerPanelDisplay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="50" selection-start="1621" selection-end="1621" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#5917#6159#0" expanded="true" />
+            <element signature="e#6144#6145#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/layermanager/ElevationModelManagerPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="66" selection-start="3467" selection-end="3475" vertical-scroll-proportion="0.3959243">
+          <folding>
+            <element signature="e#905#926#0" expanded="true" />
+            <element signature="e#1807#2754#0" expanded="true" />
+            <element signature="e#2167#2666#0" expanded="true" />
+            <element signature="e#2343#2608#0" expanded="true" />
+            <element signature="e#2573#2574#0" expanded="true" />
+            <element signature="e#2639#2640#0" expanded="true" />
+            <element signature="e#2743#2744#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CeemResourceBundle/stringMessage/strings.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="16" selection-start="39" selection-end="39" vertical-scroll-proportion="0.02652106">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/Configuration.java">
+    <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/frames/AppCeemRadarFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="29" selection-start="4798" selection-end="4798" vertical-scroll-proportion="-9.88854">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="325" column="13" selection-start="12473" selection-end="12473" vertical-scroll-proportion="-0.37384614">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/WorldWind.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="204" column="25" selection-start="7341" selection-end="7341" vertical-scroll-proportion="0.25384617">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwind/avlist/AVKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="232" column="17" selection-start="14502" selection-end="14502" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#32760#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/CeemRadarApplicationTemplate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="280" column="29" selection-start="9909" selection-end="9917" vertical-scroll-proportion="0.0">
+        <state line="95" column="46" selection-start="3478" selection-end="3478" vertical-scroll-proportion="0.8253275">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#insertBeforeCompass#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertBeforePlacenames#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertAfterPlacenames#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertBeforeLayerName#0;class#CeemRadarApplicationTemplate#0" expanded="false" />
+            <element signature="e#3122#3397#0" expanded="true" />
+            <element signature="e#3382#3383#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ua/edu/odeku/ceem/mapRadar/settings/PropertyProgram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="50" selection-end="50" vertical-scroll-proportion="0.07715582">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/ApplicationTemplate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="76" selection-start="1446" selection-end="1446" vertical-scroll-proportion="0.6838124">
-          <folding>
-            <element signature="method#insertBeforeCompass#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertBeforePlacenames#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertAfterPlacenames#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="method#insertBeforeLayerName#0;class#ApplicationTemplate#0" expanded="false" />
-            <element signature="initializer##0;class#ApplicationTemplate#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gov/nasa/worldwindx/examples/BulkDownload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="65" selection-start="974" selection-end="974" vertical-scroll-proportion="0.30559757">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -749,7 +965,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Scala (WorldWind)|Scala</last-edited>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -784,7 +1000,20 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Scala|WorldWind</last-edited>
+          <last-edited>WorldWind</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>junit</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -794,9 +1023,8 @@
           </splitter-proportions>
         </settings>
       </state>
-      <state key="ProjectLibrariesConfigurable.UI">
+      <state key="ScopeChooserConfigurable.UI">
         <settings>
-          <last-edited>junit</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
