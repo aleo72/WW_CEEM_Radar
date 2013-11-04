@@ -8,6 +8,10 @@ doc/
 #dictionaries
 /.idea/dictionaries
 
+#workspace
+/.idea/~workspace.xml
+/.idea/workspace.xml
+
 #Cache
 /MyCache
 
