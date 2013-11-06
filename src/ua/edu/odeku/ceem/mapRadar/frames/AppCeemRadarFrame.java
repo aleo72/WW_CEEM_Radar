@@ -17,6 +17,7 @@ import gov.nasa.worldwindx.examples.LayerPanel;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
+import ua.edu.odeku.ceem.mapRadar.panels.cachePanels.BulkDownloadPanel;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 
@@ -48,6 +49,7 @@ public class AppCeemRadarFrame extends JFrame {
     protected LayerPanel layerPanel;
     protected StatisticsPanel statsPanel;
     protected JMenuBar menuBar;
+    protected BulkDownloadPanel bulkDownloadPanel;
 
     public AppCeemRadarFrame() {
         this.initialize(true, true, false);
@@ -64,15 +66,44 @@ public class AppCeemRadarFrame extends JFrame {
 
     protected JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu menuMain = new JMenu(ResourceString.get("program")); // Пункт меню "Программа"
+        JMenu menuMain = new JMenu(ResourceString.get("string_program")); // Пункт меню "Программа"
 
-        JMenu menuView = new JMenu(ResourceString.get("view")); // Пункт меню "Программа"
+        JMenu menuView = new JMenu(ResourceString.get("string_view")); // Пункт меню "Программа"
         fillMenuView(menuView);
+
+        JMenu menuUtils = new JMenu(ResourceString.get("string_Utils"));
+        fillMenuUtils(menuUtils);
 
         menuBar.add(menuMain);
         menuBar.add(menuView);
+        menuBar.add(menuUtils);
 
         return menuBar;
+    }
+
+    private void fillMenuUtils(JMenu menuUtils) {
+        JCheckBoxMenuItem menuDownloadCache = new JCheckBoxMenuItem(ResourceString.get("string_Menu_download_cache"));
+        menuDownloadCache.setSelected(false);
+
+        menuDownloadCache.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+                if (!item.isSelected()){
+                    if(bulkDownloadPanel != null){
+                        getContentPane().remove(bulkDownloadPanel);
+                    }
+                } else {
+                    if(bulkDownloadPanel == null){
+                        bulkDownloadPanel = new BulkDownloadPanel(wwjPanel.getWwd());
+                    }
+                    getContentPane().add(bulkDownloadPanel, BorderLayout.EAST);
+                }
+
+            }
+        });
+
+        menuUtils.add(menuDownloadCache);
     }
 
     protected void fillMenuView(JMenu menu) {
