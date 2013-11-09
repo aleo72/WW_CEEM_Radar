@@ -1,5 +1,7 @@
 package ua.edu.odeku.ceem.mapRadar.db.models;
 
+import org.hibernate.annotations.Index;
+
 import javax.persistence.*;
 
 /**
@@ -8,14 +10,14 @@ import javax.persistence.*;
  * Time: 20:29
  */
 @Entity
-@Table(name = "NAME", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME", "LAT", "LON"}))
-public class Name {
+@Table(name = "GEO_NAME", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME", "LAT", "LON"}))
+public class GeoName {
 
-    public Name() {  }
+    public GeoName() {  }
 
-    public Name(String name, String asciiname,
-                double lat, double lon,
-                char featureClass, String featureCode) {
+    public GeoName(String name, String asciiname,
+                   double lat, double lon,
+                   char featureClass, String featureCode) {
         this.name = name;
         this.asciiname = asciiname;
         this.lat = lat;
@@ -27,6 +29,14 @@ public class Name {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    /**
+     * integer id of record in geonames database
+     * Данное поле необходимо для быстрой проверки на нахождения данного названия в таблице.
+     */
+    @Column(name = "SOURCE_ID", nullable = false, unique = true)
+    @Index(name = "SOURCE_ID_INDEX")
+    private int sourceId;
 
     /**
      * name of geographical point (utf8) varchar(200)
