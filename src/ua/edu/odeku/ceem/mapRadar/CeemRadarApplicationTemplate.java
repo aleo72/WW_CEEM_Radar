@@ -1,6 +1,8 @@
 package ua.edu.odeku.ceem.mapRadar;
 
 import gov.nasa.worldwind.Configuration;
+import ua.edu.odeku.ceem.mapRadar.db.DB;
+import ua.edu.odeku.ceem.mapRadar.db.InitDBThread;
 import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 
@@ -43,6 +45,9 @@ public class CeemRadarApplicationTemplate {
         }
 
         try {
+            // Init db
+            new InitDBThread().start();
+
             final AppCeemRadarFrame frame = (AppCeemRadarFrame) appFrameClass.newInstance();
             frame.setTitle(appName);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
