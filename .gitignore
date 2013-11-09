@@ -12,6 +12,10 @@ doc/
 /.idea/~workspace.xml
 /.idea/workspace.xml
 
+#idea dataStore
+/.idea/dataSources.ids
+/.idea/dataSources.xml
+
 #Cache
 /MyCache
 
