@@ -110,7 +110,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame( new ImportGeoName().getPanel() , ResourceString.get("gui_frame_title_tool_geoName"));
+                    ceemRadarTool = new ToolFrame(new ImportGeoName() , ResourceString.get("gui_frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(ImportGeoName.class.getName(), ceemRadarTool);
                 }

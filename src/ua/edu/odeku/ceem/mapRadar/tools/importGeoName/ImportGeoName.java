@@ -4,9 +4,12 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.panels.FileChooserForm;
+import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 /**
@@ -19,7 +22,51 @@ public class ImportGeoName implements CeemRadarTool {
     private JPanel panel;
     private JButton importButton;
     private JButton cancelButton;
-    private JProgressBar progressBar1;
+    private JProgressBar progressBar;
+    private FileChooserForm fileChooserPanel;
+    private final GeoNameImporter importer;
+    private Handler handlerClose;
+    private JFrame parent;
+
+    public ImportGeoName() {
+
+        importButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fileChooserPanel.getFile() != null && !importer.isAlive()) {
+                    importButton.setEnabled(false);
+                    cancelButton.setEnabled(true);
+                    importer.stop = false;
+
+                    importer.setFileInput(fileChooserPanel.getFile());
+
+                    importer.start();
+                }
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                importButton.setEnabled(true);
+                cancelButton.setEnabled(false);
+                importer.stop = true;
+                importer.setFileInput(null);
+                handlerClose.start();
+            }
+        });
+
+        importer = new GeoNameImporter(progressBar, handlerClose);
+    }
+
+    {
+        handlerClose = new Handler() {
+            @Override
+            public void start() {
+                if (parent != null)
+                    ImportGeoName.this.parent.dispose();
+            }
+        };
+    }
 
     @Override
     public JPanel getPanel() {
@@ -29,6 +76,10 @@ public class ImportGeoName implements CeemRadarTool {
     @Override
     public String getNameTool() {
         return this.getClass().getName();
+    }
+
+    public void setParent(JFrame parent) {
+        this.parent = parent;
     }
 
     {
@@ -61,13 +112,13 @@ public class ImportGeoName implements CeemRadarTool {
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout(0, 0));
         panel.add(panel2, cc.xy(2, 3));
-        progressBar1 = new JProgressBar();
-        panel2.add(progressBar1, BorderLayout.CENTER);
+        progressBar = new JProgressBar();
+        panel2.add(progressBar, BorderLayout.CENTER);
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new BorderLayout(0, 0));
         panel.add(panel3, cc.xy(1, 3));
-        final FileChooserForm nestedForm1 = new FileChooserForm();
-        panel.add(nestedForm1.$$$getRootComponent$$$(), cc.xy(2, 1));
+        fileChooserPanel = new FileChooserForm();
+        panel.add(fileChooserPanel.$$$getRootComponent$$$(), cc.xy(2, 1));
     }
 
     /**

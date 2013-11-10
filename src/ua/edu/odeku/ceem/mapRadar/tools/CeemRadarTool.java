@@ -9,4 +9,6 @@ import javax.swing.*;
  */
 public interface CeemRadarTool extends NamingTool, PanelTool {
 
+    public void setParent(JFrame frame);
+
 }

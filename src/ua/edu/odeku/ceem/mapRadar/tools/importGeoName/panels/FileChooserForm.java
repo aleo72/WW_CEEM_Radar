@@ -5,9 +5,12 @@ import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -22,12 +25,49 @@ public class FileChooserForm {
     private JButton chooserFileButton;
     private JButton helpButton;
 
+    private String fileName;
+    private File file;
+    private JFileChooser fileChooser = new JFileChooser();
+
+    {
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory())
+                    return true;
+
+                String name = f.getName();
+                if (!name.endsWith(".txt"))
+                    return false;
+                name = name.substring(0, name.length() - ".txt".length()).toUpperCase();
+                for (String iso : Locale.getISOCountries()) {
+                    if (name.equals(iso.toUpperCase()))
+                        return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                return "*.txt";
+            }
+        });
+    }
+
     public FileChooserForm() {
         $$$setupUI$$$();
+
+
         chooserFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(FileChooserForm.this.getClass().getName());
+                int res = fileChooser.showDialog(FileChooserForm.this.panel, ResourceString.get("gui_fileChooser_choose_file"));
+                if (res == JFileChooser.APPROVE_OPTION) {
+                    file = fileChooser.getSelectedFile();
+                    fileName = file.getName();
+                    fileNameTextField.setText(file.getAbsolutePath());
+                }
             }
         });
 
@@ -38,6 +78,10 @@ public class FileChooserForm {
                 JOptionPane.showMessageDialog(panel, ResourceString.get("gui_message_for_import_geoName"), ResourceString.get("gui_help_title"), JOptionPane.INFORMATION_MESSAGE);
             }
         });
+    }
+
+    public File getFile() {
+        return file;
     }
 
     private void createUIComponents() {

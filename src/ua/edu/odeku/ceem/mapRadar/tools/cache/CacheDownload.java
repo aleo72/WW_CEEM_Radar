@@ -52,6 +52,8 @@ public class CacheDownload extends JPanel implements CeemRadarTool {
 
     protected SectorSelector selector;
 
+    protected JFrame parent;
+
     public CacheDownload(WorldWindow wwd) {
         this.wwd = wwd;
 
@@ -320,5 +322,10 @@ public class CacheDownload extends JPanel implements CeemRadarTool {
     @Override
     public String getNameTool() {
         return this.getClass().getName();
+    }
+
+    @Override
+    public void setParent(JFrame frame) {
+        parent = frame;
     }
 }

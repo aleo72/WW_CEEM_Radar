@@ -12,8 +12,9 @@ public class ToolFrame extends JFrame {
 
     protected JPanel panel;
 
-    public ToolFrame(JPanel panel, String title){
-        this.panel = panel;
+    public ToolFrame(CeemRadarTool ceemRadarTool, String title){
+        this.panel = ceemRadarTool.getPanel();
+        ceemRadarTool.setParent(this);
         this.setTitle(title);
 
         initToolFrameSettings();
