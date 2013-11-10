@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ua.edu.odeku.ceem.mapRadar.tools.importGeoName.panels.FileChooserForm">
+  <grid id="27dc6" binding="panel" layout-manager="FormLayout">
+    <rowspec value="center:d:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:d:noGrow"/>
+    <colspec value="left:7dlu:noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <constraints>
+      <xy x="19" y="12" width="606" height="57"/>
+    </constraints>
+    <properties/>
+    <border type="none" title-resource-bundle="strings" title-key="gui_title_border_import_geoName"/>
+    <children>
+      <component id="15ced" class="javax.swing.JLabel" binding="label">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="2"/>
+          <horizontalTextPosition value="2"/>
+          <text resource-bundle="strings" key="string_label_for_import_geoNames"/>
+        </properties>
+      </component>
+      <component id="23a90" class="javax.swing.JTextField" binding="fileNameTextField">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <columns value="10"/>
+          <editable value="false"/>
+          <text value="..."/>
+        </properties>
+      </component>
+      <grid id="22869" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+        <constraints>
+          <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-vert="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f03d9" class="javax.swing.JButton" binding="chooserFileButton">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="4"/>
+              <text resource-bundle="strings" key="gui_button_file_chooser"/>
+            </properties>
+          </component>
+          <component id="a2ad4" class="javax.swing.JButton" binding="helpButton">
+            <constraints/>
+            <properties>
+              <text resource-bundle="strings" key="gui_helpButton"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

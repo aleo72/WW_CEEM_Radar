@@ -19,10 +19,7 @@ public final class ResourceString {
     }
 
     public static String get(String key) {
-        String s = key.startsWith(PREFIX) ? key : PREFIX + key;
-//        String ss = resource.containsKey(s) ? new String(resource.getString(s).getBytes("ISO-8859-1"), "UTF-8") : "None";
-        return resource.containsKey(s) ? resource.getString(s) : "None";
-
+        return resource.containsKey(key) ? resource.getString(key) : key;
     }
 
 }

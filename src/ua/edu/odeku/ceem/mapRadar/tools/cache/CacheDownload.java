@@ -4,7 +4,7 @@
  * All Rights Reserved.
  */
 
-package ua.edu.odeku.ceem.mapRadar.panels.cachePanels;
+package ua.edu.odeku.ceem.mapRadar.tools.cache;
 
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.cache.BasicDataFileStore;
@@ -18,6 +18,8 @@ import gov.nasa.worldwind.retrieve.BulkRetrievalThread;
 import gov.nasa.worldwind.terrain.CompoundElevationModel;
 import gov.nasa.worldwindx.examples.util.SectorSelector;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
+import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
+import ua.edu.odeku.ceem.mapRadar.tools.NamingTool;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
  * Date: 06.11.13
  * Time: 21:38
  */
-public class BulkDownloadPanel extends JPanel {
+public class CacheDownload extends JPanel implements CeemRadarTool {
 
     protected WorldWindow wwd;
     protected Sector currentSector;
@@ -50,7 +52,7 @@ public class BulkDownloadPanel extends JPanel {
 
     protected SectorSelector selector;
 
-    public BulkDownloadPanel(WorldWindow wwd) {
+    public CacheDownload(WorldWindow wwd) {
         this.wwd = wwd;
 
         // Init retievable list
@@ -310,4 +312,13 @@ public class BulkDownloadPanel extends JPanel {
         return String.format("%,.1f TB", sizeInMegaBytes / 1024 / 1024);
     }
 
+    @Override
+    public JPanel getPanel() {
+        return this;
+    }
+
+    @Override
+    public String getNameTool() {
+        return this.getClass().getName();
+    }
 }

@@ -9,7 +9,6 @@ import gov.nasa.worldwind.exception.WWAbsentRequirementException;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.ViewControlsLayer;
 import gov.nasa.worldwind.layers.ViewControlsSelectListener;
-import gov.nasa.worldwind.util.PerformanceStatistic;
 import gov.nasa.worldwind.util.StatisticsPanel;
 import gov.nasa.worldwind.util.StatusBar;
 import gov.nasa.worldwind.util.WWUtil;
@@ -17,9 +16,11 @@ import gov.nasa.worldwindx.examples.LayerPanel;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
-import ua.edu.odeku.ceem.mapRadar.panels.cachePanels.BulkDownloadPanel;
+import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
+import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
+import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,8 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -49,7 +49,7 @@ public class AppCeemRadarFrame extends JFrame {
     protected LayerPanel layerPanel;
     protected StatisticsPanel statsPanel;
     protected JMenuBar menuBar;
-    protected BulkDownloadPanel bulkDownloadPanel;
+    protected final Map<String,JFrame> toolsComponents = new HashMap<String, JFrame>();
 
     public AppCeemRadarFrame() {
         this.initialize(true, true, false);
@@ -71,39 +71,54 @@ public class AppCeemRadarFrame extends JFrame {
         JMenu menuView = new JMenu(ResourceString.get("string_view")); // Пункт меню "Программа"
         fillMenuView(menuView);
 
-        JMenu menuUtils = new JMenu(ResourceString.get("string_Utils"));
-        fillMenuUtils(menuUtils);
+        JMenu menuTools = new JMenu(ResourceString.get("string_tools"));
+        fillMenuUtils(menuTools);
 
         menuBar.add(menuMain);
         menuBar.add(menuView);
-        menuBar.add(menuUtils);
+        menuBar.add(menuTools);
 
         return menuBar;
     }
 
-    private void fillMenuUtils(JMenu menuUtils) {
-        JCheckBoxMenuItem menuDownloadCache = new JCheckBoxMenuItem(ResourceString.get("string_Menu_download_cache"));
-        menuDownloadCache.setSelected(false);
-
-        menuDownloadCache.addItemListener(new ItemListener() {
+    private void fillMenuUtils(final JMenu menuParent) {
+        JMenuItem menuDownloadCache = new JMenuItem(ResourceString.get("string_Menu_download_cache"));
+        menuDownloadCache.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
-                if (!item.isSelected()){
-                    if(bulkDownloadPanel != null){
-                        getContentPane().remove(bulkDownloadPanel);
-                    }
+            public void actionPerformed(ActionEvent e) {
+                JFrame ceemRadarTool = null;
+                if (toolsComponents.containsKey(CacheDownload.class.getName())){
+                    ceemRadarTool = toolsComponents.get(CacheDownload.class.getName());
+                    if(!ceemRadarTool.isVisible())
+                        ceemRadarTool.setVisible(true);
                 } else {
-                    if(bulkDownloadPanel == null){
-                        bulkDownloadPanel = new BulkDownloadPanel(wwjPanel.getWwd());
-                    }
-                    getContentPane().add(bulkDownloadPanel, BorderLayout.EAST);
+                    ceemRadarTool = new ToolFrame( new CacheDownload(wwjPanel.getWwd()) , ResourceString.get("gui_frame_title_tool_cache"));
+                    ceemRadarTool.setVisible(true);
+                    toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
                 }
-
             }
         });
 
-        menuUtils.add(menuDownloadCache);
+
+        JMenuItem menuGeoNameImporter = new JMenuItem(ResourceString.get("menu_tools_GeoNameImport"));
+        menuGeoNameImporter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame ceemRadarTool = null;
+                if (toolsComponents.containsKey(ImportGeoName.class.getName())){
+                    ceemRadarTool = toolsComponents.get(ImportGeoName.class.getName());
+                    if(!ceemRadarTool.isVisible())
+                        ceemRadarTool.setVisible(true);
+                } else {
+                    ceemRadarTool = new ToolFrame( new ImportGeoName().getPanel() , ResourceString.get("gui_frame_title_tool_geoName"));
+                    ceemRadarTool.setVisible(true);
+                    toolsComponents.put(ImportGeoName.class.getName(), ceemRadarTool);
+                }
+            }
+        });
+
+        menuParent.add(menuDownloadCache);
+        menuParent.add(menuGeoNameImporter);
     }
 
     protected void fillMenuView(JMenu menu) {

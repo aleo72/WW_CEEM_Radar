@@ -32,6 +32,12 @@
     <orderEntry type="library" name="hibernate-entitymanager-4.2.6.Final" level="project" />
     <orderEntry type="library" name="Hibernate" level="project" />
     <orderEntry type="library" name="Hibernate" level="project" />
+    <orderEntry type="library" name="jgoodies-forms" level="project" />
+    <orderEntry type="library" name="jgoodies-animation" level="project" />
+    <orderEntry type="library" name="jgoodies-binding" level="project" />
+    <orderEntry type="library" name="jgoodies-common" level="project" />
+    <orderEntry type="library" name="jgoodies-looks" level="project" />
+    <orderEntry type="library" name="jgoodies-validation" level="project" />
   </component>
 </module>
 

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_worldwind" default="compile.module.worldwind">
+  <dirname property="module.worldwind.basedir" file="${ant.file.module_worldwind}"/>
+  
+  <property name="module.jdk.home.worldwind" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.worldwind" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.worldwind" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.worldwind" value="${compiler.args}"/>
+  
+  <property name="worldwind.output.dir" value="${module.worldwind.basedir}/classes"/>
+  <property name="worldwind.testoutput.dir" value="${module.worldwind.basedir}/testClasses"/>
+  
+  <path id="worldwind.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="worldwind.module.production.classpath">
+    <path refid="library.jsobjectplugin.classpath"/>
+    <path refid="${module.jdk.classpath.worldwind}"/>
+    <path refid="library.jogl.classpath"/>
+    <path refid="library.gdal.classpath"/>
+    <path refid="library.junit.classpath"/>
+    <path refid="library.h2.classpath"/>
+    <path refid="library.hibernate-entitymanager-4.2.6.final.classpath"/>
+    <path refid="library.hibernate.classpath"/>
+  </path>
+  
+  <path id="worldwind.runtime.production.module.classpath">
+    <path refid="library.jsobjectplugin.classpath"/>
+    <pathelement location="${worldwind.output.dir}"/>
+    <path refid="library.jogl.classpath"/>
+    <path refid="library.gdal.classpath"/>
+    <path refid="library.junit.classpath"/>
+    <path refid="library.h2.classpath"/>
+    <path refid="library.hibernate-entitymanager-4.2.6.final.classpath"/>
+    <path refid="library.hibernate.classpath"/>
+  </path>
+  
+  <path id="worldwind.module.classpath">
+    <path refid="library.jsobjectplugin.classpath"/>
+    <path refid="${module.jdk.classpath.worldwind}"/>
+    <pathelement location="${worldwind.output.dir}"/>
+    <path refid="library.jogl.classpath"/>
+    <path refid="library.gdal.classpath"/>
+    <path refid="library.junit.classpath"/>
+    <path refid="library.h2.classpath"/>
+    <path refid="library.hibernate-entitymanager-4.2.6.final.classpath"/>
+    <path refid="library.hibernate.classpath"/>
+  </path>
+  
+  <path id="worldwind.runtime.module.classpath">
+    <path refid="library.jsobjectplugin.classpath"/>
+    <pathelement location="${worldwind.testoutput.dir}"/>
+    <pathelement location="${worldwind.output.dir}"/>
+    <path refid="library.jogl.classpath"/>
+    <path refid="library.gdal.classpath"/>
+    <path refid="library.junit.classpath"/>
+    <path refid="library.h2.classpath"/>
+    <path refid="library.hibernate-entitymanager-4.2.6.final.classpath"/>
+    <path refid="library.hibernate.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.worldwind">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.worldwind">
+    <patternset refid="compiler.excluded"/>
+    <patternset refid="excluded.from.module.worldwind"/>
+  </patternset>
+  
+  <path id="worldwind.module.sourcepath">
+    <dirset dir="${module.worldwind.basedir}">
+      <include name="src"/>
+      <include name="CeemResourceBundle/stringMessage"/>
+    </dirset>
+  </path>
+  
+  <path id="worldwind.module.test.sourcepath">
+    <dirset dir="${module.worldwind.basedir}">
+      <include name="test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.worldwind" depends="compile.module.worldwind.production,compile.module.worldwind.tests" description="Compile module WorldWind"/>
+  
+  <target name="compile.module.worldwind.production" depends="register.custom.compilers" description="Compile module WorldWind; production classes">
+    <mkdir dir="${worldwind.output.dir}"/>
+    <javac2 destdir="${worldwind.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.worldwind}/javac">
+      <compilerarg line="${compiler.args.worldwind}"/>
+      <bootclasspath refid="worldwind.module.bootclasspath"/>
+      <classpath refid="worldwind.module.production.classpath"/>
+      <src refid="worldwind.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.worldwind"/>
+    </javac2>
+    
+    <copy todir="${worldwind.output.dir}">
+      <fileset dir="${module.worldwind.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.worldwind"/>
+      </fileset>
+      <fileset dir="${module.worldwind.basedir}/CeemResourceBundle/stringMessage">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.worldwind"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.worldwind.tests" depends="register.custom.compilers,compile.module.worldwind.production" description="compile module WorldWind; test classes" unless="skip.tests">
+    <mkdir dir="${worldwind.testoutput.dir}"/>
+    <javac2 destdir="${worldwind.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.worldwind}/javac">
+      <compilerarg line="${compiler.args.worldwind}"/>
+      <bootclasspath refid="worldwind.module.bootclasspath"/>
+      <classpath refid="worldwind.module.classpath"/>
+      <src refid="worldwind.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.worldwind"/>
+    </javac2>
+    
+    <copy todir="${worldwind.testoutput.dir}">
+      <fileset dir="${module.worldwind.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.worldwind"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.worldwind" description="cleanup module">
+    <delete dir="${worldwind.output.dir}"/>
+    <delete dir="${worldwind.testoutput.dir}"/>
+  </target>
+</project>

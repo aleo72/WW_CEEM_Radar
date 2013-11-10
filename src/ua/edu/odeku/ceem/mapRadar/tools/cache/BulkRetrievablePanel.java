@@ -1,4 +1,4 @@
-package ua.edu.odeku.ceem.mapRadar.panels.cachePanels;
+package ua.edu.odeku.ceem.mapRadar.tools.cache;
 
 import gov.nasa.worldwind.cache.BasicDataFileStore;
 import gov.nasa.worldwind.geom.Sector;
@@ -69,7 +69,7 @@ public class BulkRetrievablePanel extends JPanel {
         if (sector != null) {
             try {
                 long size = retrievable.getEstimatedMissingDataSize(sector, 0, cache);
-                final String formattedSize = BulkDownloadPanel.makeSizeDescription(size);
+                final String formattedSize = CacheDownload.makeSizeDescription(size);
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         descriptionLabel.setText(formattedSize);

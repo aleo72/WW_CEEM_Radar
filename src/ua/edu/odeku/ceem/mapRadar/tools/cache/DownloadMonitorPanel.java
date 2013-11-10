@@ -1,15 +1,13 @@
-package ua.edu.odeku.ceem.mapRadar.panels.cachePanels;
+package ua.edu.odeku.ceem.mapRadar.tools.cache;
 
 import gov.nasa.worldwind.retrieve.BulkRetrievalThread;
 import gov.nasa.worldwind.retrieve.Progress;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 
 /**
  * User: Aleo skype: aleo72
@@ -44,8 +42,8 @@ public class DownloadMonitorPanel extends JPanel {
         // Update description
         String text = thread.getRetrievable().getName();
         text = text.length() > 30 ? text.substring(0, 27) + "..." : text;
-        text += " (" + BulkDownloadPanel.makeSizeDescription(this.progress.getCurrentSize())
-                + " / " + BulkDownloadPanel.makeSizeDescription(this.progress.getTotalSize())
+        text += " (" + CacheDownload.makeSizeDescription(this.progress.getCurrentSize())
+                + " / " + CacheDownload.makeSizeDescription(this.progress.getTotalSize())
                 + ")";
         this.descriptionLabel.setText(text);
         // Update progress bar
@@ -54,7 +52,7 @@ public class DownloadMonitorPanel extends JPanel {
             percent = (int) ((float) this.progress.getCurrentCount() / this.progress.getTotalCount() * 100f);
         this.progressBar.setValue(Math.min(percent, 100));
         // Update tooltip
-        String tooltip = BulkDownloadPanel.makeSectorDescription(this.thread.getSector());
+        String tooltip = CacheDownload.makeSectorDescription(this.thread.getSector());
         this.descriptionLabel.setToolTipText(tooltip);
         this.progressBar.setToolTipText(makeProgressDescription());
 
@@ -121,7 +119,7 @@ public class DownloadMonitorPanel extends JPanel {
         if (this.progress.getTotalCount() > 0) {
             int percent = (int) ((double) this.progress.getCurrentCount() / this.progress.getTotalCount() * 100d);
             text = percent + "% " + ResourceString.get("of") + " ";
-            text += BulkDownloadPanel.makeSizeDescription(this.progress.getTotalSize());
+            text += CacheDownload.makeSizeDescription(this.progress.getTotalSize());
         }
         return text;
     }
