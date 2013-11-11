@@ -1,5 +1,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools;
 
+import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
+
 import javax.swing.*;
 
 /**
@@ -11,4 +13,5 @@ public interface CeemRadarTool extends NamingTool, PanelTool {
 
     public void setParent(JFrame frame);
 
+    public Handler getHandlerForJFrame(final ToolFrame frame);
 }

@@ -20,6 +20,8 @@ import gov.nasa.worldwindx.examples.util.SectorSelector;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
 import ua.edu.odeku.ceem.mapRadar.tools.NamingTool;
+import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
+import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -327,5 +329,10 @@ public class CacheDownload extends JPanel implements CeemRadarTool {
     @Override
     public void setParent(JFrame frame) {
         parent = frame;
+    }
+
+    @Override
+    public Handler getHandlerForJFrame(ToolFrame frame) {
+        return null;
     }
 }

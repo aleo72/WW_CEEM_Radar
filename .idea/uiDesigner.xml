@@ -123,7 +123,7 @@
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="false" />
-    <option name="DEFAULT_LAYOUT_MANAGER" value="FlowLayout" />
+    <option name="DEFAULT_LAYOUT_MANAGER" value="FormLayout" />
   </component>
 </project>
 
