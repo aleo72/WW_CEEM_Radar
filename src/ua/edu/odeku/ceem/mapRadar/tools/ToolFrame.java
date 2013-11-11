@@ -8,6 +8,7 @@ import java.awt.*;
 /**
  * Общее окно для всех Tool компонентов программы
  *
+ *
  * User: Aleo skype: aleo72
  * Date: 10.11.13
  * Time: 15:57
