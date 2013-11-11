@@ -21,6 +21,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
+import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,20 +106,40 @@ public class AppCeemRadarFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame ceemRadarTool = null;
-                if (toolsComponents.containsKey(ImportGeoName.class.getName())){
-                    ceemRadarTool = toolsComponents.get(ImportGeoName.class.getName());
+                String toolName = ImportGeoName.class.getName();
+                if (toolsComponents.containsKey(toolName)){
+                    ceemRadarTool = toolsComponents.get(toolName);
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
                     ceemRadarTool = new ToolFrame(new ImportGeoName() , ResourceString.get("gui_frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
-                    toolsComponents.put(ImportGeoName.class.getName(), ceemRadarTool);
+                    toolsComponents.put(toolName, ceemRadarTool);
+                }
+            }
+        });
+
+        JMenuItem menuGeoNameView = new JMenuItem(ResourceString.get("menu_tools_GeoNameView"));
+        menuGeoNameView.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame ceemRadarTool = null;
+                String toolName = ViewGeoNameTool.class.getName();
+                if (toolsComponents.containsKey(toolName)){
+                    ceemRadarTool = toolsComponents.get(toolName);
+                    if(!ceemRadarTool.isVisible())
+                        ceemRadarTool.setVisible(true);
+                } else {
+                    ceemRadarTool = new ToolFrame(new ViewGeoNameTool() , ResourceString.get("gui_frame_title_tool_geoNameView"));
+                    ceemRadarTool.setVisible(true);
+                    toolsComponents.put(toolName, ceemRadarTool);
                 }
             }
         });
 
         menuParent.add(menuDownloadCache);
         menuParent.add(menuGeoNameImporter);
+        menuParent.add(menuGeoNameView);
     }
 
     protected void fillMenuView(JMenu menu) {

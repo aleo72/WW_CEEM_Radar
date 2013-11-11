@@ -3,6 +3,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.importGeoName;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
+import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.panels.FileChooserForm;
 import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
 
@@ -80,6 +81,11 @@ public class ImportGeoName implements CeemRadarTool {
 
     public void setParent(JFrame parent) {
         this.parent = parent;
+    }
+
+    @Override
+    public Handler getHandlerForJFrame(ToolFrame frame) {
+        return null;
     }
 
     {

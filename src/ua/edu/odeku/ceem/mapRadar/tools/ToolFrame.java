@@ -1,5 +1,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools;
 
+import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,10 +13,12 @@ import java.awt.*;
 public class ToolFrame extends JFrame {
 
     protected JPanel panel;
+    protected Handler handler;
 
     public ToolFrame(CeemRadarTool ceemRadarTool, String title){
         this.panel = ceemRadarTool.getPanel();
         ceemRadarTool.setParent(this);
+        handler = ceemRadarTool.getHandlerForJFrame(this);
         this.setTitle(title);
 
         initToolFrameSettings();
@@ -28,5 +32,9 @@ public class ToolFrame extends JFrame {
         this.pack();
 
         this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+
+        if(handler != null){
+            handler.start();
+        }
     }
 }
