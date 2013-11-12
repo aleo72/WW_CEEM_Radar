@@ -43,7 +43,7 @@ public class GeoNameTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 9;
+        return 10;
     }
 
     @Override
@@ -57,16 +57,18 @@ public class GeoNameTableModel extends AbstractTableModel {
             case 2 :
                 return geoName.getAsciiname();
             case 3 :
-                return geoName.getAlternatenames();
+                return geoName.getTranslateName();
             case 4 :
-                return geoName.getCountryCode();
+                return geoName.getAlternatenames();
             case 5 :
-                return geoName.getFeatureClass();
+                return geoName.getCountryCode();
             case 6 :
-                return geoName.getFeatureCode();
+                return geoName.getFeatureClass();
             case 7 :
-                return geoName.getLat();
+                return geoName.getFeatureCode();
             case 8 :
+                return geoName.getLat();
+            case 9 :
                 return geoName.getLon();
             default:
                 return null;
@@ -91,8 +93,10 @@ public class GeoNameTableModel extends AbstractTableModel {
             case 6 :
                 return String.class;
             case 7 :
-                return Double.class;
+                return String.class;
             case 8 :
+                return Double.class;
+            case 9 :
                 return Double.class;
             default:
                 return null;
@@ -109,16 +113,18 @@ public class GeoNameTableModel extends AbstractTableModel {
             case 2:
                 return ResourceString.get("table_asciiname");
             case 3:
-                return ResourceString.get("table_alternate_names");
+                return ResourceString.get("table_translate");
             case 4:
-                return ResourceString.get("table_country_code");
+                return ResourceString.get("table_alternate_names");
             case 5:
-                return ResourceString.get("table_feature_class");
+                return ResourceString.get("table_country_code");
             case 6:
-                return ResourceString.get("table_feature_code");
+                return ResourceString.get("table_feature_class");
             case 7:
-                return ResourceString.get("table_lat");
+                return ResourceString.get("table_feature_code");
             case 8:
+                return ResourceString.get("table_lat");
+            case 9:
                 return ResourceString.get("table_lon");
             default:
                 return null;

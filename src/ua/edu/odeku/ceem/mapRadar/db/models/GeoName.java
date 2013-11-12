@@ -4,6 +4,8 @@ import org.hibernate.annotations.Index;
 import ua.edu.odeku.ceem.mapRadar.db.models.geoNameEnum.*;
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
+import ua.edu.odeku.ceem.mapRadar.utils.translate.TranslateManager;
 
 import javax.persistence.*;
 import java.util.Locale;
@@ -32,6 +34,12 @@ public class GeoName {
         this.lon = lon;
         this.featureClass = featureClass;
         this.featureCode = featureCode;
+        if(PropertyProgram.isTranslateGeoName()){
+            this.translateName =
+                    TranslateManager.getTranslatable(this.countryCode).translate(this.asciiname);
+        } else {
+            this.translateName = asciiname;
+        }
     }
 
     @Id
@@ -106,6 +114,9 @@ public class GeoName {
 
     @Column(name = "ELEVATION", nullable = true)
     private Integer elevation;
+
+    @Column(name = "TRANSLATE", nullable = true)
+    private String translateName;
 
     public int getId() {
         return id;
@@ -313,6 +324,14 @@ public class GeoName {
         this.sourceId = sourceId;
     }
 
+    public String getTranslateName() {
+        return translateName;
+    }
+
+    public void setTranslateName(String translateName) {
+        this.translateName = translateName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -385,6 +404,13 @@ public class GeoName {
             String eleva = columns[15];
             if(eleva != null && !eleva.trim().isEmpty())
                 geoName.setElevation(Integer.parseInt(eleva));
+
+            if(PropertyProgram.isTranslateGeoName()){
+                geoName.translateName =
+                        TranslateManager.getTranslatable(geoName.countryCode).translate(geoName.asciiname);
+            } else {
+                geoName.translateName = geoName.asciiname;
+            }
 
         } catch (Exception e){
             throw new GeoNameException(ResourceString.get("exception_GeoName")+"\n"+ line + "\n" + e.getMessage());
