@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -42,7 +43,7 @@ public class GeoNameTableModel extends AbstractTableModel {
         entityManager.getTransaction().commit();
     }
 
-    public GeoNameTableModel(String country, String featureClass, String featureCode){
+    public GeoNameTableModel(String subName, String country, String featureClass, String featureCode){
         Session session = DB.getSession();
 
         String select = "SELECT {G.*} FROM GEO_NAME G WHERE 1 = 1 ";
@@ -72,14 +73,73 @@ public class GeoNameTableModel extends AbstractTableModel {
                 query.setParameter("featureCode", featureCode);
             }
         }
-        list = new ArrayList<GeoName>(50000);
+
+        if(subName == null || subName.isEmpty()){
+            list = handlerScrollableResults(query);
+        } else {
+            list = handlerScrollableResults(query, subName);
+        }
+
+        DB.closeSession(session);
+    }
+
+    private List<GeoName> handlerScrollableResults(SQLQuery query, String prefixName) {
+
+        List<GeoName> listName = new LinkedList<GeoName>();
+        List<GeoName> listASCIIName = new LinkedList<GeoName>();
+        List<GeoName> listTranslate = new LinkedList<GeoName>();
+        List<GeoName> listAlternative = new LinkedList<GeoName>();
+        String prefix = prefixName.toLowerCase();
+
         ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
+        results.beforeFirst();
+
+        while(results.next()){
+            GeoName geoName = (GeoName) results.get(0);
+            // Проверяем название
+            if(geoName.getName().toLowerCase().startsWith(prefix)){
+                listName.add(geoName);
+
+                // Проверим АСКИ название
+            } else if (geoName.getAsciiname().toLowerCase().startsWith(prefix)){
+                listASCIIName.add(geoName);
+
+                // Проверим перевод
+            } else if (geoName.getTranslateName() != null && !geoName.getTranslateName().isEmpty() &&
+                    geoName.getTranslateName().toLowerCase().startsWith(prefix)){
+                listTranslate.add(geoName);
+
+                // проверим альтернативные названия
+            } else if (geoName.getAlternatenames() != null && !geoName.getAlternatenames().isEmpty()) {
+                for(String alt : geoName.getAlternatenamesArray()){
+                    if (alt.toLowerCase().startsWith(prefix)){
+                        listAlternative.add(geoName);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        ArrayList<GeoName> list =
+                new ArrayList<>(listName.size() + listASCIIName.size() + listTranslate.size() + listTranslate.size());
+
+        list.addAll(listName);
+        list.addAll(listASCIIName);
+        list.addAll(listTranslate);
+        list.addAll(listAlternative);
+
+        return list;
+    }
+
+    private List<GeoName> handlerScrollableResults(SQLQuery sqlQuery){
+        List<GeoName> list = new ArrayList<GeoName>(50000);
+        ScrollableResults results = sqlQuery.scroll(ScrollMode.FORWARD_ONLY);
         results.beforeFirst();
         while(results.next()){
             list.add((GeoName) results.get(0));
         }
-
-        DB.closeSession(session);
+        return list;
     }
 
     @Override
@@ -140,7 +200,7 @@ public class GeoNameTableModel extends AbstractTableModel {
             case 5 :
                 return String.class;
             case 6 :
-                return String.class;
+                return Character.class;
             case 7 :
                 return String.class;
             case 8 :

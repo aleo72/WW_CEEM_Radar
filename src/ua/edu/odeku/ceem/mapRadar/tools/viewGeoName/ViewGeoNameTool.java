@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 /**
+ * Панель для работы с geoNameTool
  * User: Aleo skype: aleo72
  * Date: 11.11.13
  * Time: 22:17
@@ -80,11 +81,15 @@ public class ViewGeoNameTool implements CeemRadarTool {
         final String finalCountry = country;
         final String finalFeatureClass = featureClass;
         final String finalFeatureCode = featureCode;
+        final String finalPrefix = this.textField.getText().trim();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                table.setModel(new GeoNameTableModel(finalCountry, finalFeatureClass, finalFeatureCode));
+                table.setAutoCreateRowSorter(false);
+                table.setModel(new GeoNameTableModel(finalPrefix, finalCountry, finalFeatureClass, finalFeatureCode));
+                table.setAutoCreateRowSorter(true);
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
             }
         }).start();
     }
