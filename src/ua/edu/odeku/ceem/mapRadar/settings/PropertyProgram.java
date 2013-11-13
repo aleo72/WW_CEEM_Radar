@@ -19,6 +19,10 @@ public class PropertyProgram {
      */
     private final static Locale CURRENT_LOCALE = new Locale("ru", "RU");
 
+    static {
+        Locale.setDefault(CURRENT_LOCALE);
+    }
+
     /**
      * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
      */
