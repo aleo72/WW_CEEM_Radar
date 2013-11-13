@@ -23,7 +23,7 @@ public class ToolFrame extends JFrame {
         ceemRadarTool.setParent(this);
         handler = ceemRadarTool.getHandlerForJFrame(this);
         this.setTitle(title);
-
+        this.setLocationByPlatform(true);
         initToolFrameSettings();
     }
 

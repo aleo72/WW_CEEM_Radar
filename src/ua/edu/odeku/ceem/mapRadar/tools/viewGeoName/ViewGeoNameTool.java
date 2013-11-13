@@ -13,15 +13,20 @@ import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
+import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
+import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs.EditGeoNameDialog;
 import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
+import java.util.List;
 
 /**
  * Панель для работы с geoNameTool
@@ -40,6 +45,8 @@ public class ViewGeoNameTool implements CeemRadarTool {
     private JComboBox featureClassComboBox;
     private JComboBox featureCodeComboBox;
 
+    private EditGeoNameDialog editGeoNameDialog;
+
 
     public ViewGeoNameTool() {
         table.setAutoCreateRowSorter(true);
@@ -57,6 +64,25 @@ public class ViewGeoNameTool implements CeemRadarTool {
             @Override
             public void actionPerformed(ActionEvent e) {
                 refreshTable();
+            }
+        });
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable table = (JTable) e.getSource();
+                    editGeoNameDialog = new EditGeoNameDialog(((GeoNameTableModel) table.getModel()).getListGeoName().get(table.getSelectedRow()));
+                    editGeoNameDialog.setAlwaysOnTop(true);
+
+                    boolean isParentTop = parent.isAlwaysOnTop();
+                    parent.setAlwaysOnTop(false);
+                    editGeoNameDialog.setLocationByPlatform(true);
+
+                    editGeoNameDialog.setVisible(true);
+
+                    parent.setAlwaysOnTop(isParentTop);
+                }
             }
         });
     }

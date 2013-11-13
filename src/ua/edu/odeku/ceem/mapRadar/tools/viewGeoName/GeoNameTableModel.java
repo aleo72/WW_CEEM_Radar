@@ -240,4 +240,8 @@ public class GeoNameTableModel extends AbstractTableModel {
 
         }
     }
+
+    public List<GeoName> getListGeoName(){
+        return list;
+    }
 }

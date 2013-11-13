@@ -112,9 +112,6 @@ public class GeoName {
     @Column(name = "COUNTRY_CODE", nullable = false)
     private String countryCode;
 
-    @Column(name = "ELEVATION", nullable = true)
-    private Integer elevation;
-
     @Column(name = "TRANSLATE", nullable = true)
     private String translateName;
 
@@ -308,14 +305,6 @@ public class GeoName {
         throw new GeoNameException("not valid countyCode: "+countryCode);
     }
 
-    public Integer getElevation() {
-        return elevation;
-    }
-
-    public void setElevation(Integer elevation) {
-        this.elevation = elevation;
-    }
-
     public int getSourceId() {
         return sourceId;
     }
@@ -352,8 +341,6 @@ public class GeoName {
         sb.append(featureCode);
         sb.append(", ");
         sb.append(countryCode);
-        sb.append(", ");
-        sb.append(elevation);
         return sb.toString();
     }
 
@@ -401,9 +388,6 @@ public class GeoName {
             geoName.setFeatureClass(columns[6].charAt(0));
             geoName.setFeatureCode(columns[7]);
             geoName.setCountryCode(columns[8]);
-            String eleva = columns[15];
-            if(eleva != null && !eleva.trim().isEmpty())
-                geoName.setElevation(Integer.parseInt(eleva));
 
             if(PropertyProgram.isTranslateGeoName()){
                 geoName.translateName =
