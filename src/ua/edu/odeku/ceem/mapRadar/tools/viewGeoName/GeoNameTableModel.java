@@ -1,5 +1,9 @@
 package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
@@ -10,10 +14,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
 /**
+ * Модель для таблицы, данная модель заполняет таблицу изходя из переданых ей параметров
  * User: Aleo skype: aleo72
  * Date: 10.11.13
  * Time: 21:26
@@ -36,6 +42,46 @@ public class GeoNameTableModel extends AbstractTableModel {
         entityManager.getTransaction().commit();
     }
 
+    public GeoNameTableModel(String country, String featureClass, String featureCode){
+        Session session = DB.getSession();
+
+        String select = "SELECT {G.*} FROM GEO_NAME G WHERE 1 = 1 ";
+
+        if(country != null && !country.isEmpty()){
+            select += " AND G.COUNTRY_CODE = :country ";
+        }
+        if(featureClass != null && !featureClass.isEmpty()){
+            select += " AND G.FEATURE_CLASS = :featureClass ";
+            if(featureCode != null && !featureCode.isEmpty()){
+                select += " AND G.FEATURE_CODE = :featureCode ";
+            }
+        }
+        select += ";";
+
+        SQLQuery query = session.createSQLQuery(select);
+        query.addEntity("G", GeoName.class);
+
+        if(country != null && !country.isEmpty()){
+            query.setParameter("country", country);
+        }
+        if(featureClass != null && !featureClass.isEmpty()){
+            select += " AND G.FEATURE_CLASS = :featureClass ";
+            query.setParameter("featureClass", featureClass);
+            if(featureCode != null && !featureCode.isEmpty()){
+                select += " AND G.FEATURE_CODE = :featureCode ";
+                query.setParameter("featureCode", featureCode);
+            }
+        }
+        list = new ArrayList<GeoName>(50000);
+        ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
+        results.beforeFirst();
+        while(results.next()){
+            list.add((GeoName) results.get(0));
+        }
+
+        DB.closeSession(session);
+    }
+
     @Override
     public int getRowCount() {
         return list.size();
@@ -48,31 +94,34 @@ public class GeoNameTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        GeoName geoName = list.get(rowIndex);
-        switch (columnIndex){
-            case 0 :
-                return rowIndex;
-            case 1 :
-                return geoName.getName();
-            case 2 :
-                return geoName.getAsciiname();
-            case 3 :
-                return geoName.getTranslateName();
-            case 4 :
-                return geoName.getAlternatenames();
-            case 5 :
-                return geoName.getCountryCode();
-            case 6 :
-                return geoName.getFeatureClass();
-            case 7 :
-                return geoName.getFeatureCode();
-            case 8 :
-                return geoName.getLat();
-            case 9 :
-                return geoName.getLon();
-            default:
-                return null;
+        if (list.size() > rowIndex){
+            GeoName geoName = list.get(rowIndex);
+            switch (columnIndex){
+                case 0 :
+                    return rowIndex;
+                case 1 :
+                    return geoName.getName();
+                case 2 :
+                    return geoName.getAsciiname();
+                case 3 :
+                    return geoName.getTranslateName();
+                case 4 :
+                    return geoName.getAlternatenames();
+                case 5 :
+                    return geoName.getCountryCode();
+                case 6 :
+                    return geoName.getFeatureClass();
+                case 7 :
+                    return geoName.getFeatureCode();
+                case 8 :
+                    return geoName.getLat();
+                case 9 :
+                    return geoName.getLon();
+                default:
+                    return null;
+            }
         }
+        return null;
     }
 
     @Override

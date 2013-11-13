@@ -51,13 +51,40 @@ public class ViewGeoNameTool implements CeemRadarTool {
                 refreshFeatureCode();
             }
         });
+
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                refreshTable();
+            }
+        });
     }
 
     private void refreshTable() {
+        String country, featureClass, featureCode;
+        country = featureClass = featureCode = null;
+
+        Object o = countryComboBox.getSelectedItem();
+        if (o != null) {
+            country = o.toString();
+        }
+        o = featureClassComboBox.getSelectedItem();
+        if (o != null) {
+            featureClass = o.toString();
+        }
+        o = featureCodeComboBox.getSelectedItem();
+        if (o != null) {
+            featureCode = o.toString();
+        }
+
+        final String finalCountry = country;
+        final String finalFeatureClass = featureClass;
+        final String finalFeatureCode = featureCode;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                table.setModel(new GeoNameTableModel());
+                table.setModel(new GeoNameTableModel(finalCountry, finalFeatureClass, finalFeatureCode));
             }
         }).start();
     }
