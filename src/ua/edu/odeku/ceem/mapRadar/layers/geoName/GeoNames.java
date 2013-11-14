@@ -15,21 +15,23 @@ import java.awt.*;
  */
 public class GeoNames {
 
-    private static final Sector TILING_SECTOR = Sector.FULL_SPHERE;
+    protected static final Sector TILING_SECTOR = Sector.FULL_SPHERE;
     private static final int MAX_ABSENT_TILE_TRIES = 2;
     private static final int MIN_ABSENT_TILE_CHECK_INTERVAL = 10000;
 
     public final String geoNameClass;
     public final String geoNameCode;
 
-    private final LatLon tileDelta;
-    private final Font font;
+    public final LatLon tileDelta;
+    public final Font font;
 
     private boolean enabled;
     private java.awt.Color color;
     private java.awt.Color backgroundColor;
     private double minDisplayDistance;
     private double maxDisplayDistance;
+
+    private Sector maskingSector = null;
 
     private int numColumns;
 
@@ -164,5 +166,13 @@ public class GeoNames {
             return false;
         }
         return true;
+    }
+
+    public Sector getMaskingSector() {
+        return maskingSector;
+    }
+
+    public void setMaskingSector(Sector maskingSector) {
+        this.maskingSector = maskingSector;
     }
 }
