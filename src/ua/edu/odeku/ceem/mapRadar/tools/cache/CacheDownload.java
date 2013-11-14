@@ -246,7 +246,7 @@ public class CacheDownload extends JPanel implements CeemRadarTool {
         JPanel sectorPanel = new JPanel(new GridLayout(0, 1, 0, 0));
         sectorPanel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
         selectButton = new JButton(ResourceString.get("string_Select_sector"));
-        selectButton.setToolTipText(ResourceString.get("string_message_for_button_Select_sector"));
+        selectButton.setToolTipText(ResourceString.get("message_cache_for-button-Select-sector"));
         selectButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 selectButtonActionPerformed(event);

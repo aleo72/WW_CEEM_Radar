@@ -216,25 +216,25 @@ public class GeoNameTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column){
             case 0:
-                return ResourceString.get("table_row");
+                return ResourceString.get("table_geoName_row");
             case 1:
-                return ResourceString.get("table_name");
+                return ResourceString.get("table_geoName_name");
             case 2:
-                return ResourceString.get("table_asciiname");
+                return ResourceString.get("table_geoName_asciiName");
             case 3:
-                return ResourceString.get("table_translate");
+                return ResourceString.get("table_geoName_translate");
             case 4:
-                return ResourceString.get("table_alternate_names");
+                return ResourceString.get("table_geoName_alternate-names");
             case 5:
-                return ResourceString.get("table_country_code");
+                return ResourceString.get("table_geoName_country-code");
             case 6:
-                return ResourceString.get("table_feature_class");
+                return ResourceString.get("table_geoName_feature-class");
             case 7:
-                return ResourceString.get("table_feature_code");
+                return ResourceString.get("table_geoName_feature-code");
             case 8:
-                return ResourceString.get("table_lat");
+                return ResourceString.get("table_geoName_lat");
             case 9:
-                return ResourceString.get("table_lon");
+                return ResourceString.get("table_geoName_lon");
             default:
                 return null;
 

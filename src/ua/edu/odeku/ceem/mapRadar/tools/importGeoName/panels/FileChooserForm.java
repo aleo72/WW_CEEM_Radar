@@ -62,7 +62,7 @@ public class FileChooserForm {
         chooserFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int res = fileChooser.showDialog(FileChooserForm.this.panel, ResourceString.get("gui_fileChooser_choose_file"));
+                int res = fileChooser.showDialog(FileChooserForm.this.panel, ResourceString.get("frame_fileChooser_choose-file"));
                 if (res == JFileChooser.APPROVE_OPTION) {
                     file = fileChooser.getSelectedFile();
                     fileName = file.getName();
@@ -75,7 +75,7 @@ public class FileChooserForm {
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(panel, ResourceString.get("gui_message_for_import_geoName"), ResourceString.get("gui_help_title"), JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(panel, ResourceString.get("message_geoName_for-import"), ResourceString.get("title_help"), JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
@@ -98,7 +98,7 @@ public class FileChooserForm {
     private void $$$setupUI$$$() {
         panel = new JPanel();
         panel.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:noGrow,left:7dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow"));
-        panel.setBorder(BorderFactory.createTitledBorder(ResourceBundle.getBundle("strings").getString("gui_title_border_import_geoName")));
+        panel.setBorder(BorderFactory.createTitledBorder(ResourceBundle.getBundle("strings").getString("title_border_import-geoName")));
         label = new JLabel();
         label.setHorizontalAlignment(2);
         label.setHorizontalTextPosition(2);
@@ -118,7 +118,7 @@ public class FileChooserForm {
         this.$$$loadButtonText$$$(chooserFileButton, ResourceBundle.getBundle("strings").getString("gui_button_file_chooser"));
         panel1.add(chooserFileButton);
         helpButton = new JButton();
-        this.$$$loadButtonText$$$(helpButton, ResourceBundle.getBundle("strings").getString("gui_helpButton"));
+        this.$$$loadButtonText$$$(helpButton, ResourceBundle.getBundle("strings").getString("button_help-?"));
         panel1.add(helpButton);
     }
 

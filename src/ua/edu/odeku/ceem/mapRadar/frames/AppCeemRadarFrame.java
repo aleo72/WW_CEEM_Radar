@@ -69,10 +69,10 @@ public class AppCeemRadarFrame extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuMain = new JMenu(ResourceString.get("string_program")); // Пункт меню "Программа"
 
-        JMenu menuView = new JMenu(ResourceString.get("string_view")); // Пункт меню "Программа"
+        JMenu menuView = new JMenu(ResourceString.get("menu_view")); // Пункт меню "Программа"
         fillMenuView(menuView);
 
-        JMenu menuTools = new JMenu(ResourceString.get("string_tools"));
+        JMenu menuTools = new JMenu(ResourceString.get("menu_tools"));
         fillMenuUtils(menuTools);
 
         menuBar.add(menuMain);
@@ -83,7 +83,7 @@ public class AppCeemRadarFrame extends JFrame {
     }
 
     private void fillMenuUtils(final JMenu menuParent) {
-        JMenuItem menuDownloadCache = new JMenuItem(ResourceString.get("string_Menu_download_cache"));
+        JMenuItem menuDownloadCache = new JMenuItem(ResourceString.get("menu_tools_downloadCache"));
         menuDownloadCache.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,7 +93,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame( new CacheDownload(wwjPanel.getWwd()) , ResourceString.get("gui_frame_title_tool_cache"));
+                    ceemRadarTool = new ToolFrame( new CacheDownload(wwjPanel.getWwd()) , ResourceString.get("frame_title_tool_cache"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
                 }
@@ -112,7 +112,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(new ImportGeoName() , ResourceString.get("gui_frame_title_tool_geoName"));
+                    ceemRadarTool = new ToolFrame(new ImportGeoName() , ResourceString.get("frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -130,7 +130,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(new ViewGeoNameTool() , ResourceString.get("gui_frame_title_tool_geoNameView"));
+                    ceemRadarTool = new ToolFrame(new ViewGeoNameTool() , ResourceString.get("frame_title_tool_geoNameView"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }

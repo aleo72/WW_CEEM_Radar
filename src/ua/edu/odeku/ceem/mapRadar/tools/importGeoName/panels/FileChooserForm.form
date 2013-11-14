@@ -13,7 +13,7 @@
       <xy x="19" y="12" width="606" height="57"/>
     </constraints>
     <properties/>
-    <border type="none" title-resource-bundle="strings" title-key="gui_title_border_import_geoName"/>
+    <border type="none" title-resource-bundle="strings" title-key="title_border_import-geoName"/>
     <children>
       <component id="15ced" class="javax.swing.JLabel" binding="label">
         <constraints>
@@ -57,7 +57,7 @@
           <component id="a2ad4" class="javax.swing.JButton" binding="helpButton">
             <constraints/>
             <properties>
-              <text resource-bundle="strings" key="gui_helpButton"/>
+              <text resource-bundle="strings" key="button_help-?"/>
             </properties>
           </component>
         </children>

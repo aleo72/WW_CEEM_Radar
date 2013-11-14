@@ -110,10 +110,10 @@ public class ImportGeoName implements CeemRadarTool {
         CellConstraints cc = new CellConstraints();
         panel.add(panel1, cc.xy(2, 5));
         importButton = new JButton();
-        this.$$$loadButtonText$$$(importButton, ResourceBundle.getBundle("strings").getString("string_button_for_import_geoName"));
+        this.$$$loadButtonText$$$(importButton, ResourceBundle.getBundle("strings").getString("button_geoName_import"));
         panel1.add(importButton);
         cancelButton = new JButton();
-        this.$$$loadButtonText$$$(cancelButton, ResourceBundle.getBundle("strings").getString("gui_button_cancel"));
+        this.$$$loadButtonText$$$(cancelButton, ResourceBundle.getBundle("strings").getString("button_cancel"));
         panel1.add(cancelButton);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout(0, 0));
