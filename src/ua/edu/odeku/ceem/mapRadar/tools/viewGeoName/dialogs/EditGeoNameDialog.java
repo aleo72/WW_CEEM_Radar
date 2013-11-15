@@ -86,10 +86,11 @@ public class EditGeoNameDialog extends JDialog {
                     EntityManager entityManager = DB.getEntityManager();
                     entityManager.getTransaction().begin();
 
-                    Session session = DB.getSession();
-                    session.delete(geoName);
+                    GeoName geoNameMerge = entityManager.merge(geoName);
+                    entityManager.remove(geoNameMerge);
 
                     entityManager.getTransaction().commit();
+
                     entityManager.close();
 
                     onCancel();
