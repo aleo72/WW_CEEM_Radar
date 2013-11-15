@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="NASA">
+  <settings default="Odessa State environmental University">
     <module2copyright>
-      <element module="Project Files" copyright="NASA" />
+      <element module="Project Files" copyright="Odessa State environmental University" />
     </module2copyright>
   </settings>
 </component>

@@ -5,8 +5,11 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.Tile;
+import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * User: Aleo skype: aleo72
@@ -19,6 +22,7 @@ public class GeoNames {
     private static final int MAX_ABSENT_TILE_TRIES = 2;
     private static final int MIN_ABSENT_TILE_CHECK_INTERVAL = 10000;
 
+    public final String geoNameCountry;
     public final String geoNameClass;
     public final String geoNameCode;
 
@@ -36,7 +40,8 @@ public class GeoNames {
     private int numColumns;
 
 
-    public GeoNames(String geoNameClass, String geoNameCode, LatLon tileDelta, Font font) {
+    public GeoNames(String geoNameCountry, String geoNameClass, String geoNameCode, LatLon tileDelta, Font font) {
+        this.geoNameCountry = geoNameCountry;
         this.tileDelta = tileDelta;
         this.geoNameClass = geoNameClass;
         this.geoNameCode = geoNameCode;
@@ -92,7 +97,7 @@ public class GeoNames {
     }
 
     public final GeoNames copy(){
-        GeoNames copy = new GeoNames(this.geoNameClass, this.geoNameCode, this.tileDelta, this.font);
+        GeoNames copy = new GeoNames(this.geoNameCountry, this.geoNameClass, this.geoNameCode, this.tileDelta, this.font);
         return copy;
     }
 
@@ -174,5 +179,9 @@ public class GeoNames {
 
     public void setMaskingSector(Sector maskingSector) {
         this.maskingSector = maskingSector;
+    }
+
+    public List<GeoName> getGeoNamesFromDB() {
+        // TODO return
     }
 }
