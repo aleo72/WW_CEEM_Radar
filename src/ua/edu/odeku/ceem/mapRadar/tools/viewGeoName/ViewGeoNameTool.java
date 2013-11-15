@@ -82,6 +82,7 @@ public class ViewGeoNameTool implements CeemRadarTool {
                     editGeoNameDialog.setVisible(true);
 
                     parent.setAlwaysOnTop(isParentTop);
+                    refreshTable();
                 }
             }
         });
