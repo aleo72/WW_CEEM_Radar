@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
+import ua.edu.odeku.ceem.mapRadar.utils.models.GeoNameUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -44,43 +45,14 @@ public class GeoNameTableModel extends AbstractTableModel {
     }
 
     public GeoNameTableModel(String subName, String country, String featureClass, String featureCode){
-        Session session = DB.getSession();
-
-        String select = "SELECT {G.*} FROM GEO_NAME G WHERE 1 = 1 ";
-
-        if(country != null && !country.isEmpty()){
-            select += " AND G.COUNTRY_CODE = :country ";
-        }
-        if(featureClass != null && !featureClass.isEmpty()){
-            select += " AND G.FEATURE_CLASS = :featureClass ";
-            if(featureCode != null && !featureCode.isEmpty()){
-                select += " AND G.FEATURE_CODE = :featureCode ";
-            }
-        }
-        select += ";";
-
-        SQLQuery query = session.createSQLQuery(select);
-        query.addEntity("G", GeoName.class);
-
-        if(country != null && !country.isEmpty()){
-            query.setParameter("country", country);
-        }
-        if(featureClass != null && !featureClass.isEmpty()){
-            select += " AND G.FEATURE_CLASS = :featureClass ";
-            query.setParameter("featureClass", featureClass);
-            if(featureCode != null && !featureCode.isEmpty()){
-                select += " AND G.FEATURE_CODE = :featureCode ";
-                query.setParameter("featureCode", featureCode);
-            }
-        }
-
         if(subName == null || subName.isEmpty()){
-            list = handlerScrollableResults(query);
+            list = GeoNameUtils.getList(country, featureClass, featureCode);
         } else {
+            Session session = DB.getSession();
+            SQLQuery query = GeoNameUtils.getSQLQuery(session, country, featureClass, featureCode);
             list = handlerScrollableResults(query, subName);
+            DB.closeSession(session);
         }
-
-        DB.closeSession(session);
     }
 
     private List<GeoName> handlerScrollableResults(SQLQuery query, String prefixName) {
@@ -129,16 +101,6 @@ public class GeoNameTableModel extends AbstractTableModel {
         list.addAll(listTranslate);
         list.addAll(listAlternative);
 
-        return list;
-    }
-
-    private List<GeoName> handlerScrollableResults(SQLQuery sqlQuery){
-        List<GeoName> list = new ArrayList<GeoName>(50000);
-        ScrollableResults results = sqlQuery.scroll(ScrollMode.FORWARD_ONLY);
-        results.beforeFirst();
-        while(results.next()){
-            list.add((GeoName) results.get(0));
-        }
         return list;
     }
 

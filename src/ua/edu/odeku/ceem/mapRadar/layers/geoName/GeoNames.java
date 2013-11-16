@@ -6,6 +6,7 @@ import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.Tile;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
+import ua.edu.odeku.ceem.mapRadar.utils.models.GeoNameUtils;
 
 import java.awt.*;
 import java.util.*;
@@ -182,6 +183,6 @@ public class GeoNames {
     }
 
     public List<GeoName> getGeoNamesFromDB() {
-        // TODO return
+        return GeoNameUtils.getList(geoNameCountry, geoNameClass, geoNameCode);
     }
 }
