@@ -21,7 +21,7 @@ import java.util.logging.Level;
  * Date: 12.11.13
  * Time: 22:00
  */
-public class GeoNameLayer extends AbstractLayer {
+public abstract class GeoNameLayer extends AbstractLayer {
 
     public static final double LEVEL_A = 0x1 << 25; // 33,554 km
     public static final double LEVEL_B = 0x1 << 24; // 16,777 km

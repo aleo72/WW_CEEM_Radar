@@ -41,11 +41,12 @@ public class GeoNames {
     private int numColumns;
 
 
-    public GeoNames(String geoNameCountry, String geoNameClass, String geoNameCode, LatLon tileDelta, Font font) {
+    public GeoNames(String geoNameCountry, String geoNameClass, String geoNameCode, Sector sector, LatLon tileDelta, Font font) {
         this.geoNameCountry = geoNameCountry;
         this.tileDelta = tileDelta;
         this.geoNameClass = geoNameClass;
         this.geoNameCode = geoNameCode;
+        this.maskingSector = sector;
         this.font = font;
 
         this.enabled = true;
@@ -98,7 +99,7 @@ public class GeoNames {
     }
 
     public final GeoNames copy(){
-        GeoNames copy = new GeoNames(this.geoNameCountry, this.geoNameClass, this.geoNameCode, this.tileDelta, this.font);
+        GeoNames copy = new GeoNames(this.geoNameCountry, this.geoNameClass, this.geoNameCode, this.maskingSector, this.tileDelta, this.font);
         return copy;
     }
 

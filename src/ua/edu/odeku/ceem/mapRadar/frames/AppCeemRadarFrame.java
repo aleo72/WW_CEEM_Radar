@@ -15,6 +15,9 @@ import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.LayerPanel;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
+import ua.edu.odeku.ceem.mapRadar.layers.CeemRadarLayers;
+import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.a.PoliticalEntityGeoNameLayer;
+import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.p.PPLAGeoNameLayer;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
@@ -52,17 +55,17 @@ public class AppCeemRadarFrame extends JFrame {
     protected JMenuBar menuBar;
     protected final Map<String,JFrame> toolsComponents = new HashMap<String, JFrame>();
 
+    public AppCeemRadarFrame(boolean includeStatusBar, boolean includeLayerPanel, boolean includeStatsPanel) {
+        this.initialize(includeStatusBar, includeLayerPanel, includeStatsPanel);
+    }
+
     public AppCeemRadarFrame() {
-        this.initialize(true, true, false);
+        this(true, true, false);
     }
 
     public AppCeemRadarFrame(Dimension size) {
+        this();
         this.canvasSize = size;
-        this.initialize(true, true, false);
-    }
-
-    public AppCeemRadarFrame(boolean includeStatusBar, boolean includeLayerPanel, boolean includeStatsPanel) {
-        this.initialize(includeStatusBar, includeLayerPanel, includeStatsPanel);
     }
 
     protected JMenuBar createMenuBar() {
@@ -196,6 +199,9 @@ public class AppCeemRadarFrame extends JFrame {
                 }
             }
         });
+
+        // Подключаем наши слои
+        CeemRadarLayers.insertCeemRadarLayers(wwjPanel.getWwd());
 
         // Search the layer list for layers that are also select listeners and register them with the World
         // Window. This enables interactive layers to be included without specific knowledge of them here.
