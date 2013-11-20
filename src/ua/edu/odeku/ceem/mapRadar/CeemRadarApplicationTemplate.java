@@ -3,9 +3,15 @@ package ua.edu.odeku.ceem.mapRadar;
 import gov.nasa.worldwind.Configuration;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
 import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame;
+import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Базовый класс для программы CeemRadar
@@ -14,6 +20,8 @@ import javax.swing.*;
  * Time: 14:58
  */
 public class CeemRadarApplicationTemplate {
+
+    static final JWindow window = new JWindow();
 
     static {
         System.setProperty("java.net.useSystemProxies", "true");
@@ -44,8 +52,9 @@ public class CeemRadarApplicationTemplate {
         }
 
         try {
-            // Init db
-//            new InitDBThread().start();
+
+            showStartImageWindow();
+
             DB.getEntityManager();
 
             final AppCeemRadarFrame frame = (AppCeemRadarFrame) appFrameClass.newInstance();
@@ -57,6 +66,8 @@ public class CeemRadarApplicationTemplate {
                 }
             });
 
+            showStopStartImageWindow();
+
             return frame;
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,5 +77,30 @@ public class CeemRadarApplicationTemplate {
 
     public static void main(String[] args) {
         start(PropertyProgram.getNameProgram(), AppCeemRadarFrame.class);
+    }
+
+    private static void showStartImageWindow(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                BufferedImage image = null;
+                try {
+                    image = ImageIO.read(new File("resources/ww_start.png"));
+                    ImagePanel panel = new ImagePanel(image);
+                    window.add(panel);
+                    window.setSize(image.getWidth(), image.getHeight());
+                    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+                    window.setLocation(dimension.width / 2 - window.getWidth() / 2, dimension.height / 2 - window.getHeight() / 2);
+                    window.setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        });
+    }
+
+    private static void showStopStartImageWindow(){
+        if(window.isVisible()){
+            window.dispose();
+        }
     }
 }
