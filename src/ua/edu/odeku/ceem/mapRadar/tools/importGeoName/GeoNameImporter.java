@@ -45,39 +45,44 @@ public class GeoNameImporter extends Thread {
 
     @Override
     public void run() {
-        if (!stop && file != null) {
-            progressBar.setValue(0);
-            lines = readFile();
-            Session session = DB.getSession();
+        try{
+            if (!stop && file != null) {
+                progressBar.setValue(0);
+                lines = readFile();
+                Session session = DB.getSession();
 
-            try {
-                if (lines != null && lines.length > 0) {
-                    progressBar.setMaximum(lines.length);
-                    for (String line : lines) {
-                        if(stop)
-                            break;
-                        progressBar.setValue(progressBar.getValue() + 1);
-                        GeoName geoName = GeoName.createGeoName(line);
-                        try {
-                            session.save(geoName);
+                try {
+                    if (lines != null && lines.length > 0) {
+                        progressBar.setMaximum(lines.length);
+                        for (String line : lines) {
+                            if(stop)
+                                break;
+                            progressBar.setValue(progressBar.getValue() + 1);
+                            GeoName geoName = GeoName.createGeoName(line);
+                            try {
+                                session.save(geoName);
+                            }
+                            catch (Exception e){
+                                System.err.println(e.getMessage());
+                            }
                         }
-                        catch (Exception e){
-                            System.err.println(e.getMessage());
-                        }
+
                     }
-
+                } catch (GeoNameException e) {
+                    e.printStackTrace();
+                    UserMessage.error(null, e.getMessage());
+                } finally {
+                    DB.closeSession(session);
                 }
-            } catch (GeoNameException e) {
-                e.printStackTrace();
-                UserMessage.error(null, e.getMessage());
-            } finally {
-                DB.closeSession(session);
-            }
 
-        }
-        clear();
-        if(handler != null){
-            handler.start();
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        } finally {
+            clear();
+            if(handler != null){
+                handler.start();
+            }
         }
     }
 
