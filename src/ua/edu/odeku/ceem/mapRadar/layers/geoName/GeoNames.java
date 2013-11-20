@@ -3,13 +3,14 @@ package ua.edu.odeku.ceem.mapRadar.layers.geoName;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.util.AbsentResourceList;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.Tile;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 import ua.edu.odeku.ceem.mapRadar.utils.models.GeoNameUtils;
 
 import java.awt.*;
-import java.util.*;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -19,9 +20,10 @@ import java.util.List;
  */
 public class GeoNames {
 
-    protected static final Sector TILING_SECTOR = Sector.FULL_SPHERE;
+    public static final Sector TILING_SECTOR = Sector.FULL_SPHERE;
     private static final int MAX_ABSENT_TILE_TRIES = 2;
     private static final int MIN_ABSENT_TILE_CHECK_INTERVAL = 10000;
+    private static final String FORMAT_SUFFIX = ".xml.gz";
 
     public final String geoNameCountry;
     public final String geoNameClass;
@@ -40,6 +42,12 @@ public class GeoNames {
 
     private int numColumns;
 
+    private final AbsentResourceList absentTiles = new AbsentResourceList(MAX_ABSENT_TILE_TRIES,
+            MIN_ABSENT_TILE_CHECK_INTERVAL);
+
+    private String fileCachePath;
+    private String typeGeoNames;
+
 
     public GeoNames(String geoNameCountry, String geoNameClass, String geoNameCode, Sector sector, LatLon tileDelta, Font font) {
         this.geoNameCountry = geoNameCountry;
@@ -48,7 +56,6 @@ public class GeoNames {
         this.geoNameCode = geoNameCode;
         this.maskingSector = sector;
         this.font = font;
-
         this.enabled = true;
         this.color = Color.WHITE;
         this.minDisplayDistance = Double.MIN_VALUE;
@@ -62,6 +69,7 @@ public class GeoNames {
         }
 
         this.numColumns = this.numColumnsInLevel();
+        this.typeGeoNames = this.geoNameCountry + '_' + this.geoNameClass + '_' + this.geoNameCode;
     }
 
     private int numColumnsInLevel() {
@@ -185,5 +193,44 @@ public class GeoNames {
 
     public List<GeoName> getGeoNamesFromDB() {
         return GeoNameUtils.getList(geoNameCountry, geoNameClass, geoNameCode);
+    }
+
+    public synchronized final void markResourceAbsent(long tileNumber)
+    {
+        this.absentTiles.markResourceAbsent(tileNumber);
+    }
+
+    public synchronized final boolean isResourceAbsent(long resourceNumber)
+    {
+        return this.absentTiles.isResourceAbsent(resourceNumber);
+    }
+
+    public synchronized final void unmarkResourceAbsent(long tileNumber)
+    {
+        this.absentTiles.unmarkResourceAbsent(tileNumber);
+    }
+
+    public String createFileCachePathFromTile(int row, int column) {
+
+        if(row < 0 || column < 0){
+            String message = Logging.getMessage("GeoNames.RowOrColumnOutOfRange", row, column);
+            Logging.logger().severe(message);
+            throw new IllegalArgumentException(message);
+        }
+        StringBuilder sb = new StringBuilder(this.fileCachePath);
+        sb.append(File.separator).append(this.typeGeoNames);
+        sb.append(File.separator).append(row);
+        sb.append(File.separator).append(row).append('_').append(column);
+
+        String path = sb.toString();
+        return path.replaceAll("[:*?<>|]", "");
+    }
+
+    public long getTileNumber(int row, int column) {
+        return row * this.numColumns + column;
+    }
+
+    public String getTypeGeoNames(){
+        return typeGeoNames;
     }
 }

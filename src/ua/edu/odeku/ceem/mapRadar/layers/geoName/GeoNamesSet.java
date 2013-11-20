@@ -15,6 +15,7 @@ import java.util.List;
 public class GeoNamesSet extends WWObjectImpl {
 
     private final List<GeoNames> geoNamesList = new ArrayList<GeoNames>(20);
+    private long expiryTime = 0;
 
     public void addGeoNames(GeoNames geoNames, boolean replace){
 
@@ -47,6 +48,8 @@ public class GeoNamesSet extends WWObjectImpl {
             copy.geoNamesList.add(i, this.geoNamesList.get(i).copy());
         }
 
+        copy.expiryTime = expiryTime;
+
         return copy;
     }
 
@@ -70,5 +73,13 @@ public class GeoNamesSet extends WWObjectImpl {
             }
         }
         return null;
+    }
+
+    public long getExpiryTime() {
+        return expiryTime;
+    }
+
+    public void setExpiryTime(long expiryTime) {
+        this.expiryTime = expiryTime;
     }
 }

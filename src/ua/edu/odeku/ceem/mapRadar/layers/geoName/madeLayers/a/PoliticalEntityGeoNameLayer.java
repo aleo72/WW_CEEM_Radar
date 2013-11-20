@@ -25,10 +25,11 @@ public class PoliticalEntityGeoNameLayer extends GeoNameLayer {
 
     private static GeoNamesSet createGeoNamesSet() {
         GeoNamesSet geoNamesSet = new GeoNamesSet();
+        Font font = Font.decode("Arial-BOLDITALIC-12");
 
-        Font font = Font.decode("Arial-BOLD-10");
 
-        GeoNames geoNames = new GeoNames(null, "A", "PCLI", Sector.FULL_SPHERE, GRID_4x8, font);
+        String geoClass = "A", geoCode = "PCLI";
+        GeoNames geoNames = new GeoNames(null, geoClass, geoCode, Sector.FULL_SPHERE, GRID_4x8, font);
         geoNames.setMinDisplayDistance(LEVEL_G);
         geoNames.setMaxDisplayDistance(LEVEL_D);
         geoNamesSet.addGeoNames(geoNames, true);

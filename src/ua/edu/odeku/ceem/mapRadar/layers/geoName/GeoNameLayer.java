@@ -1,17 +1,25 @@
 package ua.edu.odeku.ceem.mapRadar.layers.geoName;
 
+import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.cache.BasicMemoryCache;
+import gov.nasa.worldwind.cache.Cacheable;
+import gov.nasa.worldwind.cache.MemoryCache;
 import gov.nasa.worldwind.geom.*;
 import gov.nasa.worldwind.layers.AbstractLayer;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.GeographicText;
 import gov.nasa.worldwind.render.UserFacingText;
 import gov.nasa.worldwind.util.Logging;
+import gov.nasa.worldwind.util.WWIO;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.logging.Level;
@@ -22,6 +30,8 @@ import java.util.logging.Level;
  * Time: 22:00
  */
 public abstract class GeoNameLayer extends AbstractLayer {
+
+    protected static String prefix = "Earth/GeoNamePlaceNames/";
 
     public static final double LEVEL_A = 0x1 << 25; // 33,554 km
     public static final double LEVEL_B = 0x1 << 24; // 16,777 km
@@ -54,6 +64,9 @@ public abstract class GeoNameLayer extends AbstractLayer {
     protected Vec4 referencePoint;
     protected List<NavigationTile> navTiles = new ArrayList<NavigationTile>();
     protected PriorityBlockingQueue<Runnable> requestQ = new PriorityBlockingQueue<Runnable>(64);
+    protected final Object fileLock = new Object();
+
+    protected static HashMap<String, GeoNamesChunk> geoNamesChunkHashMap = new HashMap<String, GeoNamesChunk>(20);
 
     public GeoNameLayer(GeoNamesSet geoNamesSet){
 
@@ -70,6 +83,12 @@ public abstract class GeoNameLayer extends AbstractLayer {
 
             int numLevels = (int) Math.log(calc);
             navTiles.add( new NavigationTile(geoNames, GeoNames.TILING_SECTOR, numLevels, "top"));
+        }
+        if (!WorldWind.getMemoryCacheSet().containsCache(Tile.class.getName())){
+            long size = Configuration.getLongValue(AVKey.PLACENAME_LAYER_CACHE_SIZE, 2000000L);
+            MemoryCache cache = new BasicMemoryCache((long) (0.85 * size), size);
+            cache.setName("GeoName Tiles");
+            WorldWind.getMemoryCacheSet().addCache(Tile.class.getName(), cache);
         }
     }
 
@@ -113,9 +132,18 @@ public abstract class GeoNameLayer extends AbstractLayer {
     protected void drawOrRequestTile(DrawContext dc, Tile tile, double minDistSquared, double maxDistSquared) {
         if(!isTileVisible(dc, tile, minDistSquared, maxDistSquared))
             return;
+        GeoNamesChunk chunk = null;
+        if(geoNamesChunkHashMap.containsKey(tile.geoNames.getTypeGeoNames())){
+            chunk = geoNamesChunkHashMap.get(tile.geoNames.getTypeGeoNames());
+        } else {
+            chunk = new GeoNamesChunk(tile.geoNames);
+            geoNamesChunkHashMap.put(tile.geoNames.getTypeGeoNames(), chunk);
+        }
 
-        Iterable<GeographicText> renderIter = tile.makeIterable(dc);
-        dc.getDeclutteringTextRenderer().render(dc, renderIter);
+        if(chunk != null){
+            Iterable<GeographicText> renderIter = chunk.makeIterable(dc);
+            dc.getDeclutteringTextRenderer().render(dc, renderIter);
+        }
     }
 
     protected static boolean isTileVisible(DrawContext drawContext, Tile tile, double minDistSquared, double maxDistSquared) {
@@ -240,6 +268,11 @@ public abstract class GeoNameLayer extends AbstractLayer {
         return dist >= geoNames.getMinDisplayDistance() && dist <= geoNames.getMaxDisplayDistance();
     }
 
+    protected GeoNamesChunk readTileData(Tile tile) {
+        GeoNamesChunk geoNamesChunk = new GeoNamesChunk(tile.geoNames);
+        return geoNamesChunk;
+    }
+
     protected class NavigationTile {
         String id;
         protected GeoNames geoNames;
@@ -344,11 +377,14 @@ public abstract class GeoNameLayer extends AbstractLayer {
 
     }
 
-    protected static class Tile {
+    protected static class Tile implements Cacheable {
         protected final GeoNames geoNames;
         protected final Sector sector;
         protected final int row;
         protected final int column;
+        private String fileCachePath;
+        private GeoNamesChunk dataChunk = null;
+        private double priority;
 
         Tile(GeoNames geoNames, Sector sector, int row, int column){
             this.geoNames = geoNames;
@@ -421,6 +457,45 @@ public abstract class GeoNameLayer extends AbstractLayer {
                 throw new IllegalArgumentException(msg);
             }
             return Angle.fromDegrees(-180 + delta.getDegrees() * column);
+        }
+
+        public boolean isTileInMemoryWithData() {
+            Tile t = (Tile) WorldWind.getMemoryCache(Tile.class.getName()).getObject(this.getFileCachePath());
+            return !(t == null || t.getDataChunk() == null);
+        }
+
+        protected GeoNamesChunk getDataChunk() {
+            return dataChunk;
+        }
+
+        protected void setDataChunk(GeoNamesChunk chunk) {
+            dataChunk = chunk;
+        }
+
+        protected String getFileCachePath() {
+            if(this.fileCachePath == null){
+                this.fileCachePath = this.geoNames.createFileCachePathFromTile(this.row, this.column);
+            }
+            return fileCachePath;
+        }
+
+        public double getPriority() {
+            return priority;
+        }
+
+        public void setPriority(double priority) {
+            this.priority = priority;
+        }
+
+        @Override
+        public long getSizeInBytes() {
+            long result = 32; //references
+
+            result += this.getSector().getSizeInBytes();
+            if (this.getFileCachePath() != null)
+                result += this.getFileCachePath().length();
+
+            return result;
         }
     }
 }

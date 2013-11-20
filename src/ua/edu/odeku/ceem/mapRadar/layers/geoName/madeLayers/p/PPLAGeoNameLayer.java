@@ -26,13 +26,16 @@ public class PPLAGeoNameLayer extends GeoNameLayer {
     private static GeoNamesSet createGeoNamesSet() {
         GeoNamesSet geoNamesSet = new GeoNamesSet();
 
-        Font font = Font.decode("Arial-BOLD-9");
+        Font font = Font.decode("Arial-11");
 
-        GeoNames geoNames = new GeoNames(null, "P", "PPLA", Sector.FULL_SPHERE, GRID_36x72, font);
+        String geoClass = "P", geoCode = "PPLA";
+        GeoNames geoNames = new GeoNames(null, geoClass, geoCode, Sector.FULL_SPHERE, GRID_36x72, font);
         geoNames.setMinDisplayDistance(0d);
         geoNames.setMaxDisplayDistance(LEVEL_E);
-        geoNames.setColor(Color.RED);
+        geoNames.setColor(Color.lightGray);
         geoNamesSet.addGeoNames(geoNames, true);
+
+
         return geoNamesSet;
     }
 }
