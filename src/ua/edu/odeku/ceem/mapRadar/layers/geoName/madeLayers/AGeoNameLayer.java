@@ -3,7 +3,7 @@
  * Copyright (C) 2013
  */
 
-package ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.p;
+package ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers;
 
 import gov.nasa.worldwind.geom.Sector;
 import ua.edu.odeku.ceem.mapRadar.layers.geoName.GeoNameLayer;
@@ -15,27 +15,24 @@ import java.awt.*;
 /**
  * User: Aleo skype: aleo72
  * Date: 17.11.13
- * Time: 22:58
+ * Time: 22:18
  */
-public class PPLAGeoNameLayer extends GeoNameLayer {
+public class AGeoNameLayer extends GeoNameLayer {
 
-    public PPLAGeoNameLayer() {
+    public AGeoNameLayer() {
         super(createGeoNamesSet());
     }
 
     private static GeoNamesSet createGeoNamesSet() {
         GeoNamesSet geoNamesSet = new GeoNamesSet();
+        Font font = Font.decode("Arial-BOLDITALIC-12");
 
-        Font font = Font.decode("Arial-11");
 
-        String geoClass = "P", geoCode = "PPLA";
-        GeoNames geoNames = new GeoNames(null, geoClass, geoCode, Sector.FULL_SPHERE, GRID_36x72, font);
-        geoNames.setMinDisplayDistance(0d);
-        geoNames.setMaxDisplayDistance(LEVEL_E);
-        geoNames.setColor(Color.lightGray);
+        String geoClass = "A", geoCode = "PCLI";
+        GeoNames geoNames = new GeoNames(null, geoClass, geoCode, Sector.FULL_SPHERE, GRID_4x8, font);
+        geoNames.setMinDisplayDistance(LEVEL_G);
+        geoNames.setMaxDisplayDistance(LEVEL_C);
         geoNamesSet.addGeoNames(geoNames, true);
-
-
         return geoNamesSet;
     }
 }

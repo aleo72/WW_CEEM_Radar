@@ -6,8 +6,8 @@
 package ua.edu.odeku.ceem.mapRadar.layers;
 
 import gov.nasa.worldwind.WorldWindow;
-import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.a.PoliticalEntityGeoNameLayer;
-import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.p.PPLAGeoNameLayer;
+import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.AGeoNameLayer;
+import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.PGeoNameLayer;
 
 /**
  * User: Aleo skype: aleo72
@@ -17,7 +17,7 @@ import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.p.PPLAGeoNameLayer;
 public abstract class CeemRadarLayers {
 
     public static void insertCeemRadarLayers(WorldWindow worldWindow) {
-        worldWindow.getModel().getLayers().add(new PoliticalEntityGeoNameLayer());
-        worldWindow.getModel().getLayers().add(new PPLAGeoNameLayer());
+        worldWindow.getModel().getLayers().add(new AGeoNameLayer());
+        worldWindow.getModel().getLayers().add(new PGeoNameLayer());
     }
 }

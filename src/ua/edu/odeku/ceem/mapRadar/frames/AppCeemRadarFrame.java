@@ -16,8 +16,6 @@ import gov.nasa.worldwindx.examples.LayerPanel;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 import ua.edu.odeku.ceem.mapRadar.layers.CeemRadarLayers;
-import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.a.PoliticalEntityGeoNameLayer;
-import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.p.PPLAGeoNameLayer;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
