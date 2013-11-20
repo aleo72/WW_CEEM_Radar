@@ -48,8 +48,7 @@ public class GeoNameImporter extends Thread {
         if (!stop && file != null) {
             progressBar.setValue(0);
             lines = readFile();
-            EntityManager manager = DB.getEntityManager();
-            manager.getTransaction().begin();
+            Session session = DB.getSession();
 
             try {
                 if (lines != null && lines.length > 0) {
@@ -60,12 +59,11 @@ public class GeoNameImporter extends Thread {
                         progressBar.setValue(progressBar.getValue() + 1);
                         GeoName geoName = GeoName.createGeoName(line);
                         try {
-                            manager.persist(geoName);
+                            session.save(geoName);
                         }
                         catch (Exception e){
                             System.err.println(e.getMessage());
                         }
-
                     }
 
                 }
@@ -73,8 +71,7 @@ public class GeoNameImporter extends Thread {
                 e.printStackTrace();
                 UserMessage.error(null, e.getMessage());
             } finally {
-                manager.getTransaction().commit();
-                manager.close();
+                DB.closeSession(session);
             }
 
         }
