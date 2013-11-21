@@ -8,12 +8,16 @@ package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
+import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs.EditGeoNameDialog;
@@ -44,6 +48,7 @@ public class ViewGeoNameTool implements CeemRadarTool {
     private JComboBox countryComboBox;
     private JComboBox featureClassComboBox;
     private JComboBox featureCodeComboBox;
+    private JButton editButton;
 
     private EditGeoNameDialog editGeoNameDialog;
 
@@ -71,19 +76,28 @@ public class ViewGeoNameTool implements CeemRadarTool {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    JTable table = (JTable) e.getSource();
-                    editGeoNameDialog = new EditGeoNameDialog(((GeoNameTableModel) table.getModel()).getListGeoName().get(table.getSelectedRow()));
-                    editGeoNameDialog.setAlwaysOnTop(true);
-
-                    boolean isParentTop = parent.isAlwaysOnTop();
-                    parent.setAlwaysOnTop(false);
-                    editGeoNameDialog.setLocationByPlatform(true);
-
-                    editGeoNameDialog.setVisible(true);
-
-                    parent.setAlwaysOnTop(isParentTop);
-                    refreshTable();
+                    GeoName geoName = ((GeoNameTableModel) table.getModel()).getListGeoName().get(table.getSelectedRow());
+                    LatLon latLon = LatLon.fromDegrees(geoName.getLat(), geoName.getLon());
+                    WorldWindow worldWindow = AppCeemRadarFrame.getAppCeemRadarFrame().getWwd();
+                    double elevation = 0x1 << 15;
+                    worldWindow.getView().goTo(new Position(latLon, elevation), elevation);
                 }
+            }
+        });
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editGeoNameDialog = new EditGeoNameDialog(((GeoNameTableModel) table.getModel()).getListGeoName().get(table.getSelectedRow()));
+                editGeoNameDialog.setAlwaysOnTop(true);
+
+                boolean isParentTop = parent.isAlwaysOnTop();
+                parent.setAlwaysOnTop(false);
+                editGeoNameDialog.setLocationByPlatform(true);
+
+                editGeoNameDialog.setVisible(true);
+
+                parent.setAlwaysOnTop(isParentTop);
+                refreshTable();
             }
         });
     }
@@ -261,14 +275,17 @@ public class ViewGeoNameTool implements CeemRadarTool {
         CellConstraints cc = new CellConstraints();
         panel1.add(panel2, cc.xy(3, 3));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:noGrow"));
+        panel3.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:noGrow"));
         panel2.add(panel3, cc.xy(1, 1));
         final JLabel label1 = new JLabel();
         this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("strings").getString("label_find-for-Name"));
-        panel3.add(label1, cc.xy(1, 1));
+        panel3.add(label1, cc.xy(3, 1));
         textField = new JTextField();
         textField.setColumns(10);
-        panel3.add(textField, cc.xy(3, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel3.add(textField, cc.xy(5, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
+        editButton = new JButton();
+        this.$$$loadButtonText$$$(editButton, ResourceBundle.getBundle("strings").getString("button_edit"));
+        panel3.add(editButton, cc.xy(1, 1));
         refreshButton = new JButton();
         this.$$$loadButtonText$$$(refreshButton, ResourceBundle.getBundle("strings").getString("button_refresh"));
         panel2.add(refreshButton, cc.xy(9, 1, CellConstraints.RIGHT, CellConstraints.DEFAULT));

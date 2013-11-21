@@ -43,6 +43,8 @@ import static ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils.insertBeforeComp
  * Time: 15:46
  */
 public class AppCeemRadarFrame extends JFrame {
+
+    private static AppCeemRadarFrame appCeemRadarFrame = null;
     private Dimension canvasSize = new Dimension(800, 600);
 
     ResourceBundle resource = ResourceBundle.getBundle("strings", PropertyProgram.getCurrentLocale());
@@ -55,6 +57,7 @@ public class AppCeemRadarFrame extends JFrame {
 
     public AppCeemRadarFrame(boolean includeStatusBar, boolean includeLayerPanel, boolean includeStatsPanel) {
         this.initialize(includeStatusBar, includeLayerPanel, includeStatsPanel);
+        appCeemRadarFrame = this;
     }
 
     public AppCeemRadarFrame() {
@@ -64,6 +67,10 @@ public class AppCeemRadarFrame extends JFrame {
     public AppCeemRadarFrame(Dimension size) {
         this();
         this.canvasSize = size;
+    }
+
+    public static AppCeemRadarFrame getAppCeemRadarFrame() {
+        return appCeemRadarFrame;
     }
 
     protected JMenuBar createMenuBar() {
