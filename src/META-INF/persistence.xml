@@ -11,6 +11,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
         <class>ua.edu.odeku.ceem.mapRadar.db.models.GeoName</class>
+        <class>ua.edu.odeku.ceem.mapRadar.db.models.Settings</class>
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:h2:~/.odeku/mapRadar;MVCC=true;DB_CLOSE_ON_EXIT=FALSE"/>
@@ -30,6 +31,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
         <class>ua.edu.odeku.ceem.mapRadar.db.models.GeoName</class>
+        <class>ua.edu.odeku.ceem.mapRadar.db.models.Settings</class>
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:h2:~/.odeku/mapRadar;AUTO_SERVER=TRUE;MVCC=true;DB_CLOSE_ON_EXIT=FALSE"/>
