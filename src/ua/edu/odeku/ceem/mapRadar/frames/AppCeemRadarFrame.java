@@ -168,8 +168,11 @@ public class AppCeemRadarFrame extends JFrame {
                 }
             });
             menu.add(menuItem);
-            System.out.println(layer.getName());
         }
+
+
+        // Подключаем наши слои
+        CeemRadarLayers.insertGeoNameLayers(wwjPanel.getWwd(), menu);
 
     }
 
@@ -204,9 +207,6 @@ public class AppCeemRadarFrame extends JFrame {
                 }
             }
         });
-
-        // Подключаем наши слои
-        CeemRadarLayers.insertCeemRadarLayers(wwjPanel.getWwd());
 
         // Search the layer list for layers that are also select listeners and register them with the World
         // Window. This enables interactive layers to be included without specific knowledge of them here.
