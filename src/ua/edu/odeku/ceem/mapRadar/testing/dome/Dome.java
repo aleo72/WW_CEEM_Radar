@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
+import java.util.Random;
 
 /**
  * User: Aleo Bakalov
@@ -47,8 +48,10 @@ public class Dome extends AbstractShape {
     protected Angle elevationAngle;
     protected double gainOffset = 0;
     protected double gainScale = 1;
-    protected int nThetaPoints = 61;
-    protected int nPhiPoints = 121;
+    protected int nThetaPoints = 60 / 2  + 1;
+    protected int nPhiPoints = 120  / 2 + 1;
+
+    protected int centerIndex = 0;
 
     public Dome(){
         this.nThetaIntervals = this.nThetaPoints - 1;
@@ -91,13 +94,14 @@ public class Dome extends AbstractShape {
         Vec4 vecA, vecB, vecC, vecD, vecX1, vecX2;
 
         shapeData.normals = Buffers.newDirectFloatBuffer(shapeData.vertices.limit());
+
         for(int j = 0; j <= this.nThetaIntervals; j++){
 
             for (int i = 0; i <= this.nPhiIntervals; i++){
 
                 Vec4 vec0 = this.getVec(shapeData, i, j);
 
-                if (i == 0 && j == 0) {
+                 if (i == 0 && j == 0) {
 
                     vecA = this.getVec(shapeData, i, j + 1).subtract3(vec0);
                     vecB = this.getVec(shapeData, i + 1, j).subtract3(vec0);
@@ -195,14 +199,23 @@ public class Dome extends AbstractShape {
 
         shapeData.indices = new IntBuffer[this.nThetaIntervals];
 
+        // nThetaIntervals = вертикаль
+        // nPhiIntervals = широта
+        System.out.println("_______________________________");
         for (int j = 0; j < this.nThetaIntervals; j++){
-            shapeData.indices[j] = Buffers.newDirectIntBuffer(2 * this.nPhiIntervals + 2);
+            shapeData.indices[j] = Buffers.newDirectIntBuffer(((2 * this.nPhiIntervals + 2)) * 3);
 
-            for( int i =0; i <= this.nPhiIntervals; i++){
+            for( int i = 0; i <= this.nPhiIntervals; i++){
                 int k1 = i + j * (this.nPhiIntervals + 1);
                 int k2 = k1 + this.nPhiIntervals + 1;
                 shapeData.indices[j].put(k1).put(k2);
+                System.out.print(k1 + ":" + k2 + " | ");
+
+                shapeData.indices[j].put(k1).put(centerIndex);
+                shapeData.indices[j].put(k2).put(centerIndex);
+
             }
+            System.out.println();
         }
     }
 
@@ -213,7 +226,7 @@ public class Dome extends AbstractShape {
         if(shapeData.getReferencePoint() == null || !shapeData.getReferencePoint().equals(rp)){
             shapeData.setReferencePoint(rp);
 
-            int nVertices = (this.nThetaIntervals + 1) * (this.nPhiIntervals + 1);
+            int nVertices = (this.nThetaIntervals + 1) * (this.nPhiIntervals + 1) + 1;
 
             shapeData.vertices = Buffers.newDirectFloatBuffer(3 * nVertices);
             shapeData.texCoords = Buffers.newDirectFloatBuffer(3 * nVertices);
@@ -226,7 +239,6 @@ public class Dome extends AbstractShape {
 
             double dTheta = 180 / this.nThetaIntervals;
             double dPhi = 360 / this.nPhiIntervals;
-
             for (int i = 0; i <= this.nThetaIntervals; i++){
                 for (int j = 0; j <= this.nPhiIntervals; j++){
                     double theta = i * dTheta;
@@ -236,9 +248,9 @@ public class Dome extends AbstractShape {
 
                     double r = this.getR();
 
-                    double s = r;
+                    double s = Math.random() * 255;
 
-                    shapeData.texCoords.put((float) s).put(0);
+                    shapeData.texCoords.put((float) (s)).put(0);
 
                     double rScaled = (r + this.gainOffset) * this.gainScale;
 
@@ -253,6 +265,8 @@ public class Dome extends AbstractShape {
                     shapeData.vertices.put( (float) x).put( (float) y ).put( (float) z);
                 }
             }
+            shapeData.vertices.put( 0f ).put( 0f ).put( 0f );
+            centerIndex = nVertices - 1;
             shapeData.setExtent( new Sphere(rp, Math.sqrt(xMax * xMax + yMax * yMax + zMax * zMax)));
         }
     }
@@ -271,11 +285,13 @@ public class Dome extends AbstractShape {
     @Override
     protected void doDrawOutline(DrawContext dc) {
         this.drawModel(dc, DISPLAY_MODE_LINE, !this.isHighlighted());
+//        this.drawModel(dc, DISPLAY_MODE_LINE, false);
     }
 
     @Override
     protected void doDrawInterior(DrawContext dc) {
         this.drawModel(dc, DISPLAY_MODE_FILL, true);
+//        this.drawModel(dc, DISPLAY_MODE_LINE, false);
     }
 
     private void drawModel(DrawContext dc, int displayModeLine, boolean showTexture) {
@@ -286,7 +302,7 @@ public class Dome extends AbstractShape {
 
         gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, displayModeLine);
 
-        if(!dc.isPickingMode() && showTexture){
+        if(!dc.isPickingMode() && showTexture && false){
             gl.glEnable(GL.GL_TEXTURE_2D);
             gl.glEnableClientState(GL2.GL_TEXTURE_COORD_ARRAY);
             gl.glTexCoordPointer(2, GL.GL_FLOAT, 0, shapeData.texCoords.rewind());
@@ -311,9 +327,7 @@ public class Dome extends AbstractShape {
 
         if (!dc.isPickingMode() && this.mustApplyLighting(dc, null))
             gl.glNormalPointer(GL.GL_FLOAT, 0, shapeData.normals.rewind());
-
-        for (IntBuffer iBuffer : shapeData.indices)
-        {
+        for (IntBuffer iBuffer : shapeData.indices) {
             gl.glDrawElements(GL.GL_TRIANGLE_STRIP, iBuffer.limit(), GL.GL_UNSIGNED_INT, iBuffer.rewind());
         }
 

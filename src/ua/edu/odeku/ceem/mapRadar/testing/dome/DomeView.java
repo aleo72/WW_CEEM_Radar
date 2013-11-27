@@ -24,12 +24,13 @@ import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils;
 public class DomeView {
 
     public static void add(WorldWindow wwd){
-        Position odessa = Position.fromDegrees(46.477, 30.733, 1e3);
+        Position odessa = Position.fromDegrees(46.477, 30.733, 1e5);
 
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineOpacity(0.6);
         normalAttributes.setInteriorOpacity(0.4);
-        normalAttributes.setOutlineMaterial(Material.WHITE);
+        normalAttributes.setOutlineMaterial(Material.BLACK);
+        normalAttributes.setInteriorMaterial(Material.LIGHT_GRAY);
 
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
         highlightAttributes.setOutlineOpacity(0.3);
