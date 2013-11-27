@@ -12,11 +12,11 @@ import gov.nasa.worldwind.layers.ViewControlsSelectListener;
 import gov.nasa.worldwind.util.StatisticsPanel;
 import gov.nasa.worldwind.util.StatusBar;
 import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.LayerPanel;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 import ua.edu.odeku.ceem.mapRadar.layers.CeemRadarLayers;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
+import ua.edu.odeku.ceem.mapRadar.testing.dome.DomeView;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
@@ -50,18 +50,17 @@ public class AppCeemRadarFrame extends JFrame {
     ResourceBundle resource = ResourceBundle.getBundle("strings", PropertyProgram.getCurrentLocale());
 
     protected AppMainPanel wwjPanel;
-    protected LayerPanel layerPanel;
     protected StatisticsPanel statsPanel;
     protected JMenuBar menuBar;
     protected final Map<String,JFrame> toolsComponents = new HashMap<String, JFrame>();
 
-    public AppCeemRadarFrame(boolean includeStatusBar, boolean includeLayerPanel, boolean includeStatsPanel) {
-        this.initialize(includeStatusBar, includeLayerPanel, includeStatsPanel);
+    public AppCeemRadarFrame(boolean includeStatusBar) {
+        this.initialize(includeStatusBar);
         appCeemRadarFrame = this;
     }
 
     public AppCeemRadarFrame() {
-        this(true, true, false);
+        this(true);
     }
 
     public AppCeemRadarFrame(Dimension size) {
@@ -176,10 +175,12 @@ public class AppCeemRadarFrame extends JFrame {
 
     }
 
-    protected void initialize(boolean includeStatusBar, boolean includeLayerPanel, boolean includeStatsPanel) {
+    protected void initialize(boolean includeStatusBar) {
         // Create the WorldWindow.
         this.wwjPanel = this.createAppMainPanel(this.canvasSize, includeStatusBar);
         this.wwjPanel.setPreferredSize(canvasSize);
+
+        DomeView.add(wwjPanel.getWwd());
 
         // Put the pieces together.
         this.getContentPane().add(wwjPanel, BorderLayout.CENTER);
@@ -241,10 +242,6 @@ public class AppCeemRadarFrame extends JFrame {
 
     public StatusBar getStatusBar() {
         return this.wwjPanel.getStatusBar();
-    }
-
-    public LayerPanel getLayerPanel() {
-        return layerPanel;
     }
 
     public StatisticsPanel getStatsPanel() {
