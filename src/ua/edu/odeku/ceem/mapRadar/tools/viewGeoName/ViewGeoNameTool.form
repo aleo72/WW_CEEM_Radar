@@ -112,7 +112,7 @@
                   <text resource-bundle="strings" key="label_importGeoName_country"/>
                 </properties>
               </component>
-              <component id="1fec5" class="javax.swing.JComboBox" binding="countryComboBox">
+              <component id="1fec5" class="javax.swing.JComboBox" binding="countryComboBox" custom-create="true">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -143,7 +143,7 @@
                   <text resource-bundle="strings" key="label_importGeoName_feature-class"/>
                 </properties>
               </component>
-              <component id="1ee3c" class="javax.swing.JComboBox" binding="featureClassComboBox">
+              <component id="1ee3c" class="javax.swing.JComboBox" binding="featureClassComboBox" custom-create="true">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -174,7 +174,7 @@
                   <text resource-bundle="strings" key="label_importGeoName_feature-code"/>
                 </properties>
               </component>
-              <component id="d35eb" class="javax.swing.JComboBox" binding="featureCodeComboBox">
+              <component id="d35eb" class="javax.swing.JComboBox" binding="featureCodeComboBox" custom-create="true">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -198,7 +198,9 @@
         <children>
           <component id="f20b4" class="javax.swing.JTable" binding="table">
             <constraints/>
-            <properties/>
+            <properties>
+              <updateSelectionOnSort value="false"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
