@@ -2,6 +2,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.importGeoName;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.panels.FileChooserForm;
@@ -18,74 +19,20 @@ import java.util.ResourceBundle;
  * Date: 09.11.13
  * Time: 22:24
  */
-public class ImportGeoName implements CeemRadarTool {
+public class ImportGeoName implements CeemPanel {
 
-    private JPanel panel;
-    private JButton importButton;
-    private JButton cancelButton;
-    private JProgressBar progressBar;
-    private FileChooserForm fileChooserPanel;
-    private final GeoNameImporter importer;
-    private Handler handlerClose;
-    private JFrame parent;
+    public JPanel panel;
+    public JButton importButton;
+    public JButton cancelButton;
+    public JProgressBar progressBar;
+    public FileChooserForm fileChooserPanel;
 
     public ImportGeoName() {
-
-        importButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (fileChooserPanel.getFile() != null && !importer.isAlive()) {
-                    importButton.setEnabled(false);
-                    cancelButton.setEnabled(true);
-                    importer.stop = false;
-
-                    importer.setFileInput(fileChooserPanel.getFile());
-
-                    importer.start();
-                }
-            }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                importButton.setEnabled(true);
-                cancelButton.setEnabled(false);
-                importer.stop = true;
-                importer.setFileInput(null);
-                handlerClose.start();
-            }
-        });
-
-        importer = new GeoNameImporter(progressBar, handlerClose);
-    }
-
-    {
-        handlerClose = new Handler() {
-            @Override
-            public void start() {
-                if (parent != null)
-                    ImportGeoName.this.parent.dispose();
-            }
-        };
     }
 
     @Override
-    public JPanel getPanel() {
-        return (JPanel) this.$$$getRootComponent$$$();
-    }
-
-    @Override
-    public String getNameTool() {
-        return this.getClass().getName();
-    }
-
-    public void setParent(JFrame parent) {
-        this.parent = parent;
-    }
-
-    @Override
-    public Handler getHandlerForJFrame(ToolFrame frame) {
-        return null;
+    public JPanel getRootPanel() {
+        return (JPanel) $$$getRootComponent$$$();
     }
 
     {

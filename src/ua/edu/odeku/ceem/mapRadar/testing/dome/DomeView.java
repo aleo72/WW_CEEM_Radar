@@ -12,7 +12,6 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils;
 
@@ -29,7 +28,7 @@ public class DomeView {
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setOutlineOpacity(0.6);
         normalAttributes.setInteriorOpacity(0.4);
-        normalAttributes.setOutlineMaterial(Material.BLACK);
+        normalAttributes.setOutlineMaterial(Material.RED);
         normalAttributes.setInteriorMaterial(Material.LIGHT_GRAY);
 
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);

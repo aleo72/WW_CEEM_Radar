@@ -1,4 +1,11 @@
+/*
+ * Odessa State environmental University
+ * Copyright (C) 2013
+ */
+
 package ua.edu.odeku.ceem.mapRadar.tools
+
+import javax.swing.{JPanel, JComponent}
 
 /**
  * User: Aleo Bakalov
@@ -6,5 +13,7 @@ package ua.edu.odeku.ceem.mapRadar.tools
  * Time: 17:00
  */
 trait PanelTool {
+
+  def rootPanel : JPanel
 
 }

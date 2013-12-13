@@ -17,12 +17,8 @@ import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class EditGeoNameDialog extends JDialog {
@@ -84,7 +80,7 @@ public class EditGeoNameDialog extends JDialog {
                         ResourceString.get("title_confirmDialog_delete"),
                         ResourceString.get("message_geoName_delete-item"))
                         ) {
-                    EntityManager entityManager = DB.getEntityManager();
+                    EntityManager entityManager = DB.createEntityManager();
                     entityManager.getTransaction().begin();
 
                     GeoName geoNameMerge = entityManager.merge(geoName);
@@ -123,7 +119,7 @@ public class EditGeoNameDialog extends JDialog {
     }
 
     private void initFeatureCode(GeoName geoName) {
-        Session session = DB.getSession();
+        Session session = DB.createHibernateSession();
 
         String sql = " SELECT DISTINCT FEATURE_CODE           " +
                 " FROM GEO_NAME                          " +
@@ -132,7 +128,7 @@ public class EditGeoNameDialog extends JDialog {
         SQLQuery query = session.createSQLQuery(sql);
 
         query.setParameter("featureClass", geoName.getFeatureClass());
-        query.addScalar("FEATURE_CODE", DB.STRING_TYPE);
+        query.addScalar("FEATURE_CODE", DB.STRING_TYPE());
 
         ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
         results.beforeFirst();
@@ -167,7 +163,7 @@ public class EditGeoNameDialog extends JDialog {
             Session session = null;
             boolean res = false;
             try {
-                session = DB.getSession();
+                session = DB.createHibernateSession();
 
                 GeoName geoName = (GeoName) (session.load(GeoName.class, new Integer(this.geoName.getId())));
 

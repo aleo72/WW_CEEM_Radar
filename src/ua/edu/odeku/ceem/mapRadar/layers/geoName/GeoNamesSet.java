@@ -1,7 +1,6 @@
 package ua.edu.odeku.ceem.mapRadar.layers.geoName;
 
 import gov.nasa.worldwind.WWObjectImpl;
-import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.util.Logging;
 
 import java.util.ArrayList;

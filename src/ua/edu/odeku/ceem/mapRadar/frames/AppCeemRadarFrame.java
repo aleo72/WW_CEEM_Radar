@@ -16,12 +16,14 @@ import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 import ua.edu.odeku.ceem.mapRadar.layers.CeemRadarLayers;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
+import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 import ua.edu.odeku.ceem.mapRadar.testing.dome.DomeView;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
+import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
+import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
 
 import javax.swing.*;
@@ -100,7 +102,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame( new CacheDownload(wwjPanel.getWwd()) , ResourceString.get("frame_title_tool_cache"));
+                    ceemRadarTool = new ToolFrame( new CacheDownloadTool(wwjPanel.getWwd()) , ResourceString.get("frame_title_tool_cache"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
                 }
@@ -119,7 +121,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(new ImportGeoName() , ResourceString.get("frame_title_tool_geoName"));
+                    ceemRadarTool = new ToolFrame(new ImportGeoNameTool() , ResourceString.get("frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }

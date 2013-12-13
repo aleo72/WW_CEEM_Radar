@@ -19,7 +19,6 @@ import gov.nasa.worldwind.terrain.CompoundElevationModel;
 import gov.nasa.worldwindx.examples.util.SectorSelector;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
-import ua.edu.odeku.ceem.mapRadar.tools.NamingTool;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
 
@@ -40,7 +39,7 @@ import java.util.ArrayList;
  * Date: 06.11.13
  * Time: 21:38
  */
-public class CacheDownload extends JPanel implements CeemRadarTool {
+public class CacheDownload extends JPanel {
 
     protected WorldWindow wwd;
     protected Sector currentSector;
@@ -314,25 +313,5 @@ public class CacheDownload extends JPanel implements CeemRadarTool {
         else if (sizeInMegaBytes < 1024 * 1024)
             return String.format("%,.1f GB", sizeInMegaBytes / 1024);
         return String.format("%,.1f TB", sizeInMegaBytes / 1024 / 1024);
-    }
-
-    @Override
-    public JPanel getPanel() {
-        return this;
-    }
-
-    @Override
-    public String getNameTool() {
-        return this.getClass().getName();
-    }
-
-    @Override
-    public void setParent(JFrame frame) {
-        parent = frame;
-    }
-
-    @Override
-    public Handler getHandlerForJFrame(ToolFrame frame) {
-        return null;
     }
 }

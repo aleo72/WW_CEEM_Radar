@@ -12,4 +12,6 @@ package ua.edu.odeku.ceem.mapRadar.tools
  */
 trait NamingTool {
 
+  def nameTool : String = this.getClass.getName
+
 }

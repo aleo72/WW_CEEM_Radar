@@ -55,7 +55,8 @@ public class CeemRadarApplicationTemplate {
 
             showStartImageWindow();
 
-            DB.getEntityManager();
+            // Init DB
+            DB.createEntityManager();
 
             final AppCeemRadarFrame frame = (AppCeemRadarFrame) appFrameClass.newInstance();
             frame.setTitle(appName);

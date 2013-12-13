@@ -13,10 +13,8 @@ import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.GeographicText;
 import gov.nasa.worldwind.render.UserFacingText;
 import gov.nasa.worldwind.util.Logging;
-import gov.nasa.worldwind.util.WWIO;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
