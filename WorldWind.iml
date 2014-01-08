@@ -12,9 +12,14 @@
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
       </configuration>
     </facet>
+    <facet type="scala" name="Scala">
+      <configuration>
+        <option name="compilerLibraryLevel" value="Project" />
+        <option name="compilerLibraryName" value="scala-compiler" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
-    <exclude-exploded />
     <output url="file://$MODULE_DIR$/classes" />
     <output-test url="file://$MODULE_DIR$/testClasses" />
     <exclude-output />
@@ -22,6 +27,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/CeemResourceBundle/stringMessage" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CeemResourceBundle" type="java-resource" />
     </content>
     <orderEntry type="library" name="jsobjectplugin" level="project" />
     <orderEntry type="inheritedJdk" />
@@ -39,6 +45,8 @@
     <orderEntry type="library" name="jgoodies-common" level="project" />
     <orderEntry type="library" name="jgoodies-looks" level="project" />
     <orderEntry type="library" name="jgoodies-validation" level="project" />
+    <orderEntry type="library" name="scala-compiler" level="project" />
+    <orderEntry type="library" name="scala-lib" level="project" />
   </component>
 </module>
 

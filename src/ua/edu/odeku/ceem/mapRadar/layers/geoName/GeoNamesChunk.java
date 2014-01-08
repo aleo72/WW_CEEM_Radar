@@ -5,7 +5,6 @@
 
 package ua.edu.odeku.ceem.mapRadar.layers.geoName;
 
-import gov.nasa.worldwind.cache.Cacheable;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.GeographicText;
@@ -13,7 +12,6 @@ import gov.nasa.worldwind.render.UserFacingText;
 import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
 import ua.edu.odeku.ceem.mapRadar.utils.models.GeoNameUtils;
 
-import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -13,12 +13,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Модель для таблицы, данная модель заполняет таблицу изходя из переданых ей параметров
@@ -32,7 +30,7 @@ public class GeoNameTableModel extends AbstractTableModel {
 
     public GeoNameTableModel(){
 
-        EntityManager entityManager = DB.getEntityManager();
+        EntityManager entityManager = DB.createEntityManager();
         entityManager.getTransaction().begin();
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -48,8 +46,8 @@ public class GeoNameTableModel extends AbstractTableModel {
         if(subName == null || subName.isEmpty()){
             list = GeoNameUtils.getList(country, featureClass, featureCode);
         } else {
-            Session session = DB.getSession();
-            SQLQuery query = GeoNameUtils.getSQLQuery(session, country, featureClass, featureCode);
+            Session session = DB.createHibernateSession();
+            SQLQuery query = GeoNameUtils.SQLQuery(session, country, featureClass, featureCode);
             list = handlerScrollableResults(query, subName);
             DB.closeSession(session);
         }

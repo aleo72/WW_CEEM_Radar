@@ -31,7 +31,7 @@ public class PropertyProgram {
     /**
      * Возращает название программы
      *
-     * @return
+     * @return NAME_PROGRAM
      */
     public static String getNameProgram() {
         return NAME_PROGRAM;

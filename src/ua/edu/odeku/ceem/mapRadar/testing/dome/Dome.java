@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
-import java.util.Random;
 
 /**
  * User: Aleo Bakalov
@@ -330,6 +329,13 @@ public class Dome extends AbstractShape {
         for (IntBuffer iBuffer : shapeData.indices) {
             gl.glDrawElements(GL.GL_TRIANGLE_STRIP, iBuffer.limit(), GL.GL_UNSIGNED_INT, iBuffer.rewind());
         }
+//
+//        gl.glEnable(GL2.GL_FOG);
+//        gl.glFogi(GL2.GL_FOG_MODE, GL2.GL_LINEAR);
+//        gl.glFogf(GL2.GL_FOG_START, 10);
+//        gl.glFogf(GL2.GL_FOG_END, 50);
+//
+//        gl.glFogf(GL2.GL_FOG_DENSITY, 0.1f);
 
         gl.glPopMatrix();
 
