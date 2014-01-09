@@ -45,11 +45,36 @@ package object airspace {
 		attributes.setOpacity(0.95)
 		attributes.setOutlineOpacity(.95)
 		attributes.setOutlineWidth(2)
-		return attributes
+		attributes
 	}
 
 	def setEditorAttributes(editor: AirspaceEditor) {
 		editor.setUseRubberBand(true)
 		editor.setKeepControlPointsAboveTerrain(true)
 	}
+
+  def getSelectionAndIntersectionAttributes: AirspaceAttributes = {
+    val attributes: AirspaceAttributes = new BasicAirspaceAttributes
+    attributes.setMaterial(Material.ORANGE)
+    attributes.setOpacity(0.8)
+    attributes
+  }
+
+  def getSelectionAttributes = {
+    val attributes: AirspaceAttributes = new BasicAirspaceAttributes
+    attributes.setMaterial(Material.WHITE)
+    attributes.setOutlineMaterial(Material.BLACK)
+    attributes.setDrawOutline(true)
+    attributes.setOpacity(0.8)
+    attributes.setOutlineOpacity(0.8)
+    attributes.setOutlineWidth(2)
+    attributes
+  }
+
+  def getIntersectionAttributes = {
+    val attributes: AirspaceAttributes = new BasicAirspaceAttributes
+    attributes.setMaterial(Material.RED)
+    attributes.setOpacity(0.95)
+    attributes
+  }
 }
