@@ -5,14 +5,20 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspaceManagerForm
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspacePanel
 
 /**
  * User: Aleo Bakalov
  * Date: 08.01.14
  * Time: 11:09
  */
-class AirspaceManagerView {
+class AirspaceManagerView(val model : AirspaceBuilderModel, val controller : AirspaceController) {
 
-  val form : AirspaceManagerForm = new AirspaceManagerForm
+	val form : AirspacePanel = new AirspacePanel
+
+	def getSelectedIndices : Array[Int] = this.form.table.getSelectedRows
+
+	def initComponents(){
+
+	}
 }
