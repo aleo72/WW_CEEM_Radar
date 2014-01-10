@@ -50,3 +50,7 @@ class SphereAirspaceFactory extends AirspaceFactory {
 		"Sphere"
 	}
 }
+
+object SphereAirspaceFactory {
+	val obj = new SphereAirspaceFactory
+}
