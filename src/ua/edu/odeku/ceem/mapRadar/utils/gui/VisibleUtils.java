@@ -74,4 +74,31 @@ public final class VisibleUtils {
         layers.add(targetPosition, layer);
     }
 
+
+    public static void insertBeforePlacenames(WorldWindow wwd, Layer layer)
+    {
+        // Insert the layer into the layer list just before the placenames.
+        int compassPosition = 0;
+        LayerList layers = wwd.getModel().getLayers();
+        for (Layer l : layers)
+        {
+            if (l instanceof PlaceNameLayer)
+                compassPosition = layers.indexOf(l);
+        }
+        layers.add(compassPosition, layer);
+    }
+
+    public static void insertAfterPlacenames(WorldWindow wwd, Layer layer)
+    {
+        // Insert the layer into the layer list just after the placenames.
+        int compassPosition = 0;
+        LayerList layers = wwd.getModel().getLayers();
+        for (Layer l : layers)
+        {
+            if (l instanceof PlaceNameLayer)
+                compassPosition = layers.indexOf(l);
+        }
+        layers.add(compassPosition + 1, layer);
+    }
+
 }

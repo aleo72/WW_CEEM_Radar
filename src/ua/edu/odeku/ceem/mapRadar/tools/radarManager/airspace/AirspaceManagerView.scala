@@ -6,6 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspacePanel
+import javax.swing.JPanel
 
 /**
  * User: Aleo Bakalov
@@ -15,6 +16,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspacePanel
 class AirspaceManagerView(val model : AirspaceBuilderModel, val controller : AirspaceController) {
 
 	val form : AirspacePanel = new AirspacePanel
+	val panel : JPanel = form.getRootPanel
 	var ignoreSelectEvents: Boolean = false
 
 	def getSelectedIndices : Array[Int] = this.form.table.getSelectedRows
