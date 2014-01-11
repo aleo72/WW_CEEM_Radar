@@ -34,7 +34,7 @@ class AirspaceBuilderModel extends AbstractTableModel {
 
 	override def isCellEditable(rowIndex: Int, columnIndex: Int): Boolean = true
 
-	def entries: util.List[AirspaceEntry] = java.util.Collections.unmodifiableList(this.entryList)
+	def entries: Array[AirspaceEntry] = this.entryList.toArray(Array[AirspaceEntry]())
 
 	def entries_=(value: Iterable[_ <: AirspaceEntry]): Unit = {
 		this.entryList.clear()

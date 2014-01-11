@@ -13,6 +13,7 @@ import javax.swing.JFileChooser
 import gov.nasa.worldwind.pick.PickedObjectList
 import gov.nasa.worldwind.render.airspaces.Airspace
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * User: Aleo Bakalov
@@ -123,7 +124,7 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 		val pickedObjects: PickedObjectList = this.appCeemRadarFrame.getWwd.getObjectsAtCurrentPosition
 		val topObject: AnyRef = pickedObjects.getTopObject
 		if (topObject.isInstanceOf[Airspace]) {
-			val pickedEntry = this.getEntryFor(topObject.asInstanceOf[Airspace])
+			val pickedEntry = this.entryFor(topObject.asInstanceOf[Airspace])
 			if (pickedEntry != null) {
 				if (this.selectedEntry != pickedEntry) {
 					this.selectEntry(pickedEntry, true)
@@ -140,12 +141,12 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 
 	def updateShapeIntersection() {
 		val selected: AirspaceEntry = this.selectedEntry
-		if(selected != null) {
+		if (selected != null) {
 			var hasIntersection = false
-			for (entry : AirspaceEntry <- this.model.entries){
-				if(entry != selected){
+			for (entry: AirspaceEntry <- this.model.entries) {
+				if (entry != selected) {
 					val intersecting = areShapesIntersecting(entry.airspace, selected.airspace)
-					hasIntersection = if(intersecting) true else false
+					hasIntersection = if (intersecting) true else false
 					entry.intersecting = intersecting
 				}
 			}
@@ -153,5 +154,97 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 		}
 	}
 
-	def createNewEntry
+	def createNewEntry(factory: AirspaceFactory) {
+		val airspace: Airspace = factory.createAirspace(appCeemRadarFrame.getWwd, this.resizeNewShapesToViewport)
+		val editor: AirspaceEditor = factory.createEditor(airspace)
+		val entry: AirspaceEntry = new AirspaceEntry(airspace, editor)
+
+		this.addEntry(entry)
+
+		this.selectEntry(entry, true)
+	}
+
+	def removeEntries(entries: Iterable[_ <: AirspaceEntry]) {
+		if (entries != null) {
+			for (entry: AirspaceEntry <- entries) {
+				this.removeEntry(entry)
+			}
+		}
+	}
+
+	def addEntry(entry: AirspaceEntry) {
+		entry.editor.addEditListener(this)
+		this.model.addEntry(entry)
+		this.updateShapeIntersection()
+
+		appCeemRadarFrame.getAirspaceLayer.addAirspace(entry.airspace)
+		appCeemRadarFrame.getWwd.redraw()
+	}
+
+	def removeEntry(entry: AirspaceEntry) {
+		entry.editor.removeEditListener(this)
+		if (this.selectedEntry == entry) {
+			this.selectEntry(null, true)
+		}
+		this.model.removeEntry(entry)
+		this.updateShapeIntersection()
+
+		appCeemRadarFrame.getAirspaceLayer.removeAirspace(entry.airspace)
+		appCeemRadarFrame.getWwd.redraw()
+	}
+
+	def selectEntry(entry: AirspaceEntry, updateView: Boolean) {
+		this.selectedEntry = entry
+		if (updateView) {
+			if (entry != null) {
+				val index: Int = this.model.getIndexForEntry(entry)
+				this.view.selectedIndices_=(Array(index))
+			} else {
+				this.view.selectedIndices_=(Array())
+			}
+		}
+		if (this.enableEdit) {
+			if (this.selectedEntry != null && !this.selectionEditing) {
+				this.selectionEditing = true
+			}
+		}
+		this.updateShapeIntersection()
+		this.appCeemRadarFrame.getWwd.redraw()
+	}
+
+	def viewSelectionChanged() {
+		val indices: Array[Int] = this.view.selectedIndices
+		if (indices != null) {
+			for (entry: AirspaceEntry <- this.entriesFor(indices)) {
+				this.selectEntry(entry, updateView = false)
+			}
+		}
+		appCeemRadarFrame.getWwd.redraw()
+	}
+
+	def selectedEntries: Array[AirspaceEntry] = {
+		val indices = view.selectedIndices
+		if (indices != null) {
+			this.entriesFor(indices)
+		} else {
+			Array()
+		}
+	}
+
+	def entriesFor(indices: Array[Int]): Array[AirspaceEntry] = {
+		val entries = new ArrayBuffer[AirspaceEntry](indices.length)
+		for (i: Int <- 0 to indices.length) {
+			entries += this.model.getEntry(indices(i))
+		}
+		entries.toArray
+	}
+
+	def entryFor(airspace: Airspace): AirspaceEntry = {
+		for (entry: AirspaceEntry <- model.entries) {
+			if (entry.airspace == airspace) {
+				return entry
+			}
+		}
+		null
+	}
 }

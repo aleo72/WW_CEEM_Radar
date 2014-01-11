@@ -13,19 +13,19 @@ import javax.swing.JPanel
  * Date: 08.01.14
  * Time: 11:09
  */
-class AirspaceManagerView(val model : AirspaceBuilderModel, val controller : AirspaceController) {
+class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: AirspaceController) {
 
-	val form : AirspacePanel = new AirspacePanel
-	val panel : JPanel = form.getRootPanel
+	val form: AirspacePanel = new AirspacePanel
+	val panel: JPanel = form.getRootPanel
 	var ignoreSelectEvents: Boolean = false
 
-	def getSelectedIndices : Array[Int] = this.form.table.getSelectedRows
+	def selectedIndices: Array[Int] = this.form.table.getSelectedRows
 
-	def setSelectedIndices(indices : Array[Int]) {
+	def selectedIndices_=(indices: Array[Int]): Unit = {
 		this.ignoreSelectEvents = true
 
-		if(indices != null && indices.length != 0){
-			for (index : Int <- indices){
+		if (indices != null && indices.length != 0) {
+			for (index: Int <- indices) {
 				this.form.table.setRowSelectionInterval(index, index)
 			}
 		} else {
@@ -35,9 +35,9 @@ class AirspaceManagerView(val model : AirspaceBuilderModel, val controller : Air
 		this.ignoreSelectEvents = false
 	}
 
-	def getSelectedFactory : AirspaceFactory = SphereAirspaceFactory.obj
+	def getSelectedFactory: AirspaceFactory = SphereAirspaceFactory.obj
 
-	def initComponents(){
+	def initComponents() {
 
 	}
 }

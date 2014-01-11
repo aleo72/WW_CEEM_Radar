@@ -1,3 +1,8 @@
+/*
+ * Odessa State environmental University
+ * Copyright (C) 2014
+ */
+
 package ua.edu.odeku.ceem.mapRadar.frames;
 
 import gov.nasa.worldwind.Model;
@@ -6,6 +11,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.RenderingExceptionListener;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.exception.WWAbsentRequirementException;
+import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.ViewControlsLayer;
 import gov.nasa.worldwind.layers.ViewControlsSelectListener;
@@ -54,6 +60,7 @@ public class AppCeemRadarFrame extends JFrame {
     protected AppMainPanel wwjPanel;
     protected StatisticsPanel statsPanel;
     protected JMenuBar menuBar;
+    private AirspaceLayer airspaceLayer = new AirspaceLayer();
     protected final Map<String,JFrame> toolsComponents = new HashMap<String, JFrame>();
 
     public AppCeemRadarFrame(boolean includeStatusBar) {
@@ -262,5 +269,9 @@ public class AppCeemRadarFrame extends JFrame {
             this.wwjPanel.highlightController.dispose();
 
         this.wwjPanel.highlightController = controller;
+    }
+
+    public AirspaceLayer getAirspaceLayer() {
+        return airspaceLayer;
     }
 }

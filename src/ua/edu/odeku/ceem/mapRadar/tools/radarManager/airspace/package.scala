@@ -10,10 +10,11 @@ import gov.nasa.worldwind.render.airspaces.{Airspace, SphereAirspace, BasicAirsp
 import gov.nasa.worldwind.render.Material
 import java.awt.Color
 import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
-import gov.nasa.worldwind.geom.{Vec4, LatLon}
+import gov.nasa.worldwind.geom.{Angle, Position, Vec4, LatLon}
 import gov.nasa.worldwind.SceneController
 import gov.nasa.worldwind.globes.Globe
 import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
+import gov.nasa.worldwind.view.orbit.BasicOrbitView
 
 /**
  * Created by Aleo on 08.01.14.
@@ -123,5 +124,11 @@ package object airspace {
 		val globe: Globe = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getModel.getGlobe
 		val e: Double = globe.getElevation(latlon.getLatitude, latlon.getLongitude)
 		globe.computePointFromPosition(latlon.getLatitude, latlon.getLongitude, (e + elevation) * sc.getVerticalExaggeration)
+	}
+
+	def zoomTo(latLon: LatLon, heading: Angle, pitch: Angle, zoom: Double) {
+		val view: BasicOrbitView = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getView.asInstanceOf[BasicOrbitView]
+		view.stopMovement()
+		view.addPanToAnimator(new Position(latLon, 0), heading, pitch, zoom, true)
 	}
 }
