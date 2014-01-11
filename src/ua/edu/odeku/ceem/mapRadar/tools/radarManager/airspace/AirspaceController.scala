@@ -9,7 +9,7 @@ import gov.nasa.worldwind.WWObjectImpl
 import java.awt.event.{MouseEvent, ActionEvent, MouseListener, ActionListener}
 import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditor, AirspaceEditorController, AirspaceEditEvent, AirspaceEditListener}
 import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
-import javax.swing.JFileChooser
+import javax.swing.{AbstractButton, JFileChooser}
 import gov.nasa.worldwind.pick.PickedObjectList
 import gov.nasa.worldwind.render.airspaces.Airspace
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
@@ -96,29 +96,75 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 		this.model.fireTableRowsUpdated(index, index)
 	}
 
-	def airspaceMoved(e: AirspaceEditEvent): Unit = ???
+	def airspaceMoved(e: AirspaceEditEvent): Unit = {
+		this.updateShapeIntersection()
+	}
 
-	def airspaceResized(e: AirspaceEditEvent): Unit = ???
+	def airspaceResized(e: AirspaceEditEvent): Unit = {
+		this.updateShapeIntersection()
+	}
 
-	def controlPointAdded(e: AirspaceEditEvent): Unit = ???
+	def controlPointAdded(e: AirspaceEditEvent): Unit = {
 
-	def controlPointRemoved(e: AirspaceEditEvent): Unit = ???
+	}
 
-	def controlPointChanged(e: AirspaceEditEvent): Unit = ???
+	def controlPointRemoved(e: AirspaceEditEvent): Unit = {
+
+	}
+
+	def controlPointChanged(e: AirspaceEditEvent): Unit = {
+
+	}
 
 	def mouseClicked(e: MouseEvent): Unit = {
 
 	}
 
-	def mousePressed(e: MouseEvent): Unit = ???
+	def mousePressed(e: MouseEvent): Unit = {
+		if (e == null || e.isConsumed) return
+		if (this.enabled) {
+			if (e.getButton == MouseEvent.BUTTON1) {
+				this.handleSelect()
+			}
+		}
 
-	def mouseReleased(e: MouseEvent): Unit = ???
+	}
 
-	def mouseEntered(e: MouseEvent): Unit = ???
+	def mouseReleased(e: MouseEvent): Unit = {
 
-	def mouseExited(e: MouseEvent): Unit = ???
+	}
 
-	def actionPerformed(e: ActionEvent): Unit = ???
+	def mouseEntered(e: MouseEvent): Unit = {
+
+	}
+
+	def mouseExited(e: MouseEvent): Unit = {
+
+	}
+
+	def actionPerformed(e: ActionEvent): Unit = {
+		if (this.enabled) {
+			e.getActionCommand match {
+				case NEW_AIRSPACE => this.createNewEntry(this.view.getSelectedFactory)
+				case CLEAR_SELECTION => this.selectEntry(null, updateView = true)
+				case SIZE_NEW_SHAPES_TO_VIEWPORT =>
+					e.getSource match {
+						case button: AbstractButton =>
+							this.resizeNewShapesToViewport = button.isSelected
+						case _ =>
+					}
+				case ENABLE_EDIT =>
+					e.getSource match {
+						case button: AbstractButton =>
+							this.enableEdit = button.isSelected
+						case _ =>
+					}
+				case REMOVE_SELECTED => this.removeEntries(this.selectedEntries)
+				case SELECTION_CHANGED => this.viewSelectionChanged()
+				case _ =>
+			}
+		}
+	}
 
 	def handleSelect() {
 		val pickedObjects: PickedObjectList = this.appCeemRadarFrame.getWwd.getObjectsAtCurrentPosition
