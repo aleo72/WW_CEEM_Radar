@@ -6,7 +6,9 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspacePanel
-import javax.swing.JPanel
+import javax.swing.{ListSelectionModel, JPanel}
+import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
+import java.awt.event.ActionEvent
 
 /**
  * User: Aleo Bakalov
@@ -38,6 +40,31 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 	def getSelectedFactory: AirspaceFactory = SphereAirspaceFactory.obj
 
 	def initComponents() {
+
+		// init buttonCreate
+		form.buttonCreate.setActionCommand(NEW_AIRSPACE)
+		form.buttonCreate.addActionListener(controller)
+		form.buttonCreate.setToolTipText("Create a new shape centered in the viewport")
+
+		form.checkBoxResizeNewShapes.setActionCommand(SIZE_NEW_SHAPES_TO_VIEWPORT)
+		form.checkBoxResizeNewShapes.addActionListener(controller)
+		form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
+
+		form.checkBoxEnableEdit.setActionCommand(ENABLE_EDIT)
+		form.checkBoxEnableEdit.addActionListener(controller)
+		form.checkBoxEnableEdit.setSelected(controller.enableEdit)
+
+		form.table.setModel(model)
+		form.table.setColumnSelectionAllowed(false)
+		form.table.setRowSelectionAllowed(true)
+		form.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
+		form.table.getSelectionModel.addListSelectionListener(new ListSelectionListener {
+			def valueChanged(e: ListSelectionEvent): Unit = {
+				if (!ignoreSelectEvents) {
+					controller.actionPerformed(new ActionEvent(e.getSource, -1, SELECTION_CHANGED))
+				}
+			}
+		})
 
 	}
 }

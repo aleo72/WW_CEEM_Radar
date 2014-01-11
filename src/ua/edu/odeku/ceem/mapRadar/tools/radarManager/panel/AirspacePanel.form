@@ -26,6 +26,8 @@
         <colspec value="fill:d:grow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:d:grow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):grow"/>
         <constraints>
           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
@@ -51,6 +53,15 @@
               <text resource-bundle="strings" key="button_remove"/>
             </properties>
           </component>
+          <component id="56351" class="javax.swing.JButton" binding="buttonClearSelection">
+            <constraints>
+              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text resource-bundle="strings" key="button_clear_selection"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <scrollpane id="cc752">
@@ -58,7 +69,9 @@
           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <toolTipText resource-bundle="strings" key="table_radarManager_airspace_table_toolTip"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="ed1ef" class="javax.swing.JTable" binding="table">
@@ -67,15 +80,42 @@
           </component>
         </children>
       </scrollpane>
-      <component id="d23db" class="javax.swing.JCheckBox" binding="checkBoxResizeAirspace">
+      <grid id="2b13e" layout-manager="FormLayout">
+        <rowspec value="center:d:grow"/>
+        <rowspec value="top:4dlu:noGrow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:d:grow"/>
         <constraints>
-          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
-        <properties>
-          <text value="CheckBox"/>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="d23db" class="javax.swing.JCheckBox" binding="checkBoxEnableEdit">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text resource-bundle="strings" key="checkBox_radarManager_airspace_enable_shape_editing"/>
+            </properties>
+          </component>
+          <component id="bf8ba" class="javax.swing.JCheckBox" binding="checkBoxResizeNewShapes">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text resource-bundle="strings" key="checkBox_radarManager_airspace_Fit_new_shapes_to_viewport"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>
