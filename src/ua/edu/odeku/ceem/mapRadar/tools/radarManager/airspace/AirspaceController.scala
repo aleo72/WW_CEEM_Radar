@@ -169,13 +169,15 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 	def handleSelect() {
 		val pickedObjects: PickedObjectList = this.appCeemRadarFrame.getWwd.getObjectsAtCurrentPosition
 		val topObject: AnyRef = pickedObjects.getTopObject
-		if (topObject.isInstanceOf[Airspace]) {
-			val pickedEntry = this.entryFor(topObject.asInstanceOf[Airspace])
-			if (pickedEntry != null) {
-				if (this.selectedEntry != pickedEntry) {
-					this.selectEntry(pickedEntry, true)
+		topObject match {
+			case airspace: Airspace =>
+				val pickedEntry = this.entryFor(airspace)
+				if (pickedEntry != null) {
+					if (this.selectedEntry != pickedEntry) {
+						this.selectEntry(pickedEntry, true)
+					}
 				}
-			}
+			case _ =>
 		}
 	}
 

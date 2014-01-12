@@ -9,6 +9,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspacePanel
 import javax.swing.{ListSelectionModel, JPanel}
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
 import java.awt.event.ActionEvent
+import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 
 /**
  * User: Aleo Bakalov
@@ -41,11 +42,6 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 
 	def initComponents() {
 
-		// init buttonCreate
-		form.buttonCreate.setActionCommand(NEW_AIRSPACE)
-		form.buttonCreate.addActionListener(controller)
-		form.buttonCreate.setToolTipText("Create a new shape centered in the viewport")
-
 		form.checkBoxResizeNewShapes.setActionCommand(SIZE_NEW_SHAPES_TO_VIEWPORT)
 		form.checkBoxResizeNewShapes.addActionListener(controller)
 		form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
@@ -62,6 +58,29 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 			def valueChanged(e: ListSelectionEvent): Unit = {
 				if (!ignoreSelectEvents) {
 					controller.actionPerformed(new ActionEvent(e.getSource, -1, SELECTION_CHANGED))
+				}
+			}
+		})
+
+		// init buttonCreate
+		form.buttonCreate.setActionCommand(NEW_AIRSPACE)
+		form.buttonCreate.addActionListener(controller)
+		form.buttonCreate.setToolTipText("Create a new shape centered in the viewport")
+
+		form.buttonClearSelection.setActionCommand(CLEAR_SELECTION)
+		form.buttonClearSelection.addActionListener(controller)
+
+		form.buttonRemove.setActionCommand(REMOVE_SELECTED)
+		form.buttonRemove.addActionListener(controller)
+
+		controller.addPropertyChangeListener(new PropertyChangeListener {
+			def propertyChange(evt: PropertyChangeEvent): Unit = {
+				evt.getPropertyName match {
+					case SIZE_NEW_SHAPES_TO_VIEWPORT =>
+						form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
+					case ENABLE_EDIT =>
+						form.checkBoxEnableEdit.setSelected(controller.enableEdit)
+					case _ =>
 				}
 			}
 		})
