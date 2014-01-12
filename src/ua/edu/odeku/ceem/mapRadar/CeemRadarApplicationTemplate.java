@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 /**
  * Базовый класс для программы CeemRadar
  * User: Aleo
@@ -60,7 +62,7 @@ public class CeemRadarApplicationTemplate {
 
             final AppCeemRadarFrame frame = (AppCeemRadarFrame) appFrameClass.newInstance();
             frame.setTitle(appName);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     frame.setVisible(true);

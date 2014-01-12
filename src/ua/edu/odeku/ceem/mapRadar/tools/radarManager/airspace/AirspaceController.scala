@@ -14,19 +14,21 @@ import gov.nasa.worldwind.pick.PickedObjectList
 import gov.nasa.worldwind.render.airspaces.Airspace
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 import scala.collection.mutable.ArrayBuffer
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
 
 /**
  * User: Aleo Bakalov
  * Date: 08.01.14
  * Time: 11:07
  */
-class AirspaceController(private var _model: AirspaceBuilderModel, private var _view: AirspaceManagerView) extends WWObjectImpl with ActionListener with MouseListener with AirspaceEditListener {
+class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjectImpl with ActionListener with MouseListener with AirspaceEditListener {
 
 	protected var _selectedEntry: AirspaceEntry = _
+	private var _model: AirspaceBuilderModel = _
+	private var _view: AirspaceManagerView = _
 
-	val appCeemRadarFrame: AppCeemRadarFrame = AppCeemRadarFrame.getAppCeemRadarFrame
-	val editorController: AirspaceEditorController = new AirspaceEditorController(appCeemRadarFrame.getWwd)
-	appCeemRadarFrame.getWwd.getInputHandler.addMouseListener(this)
+	val editorController: AirspaceEditorController = new AirspaceEditorController(ceemTool.appFrame.getWwd)
+	ceemTool.appFrame.getWwd.getInputHandler.addMouseListener(this)
 
 	private var _enabled = true
 	private var _enableEdit = true
@@ -47,7 +49,7 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 	def enabled_=(value: Boolean): Unit = {
 		this._enabled = value
 		view.panel.setEnabled(value)
-		appCeemRadarFrame.setEnabled(value)
+		ceemTool.appFrame.setEnabled(value)
 	}
 
 	def enableEdit: Boolean = _enableEdit
@@ -87,10 +89,10 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 
 		if (editing) {
 			this.editorController.setEditor(editor)
-			VisibleUtils.insertBeforeCompass(appCeemRadarFrame.getWwd, editor)
+			VisibleUtils.insertBeforeCompass(ceemTool.appFrame.getWwd, editor)
 		} else {
 			this.editorController.setEditor(null)
-			this.appCeemRadarFrame.getWwd.getModel.getLayers.remove(editor)
+			this.ceemTool.appFrame.getWwd.getModel.getLayers.remove(editor)
 		}
 		val index: Int = this.model.getIndexForEntry(this.selectedEntry)
 		this.model.fireTableRowsUpdated(index, index)
@@ -167,7 +169,7 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 	}
 
 	def handleSelect() {
-		val pickedObjects: PickedObjectList = this.appCeemRadarFrame.getWwd.getObjectsAtCurrentPosition
+		val pickedObjects: PickedObjectList = ceemTool.appFrame.getWwd.getObjectsAtCurrentPosition
 		val topObject: AnyRef = pickedObjects.getTopObject
 		topObject match {
 			case airspace: Airspace =>
@@ -203,7 +205,7 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 	}
 
 	def createNewEntry(factory: AirspaceFactory) {
-		val airspace: Airspace = factory.createAirspace(appCeemRadarFrame.getWwd, this.resizeNewShapesToViewport)
+		val airspace: Airspace = factory.createAirspace(ceemTool.appFrame.getWwd, this.resizeNewShapesToViewport)
 		val editor: AirspaceEditor = factory.createEditor(airspace)
 		val entry: AirspaceEntry = new AirspaceEntry(airspace, editor)
 
@@ -225,8 +227,8 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 		this.model.addEntry(entry)
 		this.updateShapeIntersection()
 
-		appCeemRadarFrame.getAirspaceLayer.addAirspace(entry.airspace)
-		appCeemRadarFrame.getWwd.redraw()
+		ceemTool.airspaceLayer.addAirspace(entry.airspace)
+		ceemTool.appFrame.getWwd.redraw()
 	}
 
 	def removeEntry(entry: AirspaceEntry) {
@@ -237,8 +239,8 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 		this.model.removeEntry(entry)
 		this.updateShapeIntersection()
 
-		appCeemRadarFrame.getAirspaceLayer.removeAirspace(entry.airspace)
-		appCeemRadarFrame.getWwd.redraw()
+		ceemTool.airspaceLayer.removeAirspace(entry.airspace)
+		ceemTool.appFrame.getWwd.redraw()
 	}
 
 	def selectEntry(entry: AirspaceEntry, updateView: Boolean) {
@@ -257,7 +259,7 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 			}
 		}
 		this.updateShapeIntersection()
-		this.appCeemRadarFrame.getWwd.redraw()
+		ceemTool.appFrame.getWwd.redraw()
 	}
 
 	def viewSelectionChanged() {
@@ -267,7 +269,7 @@ class AirspaceController(private var _model: AirspaceBuilderModel, private var _
 				this.selectEntry(entry, updateView = false)
 			}
 		}
-		appCeemRadarFrame.getWwd.redraw()
+		ceemTool.appFrame.getWwd.redraw()
 	}
 
 	def selectedEntries: Array[AirspaceEntry] = {

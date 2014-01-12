@@ -14,9 +14,9 @@ import gov.nasa.worldwind.WorldWindow
  * Date: 11.12.13
  * Time: 15:06
  */
-class CacheDownloadTool(val wwd : WorldWindow) extends CeemRadarTool {
+class CacheDownloadTool extends CeemRadarTool {
 
-  val cacheDownload = new CacheDownload(wwd)
+  val cacheDownload = this.appFrame.getWwjPanel
 
   def startFunction = (frame : ToolFrame ) => {}
 

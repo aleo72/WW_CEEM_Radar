@@ -10,13 +10,14 @@ import javax.swing.{ListSelectionModel, JPanel}
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
 import java.awt.event.ActionEvent
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
+import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel
 
 /**
  * User: Aleo Bakalov
  * Date: 08.01.14
  * Time: 11:09
  */
-class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: AirspaceController) {
+class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: AirspaceController) extends CeemPanel {
 
 	val form: AirspacePanel = new AirspacePanel
 	val panel: JPanel = form.getRootPanel
@@ -84,6 +85,7 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 				}
 			}
 		})
-
 	}
+
+	override def getRootPanel = panel
 }

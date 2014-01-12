@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools
 
-import javax.swing.JFrame
+import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
 
 /**
  * User: Aleo Bakalov
@@ -14,11 +14,15 @@ import javax.swing.JFrame
  */
 trait CeemRadarTool extends NamingTool with PanelTool {
 
-  var parentToolFrame : ToolFrame = _
+	var parentToolFrame: ToolFrame = _
 
-  def setParent(frame: ToolFrame) { parentToolFrame = frame }
+	def setParent(frame: ToolFrame) {
+		parentToolFrame = frame
+	}
 
-  def startFunction : Function1[ToolFrame, Unit]
+	def appFrame: AppCeemRadarFrame = AppCeemRadarFrame.getAppCeemRadarFrame
 
-  def endFunction : Function1[ToolFrame, Unit]
+	def startFunction: (ToolFrame) => Unit
+
+	def endFunction: (ToolFrame) => Unit
 }

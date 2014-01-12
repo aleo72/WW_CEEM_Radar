@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools
 
-import javax.swing.{JFrame}
+import javax.swing.JFrame
 import java.awt.{Dimension, BorderLayout}
 import java.awt.event.{WindowEvent, WindowAdapter}
 
@@ -16,36 +16,40 @@ import java.awt.event.{WindowEvent, WindowAdapter}
  * Date: 10.12.13
  * Time: 16:28
  */
-class ToolFrame(val ceemRadarTool : CeemRadarTool, val titleToolFrame : String) extends JFrame() {
+class ToolFrame(val ceemRadarTool: CeemRadarTool, val titleToolFrame: String) extends JFrame() {
 
-  ceemRadarTool.setParent(this)
+	def this(toolName: String, titleToolFrame: String){
+		this(Class.forName(toolName).newInstance().asInstanceOf[CeemRadarTool] , titleToolFrame)
+	}
 
-  protected val startFunction : Function1[ToolFrame, Unit] = ceemRadarTool.startFunction
-  protected val endFunction : Function1[ToolFrame, Unit] = ceemRadarTool.endFunction
+	ceemRadarTool.setParent(this)
 
-  this.setTitle(titleToolFrame)
+	protected val startFunction: (ToolFrame) => Unit = ceemRadarTool.startFunction
+	protected val endFunction: (ToolFrame) => Unit = ceemRadarTool.endFunction
 
-  this.setLocationByPlatform(true)
+	this.setTitle(titleToolFrame)
 
-  initToolFrameSettings()
+	this.setLocationByPlatform(true)
 
-  protected def initToolFrameSettings() {
-    this.setAlwaysOnTop(true)
-    this.setLayout(new BorderLayout)
-    this.add(ceemRadarTool.rootPanel, BorderLayout.CENTER)
-    this.pack
-    this.setMinimumSize(new Dimension(this.getWidth, this.getHeight))
-    if (startFunction != null) {
-      startFunction.apply(this)
-    }
-  }
+	initToolFrameSettings()
 
-  this.addWindowListener(new WindowAdapter {
-    override def windowClosing(e : WindowEvent){
-      if(endFunction != null){
-        endFunction.apply(ToolFrame.this)
-      }
-    }
-  })
+	protected def initToolFrameSettings() {
+		this.setAlwaysOnTop(true)
+		this.setLayout(new BorderLayout)
+		this.add(ceemRadarTool.rootPanel, BorderLayout.CENTER)
+		this.pack
+		this.setMinimumSize(new Dimension(this.getWidth, this.getHeight))
+		if (startFunction != null) {
+			startFunction.apply(this)
+		}
+	}
+
+	this.addWindowListener(new WindowAdapter {
+		override def windowClosing(e: WindowEvent) {
+			if (endFunction != null) {
+				endFunction.apply(ToolFrame.this)
+			}
+		}
+	})
 
 }

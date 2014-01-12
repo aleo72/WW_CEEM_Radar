@@ -30,6 +30,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
 
 import javax.swing.*;
@@ -60,7 +61,7 @@ public class AppCeemRadarFrame extends JFrame {
     protected AppMainPanel wwjPanel;
     protected StatisticsPanel statsPanel;
     protected JMenuBar menuBar;
-    private AirspaceLayer airspaceLayer = new AirspaceLayer();
+
     protected final Map<String,JFrame> toolsComponents = new HashMap<String, JFrame>();
 
     public AppCeemRadarFrame(boolean includeStatusBar) {
@@ -109,7 +110,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame( new CacheDownloadTool(wwjPanel.getWwd()) , ResourceString.get("frame_title_tool_cache"));
+                    ceemRadarTool = new ToolFrame( new CacheDownloadTool() , ResourceString.get("frame_title_tool_cache"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
                 }
@@ -128,7 +129,7 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(new ImportGeoNameTool() , ResourceString.get("frame_title_tool_geoName"));
+                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -146,7 +147,25 @@ public class AppCeemRadarFrame extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(new ViewGeoNameTool() , ResourceString.get("frame_title_tool_geoNameView"));
+                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("frame_title_tool_geoNameView"));
+                    ceemRadarTool.setVisible(true);
+                    toolsComponents.put(toolName, ceemRadarTool);
+                }
+            }
+        });
+
+        JMenuItem menuRadarManager = new JMenuItem("test");
+        menuRadarManager.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame ceemRadarTool = null;
+                String toolName = RadarManagerTool.class.getName();
+                if (toolsComponents.containsKey(toolName)){
+                    ceemRadarTool = toolsComponents.get(toolName);
+                    if(!ceemRadarTool.isVisible())
+                        ceemRadarTool.setVisible(true);
+                } else {
+                    ceemRadarTool = new ToolFrame(toolName , "test");
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -156,6 +175,7 @@ public class AppCeemRadarFrame extends JFrame {
         menuParent.add(menuDownloadCache);
         menuParent.add(menuGeoNameImporter);
         menuParent.add(menuGeoNameView);
+        menuParent.add(menuRadarManager);
     }
 
     protected void fillMenuView(JMenu menu) {
@@ -189,7 +209,7 @@ public class AppCeemRadarFrame extends JFrame {
         this.wwjPanel = this.createAppMainPanel(this.canvasSize, includeStatusBar);
         this.wwjPanel.setPreferredSize(canvasSize);
 
-        DomeView.add(wwjPanel.getWwd());
+//        DomeView.add(wwjPanel.getWwd());
 
         // Put the pieces together.
         this.getContentPane().add(wwjPanel, BorderLayout.CENTER);
@@ -269,9 +289,5 @@ public class AppCeemRadarFrame extends JFrame {
             this.wwjPanel.highlightController.dispose();
 
         this.wwjPanel.highlightController = controller;
-    }
-
-    public AirspaceLayer getAirspaceLayer() {
-        return airspaceLayer;
     }
 }
