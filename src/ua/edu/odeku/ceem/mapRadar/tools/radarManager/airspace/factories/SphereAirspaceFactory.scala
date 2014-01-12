@@ -25,7 +25,7 @@ import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
  */
 class SphereAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: Boolean) extends AirspaceFactory(radar, wwd, fitShapeToViewport) {
 
-	val DEFAULT_SHAPE_SIZE_METERS: Double = 200000.0
+	final val DEFAULT_SHAPE_SIZE_METERS: Double = 200000.0
 
 	def createAirspace(wwd: WorldWindow, fitShapeToViewport: Boolean): Airspace = {
 		val sphere: SphereAirspace = new SphereAirspace
@@ -46,7 +46,7 @@ class SphereAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: 
 
 	def initializeSphere(wwd: WorldWindow, sphere: SphereAirspace, fitShapeToViewport: Boolean) {
 		val position: Position = ShapeUtils.getNewShapePosition(wwd)
-		val sizeInMeters: Double = if (fitShapeToViewport) ShapeUtils.getViewportScaleFactor(wwd) else DEFAULT_SHAPE_SIZE_METERS
+		val sizeInMeters: Double = if (fitShapeToViewport) ShapeUtils.getViewportScaleFactor(wwd) else radar.coverage
 		sphere.setLocation(new LatLon(position))
 		sphere.setRadius(sizeInMeters / 2.0)
 	}

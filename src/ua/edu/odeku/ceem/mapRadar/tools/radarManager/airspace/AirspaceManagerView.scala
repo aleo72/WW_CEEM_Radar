@@ -95,6 +95,6 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 	override def getRootPanel = panel
 
 	def createRadar: Radar = {
-		new Radar(659, 5646, 54, 455, 154) // TODO Создать фрейм для отображения
+		new Radar(6590000, 56460000, 540000, 455000, 1) // TODO Создать фрейм для отображения
 	}
 }
