@@ -68,7 +68,20 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 	def selectedEntry: AirspaceEntry = _selectedEntry
 
-	def selectedEntry_=(value: AirspaceEntry): Unit = _selectedEntry = value
+	def selectedEntry_=(value: AirspaceEntry): Unit = {
+		if (_selectedEntry != null) {
+			if (_selectedEntry != value && _selectedEntry.editing) {
+				this.selectionEditing = false
+			}
+			this._selectedEntry.selected = false
+		}
+
+		_selectedEntry = value
+
+		if (this._selectedEntry != null) {
+			this._selectedEntry.selected = true
+		}
+	}
 
 	def selectionEditing = this.selectedEntry != null && this.selectedEntry.editing
 

@@ -1,6 +1,6 @@
 /*
  * Odessa State environmental University
- * Copyright (C) 2013
+ * Copyright (C) 2014
  */
 
 package ua.edu.odeku.ceem.mapRadar.tools
@@ -34,10 +34,10 @@ class ToolFrame(val ceemRadarTool: CeemRadarTool, val titleToolFrame: String) ex
 	initToolFrameSettings()
 
 	protected def initToolFrameSettings() {
-		this.setAlwaysOnTop(true)
+		//		this.setAlwaysOnTop(true)
 		this.setLayout(new BorderLayout)
 		this.add(ceemRadarTool.rootPanel, BorderLayout.CENTER)
-		this.pack
+		this.pack()
 		this.setMinimumSize(new Dimension(this.getWidth, this.getHeight))
 		if (startFunction != null) {
 			startFunction.apply(this)
