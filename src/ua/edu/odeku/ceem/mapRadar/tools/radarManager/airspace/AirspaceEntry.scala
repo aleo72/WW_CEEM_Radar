@@ -6,75 +6,78 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 
 import gov.nasa.worldwind.WWObjectImpl
-import gov.nasa.worldwind.render.airspaces.{AirspaceAttributes, Airspace}
-import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import gov.nasa.worldwind.render.airspaces.AirspaceAttributes
 import gov.nasa.worldwind.avlist.AVKey
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
 
 /**
  * User: Aleo Bakalov
  * Date: 08.01.14
  * Time: 11:04
  */
-class AirspaceEntry(val airspace: Airspace, val editor: AirspaceEditor) extends WWObjectImpl {
+class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 
-  val attributes: AirspaceAttributes = airspace.getAttributes
-  private var _editing: Boolean = false
-  private var _selected: Boolean = false
-  var _intersecting: Boolean = false
+	val airspace = factory.airspace
+	val editor = factory.editor
 
-  def editing = _editing
+	val attributes: AirspaceAttributes = airspace.getAttributes
+	private var _editing: Boolean = false
+	private var _selected: Boolean = false
+	var _intersecting: Boolean = false
 
-  def editing_=(value : Boolean) : Unit = {
-    this._editing = value
-    this.updateAttributes()
-  }
+	def editing = _editing
 
-  def selected = _selected
+	def editing_=(value: Boolean): Unit = {
+		this._editing = value
+		this.updateAttributes()
+	}
 
-  def selected_=(value : Boolean) : Unit = {
-    this._selected = value
-    this.updateAttributes()
-  }
+	def selected = _selected
 
-  def intersecting = _intersecting
+	def selected_=(value: Boolean): Unit = {
+		this._selected = value
+		this.updateAttributes()
+	}
 
-  def intersecting_=(value: Boolean) : Unit = {
-    this._intersecting = value
-    this.updateAttributes()
-  }
+	def intersecting = _intersecting
 
-  def name : String = this.getStringValue(AVKey.DISPLAY_NAME)
+	def intersecting_=(value: Boolean): Unit = {
+		this._intersecting = value
+		this.updateAttributes()
+	}
 
-  def name_=(value : String) : Unit = this.setValue(AVKey.DISPLAY_NAME, value)
+	def name: String = this.getStringValue(AVKey.DISPLAY_NAME)
 
-  def updateAttributes() {
-    if (this.selected && this.intersecting ){
-      this.airspace.setAttributes(getSelectionAndIntersectionAttributes)
-    }
-    else if (this.selected) {
-      this.airspace.setAttributes(getSelectionAttributes)
-    }
-    else if (this.intersecting) {
-      this.airspace.setAttributes(getIntersectionAttributes)
-    }
-    else {
-      this.airspace.setAttributes(this.attributes)
-    }
-  }
+	def name_=(value: String): Unit = this.setValue(AVKey.DISPLAY_NAME, value)
 
-  override def toString = this.name
+	def updateAttributes() {
+		if (this.selected && this.intersecting) {
+			this.airspace.setAttributes(getSelectionAndIntersectionAttributes)
+		}
+		else if (this.selected) {
+			this.airspace.setAttributes(getSelectionAttributes)
+		}
+		else if (this.intersecting) {
+			this.airspace.setAttributes(getIntersectionAttributes)
+		}
+		else {
+			this.airspace.setAttributes(this.attributes)
+		}
+	}
 
-  override def getValue(key : String) : AnyRef = {
-    val value = super.getValue(key)
-    if (value == null) this.airspace.getValue(key) else value
-  }
+	override def toString = this.name
 
-  override def setValue(key : String, value : AnyRef) : AnyRef = {
-    if (AVKey.DISPLAY_NAME == key) {
-      this.airspace.setValue(key, value)
-    }
-    else {
-      super.setValue(key, value)
-    }
-  }
+	override def getValue(key: String): AnyRef = {
+		val value = super.getValue(key)
+		if (value == null) this.airspace.getValue(key) else value
+	}
+
+	override def setValue(key: String, value: AnyRef): AnyRef = {
+		if (AVKey.DISPLAY_NAME == key) {
+			this.airspace.setValue(key, value)
+		}
+		else {
+			super.setValue(key, value)
+		}
+	}
 }

@@ -11,6 +11,7 @@ import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
 import java.awt.event.ActionEvent
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel
+import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 
 /**
  * User: Aleo Bakalov
@@ -41,7 +42,9 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 		this.ignoreSelectEvents = false
 	}
 
-	def getSelectedFactory: AirspaceFactory = SphereAirspaceFactory.obj
+	//	def selectedFactory: AirspaceFactory = {
+	//		SphereAirspaceFactory.obj
+	//	}
 
 	def initComponents() {
 
@@ -90,4 +93,8 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 	}
 
 	override def getRootPanel = panel
+
+	def createRadar: Radar = {
+		new Radar(659, 5646, 54, 455, 154) // TODO Создать фрейм для отображения
+	}
 }

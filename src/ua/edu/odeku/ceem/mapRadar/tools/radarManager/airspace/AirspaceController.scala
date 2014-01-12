@@ -14,6 +14,8 @@ import gov.nasa.worldwind.render.airspaces.Airspace
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 import scala.collection.mutable.ArrayBuffer
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
+import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 
 /**
  * User: Aleo Bakalov
@@ -159,7 +161,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	def actionPerformed(e: ActionEvent): Unit = {
 		if (this.enabled) {
 			e.getActionCommand match {
-				case NEW_AIRSPACE => this.createNewEntry(this.view.getSelectedFactory)
+				case NEW_AIRSPACE => this.createNewEntry(this.view.createRadar)
 				case CLEAR_SELECTION => this.selectEntry(null, updateView = true)
 				case SIZE_NEW_SHAPES_TO_VIEWPORT =>
 					e.getSource match {
@@ -216,10 +218,11 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 		}
 	}
 
-	def createNewEntry(factory: AirspaceFactory) {
-		val airspace: Airspace = factory.createAirspace(ceemTool.appFrame.getWwd, this.resizeNewShapesToViewport)
-		val editor: AirspaceEditor = factory.createEditor(airspace)
-		val entry: AirspaceEntry = new AirspaceEntry(airspace, editor)
+	def createNewEntry(radar: Radar) {
+
+		val factory = new SphereAirspaceFactory(radar, ceemTool.appFrame.getWwd, this.resizeNewShapesToViewport)
+
+		val entry: AirspaceEntry = new AirspaceEntry(factory)
 
 		this.addEntry(entry)
 
