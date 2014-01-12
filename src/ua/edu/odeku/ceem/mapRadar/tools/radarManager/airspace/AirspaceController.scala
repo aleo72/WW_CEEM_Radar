@@ -8,7 +8,6 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 import gov.nasa.worldwind.WWObjectImpl
 import java.awt.event.{MouseEvent, ActionEvent, MouseListener, ActionListener}
 import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditor, AirspaceEditorController, AirspaceEditEvent, AirspaceEditListener}
-import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
 import javax.swing.{AbstractButton, JFileChooser}
 import gov.nasa.worldwind.pick.PickedObjectList
 import gov.nasa.worldwind.render.airspaces.Airspace
@@ -176,7 +175,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 				val pickedEntry = this.entryFor(airspace)
 				if (pickedEntry != null) {
 					if (this.selectedEntry != pickedEntry) {
-						this.selectEntry(pickedEntry, true)
+						this.selectEntry(pickedEntry, updateView = true)
 					}
 				}
 			case _ =>
@@ -211,7 +210,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 		this.addEntry(entry)
 
-		this.selectEntry(entry, true)
+		this.selectEntry(entry, updateView = true)
 	}
 
 	def removeEntries(entries: Iterable[_ <: AirspaceEntry]) {
@@ -234,7 +233,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	def removeEntry(entry: AirspaceEntry) {
 		entry.editor.removeEditListener(this)
 		if (this.selectedEntry == entry) {
-			this.selectEntry(null, true)
+			this.selectEntry(null, updateView = true)
 		}
 		this.model.removeEntry(entry)
 		this.updateShapeIntersection()
@@ -283,8 +282,10 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 	def entriesFor(indices: Array[Int]): Array[AirspaceEntry] = {
 		val entries = new ArrayBuffer[AirspaceEntry](indices.length)
-		for (i: Int <- 0 to indices.length) {
-			entries += this.model.getEntry(indices(i))
+		if (indices.length > 0) {
+			for (i: Int <- 0 until indices.length) {
+				entries += this.model.getEntry(indices(i))
+			}
 		}
 		entries.toArray
 	}

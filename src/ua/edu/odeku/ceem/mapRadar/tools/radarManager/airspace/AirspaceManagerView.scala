@@ -23,6 +23,8 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 	val panel: JPanel = form.getRootPanel
 	var ignoreSelectEvents: Boolean = false
 
+	this.initComponents()
+
 	def selectedIndices: Array[Int] = this.form.table.getSelectedRows
 
 	def selectedIndices_=(indices: Array[Int]): Unit = {
