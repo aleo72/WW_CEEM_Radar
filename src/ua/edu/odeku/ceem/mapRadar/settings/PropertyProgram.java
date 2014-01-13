@@ -19,6 +19,11 @@ public class PropertyProgram {
      */
     private final static Locale CURRENT_LOCALE = new Locale("ru", "RU");
 
+    /**
+     * TODO флаг на начальную инициализацию базы данных в программе
+     */
+    public final static boolean INIT_DB = false;
+
     static {
         Locale.setDefault(CURRENT_LOCALE);
     }
