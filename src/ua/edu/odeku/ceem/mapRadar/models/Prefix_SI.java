@@ -43,5 +43,7 @@ public enum Prefix_SI {
         return name + "(10^"+degree+")";
     }
 
-
+    public double pow(){
+        return Math.pow(10, degree);
+    }
 }

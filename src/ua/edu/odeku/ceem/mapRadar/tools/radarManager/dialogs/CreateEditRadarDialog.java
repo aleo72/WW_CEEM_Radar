@@ -21,6 +21,8 @@ public class CreateEditRadarDialog extends JDialog {
     public JButton buttonCancel;
     public RadarEditorForm radarEditorForm;
 
+    private boolean isOK = false;
+
     public CreateEditRadarDialog() {
         $$$setupUI$$$();
         setContentPane(contentPane);
@@ -62,6 +64,7 @@ public class CreateEditRadarDialog extends JDialog {
     public void onOK() {
 // add your code here
         dispose();
+        this.isOK = true;
     }
 
     public void onCancel() {
@@ -70,7 +73,10 @@ public class CreateEditRadarDialog extends JDialog {
     }
 
     public Radar getRadar() {
-        return radarEditorForm.getRadar();
+        if (isOK)
+            return radarEditorForm.getRadar();
+        else
+            return null;
     }
 
     public static void main(String[] args) {
