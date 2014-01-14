@@ -38,7 +38,7 @@ class SphereAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: 
 	}
 
 	def createEditor(airspace: Airspace): AirspaceEditor = {
-		val editor: SphereAirspaceEditor = new SphereAirspaceEditor
+		val editor: SphereAirspaceEditor = new SphereAirspaceEditor(new RadarAirspaceControlPointRenderer)
 		editor.setSphere(airspace.asInstanceOf[SphereAirspace])
 		setEditorAttributes(editor)
 		editor
