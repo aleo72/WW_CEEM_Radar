@@ -52,7 +52,7 @@ class SphereAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: 
 	}
 
 	override def toString = {
-		"Sphere"
+		"Airspace "
 	}
 }
 
