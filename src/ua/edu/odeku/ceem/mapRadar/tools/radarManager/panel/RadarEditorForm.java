@@ -34,6 +34,7 @@ public class RadarEditorForm {
     private JComboBox<Prefix_SI> effectiveAreaComboBox;
     private JComboBox<Prefix_SI> scatteringCrossSectionComboBox;
     private JComboBox<Prefix_SI> minimumReceiverSensitivityComboBox;
+    private JSpinner altitudeSpinner;
 
     public RadarEditorForm() {
         $$$setupUI$$$();
@@ -68,7 +69,7 @@ public class RadarEditorForm {
             double tranmotter = Double.parseDouble(transmotterPowerSpinner.getValue().toString())
                     * ((Prefix_SI) transmotterPowerComboBox.getSelectedItem()).pow();
 
-             radar = new Radar(tranmotter, gain, effective, scattening, minimum);
+            radar = new Radar(tranmotter, gain, effective, scattening, minimum);
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
@@ -129,42 +130,53 @@ public class RadarEditorForm {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:noGrow,left:4dlu:noGrow,fill:max(d;60px):grow,left:4dlu:noGrow,fill:max(d;60px):noGrow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:max(d;4px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:max(d;100px):grow,left:4dlu:noGrow,fill:max(d;70px):noGrow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        CellConstraints cc = new CellConstraints();
+        panel1.add(panel2, cc.xy(3, 3, CellConstraints.DEFAULT, CellConstraints.FILL));
         final JLabel label1 = new JLabel();
         this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("strings").getString("lavel_radarManager_editor_transmitterPower"));
-        CellConstraints cc = new CellConstraints();
-        panel1.add(label1, cc.xy(3, 3, CellConstraints.RIGHT, CellConstraints.DEFAULT));
+        panel2.add(label1, cc.xy(1, 1, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         final JLabel label2 = new JLabel();
         this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("strings").getString("label_radarManager_antenaGain"));
-        panel1.add(label2, cc.xy(3, 5, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        transmotterPowerSpinner = new JSpinner();
-        panel1.add(transmotterPowerSpinner, cc.xy(5, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
-        antenaGainSpinner = new JSpinner();
-        panel1.add(antenaGainSpinner, cc.xy(5, 5, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(label2, cc.xy(1, 3, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         final JLabel label3 = new JLabel();
         this.$$$loadLabelText$$$(label3, ResourceBundle.getBundle("strings").getString("label_radarManager_effectiveArea"));
-        panel1.add(label3, cc.xy(3, 7, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        effectiveAreaSpinner = new JSpinner();
-        effectiveAreaSpinner.setEnabled(true);
-        panel1.add(effectiveAreaSpinner, cc.xy(5, 7, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(label3, cc.xy(1, 5, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         final JLabel label4 = new JLabel();
         this.$$$loadLabelText$$$(label4, ResourceBundle.getBundle("strings").getString("label_radarManager_editor"));
-        panel1.add(label4, cc.xy(3, 9, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        scatteringCrossSectionSpinner = new JSpinner();
-        panel1.add(scatteringCrossSectionSpinner, cc.xy(5, 9, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(label4, cc.xy(1, 7, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         final JLabel label5 = new JLabel();
         this.$$$loadLabelText$$$(label5, ResourceBundle.getBundle("strings").getString("label_radarManager_editor_minimumReceiverSensitivity"));
-        panel1.add(label5, cc.xy(3, 11, CellConstraints.RIGHT, CellConstraints.DEFAULT));
+        panel2.add(label5, cc.xy(1, 9, CellConstraints.RIGHT, CellConstraints.DEFAULT));
+        final JLabel label6 = new JLabel();
+        this.$$$loadLabelText$$$(label6, ResourceBundle.getBundle("strings").getString("label_airspace_radius"));
+        panel2.add(label6, cc.xy(1, 11, CellConstraints.RIGHT, CellConstraints.FILL));
+        final JLabel label7 = new JLabel();
+        this.$$$loadLabelText$$$(label7, ResourceBundle.getBundle("strings").getString("label_airspace_Altitude"));
+        panel2.add(label7, cc.xy(1, 13, CellConstraints.RIGHT, CellConstraints.FILL));
+        transmotterPowerSpinner = new JSpinner();
+        panel2.add(transmotterPowerSpinner, cc.xy(3, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(transmotterPowerComboBox, cc.xy(5, 1));
+        antenaGainSpinner = new JSpinner();
+        panel2.add(antenaGainSpinner, cc.xy(3, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(antenaGainComboBox, cc.xy(5, 3));
+        effectiveAreaSpinner = new JSpinner();
+        effectiveAreaSpinner.setEnabled(true);
+        panel2.add(effectiveAreaSpinner, cc.xy(3, 5, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(effectiveAreaComboBox, cc.xy(5, 5));
+        scatteringCrossSectionSpinner = new JSpinner();
+        panel2.add(scatteringCrossSectionSpinner, cc.xy(3, 7, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(scatteringCrossSectionComboBox, cc.xy(5, 7));
         minimumReceiverSensitivitySpinner = new JSpinner();
-        panel1.add(minimumReceiverSensitivitySpinner, cc.xy(5, 11, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(minimumReceiverSensitivitySpinner, cc.xy(3, 9, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel2.add(minimumReceiverSensitivityComboBox, cc.xy(5, 9));
         coverageTextField = new JTextField();
         coverageTextField.setEditable(false);
-        panel1.add(coverageTextField, cc.xy(5, 13, CellConstraints.FILL, CellConstraints.DEFAULT));
-        panel1.add(transmotterPowerComboBox, cc.xy(7, 3));
-        panel1.add(antenaGainComboBox, cc.xy(7, 5));
-        panel1.add(effectiveAreaComboBox, cc.xy(7, 7));
-        panel1.add(scatteringCrossSectionComboBox, cc.xy(7, 9));
-        panel1.add(minimumReceiverSensitivityComboBox, cc.xy(7, 11));
+        panel2.add(coverageTextField, cc.xy(3, 11, CellConstraints.FILL, CellConstraints.DEFAULT));
+        altitudeSpinner = new JSpinner();
+        panel2.add(altitudeSpinner, cc.xy(3, 13, CellConstraints.FILL, CellConstraints.DEFAULT));
     }
 
     /**
