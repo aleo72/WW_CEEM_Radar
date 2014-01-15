@@ -15,7 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class CreateEditRadarDialog extends JDialog {
+public class CreateEditRadarDialog extends JFrame {
     private JPanel contentPane;
     public JButton buttonOK;
     public JButton buttonCancel;
@@ -26,7 +26,7 @@ public class CreateEditRadarDialog extends JDialog {
     public CreateEditRadarDialog() {
         $$$setupUI$$$();
         setContentPane(contentPane);
-        setModal(true);
+//        setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(new ActionListener() {
@@ -57,8 +57,8 @@ public class CreateEditRadarDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         this.pack();
-        this.setMinimumSize(new Dimension(this.getWidth() + 250, this.getHeight()));
-        this.setMaximumSize(new Dimension(this.getWidth() + 250, this.getHeight()));
+        this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+        this.setMaximumSize(new Dimension(this.getWidth(), this.getHeight()));
     }
 
     public void onOK() {

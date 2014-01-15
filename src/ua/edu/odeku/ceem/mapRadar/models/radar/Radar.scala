@@ -15,12 +15,14 @@ package ua.edu.odeku.ceem.mapRadar.models.radar
  * @param effectiveArea эффективная площадь антенны
  * @param scatteringCrossSection эффективная площадь рассеяния цели
  * @param minimumReceiverSensitivity минимальная чувствительность приёмника.
+ * @param altitude высота над землей
  */
 class Radar(var transmitterPower: Double,
 			var antennaGain: Double,
 			var effectiveArea: Double,
 			var scatteringCrossSection: Double,
-			var minimumReceiverSensitivity: Double) {
+			var minimumReceiverSensitivity: Double,
+			var altitude: Int) {
 
 	/**
 	 * <p>D max = sqrt(sqrt( Pt * Gt * Ar * q / Pr.min * (4П)^2^ ))</p>
@@ -34,6 +36,29 @@ class Radar(var transmitterPower: Double,
 				/ ((4 * math.Pi) * (4 * math.Pi) * minimumReceiverSensitivity)
 			, 0.25
 		)
+	}
+
+	/**
+	 * Метод обновляет все переменные
+	 * @param transmitterPower мощность передатчика;
+	 * @param antennaGain коэффициент направленного действия антенны;
+	 * @param effectiveArea эффективная площадь антенны
+	 * @param scatteringCrossSection эффективная площадь рассеяния цели
+	 * @param minimumReceiverSensitivity минимальная чувствительность приёмника.
+	 * @param altitude высота над землей
+	 */
+	def update(transmitterPower: Double,
+			   antennaGain: Double,
+			   effectiveArea: Double,
+			   scatteringCrossSection: Double,
+			   minimumReceiverSensitivity: Double,
+			   altitude: Int) {
+		this.transmitterPower = transmitterPower
+		this.antennaGain = antennaGain
+		this.effectiveArea = effectiveArea
+		this.scatteringCrossSection = scatteringCrossSection
+		this.minimumReceiverSensitivity = this.minimumReceiverSensitivity
+		this.altitude = altitude
 	}
 
 	def isValid = coverage > 0

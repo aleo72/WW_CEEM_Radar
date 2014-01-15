@@ -23,18 +23,22 @@ import java.util.ResourceBundle;
  */
 public class RadarEditorForm {
     private JPanel panel1;
-    public JSpinner transmotterPowerSpinner;
-    public JSpinner antenaGainSpinner;
-    public JSpinner effectiveAreaSpinner;
-    public JSpinner scatteringCrossSectionSpinner;
-    public JSpinner minimumReceiverSensitivitySpinner;
-    public JTextField coverageTextField;
+    private JSpinner transmotterPowerSpinner;
+    private JSpinner antenaGainSpinner;
+    private JSpinner effectiveAreaSpinner;
+    private JSpinner scatteringCrossSectionSpinner;
+    private JSpinner minimumReceiverSensitivitySpinner;
+    private JTextField coverageTextField;
     private JComboBox<Prefix_SI> transmotterPowerComboBox;
     private JComboBox<Prefix_SI> antenaGainComboBox;
     private JComboBox<Prefix_SI> effectiveAreaComboBox;
     private JComboBox<Prefix_SI> scatteringCrossSectionComboBox;
     private JComboBox<Prefix_SI> minimumReceiverSensitivityComboBox;
     private JSpinner altitudeSpinner;
+    private JTextField lanTextField;
+    private JTextField lonTextField;
+
+    private Radar _radar = null;
 
     public RadarEditorForm() {
         $$$setupUI$$$();
@@ -56,7 +60,11 @@ public class RadarEditorForm {
     }
 
     public Radar getRadar() {
-        Radar radar = null;
+        updateRadar();
+        return _radar;
+    }
+
+    private void updateRadar() {
         try {
             double gain = Double.parseDouble(antenaGainSpinner.getValue().toString())
                     * ((Prefix_SI) antenaGainComboBox.getSelectedItem()).pow();
@@ -68,12 +76,18 @@ public class RadarEditorForm {
                     * ((Prefix_SI) scatteringCrossSectionComboBox.getSelectedItem()).pow();
             double tranmotter = Double.parseDouble(transmotterPowerSpinner.getValue().toString())
                     * ((Prefix_SI) transmotterPowerComboBox.getSelectedItem()).pow();
+            int altitude = Integer.parseInt(altitudeSpinner.getValue().toString());
 
-            radar = new Radar(tranmotter, gain, effective, scattening, minimum);
+            if (_radar == null) {
+                _radar = new Radar(tranmotter, gain, effective, scattening, minimum, altitude);
+            } else {
+                _radar.update(tranmotter, gain, effective, scattening, minimum, altitude);
+            }
+
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
+            _radar = null;  // TODO Нужноли это или нет?
         }
-        return radar;
     }
 
     private ChangeListener valueChangeListener = new ChangeListener() {
@@ -130,7 +144,7 @@ public class RadarEditorForm {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:max(d;4px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:max(d;4px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:max(d;100px):grow,left:4dlu:noGrow,fill:max(d;70px):noGrow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         CellConstraints cc = new CellConstraints();
@@ -177,6 +191,21 @@ public class RadarEditorForm {
         panel2.add(coverageTextField, cc.xy(3, 11, CellConstraints.FILL, CellConstraints.DEFAULT));
         altitudeSpinner = new JSpinner();
         panel2.add(altitudeSpinner, cc.xy(3, 13, CellConstraints.FILL, CellConstraints.DEFAULT));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new FormLayout("fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow"));
+        panel1.add(panel3, cc.xy(3, 5, CellConstraints.FILL, CellConstraints.DEFAULT));
+        final JLabel label8 = new JLabel();
+        this.$$$loadLabelText$$$(label8, ResourceBundle.getBundle("strings").getString("label_geoName_latitude"));
+        panel3.add(label8, cc.xy(1, 2, CellConstraints.RIGHT, CellConstraints.DEFAULT));
+        lanTextField = new JTextField();
+        lanTextField.setEditable(false);
+        panel3.add(lanTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
+        final JLabel label9 = new JLabel();
+        this.$$$loadLabelText$$$(label9, ResourceBundle.getBundle("strings").getString("field_geoName_longitude"));
+        panel3.add(label9, cc.xy(5, 2, CellConstraints.RIGHT, CellConstraints.DEFAULT));
+        lonTextField = new JTextField();
+        lonTextField.setEditable(false);
+        panel3.add(lonTextField, cc.xy(7, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
     }
 
     /**
