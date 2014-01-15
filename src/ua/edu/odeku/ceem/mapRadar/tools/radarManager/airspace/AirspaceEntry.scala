@@ -9,7 +9,6 @@ import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.render.airspaces.AirspaceAttributes
 import gov.nasa.worldwind.avlist.AVKey
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
-import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 
 /**
  * User: Aleo Bakalov
@@ -84,8 +83,23 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 }
 
 object AirspaceEntry {
-	def apply(radar: Radar, wwd: WorldWindow ) ={
-// TODO осуществить создание
+
+	/**
+	 * Метод воздаст объект AirspaceEntry который будет обработан, через метод переданый из котроллера
+	 * @param wwd объект WindWindow
+	 * @param methodOfController метод из котроллера, которому необходимо предать объект AirspaceEntry,
+	 *                           для того что бы он был зарегестрирован AirspaceController
+	 */
+	def apply(wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
+		/*
+		Алгоритм действий:
+		1) Создаем диалог (фрейм)
+		2) Передаем ему эти же праметры
+		3) Данный диалог, после нажатия кнопки создать, создает AirspaceEntry и регестрирует его по средством метода
+		4) Airspace создается, но окно не закрывается. Airspace можно редактировать
+
+		Airspace получает новое поле Radar
+		 */
 		null
 	}
 }

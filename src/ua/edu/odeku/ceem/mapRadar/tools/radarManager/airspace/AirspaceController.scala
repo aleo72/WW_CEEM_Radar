@@ -218,17 +218,16 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 		}
 	}
 
-	def createNewEntry() {
-		// TODO Перейти на новое создание AirspaceEntry!!!!
-//		if (radar != null && radar.isValid){
-//			val factory = new SphereAirspaceFactory(radar, ceemTool.appFrame.getWwd, this.resizeNewShapesToViewport)
-//
-//			val entry: AirspaceEntry = new AirspaceEntry(factory)
-//
-//			this.addEntry(entry)
-//
-//			this.selectEntry(entry, updateView = true)
-//		}
+	/**
+	 * Метод дает сигнал на открытие формы для создания нового Airspace
+	 */
+	private def createNewEntry() {
+		AirspaceEntry(ceemTool.appFrame.getWwd, createNewEntry)
+	}
+
+	def createNewEntry(entry: AirspaceEntry) {
+		this.addEntry(entry)
+		this.selectEntry(entry, updateView = true)
 	}
 
 	def removeEntries(entries: Iterable[_ <: AirspaceEntry]) {

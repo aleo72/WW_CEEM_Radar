@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarDialog
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
 
 /**
  * User: Aleo Bakalov
@@ -96,7 +96,7 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 	override def getRootPanel = panel
 
 	def createRadar: Radar = {
-		val dialog = new CreateEditRadarDialog
+		val dialog = new CreateEditRadarFrame
 		dialog.setVisible(true)
 		dialog.getRadar
 	}
