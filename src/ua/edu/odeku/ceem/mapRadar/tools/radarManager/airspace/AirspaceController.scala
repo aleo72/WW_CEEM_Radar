@@ -161,7 +161,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	def actionPerformed(e: ActionEvent): Unit = {
 		if (this.enabled) {
 			e.getActionCommand match {
-				case NEW_AIRSPACE => this.createNewEntry(this.view.createRadar)
+				case NEW_AIRSPACE => this.createNewEntry()
 				case CLEAR_SELECTION => this.selectEntry(null, updateView = true)
 				case SIZE_NEW_SHAPES_TO_VIEWPORT =>
 					e.getSource match {
@@ -218,16 +218,17 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 		}
 	}
 
-	def createNewEntry(radar: Radar) {
-		if (radar != null && radar.isValid){
-			val factory = new SphereAirspaceFactory(radar, ceemTool.appFrame.getWwd, this.resizeNewShapesToViewport)
-
-			val entry: AirspaceEntry = new AirspaceEntry(factory)
-
-			this.addEntry(entry)
-
-			this.selectEntry(entry, updateView = true)
-		}
+	def createNewEntry() {
+		// TODO Перейти на новое создание AirspaceEntry!!!!
+//		if (radar != null && radar.isValid){
+//			val factory = new SphereAirspaceFactory(radar, ceemTool.appFrame.getWwd, this.resizeNewShapesToViewport)
+//
+//			val entry: AirspaceEntry = new AirspaceEntry(factory)
+//
+//			this.addEntry(entry)
+//
+//			this.selectEntry(entry, updateView = true)
+//		}
 	}
 
 	def removeEntries(entries: Iterable[_ <: AirspaceEntry]) {

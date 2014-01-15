@@ -5,10 +5,11 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 
-import gov.nasa.worldwind.WWObjectImpl
+import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.render.airspaces.AirspaceAttributes
 import gov.nasa.worldwind.avlist.AVKey
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 
 /**
  * User: Aleo Bakalov
@@ -79,5 +80,12 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 		else {
 			super.setValue(key, value)
 		}
+	}
+}
+
+object AirspaceEntry {
+	def apply(radar: Radar, wwd: WorldWindow ) ={
+// TODO осуществить создание
+		null
 	}
 }
