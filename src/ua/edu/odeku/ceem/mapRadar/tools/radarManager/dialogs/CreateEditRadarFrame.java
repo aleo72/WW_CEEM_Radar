@@ -11,6 +11,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.AirspaceEntry;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm;
 
 import javax.swing.*;
@@ -26,8 +27,10 @@ public class CreateEditRadarFrame extends JFrame {
     private JButton buttonDelete;
 
     private boolean isOK = false;
+    private AirspaceEntry airspaceEntry;
 
-    public CreateEditRadarFrame() {
+    public CreateEditRadarFrame(AirspaceEntry airspaceEntry) {
+        this.airspaceEntry = airspaceEntry;
         $$$setupUI$$$();
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonSave);
@@ -66,22 +69,15 @@ public class CreateEditRadarFrame extends JFrame {
         dispose();
     }
 
-    public Radar getRadar() {
-        if (isOK)
-            return radarEditorForm.getRadar();
-        else
-            return null;
-    }
-
     public static void main(String[] args) {
-        CreateEditRadarFrame dialog = new CreateEditRadarFrame();
+        CreateEditRadarFrame dialog = new CreateEditRadarFrame(null);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }
 
     private void createUIComponents() {
-        radarEditorForm = new RadarEditorForm();
+        radarEditorForm = new RadarEditorForm(airspaceEntry);
     }
 
     /**

@@ -9,6 +9,7 @@ import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.render.airspaces.AirspaceAttributes
 import gov.nasa.worldwind.avlist.AVKey
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 
 /**
  * User: Aleo Bakalov
@@ -24,6 +25,10 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 	private var _editing: Boolean = false
 	private var _selected: Boolean = false
 	var _intersecting: Boolean = false
+	private var _radar : Radar = _
+
+	def radar = _radar
+	def radar_=(value: Radar) : Unit = _radar = value
 
 	def editing = _editing
 
@@ -100,6 +105,6 @@ object AirspaceEntry {
 
 		Airspace получает новое поле Radar
 		 */
-		null
+//		null
 	}
 }
