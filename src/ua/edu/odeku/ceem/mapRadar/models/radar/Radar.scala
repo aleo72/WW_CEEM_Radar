@@ -30,12 +30,12 @@ class Radar(var transmitterPower: Double,
 	 * <a href="http://ru.wikipedia.org/wiki/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%BE%D0%B5_%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D1%80%D0%B0%D0%B4%D0%B8%D0%BE%D0%BB%D0%BE%D0%BA%D0%B0%D1%86%D0%B8%D0%B8">wiki</a>
 	 * @return Дальность действия радиолокатора с пассивным ответом
 	 */
-	def coverage = {
+	def coverage: Double = {
 		math.pow(
 			(transmitterPower * antennaGain * effectiveArea * scatteringCrossSection)
 				/ ((4 * math.Pi) * (4 * math.Pi) * minimumReceiverSensitivity)
 			, 0.25
-		)
+		) / 2
 	}
 
 	/**
@@ -52,13 +52,15 @@ class Radar(var transmitterPower: Double,
 			   effectiveArea: Double,
 			   scatteringCrossSection: Double,
 			   minimumReceiverSensitivity: Double,
-			   altitude: Int) {
+			   altitude: Int): Radar = {
 		this.transmitterPower = transmitterPower
 		this.antennaGain = antennaGain
 		this.effectiveArea = effectiveArea
 		this.scatteringCrossSection = scatteringCrossSection
 		this.minimumReceiverSensitivity = this.minimumReceiverSensitivity
 		this.altitude = altitude
+
+		this
 	}
 
 	def isValid = coverage > 0
