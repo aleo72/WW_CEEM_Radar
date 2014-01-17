@@ -94,10 +94,4 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 	}
 
 	override def getRootPanel = panel
-
-	def createRadar: Radar = {
-		val dialog = new CreateEditRadarFrame
-		dialog.setVisible(true)
-		dialog.getRadar
-	}
 }
