@@ -6,7 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry
 
 import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
-import gov.nasa.worldwind.render.airspaces.{Airspace, AirspaceAttributes}
+import gov.nasa.worldwind.render.airspaces.{SphereAirspace, Airspace, AirspaceAttributes}
 import gov.nasa.worldwind.avlist.AVKey
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
@@ -31,7 +31,10 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 	private var _radar : Radar = _
 
 	def radar = _radar
-	def radar_=(value: Radar) : Unit = _radar = value
+	def radar_=(value: Radar) : Unit = {
+		_radar = value
+		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.coverage)
+	}
 
 	def editing = _editing
 

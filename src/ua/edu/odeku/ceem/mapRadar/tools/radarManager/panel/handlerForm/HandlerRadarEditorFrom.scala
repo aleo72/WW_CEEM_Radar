@@ -24,8 +24,9 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAi
 class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: AirspaceEntryMessage) {
 
 	private var _airspaceEntry: AirspaceEntry = null
-	private var methodOfController: AirspaceEntry => Unit = message.register
+	private var methodOfController: AirspaceEntry => Unit = message.method
 	private var radar: Radar = _
+	private var savedNewAirspaceEntry = true // флаг на надобность сохранить как новый объект
 
 	message match {
 		case message: CreateAirspaceEntryMessage =>
@@ -45,6 +46,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	updateLocation()
 
 	def createAirspaceEntry(): AirspaceEntry = {
+		savedNewAirspaceEntry = false
 		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
 	}
 
@@ -175,6 +177,16 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	val buttonActionListener = new ActionListener {
 		def actionPerformed(e: ActionEvent): Unit = {
 			println(e.getActionCommand)
+			e.getActionCommand match {
+				case "saveAirspace" =>
+					airspaceEntry.radar = updateRadar(radar)
+					if(!savedNewAirspaceEntry){
+						message.method.apply(airspaceEntry)
+						savedNewAirspaceEntry = true
+					} else {
+						message.wwd.redraw()
+					}
+			}
 		}
 	}
 }

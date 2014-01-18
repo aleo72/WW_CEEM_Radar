@@ -114,7 +114,7 @@ public class CreateEditRadarFrame extends JFrame {
         panel1.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonSave = new JButton();
         buttonSave.setActionCommand("saveAirspace");
-        buttonSave.setLabel(ResourceBundle.getBundle("button").getString("Save"));
+        buttonSave.setLabel("Сохранить");
         this.$$$loadButtonText$$$(buttonSave, ResourceBundle.getBundle("button").getString("Save"));
         CellConstraints cc = new CellConstraints();
         panel3.add(buttonSave, cc.xy(1, 1));

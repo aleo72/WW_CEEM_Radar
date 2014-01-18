@@ -48,7 +48,7 @@ class SphereAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: 
 		val position: Position = ShapeUtils.getNewShapePosition(wwd)
 		val sizeInMeters: Double = if (fitShapeToViewport) ShapeUtils.getViewportScaleFactor(wwd) else radar.coverage
 		sphere.setLocation(new LatLon(position))
-		sphere.setRadius(sizeInMeters / 2.0)
+		sphere.setRadius(sizeInMeters)
 	}
 
 	override def toString = {
