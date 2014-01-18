@@ -10,8 +10,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.models.radar.Radar;
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.AirspaceEntry;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm;
 
 import javax.swing.*;
@@ -27,10 +26,10 @@ public class CreateEditRadarFrame extends JFrame {
     private JButton buttonDelete;
 
     private boolean isOK = false;
-    private AirspaceEntry airspaceEntry;
+    private AirspaceEntryMessage createdAirspaceEntry;
 
-    public CreateEditRadarFrame(AirspaceEntry airspaceEntry) {
-        this.airspaceEntry = airspaceEntry;
+    public CreateEditRadarFrame(AirspaceEntryMessage createdAirspaceEntry) {
+        this.createdAirspaceEntry = createdAirspaceEntry;
         $$$setupUI$$$();
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonSave);
@@ -57,6 +56,13 @@ public class CreateEditRadarFrame extends JFrame {
         this.pack();
         this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
         this.setMaximumSize(new Dimension(this.getWidth(), this.getHeight()));
+
+        initButtonListener();
+    }
+
+    private void initButtonListener() {
+        buttonSave.addActionListener(radarEditorForm.handler.buttonActionListener());
+        buttonDelete.addActionListener(radarEditorForm.handler.buttonActionListener());
     }
 
     public void save() {
@@ -77,7 +83,7 @@ public class CreateEditRadarFrame extends JFrame {
     }
 
     private void createUIComponents() {
-        radarEditorForm = new RadarEditorForm(airspaceEntry);
+        radarEditorForm = new RadarEditorForm(createdAirspaceEntry);
     }
 
     /**
@@ -100,16 +106,20 @@ public class CreateEditRadarFrame extends JFrame {
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonClose = new JButton();
+        buttonClose.setActionCommand("close");
         this.$$$loadButtonText$$$(buttonClose, ResourceBundle.getBundle("button").getString("close"));
         panel2.add(buttonClose, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new FormLayout("fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:grow"));
         panel1.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonSave = new JButton();
+        buttonSave.setActionCommand("saveAirspace");
+        buttonSave.setLabel(ResourceBundle.getBundle("button").getString("Save"));
         this.$$$loadButtonText$$$(buttonSave, ResourceBundle.getBundle("button").getString("Save"));
         CellConstraints cc = new CellConstraints();
         panel3.add(buttonSave, cc.xy(1, 1));
         buttonDelete = new JButton();
+        buttonDelete.setActionCommand("removeAirspace");
         this.$$$loadButtonText$$$(buttonDelete, ResourceBundle.getBundle("button").getString("delete"));
         panel3.add(buttonDelete, cc.xy(3, 1));
         final JPanel panel4 = new JPanel();

@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel
 import java.lang.String
 import gov.nasa.worldwind.avlist.AVKey
 import java.util
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
 
 /**
  * User: Aleo Bakalov

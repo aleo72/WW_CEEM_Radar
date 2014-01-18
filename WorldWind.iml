@@ -7,7 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="db_h2" value="7c73f76f-f0ba-449b-bbdd-1ac94fef453c" />
-          <factory-entry name="db_h2_server" />
+          <factory-entry name="db_h2_server" value="fd501654-e3af-42db-b854-5bd4aba37230" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
       </configuration>

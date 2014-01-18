@@ -16,6 +16,7 @@ import scala.collection.mutable.ArrayBuffer
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
 
 /**
  * User: Aleo Bakalov

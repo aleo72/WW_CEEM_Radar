@@ -18,11 +18,15 @@ package ua.edu.odeku.ceem.mapRadar.models.radar
  * @param altitude высота над землей
  */
 class Radar(var transmitterPower: Double,
-			var antennaGain: Double,
-			var effectiveArea: Double,
-			var scatteringCrossSection: Double,
-			var minimumReceiverSensitivity: Double,
-			var altitude: Int) {
+            var antennaGain: Double,
+            var effectiveArea: Double,
+            var scatteringCrossSection: Double,
+            var minimumReceiverSensitivity: Double,
+            var altitude: Int) {
+
+	def this() {
+		this(1.0, 1.0, 1.0, 1.0, 1.0, 1)
+	}
 
 	/**
 	 * <p>D max = sqrt(sqrt( Pt * Gt * Ar * q / Pr.min * (4П)^2^ ))</p>
@@ -48,11 +52,11 @@ class Radar(var transmitterPower: Double,
 	 * @param altitude высота над землей
 	 */
 	def update(transmitterPower: Double,
-			   antennaGain: Double,
-			   effectiveArea: Double,
-			   scatteringCrossSection: Double,
-			   minimumReceiverSensitivity: Double,
-			   altitude: Int): Radar = {
+	           antennaGain: Double,
+	           effectiveArea: Double,
+	           scatteringCrossSection: Double,
+	           minimumReceiverSensitivity: Double,
+	           altitude: Int): Radar = {
 		this.transmitterPower = transmitterPower
 		this.antennaGain = antennaGain
 		this.effectiveArea = effectiveArea

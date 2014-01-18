@@ -8,14 +8,10 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.models.Prefix_SI;
-import ua.edu.odeku.ceem.mapRadar.models.radar.Radar;
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.AirspaceEntry;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.HandlerRadarEditorFrom;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.event.*;
 import java.util.ResourceBundle;
 
 /**
@@ -40,13 +36,13 @@ public class RadarEditorForm {
     public JTextField lanTextField;
     public JTextField lonTextField;
 
-    private final HandlerRadarEditorFrom handler;
+    public final HandlerRadarEditorFrom handler;
 
-    public RadarEditorForm(AirspaceEntry airspaceEntry) {
+    public RadarEditorForm(AirspaceEntryMessage createdAirspaceEntry) {
         /*
         Создаем обработчик что бы можно было инициализировать некоторые элименты
          */
-        handler = new HandlerRadarEditorFrom(this, airspaceEntry);
+        handler = new HandlerRadarEditorFrom(this, createdAirspaceEntry);
 
         /*
         GUI

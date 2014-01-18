@@ -6,40 +6,75 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm
 
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm
-import javax.swing.{JComboBox, SpinnerNumberModel, JSpinner}
+import javax.swing.{JTextField, JComboBox, SpinnerNumberModel, JSpinner}
 import javax.swing.event.{ChangeEvent, ChangeListener}
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.AirspaceEntry
 import java.lang.NumberFormatException
-import ua.edu.odeku.ceem.mapRadar.models.Prefix_SI
-import java.awt.event.{ItemEvent, ItemListener}
+import ua.edu.odeku.ceem.mapRadar.models.{DoubleWhisPrefix_SI, Prefix_SI}
+import java.awt.event.{ActionEvent, ActionListener, ItemEvent, ItemListener}
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{EditAirspaceEntryMessage, CreateAirspaceEntryMessage, AirspaceEntryMessage, AirspaceEntry}
+import gov.nasa.worldwind.render.airspaces.SphereAirspace
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 
 /**
  * User: Aleo Bakalov
  * Date: 16.01.14
  * Time: 15:01
  */
-class HandlerRadarEditorFrom(val form: RadarEditorForm, private var _airspaceEntry: AirspaceEntry) {
+class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: AirspaceEntryMessage) {
+
+	private var _airspaceEntry: AirspaceEntry = null
+	private var methodOfController: AirspaceEntry => Unit = message.register
+	private var radar: Radar = _
+
+	message match {
+		case message: CreateAirspaceEntryMessage =>
+			radar = new Radar()
+			_airspaceEntry = createAirspaceEntry()
+		case message: EditAirspaceEntryMessage =>
+			_airspaceEntry = message.airspaceEntry
+			radar = _airspaceEntry.radar
+	}
+
+
 
 	initSpinners()
 	initComboBoxes()
+	initTextField()
+	updateForm()
+	updateLocation()
 
-	handleAirspaceEntry(_airspaceEntry)
-
-
-	def airspaceEntry = _airspaceEntry
-	/**
-	 * Метод должен обработать переданый AirspaceEntry
-	 * Если он null то его необходимо создать,
-	 * иначе необходимо заполнить формы ввода относительно переданного AirspaceEntry
-	 *
-	 * @param airspaceEntry
-	 */
-	private def handleAirspaceEntry(airspaceEntry: AirspaceEntry) {
-
+	def createAirspaceEntry(): AirspaceEntry = {
+		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
 	}
 
-	def initSpinners(){
+	def updateForm() {
+
+		def updateForm(value: Double, spinner: JSpinner, comboBox: JComboBox[Prefix_SI]) {
+			val doublePrefixSI = new DoubleWhisPrefix_SI(value)
+			spinner.setValue(doublePrefixSI._v)
+			comboBox.setSelectedItem(doublePrefixSI._prefix)
+		}
+
+		updateForm(radar.transmitterPower, form.transmotterPowerSpinner, form.transmotterPowerComboBox)
+		updateForm(radar.antennaGain, form.antenaGainSpinner, form.antenaGainComboBox)
+		updateForm(radar.effectiveArea, form.effectiveAreaSpinner, form.effectiveAreaComboBox)
+		updateForm(radar.minimumReceiverSensitivity, form.minimumReceiverSensitivitySpinner, form.minimumReceiverSensitivityComboBox)
+		updateForm(radar.scatteringCrossSection, form.scatteringCrossSectionSpinner, form.scatteringCrossSectionComboBox)
+
+		form.altitudeSpinner.setValue(radar.altitude)
+	}
+
+	def updateLocation(airspace: SphereAirspace = _airspaceEntry.airspace.asInstanceOf[SphereAirspace]) {
+		if (airspace != null) {
+			val location = airspace.getLocation
+
+			form.lanTextField.setText(location.asDegreesArray()(0).toString)
+			form.lonTextField.setText(location.asDegreesArray()(1).toString)
+		}
+	}
+
+	def initSpinners() {
 		val format: String = "#,##0.########"
 
 		def initSpinner() = {
@@ -56,9 +91,11 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var _airspaceEnt
 		form.minimumReceiverSensitivitySpinner = initSpinner()
 		form.scatteringCrossSectionSpinner = initSpinner()
 		form.transmotterPowerSpinner = initSpinner()
+
+		form.altitudeSpinner = new JSpinner()
 	}
 
-	def initComboBoxes(){
+	def initComboBoxes() {
 		def initComboBox() = {
 			val comboBox = new JComboBox[Prefix_SI](Prefix_SI.array)
 			comboBox.setSelectedItem(Prefix_SI.ONE)
@@ -93,17 +130,17 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var _airspaceEnt
 			form.coverageTextField.setText(radar.coverage.toString)
 	}
 
-	def updateRadar(_radar: Radar = null) : Radar = {
+	def updateRadar(_radar: Radar = null): Radar = {
 		var radar = _radar
-		try{
-			val gain: 		Double = form.antenaGainSpinner.getValue.toString.toDouble * form.antenaGainComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val effective: 	Double = form.effectiveAreaSpinner.getValue.toString.toDouble * form.effectiveAreaComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val minimum: 	Double = form.minimumReceiverSensitivitySpinner.getValue.toString.toDouble * form.minimumReceiverSensitivityComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
+		try {
+			val gain: Double = form.antenaGainSpinner.getValue.toString.toDouble * form.antenaGainComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
+			val effective: Double = form.effectiveAreaSpinner.getValue.toString.toDouble * form.effectiveAreaComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
+			val minimum: Double = form.minimumReceiverSensitivitySpinner.getValue.toString.toDouble * form.minimumReceiverSensitivityComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
 			val scattening: Double = form.scatteringCrossSectionSpinner.getValue.toString.toDouble * form.scatteringCrossSectionComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
 			val tranmotter: Double = form.transmotterPowerSpinner.getValue.toString.toDouble * form.transmotterPowerComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val altitude: 	Int = form.altitudeSpinner.getValue.toString.toInt
+			val altitude: Int = form.altitudeSpinner.getValue.toString.toInt
 
-			radar = if(radar == null){
+			radar = if (radar == null) {
 				new Radar(
 					transmitterPower = tranmotter,
 					antennaGain = gain,
@@ -125,5 +162,19 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var _airspaceEnt
 				ex.printStackTrace()
 		}
 		radar
+	}
+
+	def airspaceEntry = _airspaceEntry
+
+	def initTextField() {
+		form.coverageTextField = new JTextField()
+		form.lanTextField = new JTextField()
+		form.lonTextField = new JTextField()
+	}
+
+	val buttonActionListener = new ActionListener {
+		def actionPerformed(e: ActionEvent): Unit = {
+			println(e.getActionCommand)
+		}
 	}
 }

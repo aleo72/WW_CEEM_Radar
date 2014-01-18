@@ -3,13 +3,16 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
+package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry
 
 import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
-import gov.nasa.worldwind.render.airspaces.AirspaceAttributes
+import gov.nasa.worldwind.render.airspaces.{Airspace, AirspaceAttributes}
 import gov.nasa.worldwind.avlist.AVKey
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace._
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
+import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
 
 /**
  * User: Aleo Bakalov
@@ -18,8 +21,8 @@ import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
  */
 class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 
-	val airspace = factory.airspace
-	val editor = factory.editor
+	val airspace: Airspace = factory.airspace
+	val editor: AirspaceEditor = factory.editor
 
 	val attributes: AirspaceAttributes = airspace.getAttributes
 	private var _editing: Boolean = false
@@ -105,6 +108,21 @@ object AirspaceEntry {
 
 		Airspace получает новое поле Radar
 		 */
-//		null
+		val frame = new CreateEditRadarFrame(CreateAirspaceEntryMessage(wwd, methodOfController))
+		frame.setVisible(true)
+	}
+
+	def apply(entry: AirspaceEntry, wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
+		/*
+		Алгоритм действий:
+		1) Создаем диалог (фрейм)
+		2) Передаем ему эти же праметры
+		3) Данный диалог, после нажатия кнопки создать, создает AirspaceEntry и регестрирует его по средством метода
+		4) Airspace создается, но окно не закрывается. Airspace можно редактировать
+
+		Airspace получает новое поле Radar
+		 */
+		val frame = new CreateEditRadarFrame(CreateAirspaceEntryMessage(wwd, methodOfController))
+		frame.setVisible(true)
 	}
 }
