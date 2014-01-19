@@ -23,7 +23,6 @@ public class CreateEditRadarFrame extends JFrame {
     public JButton buttonClose;
     public RadarEditorForm radarEditorForm;
     private JButton buttonSave;
-    private JButton buttonDelete;
 
     private boolean isOK = false;
     private AirspaceEntryMessage createdAirspaceEntry;
@@ -62,7 +61,6 @@ public class CreateEditRadarFrame extends JFrame {
 
     private void initButtonListener() {
         buttonSave.addActionListener(radarEditorForm.handler.buttonActionListener());
-        buttonDelete.addActionListener(radarEditorForm.handler.buttonActionListener());
     }
 
     public void save() {
@@ -110,7 +108,7 @@ public class CreateEditRadarFrame extends JFrame {
         this.$$$loadButtonText$$$(buttonClose, ResourceBundle.getBundle("button").getString("close"));
         panel2.add(buttonClose, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout("fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:grow"));
+        panel3.setLayout(new FormLayout("fill:d:grow", "center:d:grow"));
         panel1.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonSave = new JButton();
         buttonSave.setActionCommand("saveAirspace");
@@ -118,10 +116,6 @@ public class CreateEditRadarFrame extends JFrame {
         this.$$$loadButtonText$$$(buttonSave, ResourceBundle.getBundle("button").getString("Save"));
         CellConstraints cc = new CellConstraints();
         panel3.add(buttonSave, cc.xy(1, 1));
-        buttonDelete = new JButton();
-        buttonDelete.setActionCommand("removeAirspace");
-        this.$$$loadButtonText$$$(buttonDelete, ResourceBundle.getBundle("button").getString("delete"));
-        panel3.add(buttonDelete, cc.xy(3, 1));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

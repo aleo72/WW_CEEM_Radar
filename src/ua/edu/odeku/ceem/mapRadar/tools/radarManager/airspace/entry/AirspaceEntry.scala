@@ -24,17 +24,27 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 	val airspace: Airspace = factory.airspace
 	val editor: AirspaceEditor = factory.editor
 
+	var _nameAirspaceEntry: String = airspace.getValue(AVKey.DISPLAY_NAME).toString
+
 	val attributes: AirspaceAttributes = airspace.getAttributes
 	private var _editing: Boolean = false
 	private var _selected: Boolean = false
 	var _intersecting: Boolean = false
-	private var _radar : Radar = _
+	private var _radar: Radar = _
 
 	def radar = _radar
-	def radar_=(value: Radar) : Unit = {
+
+	def radar_=(value: Radar): Unit = {
 		_radar = value
 		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.coverage)
 		airspace.asInstanceOf[SphereAirspace].setAltitude(_radar.altitude)
+	}
+
+	def nameAirspaceEntry = _nameAirspaceEntry
+
+	def nameAirspaceEntry_=(value: String): Unit = {
+		_nameAirspaceEntry = value
+		airspace.setValue(AVKey.DISPLAY_NAME, value)
 	}
 
 	def editing = _editing
@@ -95,6 +105,8 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 }
 
 object AirspaceEntry {
+
+	private var numberNewAirspaceEntry = 1
 
 	/**
 	 * Метод воздаст объект AirspaceEntry который будет обработан, через метод переданый из котроллера

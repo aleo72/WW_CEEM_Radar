@@ -85,8 +85,6 @@
         <rowspec value="top:4dlu:noGrow"/>
         <rowspec value="center:max(d;4px):noGrow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
-        <colspec value="fill:d:grow"/>
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
@@ -102,16 +100,6 @@
             <properties>
               <selected value="true"/>
               <text resource-bundle="strings" key="checkBox_radarManager_airspace_enable_shape_editing"/>
-            </properties>
-          </component>
-          <component id="bf8ba" class="javax.swing.JCheckBox" binding="checkBoxResizeNewShapes">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <forms/>
-            </constraints>
-            <properties>
-              <selected value="true"/>
-              <text resource-bundle="strings" key="checkBox_radarManager_airspace_Fit_new_shapes_to_viewport"/>
             </properties>
           </component>
         </children>

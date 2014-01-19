@@ -45,6 +45,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	updateForm()
 	updateLocation()
 
+
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
 		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
@@ -175,6 +176,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		form.coverageTextField = new JTextField()
 		form.lanTextField = new JTextField()
 		form.lonTextField = new JTextField()
+		form.nameAirspaceTextField = new JTextField(airspaceEntry.nameAirspaceEntry)
 	}
 
 	val buttonActionListener = new ActionListener {
@@ -183,6 +185,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			e.getActionCommand match {
 				case "saveAirspace" =>
 					airspaceEntry.radar = updateRadar()
+					airspaceEntry.nameAirspaceEntry = form.nameAirspaceTextField.getText
 					if (!savedNewAirspaceEntry) {
 						message.method.apply(airspaceEntry)
 						savedNewAirspaceEntry = true

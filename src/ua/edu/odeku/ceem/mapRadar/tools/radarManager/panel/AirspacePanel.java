@@ -69,16 +69,12 @@ public class AirspacePanel implements CeemPanel {
         table = new JTable();
         scrollPane1.setViewportView(table);
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout("fill:d:grow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel3.setLayout(new FormLayout("fill:d:grow", "center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         panel1.add(panel3, cc.xy(3, 3));
         checkBoxEnableEdit = new JCheckBox();
         checkBoxEnableEdit.setSelected(true);
         this.$$$loadButtonText$$$(checkBoxEnableEdit, ResourceBundle.getBundle("strings").getString("checkBox_radarManager_airspace_enable_shape_editing"));
         panel3.add(checkBoxEnableEdit, cc.xy(1, 3));
-        checkBoxResizeNewShapes = new JCheckBox();
-        checkBoxResizeNewShapes.setSelected(true);
-        this.$$$loadButtonText$$$(checkBoxResizeNewShapes, ResourceBundle.getBundle("strings").getString("checkBox_radarManager_airspace_Fit_new_shapes_to_viewport"));
-        panel3.add(checkBoxResizeNewShapes, cc.xy(3, 3));
     }
 
     /**

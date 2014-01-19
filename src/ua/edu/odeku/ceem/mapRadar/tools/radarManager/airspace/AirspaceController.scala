@@ -134,7 +134,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def mouseClicked(e: MouseEvent): Unit = {
-
+		println(e.getClickCount)
 	}
 
 	def mousePressed(e: MouseEvent): Unit = {

@@ -49,9 +49,9 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 
 	def initComponents() {
 
-		form.checkBoxResizeNewShapes.setActionCommand(SIZE_NEW_SHAPES_TO_VIEWPORT)
-		form.checkBoxResizeNewShapes.addActionListener(controller)
-		form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
+//		form.checkBoxResizeNewShapes.setActionCommand(SIZE_NEW_SHAPES_TO_VIEWPORT)
+//		form.checkBoxResizeNewShapes.addActionListener(controller)
+//		form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
 
 		form.checkBoxEnableEdit.setActionCommand(ENABLE_EDIT)
 		form.checkBoxEnableEdit.addActionListener(controller)
@@ -84,7 +84,7 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 			def propertyChange(evt: PropertyChangeEvent): Unit = {
 				evt.getPropertyName match {
 					case SIZE_NEW_SHAPES_TO_VIEWPORT =>
-						form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
+//						form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
 					case ENABLE_EDIT =>
 						form.checkBoxEnableEdit.setSelected(controller.enableEdit)
 					case _ =>
