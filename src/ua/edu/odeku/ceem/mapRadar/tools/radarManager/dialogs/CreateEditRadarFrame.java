@@ -25,10 +25,10 @@ public class CreateEditRadarFrame extends JFrame {
     private JButton buttonSave;
 
     private boolean isOK = false;
-    private AirspaceEntryMessage createdAirspaceEntry;
+    private AirspaceEntryMessage airspaceEntryMessage;
 
-    public CreateEditRadarFrame(AirspaceEntryMessage createdAirspaceEntry) {
-        this.createdAirspaceEntry = createdAirspaceEntry;
+    public CreateEditRadarFrame(AirspaceEntryMessage airspaceEntryMessage) {
+        this.airspaceEntryMessage = airspaceEntryMessage;
         $$$setupUI$$$();
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonSave);
@@ -81,7 +81,7 @@ public class CreateEditRadarFrame extends JFrame {
     }
 
     private void createUIComponents() {
-        radarEditorForm = new RadarEditorForm(createdAirspaceEntry);
+        radarEditorForm = new RadarEditorForm(airspaceEntryMessage);
     }
 
     /**

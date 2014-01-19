@@ -39,11 +39,11 @@ public class RadarEditorForm {
 
     public final HandlerRadarEditorFrom handler;
 
-    public RadarEditorForm(AirspaceEntryMessage createdAirspaceEntry) {
+    public RadarEditorForm(AirspaceEntryMessage airspaceEntryMessage) {
         /*
         Создаем обработчик что бы можно было инициализировать некоторые элименты
          */
-        handler = new HandlerRadarEditorFrom(this, createdAirspaceEntry);
+        handler = new HandlerRadarEditorFrom(this, airspaceEntryMessage);
 
         /*
         GUI

@@ -108,6 +108,10 @@ object AirspaceEntry {
 
 	private var numberNewAirspaceEntry = 1
 
+	def create(wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
+		apply(wwd, methodOfController)
+	}
+
 	/**
 	 * Метод воздаст объект AirspaceEntry который будет обработан, через метод переданый из котроллера
 	 * @param wwd объект WindWindow
@@ -128,17 +132,8 @@ object AirspaceEntry {
 		frame.setVisible(true)
 	}
 
-	def apply(entry: AirspaceEntry, wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
-		/*
-		Алгоритм действий:
-		1) Создаем диалог (фрейм)
-		2) Передаем ему эти же праметры
-		3) Данный диалог, после нажатия кнопки создать, создает AirspaceEntry и регестрирует его по средством метода
-		4) Airspace создается, но окно не закрывается. Airspace можно редактировать
-
-		Airspace получает новое поле Radar
-		 */
-		val frame = new CreateEditRadarFrame(CreateAirspaceEntryMessage(wwd, methodOfController))
+	def edit(entry: AirspaceEntry, wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
+		val frame = new CreateEditRadarFrame(EditAirspaceEntryMessage(entry, wwd, methodOfController))
 		frame.setVisible(true)
 	}
 }

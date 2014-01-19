@@ -17,13 +17,13 @@ class AirspaceEntryMessage(val wwd: WorldWindow, val method: AirspaceEntry => Un
 /**
  * Класс сообщение на создание
  * @param _wwd WorldWindow
- * @param _register метод регистрации изменений
+ * @param function метод регистрации изменений
  */
-case class CreateAirspaceEntryMessage(_wwd: WorldWindow, _register: AirspaceEntry => Unit) extends AirspaceEntryMessage(_wwd, _register)
+case class CreateAirspaceEntryMessage(_wwd: WorldWindow, function: AirspaceEntry => Unit) extends AirspaceEntryMessage(_wwd, function)
 
 /**
  * Класс сообщение на редактирование
  * @param _wwd WorldWindow
- * @param _register метод регистрации изменений
+ * @param function метод регистрации изменений
  */
-case class EditAirspaceEntryMessage(airspaceEntry: AirspaceEntry, _wwd: WorldWindow, _register: AirspaceEntry => Unit) extends AirspaceEntryMessage(_wwd, _register)
+case class EditAirspaceEntryMessage(airspaceEntry: AirspaceEntry, _wwd: WorldWindow, function: AirspaceEntry => Unit) extends AirspaceEntryMessage(_wwd, function)

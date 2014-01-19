@@ -8,7 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 import gov.nasa.worldwind.WWObjectImpl
 import java.awt.event.{MouseEvent, ActionEvent, MouseListener, ActionListener}
 import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditor, AirspaceEditorController, AirspaceEditEvent, AirspaceEditListener}
-import javax.swing.{AbstractButton, JFileChooser}
+import javax.swing.{JButton, AbstractButton, JFileChooser}
 import gov.nasa.worldwind.pick.PickedObjectList
 import gov.nasa.worldwind.render.airspaces.Airspace
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
@@ -134,7 +134,9 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def mouseClicked(e: MouseEvent): Unit = {
-		println(e.getClickCount)
+		if(e.getButton == MouseEvent.BUTTON1 && e.getClickCount == 2){
+			editSelectedEntry()
+		}
 	}
 
 	def mousePressed(e: MouseEvent): Unit = {
@@ -219,6 +221,10 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 		}
 	}
 
+	private def editSelectedEntry(){
+		AirspaceEntry.edit(selectedEntry, ceemTool.appFrame.getWwd, selectedEntry_=)
+	}
+	
 	/**
 	 * Метод дает сигнал на открытие формы для создания нового Airspace
 	 */
