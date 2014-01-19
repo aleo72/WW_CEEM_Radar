@@ -125,15 +125,16 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def updateCoverageTextField() {
-		val radar: Radar = updateRadar(airspaceEntry.radar)
-		if (radar == null)
+		updateRadar()
+		if (radar == null) {
 			form.coverageTextField.setText("")
-		else
+		}
+		else {
 			form.coverageTextField.setText(radar.coverage.toString)
+		}
 	}
 
-	def updateRadar(_radar: Radar = null): Radar = {
-		var radar = _radar
+	def updateRadar(): Radar = {
 		try {
 			val gain: Double = form.antenaGainSpinner.getValue.toString.toDouble * form.antenaGainComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
 			val effective: Double = form.effectiveAreaSpinner.getValue.toString.toDouble * form.effectiveAreaComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
@@ -142,8 +143,8 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			val tranmotter: Double = form.transmotterPowerSpinner.getValue.toString.toDouble * form.transmotterPowerComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
 			val altitude: Int = form.altitudeSpinner.getValue.toString.toInt
 
-			radar = if (radar == null) {
-				new Radar(
+			if (radar == null) {
+				radar = new Radar(
 					transmitterPower = tranmotter,
 					antennaGain = gain,
 					effectiveArea = effective,
@@ -151,14 +152,16 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 					minimumReceiverSensitivity = minimum,
 					altitude = altitude
 				)
-			} else radar.update(
-				transmitterPower = tranmotter,
-				antennaGain = gain,
-				effectiveArea = effective,
-				scatteringCrossSection = scattening,
-				minimumReceiverSensitivity = minimum,
-				altitude = altitude
-			)
+			} else {
+				radar.update(
+					transmitterPower = tranmotter,
+					antennaGain = gain,
+					effectiveArea = effective,
+					scatteringCrossSection = scattening,
+					minimumReceiverSensitivity = minimum,
+					altitude = altitude
+				)
+			}
 		} catch {
 			case ex: NumberFormatException =>
 				ex.printStackTrace()
@@ -179,8 +182,8 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			println(e.getActionCommand)
 			e.getActionCommand match {
 				case "saveAirspace" =>
-					airspaceEntry.radar = updateRadar(radar)
-					if(!savedNewAirspaceEntry){
+					airspaceEntry.radar = updateRadar()
+					if (!savedNewAirspaceEntry) {
 						message.method.apply(airspaceEntry)
 						savedNewAirspaceEntry = true
 					} else {
