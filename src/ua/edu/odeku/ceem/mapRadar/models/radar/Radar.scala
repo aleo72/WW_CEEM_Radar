@@ -61,7 +61,7 @@ class Radar(var transmitterPower: Double,
 		this.antennaGain = antennaGain
 		this.effectiveArea = effectiveArea
 		this.scatteringCrossSection = scatteringCrossSection
-		this.minimumReceiverSensitivity = this.minimumReceiverSensitivity
+		this.minimumReceiverSensitivity = minimumReceiverSensitivity
 		this.altitude = altitude
 
 		this
