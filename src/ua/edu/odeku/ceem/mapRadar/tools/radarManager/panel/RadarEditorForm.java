@@ -53,8 +53,8 @@ public class RadarEditorForm {
     }
 
     private void createUIComponents() {
-        handler.initComboBoxes();
-        handler.initSpinners();
+//        handler.initComboBoxes();
+//        handler.initSpinners();
     }
 
     /**

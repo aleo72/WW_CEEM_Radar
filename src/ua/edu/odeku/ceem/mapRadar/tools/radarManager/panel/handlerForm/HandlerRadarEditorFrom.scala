@@ -37,15 +37,6 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			radar = _airspaceEntry.radar
 	}
 
-
-
-	initSpinners()
-	initComboBoxes()
-	initTextField()
-	updateForm()
-	updateLocation()
-
-
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
 		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
@@ -195,4 +186,14 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			}
 		}
 	}
+
+
+
+
+
+	initSpinners()
+	initComboBoxes()
+	initTextField()
+	updateForm()
+	updateLocation()
 }
