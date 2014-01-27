@@ -50,13 +50,29 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			comboBox.setSelectedItem(doublePrefixSI._prefix)
 		}
 
-		updateForm(radar.transmitterPower, form.transmotterPowerSpinner, form.transmotterPowerComboBox)
-		updateForm(radar.antennaGain, form.antenaGainSpinner, form.antenaGainComboBox)
-		updateForm(radar.effectiveArea, form.effectiveAreaSpinner, form.effectiveAreaComboBox)
-		updateForm(radar.minimumReceiverSensitivity, form.minimumReceiverSensitivitySpinner, form.minimumReceiverSensitivityComboBox)
-		updateForm(radar.scatteringCrossSection, form.scatteringCrossSectionSpinner, form.scatteringCrossSectionComboBox)
+		val (
+			transmitterPower,
+			antennaGain,
+			effectiveArea,
+			minimumReceiverSensitivity,
+			scatteringCrossSection,
+			altitude
+		) = (
+			radar.transmitterPower,
+			radar.antennaGain,
+			radar.effectiveArea,
+			radar.minimumReceiverSensitivity,
+			radar.scatteringCrossSection,
+			radar.altitude
+			)
 
-		form.altitudeSpinner.setValue(radar.altitude)
+		updateForm(transmitterPower, form.transmotterPowerSpinner, form.transmotterPowerComboBox)
+		updateForm(antennaGain, form.antenaGainSpinner, form.antenaGainComboBox)
+		updateForm(effectiveArea, form.effectiveAreaSpinner, form.effectiveAreaComboBox)
+		updateForm(minimumReceiverSensitivity, form.minimumReceiverSensitivitySpinner, form.minimumReceiverSensitivityComboBox)
+		updateForm(scatteringCrossSection, form.scatteringCrossSectionSpinner, form.scatteringCrossSectionComboBox)
+
+		form.altitudeSpinner.setValue(altitude)
 	}
 
 	def updateLocation(airspace: SphereAirspace = _airspaceEntry.airspace.asInstanceOf[SphereAirspace]) {
@@ -188,12 +204,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 
-
-
-
 	initSpinners()
 	initComboBoxes()
 	initTextField()
 	updateForm()
+	updateCoverageTextField()
 	updateLocation()
 }
