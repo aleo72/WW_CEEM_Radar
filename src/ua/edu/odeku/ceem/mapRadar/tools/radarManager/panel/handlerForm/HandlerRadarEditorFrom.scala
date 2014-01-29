@@ -15,6 +15,7 @@ import java.awt.event.{ActionEvent, ActionListener, ItemEvent, ItemListener}
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{EditAirspaceEntryMessage, CreateAirspaceEntryMessage, AirspaceEntryMessage, AirspaceEntry}
 import gov.nasa.worldwind.render.airspaces.SphereAirspace
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
 
 /**
  * User: Aleo Bakalov
@@ -28,14 +29,53 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	private var radar: Radar = _
 	private var savedNewAirspaceEntry = true // флаг на надобность сохранить как новый объект
 
+	val changeLocationListener = new AirspaceChangeLocationOnFormListener(form.locationForm)
+
+	val buttonActionListener = new ActionListener {
+		def actionPerformed(e: ActionEvent): Unit = {
+			println(e.getActionCommand)
+			e.getActionCommand match {
+				case "saveAirspace" =>
+					airspaceEntry.radar = updateRadar()
+					airspaceEntry.nameAirspaceEntry = form.nameAirspaceTextField.getText
+					if (!savedNewAirspaceEntry) {
+						message.method.apply(airspaceEntry)
+						savedNewAirspaceEntry = true
+					} else {
+						message.wwd.redraw()
+					}
+			}
+		}
+	}
+
+	val valueChangeListener = new ChangeListener {
+		def stateChanged(e: ChangeEvent): Unit = {
+			updateCoverageTextField()
+		}
+	}
+
+	val comboBoxItemListener = new ItemListener {
+		def itemStateChanged(e: ItemEvent): Unit = {
+			updateCoverageTextField()
+		}
+	}
+
 	message match {
 		case message: CreateAirspaceEntryMessage =>
 			radar = new Radar()
-			_airspaceEntry = createAirspaceEntry()
+			airspaceEntry = createAirspaceEntry()
 		case message: EditAirspaceEntryMessage =>
-			_airspaceEntry = message.airspaceEntry
-			radar = _airspaceEntry.radar
+			airspaceEntry = message.airspaceEntry
+			radar = airspaceEntry.radar
 	}
+
+	changeLocationListener.updateFields(airspaceEntry.airspace.asInstanceOf[SphereAirspace].getLocation)
+
+	initSpinners()
+	initComboBoxes()
+	initTextField()
+	updateForm()
+	updateCoverageTextField()
 
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
@@ -57,7 +97,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			minimumReceiverSensitivity,
 			scatteringCrossSection,
 			altitude
-		) = (
+			) = (
 			radar.transmitterPower,
 			radar.antennaGain,
 			radar.effectiveArea,
@@ -73,15 +113,6 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		updateForm(scatteringCrossSection, form.scatteringCrossSectionSpinner, form.scatteringCrossSectionComboBox)
 
 		form.altitudeSpinner.setValue(altitude)
-	}
-
-	def updateLocation(airspace: SphereAirspace = _airspaceEntry.airspace.asInstanceOf[SphereAirspace]) {
-		if (airspace != null) {
-			val location = airspace.getLocation
-
-			form.lanTextField.setText(location.asDegreesArray()(0).toString)
-			form.lonTextField.setText(location.asDegreesArray()(1).toString)
-		}
 	}
 
 	def initSpinners() {
@@ -118,18 +149,6 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		form.effectiveAreaComboBox = initComboBox()
 		form.scatteringCrossSectionComboBox = initComboBox()
 		form.minimumReceiverSensitivityComboBox = initComboBox()
-	}
-
-	val valueChangeListener = new ChangeListener {
-		def stateChanged(e: ChangeEvent): Unit = {
-			updateCoverageTextField()
-		}
-	}
-
-	val comboBoxItemListener = new ItemListener {
-		def itemStateChanged(e: ItemEvent): Unit = {
-			updateCoverageTextField()
-		}
 	}
 
 	def updateCoverageTextField() {
@@ -179,35 +198,17 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 	def airspaceEntry = _airspaceEntry
 
+	private def airspaceEntry_=(value: AirspaceEntry): Unit = {
+		_airspaceEntry = value
+		_airspaceEntry.editor.addEditListener(changeLocationListener)
+	}
+
 	def initTextField() {
 		form.coverageTextField = new JTextField()
-		form.lanTextField = new JTextField()
-		form.lonTextField = new JTextField()
 		form.nameAirspaceTextField = new JTextField(airspaceEntry.nameAirspaceEntry)
 	}
 
-	val buttonActionListener = new ActionListener {
-		def actionPerformed(e: ActionEvent): Unit = {
-			println(e.getActionCommand)
-			e.getActionCommand match {
-				case "saveAirspace" =>
-					airspaceEntry.radar = updateRadar()
-					airspaceEntry.nameAirspaceEntry = form.nameAirspaceTextField.getText
-					if (!savedNewAirspaceEntry) {
-						message.method.apply(airspaceEntry)
-						savedNewAirspaceEntry = true
-					} else {
-						message.wwd.redraw()
-					}
-			}
-		}
+	def eventCloseForm() {
+		airspaceEntry.editor.removeEditListener(changeLocationListener)
 	}
-
-
-	initSpinners()
-	initComboBoxes()
-	initTextField()
-	updateForm()
-	updateCoverageTextField()
-	updateLocation()
 }

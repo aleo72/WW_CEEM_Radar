@@ -70,6 +70,7 @@ public class CreateEditRadarFrame extends JFrame {
     }
 
     public void onCancel() {
+        radarEditorForm.handler.eventCloseForm(); // Обрабатываем закрытие
         dispose();
     }
 

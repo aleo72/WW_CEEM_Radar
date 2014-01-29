@@ -1,6 +1,6 @@
 /*
  * Odessa State environmental University
- * Copyright (C) 2013
+ * Copyright (C) 2014
  */
 
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel;
@@ -33,9 +33,8 @@ public class RadarEditorForm {
     public JComboBox<Prefix_SI> scatteringCrossSectionComboBox;
     public JComboBox<Prefix_SI> minimumReceiverSensitivityComboBox;
     public JSpinner altitudeSpinner;
-    public JTextField lanTextField;
-    public JTextField lonTextField;
     public JTextField nameAirspaceTextField;
+    public LocationForm locationForm = new LocationForm();
 
     public final HandlerRadarEditorFrom handler;
 
@@ -67,7 +66,7 @@ public class RadarEditorForm {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:max(d;4px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:max(d;4px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:max(d;100px):grow,left:4dlu:noGrow,fill:max(d;70px):noGrow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         CellConstraints cc = new CellConstraints();
@@ -109,25 +108,13 @@ public class RadarEditorForm {
         panel2.add(coverageTextField, cc.xy(3, 11, CellConstraints.FILL, CellConstraints.DEFAULT));
         panel2.add(altitudeSpinner, cc.xy(3, 13, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout("fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow"));
-        panel1.add(panel3, cc.xy(3, 7, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel3.setLayout(new FormLayout("fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow"));
+        panel1.add(panel3, cc.xy(3, 3));
         final JLabel label8 = new JLabel();
-        this.$$$loadLabelText$$$(label8, ResourceBundle.getBundle("strings").getString("label_geoName_latitude"));
-        panel3.add(label8, cc.xy(1, 2, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        lanTextField.setEditable(false);
-        panel3.add(lanTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
-        final JLabel label9 = new JLabel();
-        this.$$$loadLabelText$$$(label9, ResourceBundle.getBundle("strings").getString("field_geoName_longitude"));
-        panel3.add(label9, cc.xy(5, 2, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        lonTextField.setEditable(false);
-        panel3.add(lonTextField, cc.xy(7, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
-        final JPanel panel4 = new JPanel();
-        panel4.setLayout(new FormLayout("fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow"));
-        panel1.add(panel4, cc.xy(3, 3));
-        final JLabel label10 = new JLabel();
-        this.$$$loadLabelText$$$(label10, ResourceBundle.getBundle("label").getString("airspace_name"));
-        panel4.add(label10, cc.xy(1, 2, CellConstraints.RIGHT, CellConstraints.FILL));
-        panel4.add(nameAirspaceTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
+        this.$$$loadLabelText$$$(label8, ResourceBundle.getBundle("label").getString("airspace_name"));
+        panel3.add(label8, cc.xy(1, 2, CellConstraints.RIGHT, CellConstraints.FILL));
+        panel3.add(nameAirspaceTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel1.add(locationForm.$$$getRootComponent$$$(), cc.xy(3, 7));
     }
 
     /**
