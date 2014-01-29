@@ -5,6 +5,9 @@
 
 package ua.edu.odeku.ceem.mapRadar.models.radar
 
+import java.util.ResourceBundle
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameter.RadarTypeParameter
+
 /**
  * User: Aleo Bakalov
  * Date: 10.12.13
@@ -68,4 +71,50 @@ class Radar(var transmitterPower: Double,
 	}
 
 	def isValid = coverage > 0
+}
+
+class RadarParameter[T] private (val radarTypeParameter: RadarTypeParameter, private val _values: Array[T]) {
+
+	/**
+	 * Вернет кодовое название параметра радара
+	 * @return название параметра
+	 */
+	def name = radarTypeParameter._1
+
+	/**
+	 * Вернет описание параметра радара
+	 * @return описание параметра
+	 */
+	def description = radarTypeParameter._2
+
+	/**
+	 * Вернет возможные значения данного параметра
+	 * @return возможные значения данного параметра
+	 */
+	def values = _values.clone()
+}
+
+object RadarTypeParameter extends Enumeration {
+	type RadarTypeParameter = (String, String)
+
+	val FREQUENCY_BAND = loadRadarTypeParameter("FREQUENCY_BAND")
+	val	PULSE_POWER = loadRadarTypeParameter("PULSE_POWER")
+	val MINIMUM_RECEPTION_POWER = loadRadarTypeParameter("MINIMUM_RECEPTION_POWER")
+	val PULSE_REPETITION_FREQUENCY = loadRadarTypeParameter("PULSE_REPETITION_FREQUENCY")
+	val DURATION_PROBING_PULSE = loadRadarTypeParameter("DURATION_PROBING_PULSE")
+	val WORKING_RADIUS = loadRadarTypeParameter("WORKING_RADIUS")
+	val ANTENNA_DIAMETER = loadRadarTypeParameter("ANTENNA_DIAMETER")
+	val BEAM_WIDTH_AT_3_DB = loadRadarTypeParameter("BEAM_WIDTH_AT_3_DB")
+	val PULSE_REPETITION_FREQUENCY_MODE_THE_INTENSITY_OF_SPEED = loadRadarTypeParameter("PULSE_REPETITION_FREQUENCY_MODE_THE_INTENSITY_OF_SPEED")
+	val DURATION_PROBING_PULSE_MODE_THE_INTENSITY_OF_SPEED = loadRadarTypeParameter("DURATION_PROBING_PULSE_MODE_THE_INTENSITY_OF_SPEED")
+	val WORKING_RADIUS_MODE_THE_INTENSITY_OF_SPEED = loadRadarTypeParameter("WORKING_RADIUS_MODE_THE_INTENSITY_OF_SPEED")
+	val BEAM_WIDTH_AT_HALF_POWER = loadRadarTypeParameter("BEAM_WIDTH_AT_HALF_POWER")
+	val UNIQUELY_DETERMINED_BY_THE_DOPPLER_SPEED = loadRadarTypeParameter("UNIQUELY_DETERMINED_BY_THE_DOPPLER_SPEED")
+	val Z_MIN = loadRadarTypeParameter("Z_MIN")
+	val RECEIVER_DYNAMIC_RANGE = loadRadarTypeParameter("RECEIVER_DYNAMIC_RANGE")
+	val FIRST_SIDE_LOBE_LEVEL_RELATIVE_TO_THE_MAIN = loadRadarTypeParameter("FIRST_SIDE_LOBE_LEVEL_RELATIVE_TO_THE_MAIN")
+
+	private def loadRadarTypeParameter(name: String) : (String, String) = {
+		(name, ResourceBundle.getBundle("RadarTypeParameter").getString(name))
+	}
 }
