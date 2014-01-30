@@ -97,7 +97,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="e82e2" binding="panelParm" layout-manager="FormLayout">
+          <grid id="e82e2" binding="panelParm" custom-create="true" layout-manager="FormLayout">
             <rowspec value="center:d:noGrow"/>
             <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
@@ -117,7 +117,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="Label"/>
+                  <text resource-bundle="RadarTypeParameter" key="FREQUENCY_BAND"/>
                 </properties>
               </component>
               <component id="4d76c" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
@@ -134,7 +134,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="Label"/>
+                  <text resource-bundle="RadarTypeParameter" key="PULSE_POWER"/>
                 </properties>
               </component>
               <component id="81a65" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
@@ -151,7 +151,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="Label"/>
+                  <text resource-bundle="RadarTypeParameter" key="ANTENNA_DIAMETER"/>
                 </properties>
               </component>
               <component id="f78b1" class="javax.swing.JComboBox" binding="comboBox3" default-binding="true">
