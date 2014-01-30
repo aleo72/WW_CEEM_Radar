@@ -18,7 +18,7 @@ import scala.collection.mutable
 abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 
 	val radarParameters : Map[RadarTypeParameter, Array[Double]]
-	val setRadarParameters : mutable.HashMap[RadarTypeParameter, Double] = initParameter()
+	lazy val setRadarParameters : mutable.HashMap[RadarTypeParameter, Double] = initParameter()
 	var _altitude = 10
 
 	/**
@@ -78,7 +78,7 @@ object RadarTypeParameters extends Enumeration {
 	val ANTENNA_DIAMETER                            = RadarTypeParameter("ANTENNA_DIAMETER")
 	val BEAM_WIDTH_AT_3_DB                          = RadarTypeParameter("BEAM_WIDTH_AT_3_DB")
 	val PULSE_REPETITION_FREQUENCY_MODE_INTENSITY   = RadarTypeParameter("PULSE_REPETITION_FREQUENCY_MODE_INTENSITY")
-	val PULSE_REPETITION_FREQUENCY_MODE_SPEED       = RadarTypeParameter("PULSE_REPETITION_FREQUENCY_MODE__SPEED")
+	val PULSE_REPETITION_FREQUENCY_MODE_SPEED       = RadarTypeParameter("PULSE_REPETITION_FREQUENCY_MODE_SPEED")
 	val DURATION_PROBING_PULSE_MODE_INTENSITY       = RadarTypeParameter("DURATION_PROBING_PULSE_MODE_INTENSITY")
 	val DURATION_PROBING_PULSE_MODE_SPEED           = RadarTypeParameter("DURATION_PROBING_PULSE_MODE_SPEED")
 	val WORKING_RADIUS_MODE_SPEED                   = RadarTypeParameter("WORKING_RADIUS_MODE_SPEED")

@@ -97,7 +97,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="e82e2" binding="panelParm" custom-create="true" layout-manager="FormLayout">
+          <grid id="e82e2" binding="panelParm" layout-manager="FormLayout">
             <rowspec value="center:d:noGrow"/>
             <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>

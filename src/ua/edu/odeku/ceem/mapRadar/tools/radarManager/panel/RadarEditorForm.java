@@ -81,6 +81,7 @@ public class RadarEditorForm {
         panel1.add(locationForm.$$$getRootComponent$$$(), cc.xy(1, 5));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, cc.xy(1, 3, CellConstraints.FILL, CellConstraints.FILL));
+        panelParm = new JPanel();
         panelParm.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:max(d;4px):grow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         scrollPane1.setViewportView(panelParm);
         final JLabel label4 = new JLabel();

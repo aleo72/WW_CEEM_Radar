@@ -53,9 +53,8 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		}
 	}
 
-	initSpinners()
 	initComboBoxes()
-	initTextField()
+	updateRadar()
 
 	message match {
 		case message: CreateAirspaceEntryMessage =>
@@ -63,13 +62,16 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		case message: EditAirspaceEntryMessage =>
 			airspaceEntry = message.airspaceEntry
 			radar = airspaceEntry.radar
+			form.typeRadarComboBox.setSelectedItem(radar.radarName)
 	}
+
+	initSpinners()
+	initTextField()
 
 	changeLocationListener.updateFields(airspaceEntry.airspace.asInstanceOf[SphereAirspace].getLocation)
 
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
-
 		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
 	}
 
