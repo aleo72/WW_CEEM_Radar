@@ -92,11 +92,37 @@ public class AppCeemRadarFrame extends JFrame {
         JMenu menuTools = new JMenu(ResourceString.get("menu_tools"));
         fillMenuUtils(menuTools);
 
+        JMenu menuRadars = new JMenu(ResourceString.get("menu_radar"));
+        fillMenuRadar(menuRadars);
+
         menuBar.add(menuMain);
         menuBar.add(menuView);
         menuBar.add(menuTools);
+        menuBar.add(menuRadars);
 
         return menuBar;
+    }
+
+    private void fillMenuRadar(final JMenu menuParent){
+        JMenuItem menuRadarManager = new JMenuItem(ResourceString.get("menu_radar_manager"));
+        menuRadarManager.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame ceemRadarTool = null;
+                String toolName = RadarManagerTool.class.getName();
+                if (toolsComponents.containsKey(toolName)){
+                    ceemRadarTool = toolsComponents.get(toolName);
+                    if(!ceemRadarTool.isVisible())
+                        ceemRadarTool.setVisible(true);
+                } else {
+                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("menu_radar_manager"));
+                    ceemRadarTool.setVisible(true);
+                    toolsComponents.put(toolName, ceemRadarTool);
+                }
+            }
+        });
+
+        menuParent.add(menuRadarManager);
     }
 
     private void fillMenuUtils(final JMenu menuParent) {
@@ -154,28 +180,9 @@ public class AppCeemRadarFrame extends JFrame {
             }
         });
 
-        JMenuItem menuRadarManager = new JMenuItem("test");
-        menuRadarManager.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame ceemRadarTool = null;
-                String toolName = RadarManagerTool.class.getName();
-                if (toolsComponents.containsKey(toolName)){
-                    ceemRadarTool = toolsComponents.get(toolName);
-                    if(!ceemRadarTool.isVisible())
-                        ceemRadarTool.setVisible(true);
-                } else {
-                    ceemRadarTool = new ToolFrame(toolName , "test");
-                    ceemRadarTool.setVisible(true);
-                    toolsComponents.put(toolName, ceemRadarTool);
-                }
-            }
-        });
-
         menuParent.add(menuDownloadCache);
         menuParent.add(menuGeoNameImporter);
         menuParent.add(menuGeoNameView);
-        menuParent.add(menuRadarManager);
     }
 
     protected void fillMenuView(JMenu menu) {
