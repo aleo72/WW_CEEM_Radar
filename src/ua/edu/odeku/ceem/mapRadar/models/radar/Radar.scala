@@ -17,7 +17,7 @@ import scala.collection.mutable
  */
 abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 
-	val radarParameters : Map[RadarTypeParameter, Array[Double]]
+	val radarParameters : mutable.LinkedHashMap[RadarTypeParameter, Array[Double]]
 	lazy val setRadarParameters : mutable.HashMap[RadarTypeParameter, Double] = initParameter()
 	var _altitude = 10
 

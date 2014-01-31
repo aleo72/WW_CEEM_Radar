@@ -33,7 +33,30 @@ object RadarFactory {
 				new Radar_RODIN
 			case WSR_88D_S =>
 				new Radar_WSR_88D_S
-			// TODO Дописать....
+			case WSR_88D_C =>
+				new Radar_WSR_88D_C
+			case WSR_82D_X =>
+				new Radar_WSR_82D_X
+			case WSR_82D_C =>
+				new Radar_WSR_82D_C
+			case ERICSSON_RADAR_C =>
+				new Radar_ERICSSON_RADAR_C
+			case ERICSSON_RADAR_S =>
+				new Radar_ERICSSON_RADAR_S
+			case TDWR =>
+				new Radar_TDWR
+			case MITSUBISHI =>
+				new Radar_MITSUBISHI
+			case COST_73 =>
+				new Radar_COST_73
+			case METEOR_500_C =>
+				new Radar_METEOR_500_C
+			case DWSR_8500_S =>
+				new Radar_DWSR_8500_S
+			case DWSR_2500_С =>
+				new Radar_DWSR_2500_С
+			case DWSR_2500_С_К =>
+				new Radar_DWSR_2500_С_К
 			case _ => throw new IllegalArgumentException
 		}
 	}
