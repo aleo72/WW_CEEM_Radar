@@ -14,7 +14,7 @@ import gov.nasa.worldwind.render.airspaces.SphereAirspace
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes._
-import com.jgoodies.forms.layout.CellConstraints
+import com.jgoodies.forms.layout.{FormLayout, CellConstraints}
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.EditAirspaceEntryMessage
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspaceEntryMessage
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
@@ -130,25 +130,34 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		form.panelParm.removeAll()
 		val cc: CellConstraints = new CellConstraints
 
+		val columns = "fill:d:noGrow,left:4dlu:noGrow,fill:max(d;4px):grow"
+		val rows = "center:d:noGrow,top:4dlu:noGrow" + (",center:max(d;4px):noGrow,top:4dlu:noGrow" * radar.radarParameters.size)
+
+		form.panelParm.setLayout(new FormLayout(columns, rows))
+
 		var label: JLabel = new JLabel
 		label.setHorizontalAlignment(4)
 		label.setText(RadarTypeParameters.FREQUENCY_BAND.descriptions + ":")
 		form.panelParm.add(label, cc.xy(1, 1, CellConstraints.DEFAULT,	CellConstraints.FILL))
 
-		label = new JLabel
-		label.setText(radar.FREQUENCY_BAND.toString)
-		form.panelParm.add(label, cc.xy(3, 1))
+		val comboBox = new JComboBox[Char]()
+		comboBox.addItem(radar.FREQUENCY_BAND)
+		comboBox.setEnabled(false)
+
+		form.panelParm.add(comboBox, cc.xy(3, 1))
 
 		var index = 1 + 2
 		for( parm <- radar.radarParameters ){
 			val label = new JLabel()
 			label.setHorizontalAlignment(4)
 			label.setText(parm._1.descriptions + ":")
-			form.panelParm.add(label, cc.xy(1, index, CellConstraints.DEFAULT, CellConstraints.FILL))
+			form.panelParm.add(label, cc.xy(1, index))
 
 			val comboBox = new JComboBox[Double]()
 
 			for(v <- radar.radarParameters(parm._1)) comboBox.addItem(v)
+
+			if(comboBox.getItemCount == 1) comboBox.setEnabled(false)
 
 			comboBox.setSelectedItem(radar.setRadarParameters(parm._1))
 			form.panelParm.add(comboBox, cc.xy(3, index))

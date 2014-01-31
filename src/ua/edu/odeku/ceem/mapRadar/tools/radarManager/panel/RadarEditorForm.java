@@ -28,7 +28,6 @@ public class RadarEditorForm {
     public JPanel panelParm;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    private JComboBox comboBox3;
 
     public final HandlerRadarEditorFrom handler;
 
@@ -60,7 +59,7 @@ public class RadarEditorForm {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:max(d;4px):grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:max(d;4px):grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new FormLayout("fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         CellConstraints cc = new CellConstraints();
@@ -79,28 +78,18 @@ public class RadarEditorForm {
         panel2.add(label3, cc.xy(1, 6, CellConstraints.DEFAULT, CellConstraints.FILL));
         panel2.add(typeRadarComboBox, cc.xy(3, 6));
         panel1.add(locationForm.$$$getRootComponent$$$(), cc.xy(1, 5));
-        final JScrollPane scrollPane1 = new JScrollPane();
-        panel1.add(scrollPane1, cc.xy(1, 3, CellConstraints.FILL, CellConstraints.FILL));
-        panelParm.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:max(d;4px):grow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
-        scrollPane1.setViewportView(panelParm);
+        panelParm.setLayout(new FormLayout("fill:25px:noGrow,left:4dlu:noGrow,fill:max(d;4px):grow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.add(panelParm, cc.xy(1, 3, CellConstraints.DEFAULT, CellConstraints.TOP));
         final JLabel label4 = new JLabel();
-        label4.setHorizontalAlignment(4);
-        this.$$$loadLabelText$$$(label4, ResourceBundle.getBundle("RadarTypeParameter").getString("FREQUENCY_BAND"));
-        panelParm.add(label4, cc.xy(1, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
+        label4.setText("Label");
+        panelParm.add(label4, cc.xy(1, 1));
         comboBox1 = new JComboBox();
         panelParm.add(comboBox1, cc.xy(3, 1));
         final JLabel label5 = new JLabel();
-        label5.setHorizontalAlignment(4);
-        this.$$$loadLabelText$$$(label5, ResourceBundle.getBundle("RadarTypeParameter").getString("PULSE_POWER"));
+        label5.setText("Label");
         panelParm.add(label5, cc.xy(1, 3));
         comboBox2 = new JComboBox();
         panelParm.add(comboBox2, cc.xy(3, 3));
-        final JLabel label6 = new JLabel();
-        label6.setHorizontalAlignment(4);
-        this.$$$loadLabelText$$$(label6, ResourceBundle.getBundle("RadarTypeParameter").getString("ANTENNA_DIAMETER"));
-        panelParm.add(label6, cc.xy(1, 5));
-        comboBox3 = new JComboBox();
-        panelParm.add(comboBox3, cc.xy(3, 5));
     }
 
     /**
