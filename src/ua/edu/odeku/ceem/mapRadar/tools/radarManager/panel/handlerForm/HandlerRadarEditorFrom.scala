@@ -9,7 +9,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm
 import javax.swing._
 import ua.edu.odeku.ceem.mapRadar.models.radar.{RadarTypeParameters, RadarFactory, RadarTypes, Radar}
 import java.awt.event.{ActionEvent, ActionListener, ItemEvent, ItemListener}
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{EditAirspaceEntryMessage, CreateAirspaceEntryMessage, AirspaceEntryMessage, AirspaceEntry}
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntryMessage, AirspaceEntry}
 import gov.nasa.worldwind.render.airspaces.SphereAirspace
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
@@ -18,6 +18,8 @@ import com.jgoodies.forms.layout.{FormLayout, CellConstraints}
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.EditAirspaceEntryMessage
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspaceEntryMessage
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
+import scala.collection.mutable
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
 
 /**
  * User: Aleo Bakalov
@@ -29,8 +31,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	private var _airspaceEntry: AirspaceEntry = null
 	private var methodOfController: AirspaceEntry => Unit = message.method
 	private var radar: Radar = _
-	private var savedNewAirspaceEntry = true // флаг на надобность сохранить как новый объект
+	private var savedNewAirspaceEntry = true
+	// флаг на надобность сохранить как новый объект
 	private val radarTypeMap = new collection.mutable.HashMap[RadarType, Radar]
+	private val comboBoxParameterCurrentRadar = new mutable.HashMap[RadarTypeParameter, JComboBox[Double]]()
 
 	val changeLocationListener = new AirspaceChangeLocationOnFormListener(form.locationForm)
 
@@ -54,6 +58,12 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	val typeRadarComboBoxItemListener = new ItemListener {
 		def itemStateChanged(e: ItemEvent): Unit = {
 			updateRadar()
+		}
+	}
+
+	val changeRadarParameterComboBoxItemListener = new ItemListener {
+		override def itemStateChanged(e: ItemEvent): Unit = {
+			updateRadarParameter()
 		}
 	}
 
@@ -87,16 +97,17 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 	def initComboBoxes() {
 		form.typeRadarComboBox = new JComboBox[RadarType]()
-		for(radarType <- RadarTypes.values){
+		for (radarType <- RadarTypes.values) {
 			form.typeRadarComboBox.addItem(radarType)
 		}
 		form.typeRadarComboBox.setSelectedIndex(0)
+		form.typeRadarComboBox.addItemListener(typeRadarComboBoxItemListener)
 	}
 
 	def updateRadar(): Radar = {
 		val radarName = form.typeRadarComboBox.getSelectedItem.asInstanceOf[RadarType]
-		if(radar == null || radarName != radar.radarName){
-			if (radarTypeMap.keys.exists( radarName == _ )){
+		if (radar == null || radarName != radar.radarName) {
+			if (radarTypeMap.keys.exists(radarName == _)) {
 				radar = radarTypeMap(radarName)
 			} else {
 				radar = RadarFactory(radarName)
@@ -128,6 +139,8 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	 */
 	def updateForm() {
 		form.panelParm.removeAll()
+		comboBoxParameterCurrentRadar.clear()
+
 		val cc: CellConstraints = new CellConstraints
 
 		val columns = "fill:d:noGrow,left:4dlu:noGrow,fill:max(d;4px):grow"
@@ -135,10 +148,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 		form.panelParm.setLayout(new FormLayout(columns, rows))
 
-		var label: JLabel = new JLabel
+		val label = new JLabel
 		label.setHorizontalAlignment(4)
 		label.setText(RadarTypeParameters.FREQUENCY_BAND.descriptions + ":")
-		form.panelParm.add(label, cc.xy(1, 1, CellConstraints.DEFAULT,	CellConstraints.FILL))
+		form.panelParm.add(label, cc.xy(1, 1, CellConstraints.DEFAULT, CellConstraints.FILL))
 
 		val comboBox = new JComboBox[Char]()
 		comboBox.addItem(radar.FREQUENCY_BAND)
@@ -147,7 +160,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		form.panelParm.add(comboBox, cc.xy(3, 1))
 
 		var index = 1 + 2
-		for( parm <- radar.radarParameters ){
+		for (parm <- radar.radarParameters) {
 			val label = new JLabel()
 			label.setHorizontalAlignment(4)
 			label.setText(parm._1.descriptions + ":")
@@ -155,14 +168,23 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 			val comboBox = new JComboBox[Double]()
 
-			for(v <- radar.radarParameters(parm._1)) comboBox.addItem(v)
+			for (v <- radar.radarParameters(parm._1)) comboBox.addItem(v)
 
-			if(comboBox.getItemCount == 1) comboBox.setEnabled(false)
+			if (comboBox.getItemCount == 1) comboBox.setEnabled(false)
 
 			comboBox.setSelectedItem(radar.setRadarParameters(parm._1))
+			comboBox.addItemListener(changeRadarParameterComboBoxItemListener)
 			form.panelParm.add(comboBox, cc.xy(3, index))
 
-			index +=2
+			comboBoxParameterCurrentRadar += (parm._1 -> comboBox)
+
+			index += 2
+		}
+	}
+
+	def updateRadarParameter() {
+		for (tuple <- comboBoxParameterCurrentRadar) {
+			radar.setRadarParameters.update(tuple._1, tuple._2.getSelectedItem.asInstanceOf[Double])
 		}
 	}
 }

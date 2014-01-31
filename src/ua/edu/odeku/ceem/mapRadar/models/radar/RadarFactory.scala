@@ -34,7 +34,7 @@ object RadarFactory {
 			case WSR_88D_S =>
 				new Radar_WSR_88D_S
 			// TODO Дописать....
-			case _ => throw new NumberFormatException
+			case _ => throw new IllegalArgumentException
 		}
 	}
 }

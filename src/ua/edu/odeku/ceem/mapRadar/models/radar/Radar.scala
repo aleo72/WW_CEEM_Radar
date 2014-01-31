@@ -29,7 +29,7 @@ abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 	 */
 	def radius: Double = {
 		// TODO WORKING_RADIUS_MODE_INTENSITY и WORKING_RADIUS_MODE_SPEED
-		if(setRadarParameters.keySet.exists(RadarTypeParameters.WORKING_RADIUS == _)) {
+		val radiusInKm = if(setRadarParameters.keySet.exists(RadarTypeParameters.WORKING_RADIUS == _)) {
 			setRadarParameters(RadarTypeParameters.WORKING_RADIUS)
 		} else if(setRadarParameters.keySet.exists(RadarTypeParameters.WORKING_RADIUS_MODE_INTENSITY == _)){
 			setRadarParameters(RadarTypeParameters.WORKING_RADIUS_MODE_INTENSITY)
@@ -38,6 +38,7 @@ abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 		} else {
 			throw new NumberFormatException
 		}
+		radiusInKm * 1000
 	}
 	def initParameter(): mutable.HashMap[RadarTypeParameter, Double] = {
 		var map = new mutable.HashMap[RadarTypeParameter, Double]()
