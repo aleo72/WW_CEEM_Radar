@@ -20,6 +20,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspa
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
 import scala.collection.mutable
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
 /**
  * User: Aleo Bakalov
@@ -92,7 +93,13 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def initSpinners() {
-		form.altitudeSpinner = new JSpinner()
+		form.altitudeSpinner = new JSpinner(
+			new SpinnerNumberModel(
+				PropertyProgram.getDefaultAltitudeForRadar,
+				PropertyProgram.getMinAltitudeForRadar,
+				PropertyProgram.getMaxAltitudeForRadar,
+				PropertyProgram.getStepAltitudeForRadar
+			))
 	}
 
 	def initComboBoxes() {
@@ -114,7 +121,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			}
 			updateForm()
 		}
-
+		updateRadarParameter()
 		radarTypeMap.put(radarName, radar)
 		radar
 	}
@@ -186,5 +193,8 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		for (tuple <- comboBoxParameterCurrentRadar) {
 			radar.setRadarParameters.update(tuple._1, tuple._2.getSelectedItem.asInstanceOf[Double])
 		}
+
+		if(form.altitudeSpinner != null)
+			radar.altitude = form.altitudeSpinner.getValue.asInstanceOf[Int]
 	}
 }
