@@ -25,6 +25,29 @@ public class PropertyProgram {
     public final static boolean INIT_DB = false;
 
     /**
+     * Название как будет отображаться программа
+     */
+    private final static String LOOK_AND_FEEL_INFO = "Nimbus";
+
+    /**
+     * Название как будет отображаться программа
+     * @return Строка названия класса отображения программы
+     */
+    public static String getLookAndFeelInfo() {
+        return LOOK_AND_FEEL_INFO;
+    }
+
+    private final static String FILE_START_WINDOW = "resources/ww_start.png";
+
+    /**
+     * Возращает строку, где распологается этот файл с его именем
+     * @return Строка, путь к файлу картинки, которая будет отображаться при старте программы
+     */
+    public static String getFileStartWindow() {
+        return FILE_START_WINDOW;
+    }
+
+    /**
      * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
      */
     private final static boolean translateGeoName = true;
