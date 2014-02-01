@@ -331,7 +331,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 	def goToSelectionAirspace(){
 		val latLon = selectedEntry.airspace.asInstanceOf[SphereAirspace].getLocation
-		val elevation = selectedEntry.radar.altitude + PropertyProgram.getAltitudeForGoToAirspace
+		val elevation = selectedEntry.radar.altitude + 2 * selectedEntry.radar.radius + PropertyProgram.getAltitudeForGoToAirspace
 		val position = new Position(latLon, elevation )
 		ceemTool.appFrame.getWwd.getView.goTo(position, elevation)
 	}
