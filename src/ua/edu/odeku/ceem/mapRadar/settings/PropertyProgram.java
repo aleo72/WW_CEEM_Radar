@@ -78,6 +78,18 @@ public class PropertyProgram {
     }
 
     /**
+     * Значение высоты которую необходимо дополнительно установить над куполом радара, при переходе к нему
+     */
+    public static final int ALTITUDE_FOR_GO_TO_AIRSPACE = 100_000;
+
+    /**
+     * @return Значение высоты которую необходимо дополнительно установить над куполом радара, при переходе к нему
+     */
+    public static int getAltitudeForGoToAirspace() {
+        return ALTITUDE_FOR_GO_TO_AIRSPACE;
+    }
+
+    /**
      * Возращает название программы
      *
      * @return NAME_PROGRAM

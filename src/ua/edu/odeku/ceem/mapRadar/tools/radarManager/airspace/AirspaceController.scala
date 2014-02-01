@@ -8,15 +8,15 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 import gov.nasa.worldwind.WWObjectImpl
 import java.awt.event.{MouseEvent, ActionEvent, MouseListener, ActionListener}
 import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditor, AirspaceEditorController, AirspaceEditEvent, AirspaceEditListener}
-import javax.swing.{JButton, AbstractButton, JFileChooser}
+import javax.swing.{AbstractButton, JFileChooser}
 import gov.nasa.worldwind.pick.PickedObjectList
-import gov.nasa.worldwind.render.airspaces.Airspace
+import gov.nasa.worldwind.render.airspaces.{SphereAirspace, Airspace}
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 import scala.collection.mutable.ArrayBuffer
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
-import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
+import gov.nasa.worldwind.geom.Position
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
 /**
  * User: Aleo Bakalov
@@ -164,8 +164,10 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	def actionPerformed(e: ActionEvent): Unit = {
 		if (this.enabled) {
 			e.getActionCommand match {
-				case NEW_AIRSPACE => this.createNewEntry()
-				case CLEAR_SELECTION => this.selectEntry(null, updateView = true)
+				case NEW_AIRSPACE =>
+					this.createNewEntry()
+				case CLEAR_SELECTION =>
+					this.selectEntry(null, updateView = true)
 				case SIZE_NEW_SHAPES_TO_VIEWPORT =>
 					e.getSource match {
 						case button: AbstractButton =>
@@ -178,8 +180,12 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 							this.enableEdit = button.isSelected
 						case _ =>
 					}
-				case REMOVE_SELECTED => this.removeEntries(this.selectedEntries)
-				case SELECTION_CHANGED => this.viewSelectionChanged()
+				case REMOVE_SELECTED =>
+					this.removeEntries(this.selectedEntries)
+				case SELECTION_CHANGED =>
+					this.viewSelectionChanged()
+				case GO_TO_SELECTION_AIRSPACE =>
+					this.goToSelectionAirspace()
 				case _ =>
 			}
 		}
@@ -321,5 +327,12 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 			}
 		}
 		null
+	}
+
+	def goToSelectionAirspace(){
+		val latLon = selectedEntry.airspace.asInstanceOf[SphereAirspace].getLocation
+		val elevation = selectedEntry.radar.altitude + PropertyProgram.getAltitudeForGoToAirspace
+		val position = new Position(latLon, elevation )
+		ceemTool.appFrame.getWwd.getView.goTo(position, elevation)
 	}
 }

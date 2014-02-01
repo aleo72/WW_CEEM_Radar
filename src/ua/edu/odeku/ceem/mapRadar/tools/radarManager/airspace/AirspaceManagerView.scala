@@ -8,11 +8,9 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.AirspacePanel
 import javax.swing.{ListSelectionModel, JPanel}
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
-import java.awt.event.ActionEvent
+import java.awt.event.{MouseEvent, MouseAdapter, ActionEvent}
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel
-import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
 
 /**
  * User: Aleo Bakalov
@@ -65,6 +63,15 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 			def valueChanged(e: ListSelectionEvent): Unit = {
 				if (!ignoreSelectEvents) {
 					controller.actionPerformed(new ActionEvent(e.getSource, -1, SELECTION_CHANGED))
+				}
+			}
+		})
+
+		form.table.addMouseListener(new MouseAdapter {
+
+			override def mouseClicked(e: MouseEvent): Unit = {
+				if(e.getClickCount == 2 && e.getButton == MouseEvent.BUTTON1){
+					controller.actionPerformed(new ActionEvent(e.getSource, -1, GO_TO_SELECTION_AIRSPACE))
 				}
 			}
 		})

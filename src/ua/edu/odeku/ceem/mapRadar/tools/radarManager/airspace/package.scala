@@ -17,6 +17,7 @@ import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
 import gov.nasa.worldwind.view.orbit.BasicOrbitView
 
 /**
+ * Класс пакет
  * Created by Aleo on 08.01.14.
  */
 package object airspace {
@@ -31,6 +32,7 @@ package object airspace {
 	val REMOVE_SELECTED: String = "AirspaceBuilder.RemoveSelected"
 	val SAVE: String = "AirspaceBuilder.Save"
 	val SELECTION_CHANGED: String = "AirspaceBuilder.SelectionChanged"
+	val GO_TO_SELECTION_AIRSPACE: String = "AirspaceBuilder.GoToSelectionAirspace"
 
 	var nextEntryNumber: Long = 1
 
@@ -84,23 +86,23 @@ package object airspace {
 	}
 
 	def areShapesIntersecting(a1: Airspace, a2: Airspace): Boolean = {
-		if (a1.isInstanceOf[SphereAirspace] && a2.isInstanceOf[SphereAirspace]) {
-			val s1: SphereAirspace = a1.asInstanceOf[SphereAirspace]
-			val s2: SphereAirspace = a2.asInstanceOf[SphereAirspace]
-			val location1: LatLon = s1.getLocation
-			val location2: LatLon = s2.getLocation
-			val altitude1: Double = s1.getAltitudes()(0)
-			val altitude2: Double = s2.getAltitudes()(0)
-			val terrainConforming1: Boolean = s1.isTerrainConforming()(0)
-			val terrainConforming2: Boolean = s2.isTerrainConforming()(0)
-			val p1: Vec4 = if (terrainConforming1) getSurfacePoint(location1, altitude1) else getPoint(location1, altitude1)
-			val p2: Vec4 = if (terrainConforming2) getSurfacePoint(location2, altitude2) else getPoint(location2, altitude2)
-			val r1: Double = s1.getRadius
-			val r2: Double = s2.getRadius
-			val d: Double = p1.distanceTo3(p2)
-			d <= (r1 + r2)
-		} else{
-			false
+		a1 match {
+			case s1: SphereAirspace if a2.isInstanceOf[SphereAirspace] =>
+				val s2: SphereAirspace = a2.asInstanceOf[SphereAirspace]
+				val location1: LatLon = s1.getLocation
+				val location2: LatLon = s2.getLocation
+				val altitude1: Double = s1.getAltitudes()(0)
+				val altitude2: Double = s2.getAltitudes()(0)
+				val terrainConforming1: Boolean = s1.isTerrainConforming()(0)
+				val terrainConforming2: Boolean = s2.isTerrainConforming()(0)
+				val p1: Vec4 = if (terrainConforming1) getSurfacePoint(location1, altitude1) else getPoint(location1, altitude1)
+				val p2: Vec4 = if (terrainConforming2) getSurfacePoint(location2, altitude2) else getPoint(location2, altitude2)
+				val r1: Double = s1.getRadius
+				val r2: Double = s2.getRadius
+				val d: Double = p1.distanceTo3(p2)
+				d <= (r1 + r2)
+			case _ =>
+				false
 		}
 
 	}
