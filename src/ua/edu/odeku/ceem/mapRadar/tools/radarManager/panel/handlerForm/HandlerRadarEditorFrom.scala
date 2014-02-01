@@ -21,6 +21,7 @@ import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
 import scala.collection.mutable
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 
 /**
  * User: Aleo Bakalov
@@ -187,6 +188,9 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 			index += 2
 		}
+
+		VisibleUtils.packFrame(form.parent)
+		VisibleUtils.setMinMaxSizeFrame(form.parent)
 	}
 
 	def updateRadarParameter() {

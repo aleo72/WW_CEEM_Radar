@@ -30,8 +30,10 @@ public class RadarEditorForm {
     private JComboBox comboBox2;
 
     public final HandlerRadarEditorFrom handler;
+    public final JFrame parent;
 
-    public RadarEditorForm(AirspaceEntryMessage airspaceEntryMessage) {
+    public RadarEditorForm(JFrame parent, AirspaceEntryMessage airspaceEntryMessage) {
+        this.parent = parent;
         /*
         Создаем обработчик что бы можно было инициализировать некоторые элименты
          */

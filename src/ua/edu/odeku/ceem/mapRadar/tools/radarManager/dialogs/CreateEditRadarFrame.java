@@ -25,7 +25,6 @@ public class CreateEditRadarFrame extends JFrame {
     public RadarEditorForm radarEditorForm;
     private JButton buttonSave;
 
-    private boolean isOK = false;
     private AirspaceEntryMessage airspaceEntryMessage;
 
     public CreateEditRadarFrame(AirspaceEntryMessage airspaceEntryMessage) {
@@ -68,7 +67,6 @@ public class CreateEditRadarFrame extends JFrame {
     public void save() {
         //TODO --------------
         dispose();
-        this.isOK = true;
     }
 
     public void onCancel() {
@@ -84,7 +82,7 @@ public class CreateEditRadarFrame extends JFrame {
     }
 
     private void createUIComponents() {
-        radarEditorForm = new RadarEditorForm(airspaceEntryMessage);
+        radarEditorForm = new RadarEditorForm(this, airspaceEntryMessage);
     }
 
     /**
