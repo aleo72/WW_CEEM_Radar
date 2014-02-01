@@ -26,6 +26,7 @@ object CeemRadarApplication extends App {
 
 	Application.initSystemProperty()
 	Application.initLookAndFeel(PropertyProgram.getLookAndFeelInfo)
+	Application.initConfigurationProgram()
 
 	try {
 		Application.showStartWindow(visible = true)
@@ -82,6 +83,19 @@ private object Application {
 					classOf[CeemRadarApplicationTemplate].getName
 				).log(java.util.logging.Level.SEVERE, null, ex)
 		}
+	}
+
+	/**
+	 * Метод инициализации конфигурации WorldWind
+	 */
+	def initConfigurationProgram(){
+
+		// Файл с настройками путей сохранения Cache
+		Configuration.setValue (
+			"gov.nasa.worldwind.avkey.DataFileStoreConfigurationFileName",
+			"ua/edu/odeku/ceem/mapRadar/config/DataFileStore.xml"
+		)
+
 	}
 
 	private var startWindow: JWindow = null
