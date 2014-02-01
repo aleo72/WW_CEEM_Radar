@@ -10,6 +10,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm;
 
@@ -24,7 +25,6 @@ public class CreateEditRadarFrame extends JFrame {
     public RadarEditorForm radarEditorForm;
     private JButton buttonSave;
 
-    private boolean isOK = false;
     private AirspaceEntryMessage airspaceEntryMessage;
 
     public CreateEditRadarFrame(AirspaceEntryMessage airspaceEntryMessage) {
@@ -56,6 +56,7 @@ public class CreateEditRadarFrame extends JFrame {
         this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
         this.setMaximumSize(new Dimension(this.getWidth(), this.getHeight()));
 
+        this.setTitle(ResourceString.get("menu_radar_manager_edit"));
         initButtonListener();
     }
 
@@ -66,7 +67,6 @@ public class CreateEditRadarFrame extends JFrame {
     public void save() {
         //TODO --------------
         dispose();
-        this.isOK = true;
     }
 
     public void onCancel() {
@@ -82,7 +82,7 @@ public class CreateEditRadarFrame extends JFrame {
     }
 
     private void createUIComponents() {
-        radarEditorForm = new RadarEditorForm(airspaceEntryMessage);
+        radarEditorForm = new RadarEditorForm(this, airspaceEntryMessage);
     }
 
     /**

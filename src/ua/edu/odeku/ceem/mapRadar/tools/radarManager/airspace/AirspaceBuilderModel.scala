@@ -10,6 +10,8 @@ import java.lang.String
 import gov.nasa.worldwind.avlist.AVKey
 import java.util
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
+import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
 
 /**
  * User: Aleo Bakalov
@@ -26,14 +28,20 @@ class AirspaceBuilderModel extends AbstractTableModel {
 
 	def getRowCount: Int = this.entryList.size()
 
-	def getColumnCount: Int = 1
+	def getColumnCount: Int = 2
 
 	def getValueAt(rowIndex: Int, columnIndex: Int): AnyRef = {
 		val entry = this.entryList.get(rowIndex)
-		entry.getValue(AirspaceBuilderModel.columnAttribute(columnIndex))
+		columnIndex match {
+			case 0 =>
+				entry.getValue(AirspaceBuilderModel.columnAttribute(columnIndex))
+			case 1 =>
+				entry.radar.radarName
+		}
+
 	}
 
-	override def isCellEditable(rowIndex: Int, columnIndex: Int): Boolean = true
+	override def isCellEditable(rowIndex: Int, columnIndex: Int): Boolean = false
 
 	def entries: Array[AirspaceEntry] = this.entryList.toArray(Array[AirspaceEntry]())
 
@@ -50,7 +58,7 @@ class AirspaceBuilderModel extends AbstractTableModel {
 
 	def addEntry(entry : AirspaceEntry) {
 		this.entryList.add(entry)
-		val index = this.entryList.size() - 1;
+		val index = this.entryList.size() - 1
 		this.fireTableRowsInserted(index, index)
 	}
 
@@ -75,7 +83,10 @@ class AirspaceBuilderModel extends AbstractTableModel {
 }
 
 object AirspaceBuilderModel {
-	val columnName: Array[String] = Array("Name")
-	val columnClass: Array[Class[_]] = Array(classOf[String])
+	val columnName: Array[String] = Array(
+		ResourceString.get("table_airspace_name"),
+		ResourceString.get("table_airspace_radar-type")
+	)
+	val columnClass: Array[Class[_]] = Array(classOf[String], classOf[RadarTypeParameter])
 	val columnAttribute: Array[String] = Array(AVKey.DISPLAY_NAME)
 }

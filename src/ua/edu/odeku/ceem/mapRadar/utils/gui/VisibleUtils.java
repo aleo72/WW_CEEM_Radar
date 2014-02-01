@@ -6,6 +6,9 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.layers.placename.PlaceNameLayer;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Класс с набором методов утилит
  * User: Aleo
@@ -101,4 +104,44 @@ public final class VisibleUtils {
         layers.add(compassPosition + 1, layer);
     }
 
+    /**
+     * Упаковывает окно
+     * @param frame окно которое необходимо упокавать
+     */
+    public static void packFrame(JFrame frame){
+        frame.pack();
+    }
+
+    /**
+     * Установит Минимальное и максимальное значение для окна
+     * Приэтом окно упаковано
+     * @param frame окно которое подлежит указанию границ
+     */
+    public static void setMinMaxSizeFrame(JFrame frame){
+        setMinSizeFrame(frame);
+        setMaxSizeFrame(frame);
+        frame.setResizable(false);
+    }
+
+    /**
+     * Установит Минимальное значение для окна
+     * Приэтом окно упаковано
+     * @param frame окно которое подлежит указанию границ
+     */
+    public static void setMinSizeFrame(JFrame frame){
+        Dimension dimension = frame.getSize();
+        frame.pack();
+        frame.setMinimumSize(frame.getSize());
+        frame.setSize(dimension);
+    }
+
+    /**
+     * Установит Максимальное значение для окна
+     * Приэтом окно будет упаковано
+     * @param frame окно которое подлежит указанию границ
+     */
+    public static void setMaxSizeFrame(JFrame frame){
+        frame.pack();
+        frame.setMaximumSize(frame.getSize());
+    }
 }

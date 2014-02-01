@@ -36,7 +36,7 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 
 	def radar_=(value: Radar): Unit = {
 		_radar = value
-		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.coverage)
+		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.radius)
 		airspace.asInstanceOf[SphereAirspace].setAltitude(_radar.altitude)
 	}
 

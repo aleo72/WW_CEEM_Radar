@@ -6,16 +6,22 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm
 
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm
-import javax.swing.{JTextField, JComboBox, SpinnerNumberModel, JSpinner}
-import javax.swing.event.{ChangeEvent, ChangeListener}
-import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
-import java.lang.NumberFormatException
-import ua.edu.odeku.ceem.mapRadar.models.{DoubleWhisPrefix_SI, Prefix_SI}
+import javax.swing._
+import ua.edu.odeku.ceem.mapRadar.models.radar.{RadarTypeParameters, RadarFactory, RadarTypes, Radar}
 import java.awt.event.{ActionEvent, ActionListener, ItemEvent, ItemListener}
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{EditAirspaceEntryMessage, CreateAirspaceEntryMessage, AirspaceEntryMessage, AirspaceEntry}
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntryMessage, AirspaceEntry}
 import gov.nasa.worldwind.render.airspaces.SphereAirspace
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes._
+import com.jgoodies.forms.layout.{FormLayout, CellConstraints}
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.EditAirspaceEntryMessage
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspaceEntryMessage
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
+import scala.collection.mutable
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 
 /**
  * User: Aleo Bakalov
@@ -27,7 +33,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	private var _airspaceEntry: AirspaceEntry = null
 	private var methodOfController: AirspaceEntry => Unit = message.method
 	private var radar: Radar = _
-	private var savedNewAirspaceEntry = true // флаг на надобность сохранить как новый объект
+	private var savedNewAirspaceEntry = true
+	// флаг на надобность сохранить как новый объект
+	private val radarTypeMap = new collection.mutable.HashMap[RadarType, Radar]
+	private val comboBoxParameterCurrentRadar = new mutable.HashMap[RadarTypeParameter, JComboBox[Double]]()
 
 	val changeLocationListener = new AirspaceChangeLocationOnFormListener(form.locationForm)
 
@@ -48,151 +57,73 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		}
 	}
 
-	val valueChangeListener = new ChangeListener {
-		def stateChanged(e: ChangeEvent): Unit = {
-			updateCoverageTextField()
+	val typeRadarComboBoxItemListener = new ItemListener {
+		def itemStateChanged(e: ItemEvent): Unit = {
+			updateRadar()
 		}
 	}
 
-	val comboBoxItemListener = new ItemListener {
-		def itemStateChanged(e: ItemEvent): Unit = {
-			updateCoverageTextField()
+	val changeRadarParameterComboBoxItemListener = new ItemListener {
+		override def itemStateChanged(e: ItemEvent): Unit = {
+			updateRadarParameter()
 		}
 	}
+
+	initComboBoxes()
+	form.panelParm = new JPanel()
+	updateRadar()
+	updateForm()
 
 	message match {
 		case message: CreateAirspaceEntryMessage =>
-			radar = new Radar()
 			airspaceEntry = createAirspaceEntry()
 		case message: EditAirspaceEntryMessage =>
 			airspaceEntry = message.airspaceEntry
 			radar = airspaceEntry.radar
+			form.typeRadarComboBox.setSelectedItem(radar.radarName)
 	}
 
-	changeLocationListener.updateFields(airspaceEntry.airspace.asInstanceOf[SphereAirspace].getLocation)
-
 	initSpinners()
-	initComboBoxes()
 	initTextField()
-	updateForm()
-	updateCoverageTextField()
+
+	changeLocationListener.updateFields(airspaceEntry.airspace.asInstanceOf[SphereAirspace].getLocation)
 
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
 		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
 	}
 
-	def updateForm() {
-
-		def updateForm(value: Double, spinner: JSpinner, comboBox: JComboBox[Prefix_SI]) {
-			val doublePrefixSI = new DoubleWhisPrefix_SI(value)
-			spinner.setValue(doublePrefixSI._v)
-			comboBox.setSelectedItem(doublePrefixSI._prefix)
-		}
-
-		val (
-			transmitterPower,
-			antennaGain,
-			effectiveArea,
-			minimumReceiverSensitivity,
-			scatteringCrossSection,
-			altitude
-			) = (
-			radar.transmitterPower,
-			radar.antennaGain,
-			radar.effectiveArea,
-			radar.minimumReceiverSensitivity,
-			radar.scatteringCrossSection,
-			radar.altitude
-			)
-
-		updateForm(transmitterPower, form.transmotterPowerSpinner, form.transmotterPowerComboBox)
-		updateForm(antennaGain, form.antenaGainSpinner, form.antenaGainComboBox)
-		updateForm(effectiveArea, form.effectiveAreaSpinner, form.effectiveAreaComboBox)
-		updateForm(minimumReceiverSensitivity, form.minimumReceiverSensitivitySpinner, form.minimumReceiverSensitivityComboBox)
-		updateForm(scatteringCrossSection, form.scatteringCrossSectionSpinner, form.scatteringCrossSectionComboBox)
-
-		form.altitudeSpinner.setValue(altitude)
-	}
-
 	def initSpinners() {
-		val format: String = "#,##0.########"
-
-		def initSpinner() = {
-			val jSpinner: JSpinner = new JSpinner()
-			val spinnerNumberModel: SpinnerNumberModel = new SpinnerNumberModel(1.0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1)
-			jSpinner.setModel(spinnerNumberModel)
-			jSpinner.setEditor(new JSpinner.NumberEditor(jSpinner, format))
-			jSpinner.addChangeListener(valueChangeListener)
-			jSpinner
-		}
-
-		form.antenaGainSpinner = initSpinner()
-		form.effectiveAreaSpinner = initSpinner()
-		form.minimumReceiverSensitivitySpinner = initSpinner()
-		form.scatteringCrossSectionSpinner = initSpinner()
-		form.transmotterPowerSpinner = initSpinner()
-
-		form.altitudeSpinner = new JSpinner()
+		form.altitudeSpinner = new JSpinner(
+			new SpinnerNumberModel(
+				PropertyProgram.getDefaultAltitudeForRadar,
+				PropertyProgram.getMinAltitudeForRadar,
+				PropertyProgram.getMaxAltitudeForRadar,
+				PropertyProgram.getStepAltitudeForRadar
+			))
 	}
 
 	def initComboBoxes() {
-		def initComboBox() = {
-			val comboBox = new JComboBox[Prefix_SI](Prefix_SI.array)
-			comboBox.setSelectedItem(Prefix_SI.ONE)
-			comboBox.addItemListener(comboBoxItemListener)
-			comboBox
+		form.typeRadarComboBox = new JComboBox[RadarType]()
+		for (radarType <- RadarTypes.values) {
+			form.typeRadarComboBox.addItem(radarType)
 		}
-
-		form.transmotterPowerComboBox = initComboBox()
-		form.antenaGainComboBox = initComboBox()
-		form.effectiveAreaComboBox = initComboBox()
-		form.scatteringCrossSectionComboBox = initComboBox()
-		form.minimumReceiverSensitivityComboBox = initComboBox()
-	}
-
-	def updateCoverageTextField() {
-		updateRadar()
-		if (radar == null) {
-			form.coverageTextField.setText("")
-		}
-		else {
-			form.coverageTextField.setText(radar.coverage.toString)
-		}
+		form.typeRadarComboBox.setSelectedIndex(0)
+		form.typeRadarComboBox.addItemListener(typeRadarComboBoxItemListener)
 	}
 
 	def updateRadar(): Radar = {
-		try {
-			val gain: Double = form.antenaGainSpinner.getValue.toString.toDouble * form.antenaGainComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val effective: Double = form.effectiveAreaSpinner.getValue.toString.toDouble * form.effectiveAreaComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val minimum: Double = form.minimumReceiverSensitivitySpinner.getValue.toString.toDouble * form.minimumReceiverSensitivityComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val scattening: Double = form.scatteringCrossSectionSpinner.getValue.toString.toDouble * form.scatteringCrossSectionComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val tranmotter: Double = form.transmotterPowerSpinner.getValue.toString.toDouble * form.transmotterPowerComboBox.getSelectedItem.asInstanceOf[Prefix_SI].pow()
-			val altitude: Int = form.altitudeSpinner.getValue.toString.toInt
-
-			if (radar == null) {
-				radar = new Radar(
-					transmitterPower = tranmotter,
-					antennaGain = gain,
-					effectiveArea = effective,
-					scatteringCrossSection = scattening,
-					minimumReceiverSensitivity = minimum,
-					altitude = altitude
-				)
+		val radarName = form.typeRadarComboBox.getSelectedItem.asInstanceOf[RadarType]
+		if (radar == null || radarName != radar.radarName) {
+			if (radarTypeMap.keys.exists(radarName == _)) {
+				radar = radarTypeMap(radarName)
 			} else {
-				radar.update(
-					transmitterPower = tranmotter,
-					antennaGain = gain,
-					effectiveArea = effective,
-					scatteringCrossSection = scattening,
-					minimumReceiverSensitivity = minimum,
-					altitude = altitude
-				)
+				radar = RadarFactory(radarName)
 			}
-		} catch {
-			case ex: NumberFormatException =>
-				ex.printStackTrace()
+			updateForm()
 		}
+		updateRadarParameter()
+		radarTypeMap.put(radarName, radar)
 		radar
 	}
 
@@ -204,11 +135,70 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def initTextField() {
-		form.coverageTextField = new JTextField()
 		form.nameAirspaceTextField = new JTextField(airspaceEntry.nameAirspaceEntry)
 	}
 
 	def eventCloseForm() {
 		airspaceEntry.editor.removeEditListener(changeLocationListener)
+	}
+
+	/**
+	 * Метод генирить данные формы
+	 */
+	def updateForm() {
+		form.panelParm.removeAll()
+		comboBoxParameterCurrentRadar.clear()
+
+		val cc: CellConstraints = new CellConstraints
+
+		val columns = "fill:d:noGrow,left:4dlu:noGrow,fill:max(d;4px):grow"
+		val rows = "center:d:noGrow,top:4dlu:noGrow" + (",center:max(d;4px):noGrow,top:4dlu:noGrow" * radar.radarParameters.size)
+
+		form.panelParm.setLayout(new FormLayout(columns, rows))
+
+		val label = new JLabel
+		label.setHorizontalAlignment(4)
+		label.setText(RadarTypeParameters.FREQUENCY_BAND.descriptions + ":")
+		form.panelParm.add(label, cc.xy(1, 1, CellConstraints.DEFAULT, CellConstraints.FILL))
+
+		val comboBox = new JComboBox[Char]()
+		comboBox.addItem(radar.FREQUENCY_BAND)
+		comboBox.setEnabled(false)
+
+		form.panelParm.add(comboBox, cc.xy(3, 1))
+
+		var index = 1 + 2
+		for (parm <- radar.radarParameters) {
+			val label = new JLabel()
+			label.setHorizontalAlignment(4)
+			label.setText(parm._1.descriptions + ":")
+			form.panelParm.add(label, cc.xy(1, index))
+
+			val comboBox = new JComboBox[Double]()
+
+			for (v <- radar.radarParameters(parm._1)) comboBox.addItem(v)
+
+			if (comboBox.getItemCount == 1) comboBox.setEnabled(false)
+
+			comboBox.setSelectedItem(radar.setRadarParameters(parm._1))
+			comboBox.addItemListener(changeRadarParameterComboBoxItemListener)
+			form.panelParm.add(comboBox, cc.xy(3, index))
+
+			comboBoxParameterCurrentRadar += (parm._1 -> comboBox)
+
+			index += 2
+		}
+
+		VisibleUtils.packFrame(form.parent)
+		VisibleUtils.setMinMaxSizeFrame(form.parent)
+	}
+
+	def updateRadarParameter() {
+		for (tuple <- comboBoxParameterCurrentRadar) {
+			radar.setRadarParameters.update(tuple._1, tuple._2.getSelectedItem.asInstanceOf[Double])
+		}
+
+		if(form.altitudeSpinner != null)
+			radar.altitude = form.altitudeSpinner.getValue.asInstanceOf[Int]
 	}
 }

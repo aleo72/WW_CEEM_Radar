@@ -47,14 +47,70 @@ public class PropertyProgram {
         return FILE_START_WINDOW;
     }
 
-    static {
-        Locale.setDefault(CURRENT_LOCALE);
+    /**
+     * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
+     */
+    private final static boolean translateGeoName = true;
+
+    /**
+     * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
+     */
+    private final static int MAX_ALTITUDE_FOR_RADAR = 100_000;
+
+    /**
+     * @return Возращает максимальное значение высоты установки радара
+     */
+    public static int getMaxAltitudeForRadar() {
+        return MAX_ALTITUDE_FOR_RADAR;
     }
 
     /**
      * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
      */
-    private final static boolean translateGeoName = true;
+    private final static int MIN_ALTITUDE_FOR_RADAR = 0;
+
+    /**
+     * @return Возращает минимальное значение высоты установки радара
+     */
+    public static int getMinAltitudeForRadar() {
+        return MIN_ALTITUDE_FOR_RADAR;
+    }
+
+    /**
+     * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
+     */
+    private final static int DEFAULT_ALTITUDE_FOR_RADAR = 10;
+
+    /**
+     * @return Возрадает значение высоты установки радара по умолчанию
+     */
+    public static int getDefaultAltitudeForRadar() {
+        return DEFAULT_ALTITUDE_FOR_RADAR;
+    }
+
+    /**
+     * TODO данная настройка так же должна быть настраеваемая пользователем, или автоматически браться по определенному критерию
+     */
+    private final static int STEP_ALTITUDE_FOR_RADAR = 5;
+
+    /**
+     * @return Возращает шаг увеличения высоты установки радара для JSpinner
+     */
+    public static int getStepAltitudeForRadar() {
+        return STEP_ALTITUDE_FOR_RADAR;
+    }
+
+    /**
+     * Значение высоты которую необходимо дополнительно установить над куполом радара, при переходе к нему
+     */
+    public static final int ALTITUDE_FOR_GO_TO_AIRSPACE = 100_000;
+
+    /**
+     * @return Значение высоты которую необходимо дополнительно установить над куполом радара, при переходе к нему
+     */
+    public static int getAltitudeForGoToAirspace() {
+        return ALTITUDE_FOR_GO_TO_AIRSPACE;
+    }
 
     /**
      * Возращает название программы
@@ -71,5 +127,9 @@ public class PropertyProgram {
 
     public static boolean isTranslateGeoName() {
         return translateGeoName;
+    }
+
+    static {
+        Locale.setDefault(CURRENT_LOCALE);
     }
 }
