@@ -1,5 +1,5 @@
 <component name="CopyrightManager">
-  <settings default="NASA">
+  <settings default="">
     <module2copyright>
       <element module="Project Files" copyright="NASA" />
     </module2copyright>
