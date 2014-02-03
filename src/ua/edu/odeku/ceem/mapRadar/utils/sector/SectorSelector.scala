@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.utils
+package ua.edu.odeku.ceem.mapRadar.utils.sector
 
 import gov.nasa.worldwind.{View, Movable, WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.event._

@@ -16,11 +16,12 @@ import gov.nasa.worldwind.layers.Layer
 import gov.nasa.worldwind.terrain.CompoundElevationModel
 import gov.nasa.worldwind.globes.ElevationModel
 import java.awt.{Component, Color}
-import ua.edu.odeku.ceem.mapRadar.utils.SectorSelector
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import java.util.ResourceBundle
 import java.awt.event.ActionEvent
 import gov.nasa.worldwind.event.{BulkRetrievalEvent, BulkRetrievalListener}
+import ua.edu.odeku.ceem.mapRadar.utils.sector.{SectorUtils, SectorSelector}
+import gov.nasa.worldwindx.examples.BulkDownloadPanel
 
 /**
  * Класс обработчик собитий для формы CacheDownloaderForm
@@ -157,14 +158,64 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 	def initComponents() = {
 
 	}
-}
 
-protected class BulkRetrievablePanel(val retrievable: BulkRetrievable) extends JPanel {
+	protected class BulkRetrievablePanel(val retrievable: BulkRetrievable) extends JPanel {
 
-	val selectCheckBox: JCheckBox = new JCheckBox()
+		val selectCheckBox: JCheckBox = new JCheckBox()
+		val descriptionLabel: JLabel = null
+		var updateThread: Thread = null
+		var sector: Sector = null
 
-	def updateDescription(sector: Sector) = {
-		//TODO updateDescription
+		def initComponents() {
+			// TODO ---!!!!!!!!!!!!!!!!!!!!
+		}
+
+		def updateDescription(sector: Sector) {
+			if (this.updateThread != null && this.updateThread.isAlive)
+				return
+
+			this.sector = sector
+			if(!this.selectCheckBox.isSelected){
+				doUpdateDescription(null)
+			} else {
+				this.updateThread = new Thread(new Runnable {
+					override def run(): Unit = {
+						doUpdateDescription(sector)
+					}
+				})
+				this.updateThread.setDaemon(true)
+				this.updateThread.start()
+			}
+		}
+
+		def doUpdateDescription(sector: Sector){
+			if(sector != null){
+				try{
+					val size = retrievable.getEstimatedMissingDataSize(sector, 0, cache)
+					val formattedSize = SectorUtils.makeSizeDescription(size)
+					SwingUtilities.invokeLater(new Runnable {
+						override def run(): Unit = {
+							descriptionLabel.setText(formattedSize)
+						}
+					})
+				} catch {
+					case _: Throwable =>
+						SwingUtilities.invokeLater(new Runnable {
+							override def run(): Unit = {
+								descriptionLabel.setText("-")
+							}
+						})
+				}
+			} else {
+				SwingUtilities.invokeLater(new Runnable {
+					override def run(): Unit = {
+						descriptionLabel.setText("-")
+					}
+				})
+			}
+		}
+
+		override def toString = this.retrievable.getName
 	}
 }
 
