@@ -21,7 +21,6 @@ import java.util.ResourceBundle
 import java.awt.event.{ActionListener, ActionEvent}
 import gov.nasa.worldwind.event.{BulkRetrievalEvent, BulkRetrievalListener}
 import ua.edu.odeku.ceem.mapRadar.utils.sector.{SectorUtils, SectorSelector}
-import gov.nasa.worldwindx.examples.BulkDownloadPanel
 
 /**
  * Класс обработчик собитий для формы CacheDownloaderForm
@@ -37,17 +36,66 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 	JPopupMenu.setDefaultLightWeightPopupEnabled(false)
 	ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false)
 
-
 	initComponents()
+
+	def initComponents() {
+		this.form.locationButton.addActionListener(new ActionListener {
+			override def actionPerformed(e: ActionEvent): Unit = {
+				val fc = new JFileChooser()
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
+				fc.setMultiSelectionEnabled(false)
+				val status = fc.showOpenDialog(form.locationButton.getParent)
+
+				if (status == JFileChooser.APPROVE_OPTION) {
+					val file = fc.getSelectedFile
+					if (file != null) {
+						form.locationTextField.setText(file.getPath)
+						cache = new BasicDataFileStore(file)
+						updateRetrievablePanels(selector.sector)
+					}
+				}
+			}
+		})
+
+		this.form.selectButton.addActionListener(new ActionListener {
+			override def actionPerformed(e: ActionEvent): Unit = {
+				selectButtonActionPerformed(e)
+			}
+		})
+
+		form.layersPanel.setLayout(new BoxLayout(this.form.layersPanel, BoxLayout.Y_AXIS))
+		form.layersPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2))
+		this.retrievables.foreach(this.form.layersPanel.add(_))
+
+
+		this.form.startButton.setEnabled(false)
+		this.form.startButton.addActionListener(new ActionListener {
+			override def actionPerformed(e: ActionEvent): Unit = {
+				startButtonActionPerformed(e)
+			}
+		})
+
+		this.form.monitorPanel.setLayout(new BoxLayout(this.form.monitorPanel, BoxLayout.Y_AXIS))
+		this.form.monitorPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2))
+
+	}
 
 	def initRetrievables(wwd: WorldWindow): ArrayBuffer[BulkRetrievablePanel] = {
 		val buff = new ArrayBuffer[BulkRetrievablePanel]()
-		for (layer: Layer <- wwd.getModel.getLayers if layer.isInstanceOf[BulkRetrievable])
-			buff += new BulkRetrievablePanel(layer.asInstanceOf[BulkRetrievable])
+		//		wwd.getModel.getLayers
+		for (i: Int <- 0 until wwd.getModel.getLayers.size()) {
+			val layer: Layer = wwd.getModel.getLayers.get(i)
+			if (layer.isInstanceOf[BulkRetrievable])
+				buff += new BulkRetrievablePanel(layer.asInstanceOf[BulkRetrievable])
+		}
 
 		val cem: CompoundElevationModel = wwd.getModel.getGlobe.getElevationModel.asInstanceOf[CompoundElevationModel]
-		for (elevationModel: ElevationModel <- cem.getElevationModels if elevationModel.asInstanceOf[BulkRetrievable])
-			buff += new BulkRetrievablePanel(elevationModel.asInstanceOf[BulkRetrievable])
+
+		for (i: Int <- 0 until cem.getElevationModels.size()) {
+			val elevationModel: ElevationModel = cem.getElevationModels.get(i)
+			if (elevationModel.isInstanceOf[BulkRetrievable])
+				buff += new BulkRetrievablePanel(elevationModel.asInstanceOf[BulkRetrievable])
+		}
 
 		buff
 	}
@@ -119,7 +167,7 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 	def hasActiveDownloads: Boolean = {
 		var flag = false
 		for (c: Component <- this.form.monitorPanel.getComponents
-			 if !flag && c.isInstanceOf[DownloadMonitorPanel] && c.asInstanceOf[DownloadMonitorPanel].thread.isAlive) {
+		     if !flag && c.isInstanceOf[DownloadMonitorPanel] && c.asInstanceOf[DownloadMonitorPanel].thread.isAlive) {
 			flag = true
 		}
 		flag
@@ -127,7 +175,7 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 
 	def cancelActiveDownloads() {
 		for (c: Component <- this.form.monitorPanel.getComponents
-			 if c.isInstanceOf[DownloadMonitorPanel] && c.asInstanceOf[DownloadMonitorPanel].thread.isAlive) {
+		     if c.isInstanceOf[DownloadMonitorPanel] && c.asInstanceOf[DownloadMonitorPanel].thread.isAlive) {
 			val panel = c.asInstanceOf[DownloadMonitorPanel]
 			panel.cancelButtonActionPerformed(null)
 			try {
@@ -155,16 +203,14 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 		this.form.monitorPanel.validate()
 	}
 
-	def initComponents() = {
-
-	}
-
 	protected class BulkRetrievablePanel(val retrievable: BulkRetrievable) extends JPanel {
 
 		var selectCheckBox: JCheckBox = new JCheckBox()
 		var descriptionLabel: JLabel = null
 		var updateThread: Thread = null
 		var sector: Sector = null
+
+		initComponents()
 
 		def initComponents() {
 			this.setLayout(new BorderLayout())
@@ -250,7 +296,7 @@ class DownloadMonitorPanel(val thread: BulkRetrievalThread) extends JPanel {
 
 	this.add(descriptionPanel)
 
-	val progressPanel = new JPanel(new BoxLayout(progressPanel, BoxLayout.X_AXIS))
+	val progressPanel: JPanel = new JPanel(new BoxLayout(progressPanel, BoxLayout.X_AXIS))
 	progressPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2))
 
 	val progressBar: JProgressBar = new JProgressBar(0, 100)

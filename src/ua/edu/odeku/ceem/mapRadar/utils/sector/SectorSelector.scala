@@ -99,7 +99,7 @@ class SectorSelector(val wwd: WorldWindow, val shape: RegionShape = new RegionSh
 		this.wwd.asInstanceOf[Component].setCursor(if (cursor != null) cursor else Cursor.getDefaultCursor)
 	}
 
-	def sector: Sector = if (this.shape.hashSelection) this.shape.sector else null
+	def sector: Sector = if (this.shape.hashSelection) this.shape._sector_ else null
 
 	def interiorColor = this.shape.interiorColor
 
@@ -123,7 +123,7 @@ class SectorSelector(val wwd: WorldWindow, val shape: RegionShape = new RegionSh
 
 	def notifySectorChanged() {
 		if (this.shape.hashSelection && this.sector != null && this.sector != previousSector) {
-			this.firePropertyChange(SECTOR_PROPERTY, this.previousSector, this.shape.sector)
+			this.firePropertyChange(SECTOR_PROPERTY, this.previousSector, this.shape._sector_)
 			this.previousSector = this.sector
 		}
 	}
@@ -159,7 +159,7 @@ class SectorSelector(val wwd: WorldWindow, val shape: RegionShape = new RegionSh
 				} else {
 					val newSector = this.resizeShape(dragObject, this.side)
 					if (newSector != null) {
-						dragObject.sector = newSector
+						dragObject._sector_ = newSector
 					}
 					this.operatiron = SIZING
 				}
@@ -371,7 +371,7 @@ class SectorSelector(val wwd: WorldWindow, val shape: RegionShape = new RegionSh
 	}
 }
 
-private class RegionShape(var _sector: Sector) extends SurfaceSector(_sector) {
+protected class RegionShape(var __sector: Sector) extends SurfaceSector(__sector) {
 
 	var resizeable = false
 	var startPosition: Position = null
@@ -379,7 +379,7 @@ private class RegionShape(var _sector: Sector) extends SurfaceSector(_sector) {
 	private var borderShape: SurfaceSector = null
 
 	// The edges of the region shape should be constant lines of latitude and longitude.
-	this.border = new SurfaceSector(sector)
+	this.border = new SurfaceSector(_sector_)
 	this.setPathType(AVKey.LINEAR)
 	this.border.setPathType(AVKey.LINEAR)
 
@@ -440,9 +440,9 @@ private class RegionShape(var _sector: Sector) extends SurfaceSector(_sector) {
 		this.border.setAttributes(attr)
 	}
 
-	def sector = this._sector
+	def _sector_ = this.__sector
 
-	def sector_=(value: Sector): Unit = {
+	def _sector__=(value: Sector): Unit = {
 		super.setSector(value)
 		border.setSector(value)
 	}
@@ -463,7 +463,7 @@ private class RegionShape(var _sector: Sector) extends SurfaceSector(_sector) {
 	def clear() {
 		startPosition = null
 		endPosition = null
-		sector = Sector.EMPTY_SECTOR
+		_sector_ = Sector.EMPTY_SECTOR
 	}
 
 	override def preRender(dc: DrawContext) {
@@ -495,7 +495,7 @@ private class RegionShape(var _sector: Sector) extends SurfaceSector(_sector) {
 						val end = terrainObject.getPosition
 						if (this.startPosition != end) {
 							this.endPosition = end
-							this.sector = Sector.boundingSector(this.startPosition, this.endPosition)
+							this._sector_ = Sector.boundingSector(this.startPosition, this.endPosition)
 							this.doRender(dc)
 						}
 					} else {

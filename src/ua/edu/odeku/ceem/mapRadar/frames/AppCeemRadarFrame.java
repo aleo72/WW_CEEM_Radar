@@ -28,6 +28,7 @@ import ua.edu.odeku.ceem.mapRadar.testing.dome.DomeView;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
+import ua.edu.odeku.ceem.mapRadar.tools.cacheManager.CacheManagerTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
@@ -131,14 +132,15 @@ public class AppCeemRadarFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame ceemRadarTool = null;
-                if (toolsComponents.containsKey(CacheDownload.class.getName())){
-                    ceemRadarTool = toolsComponents.get(CacheDownload.class.getName());
+                String toolName = CacheManagerTool.class.getName();
+                if (toolsComponents.containsKey(toolName)){
+                    ceemRadarTool = toolsComponents.get(toolName);
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame( new CacheDownloadTool() , ResourceString.get("frame_title_tool_cache"));
+                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
-                    toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
+                    toolsComponents.put(toolName, ceemRadarTool);
                 }
             }
         });
