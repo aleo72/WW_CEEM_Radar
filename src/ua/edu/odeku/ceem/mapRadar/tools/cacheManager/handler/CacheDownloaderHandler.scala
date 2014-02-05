@@ -39,6 +39,9 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 	initComponents()
 
 	def initComponents() {
+
+		this.form.selectButton.setText(ResourceBundle.getBundle("button").getString("select-sector"))
+
 		this.form.locationButton.addActionListener(new ActionListener {
 			override def actionPerformed(e: ActionEvent): Unit = {
 				val fc = new JFileChooser()

@@ -24,7 +24,15 @@ import gov.nasa.worldwind.globes.EllipsoidalGlobe
  *
  * Created by Aleo on 02.02.14.
  */
-class SectorSelector(val wwd: WorldWindow, val shape: RegionShape = new RegionShape(Sector.EMPTY_SECTOR), val layer: RenderableLayer = new RenderableLayer) extends WWObjectImpl with SelectListener with MouseListener with MouseMotionListener with RenderingListener {
+class SectorSelector(
+	                    val wwd: WorldWindow,
+	                    val shape: RegionShape = new RegionShape(Sector.EMPTY_SECTOR),
+	                    val layer: RenderableLayer = new RenderableLayer
+	                 ) extends WWObjectImpl
+						with SelectListener
+						with MouseListener
+						with MouseMotionListener
+						with RenderingListener {
 
 	if (wwd == null) {
 		Logging.logger().log(java.util.logging.Level.SEVERE, Logging.getMessage("nullValue.WorldWindow"))

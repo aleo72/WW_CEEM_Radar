@@ -15,7 +15,7 @@ import gov.nasa.worldwind.geom.Sector
 object SectorUtils {
 
 	def makeSectorDescription(sector: Sector): String = {
-		"S %7.4° W %7.4° N %7.4° E %7.4°" format (
+		"S %7.4f° W %7.4f° N %7.4f° E %7.4f°" format (
 			sector.getMinLatitude.degrees,
 			sector.getMinLongitude.degrees,
 			sector.getMaxLatitude.degrees,
