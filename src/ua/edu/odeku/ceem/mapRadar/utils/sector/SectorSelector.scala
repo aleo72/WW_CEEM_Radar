@@ -292,22 +292,29 @@ with RenderingListener {
 		}
 	}
 
-	def dragWholeShape(dragEvent: DragSelectEvent, dragObject: Movable) {
+	def dragWholeShape(dragEvent: DragSelectEvent, dragObject: RegionShape) {
 		val view: View = this.wwd.getView
 		val globe: EllipsoidalGlobe = this.wwd.getModel.getGlobe.asInstanceOf[EllipsoidalGlobe]
+
 		val refPos: Position = dragObject.getReferencePosition
-		if (refPos == null) return
+		if (refPos == null)
+			return
+
 		val refPoint: Vec4 = globe.computePointFromPosition(refPos)
 		val screenRefPoint: Vec4 = view.project(refPoint)
+
 		val dx: Int = dragEvent.getPickPoint.x - dragEvent.getPreviousPickPoint.x
 		val dy: Int = dragEvent.getPickPoint.y - dragEvent.getPreviousPickPoint.y
+
 		val x: Double = screenRefPoint.x + dx
 		val y: Double = dragEvent.getMouseEvent.getComponent.getSize.height - screenRefPoint.y + dy - 1
 		val ray: Line = view.computeRayFromScreenPoint(x, y)
-		val inters = globe.intersect(ray, refPos.getElevation)
+		val inters: Array[Intersection] = globe.intersect(ray, refPos.getElevation)
+
 		if (inters != null) {
 			val p: Position = globe.computePositionFromPoint(inters(0).getIntersectionPoint)
 			dragObject.moveTo(p)
+			dragObject.border.moveTo(p)
 		}
 	}
 
