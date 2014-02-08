@@ -108,7 +108,7 @@ class CacheDownloaderHandler(val form: CacheDownloaderForm, val wwd: WorldWindow
 		selector.interiorColor = new Color(1f, 1f, 1f, 0.1f)
 		selector.borderColor = new Color(1f, 0f, 0f, 0.5f)
 		selector.borderWidth = 3
-		selector.addPropertyChangeListener(selector.SECTOR_PROPERTY, new PropertyChangeListener {
+		selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY, new PropertyChangeListener {
 			override def propertyChange(evt: PropertyChangeEvent): Unit = {
 				updateSector()
 			}

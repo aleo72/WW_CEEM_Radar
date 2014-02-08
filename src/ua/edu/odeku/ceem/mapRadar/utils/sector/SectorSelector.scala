@@ -8,7 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.utils.sector
 import gov.nasa.worldwind.{View, Movable, WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.event._
 import java.awt.event.{InputEvent, MouseEvent, MouseMotionListener, MouseListener}
-import gov.nasa.worldwind.layers.RenderableLayer
+import gov.nasa.worldwind.layers.{LayerList, RenderableLayer}
 import gov.nasa.worldwind.render._
 import gov.nasa.worldwind.geom._
 import gov.nasa.worldwind.util.Logging
@@ -25,14 +25,14 @@ import gov.nasa.worldwind.globes.EllipsoidalGlobe
  * Created by Aleo on 02.02.14.
  */
 class SectorSelector(
-	                    val wwd: WorldWindow,
-	                    val shape: RegionShape = new RegionShape(Sector.EMPTY_SECTOR),
-	                    val layer: RenderableLayer = new RenderableLayer
-	                 ) extends WWObjectImpl
-						with SelectListener
-						with MouseListener
-						with MouseMotionListener
-						with RenderingListener {
+						val wwd: WorldWindow,
+						val shape: RegionShape = new RegionShape(Sector.EMPTY_SECTOR),
+						val layer: RenderableLayer = new RenderableLayer
+						) extends WWObjectImpl
+with SelectListener
+with MouseListener
+with MouseMotionListener
+with RenderingListener {
 
 	if (wwd == null) {
 		Logging.logger().log(java.util.logging.Level.SEVERE, Logging.getMessage("nullValue.WorldWindow"))
@@ -49,35 +49,19 @@ class SectorSelector(
 		throw new IllegalArgumentException
 	}
 
-	val SECTOR_PROPERTY = "gov.nasa.worldwind.SectorSelector"
-
-	val NONE = 0
-	val MOVING = 1
-	val SIZING = 2
-
-	val NORTH = 1
-	val SOUTH = 2
-	val EAST = 4
-	val WEST = 8
-
-	val NORTHWEST = NORTH + WEST
-	val NORTHEAST = NORTH + EAST
-	val SOUTHWEST = SOUTH + WEST
-	val SOUTHEAST = SOUTH + EAST
-
 	this.layer.asInstanceOf[RenderableLayer].addRenderable(this.shape)
 
 	var edgeFactor = 0.1
 	var armed = false
-	private var operatiron = NONE
-	var side = NONE
+	private var operatiron = SectorSelector.NONE
+	var side = SectorSelector.NONE
 	var previousPosition: Position = null
 	var previousSector: Sector = null
 
 	def enable() {
 		this.shape.startPosition = null
 
-		val layers = this.wwd.getModel.getLayers
+		val layers: LayerList = this.wwd.getModel.getLayers
 
 		if (!layers.contains(this.layer)) layers.add(this.layer)
 
@@ -109,29 +93,29 @@ class SectorSelector(
 
 	def sector: Sector = if (this.shape.hashSelection) this.shape._sector_ else null
 
-	def interiorColor = this.shape.interiorColor
+	def interiorColor: Color = this.shape.interiorColor
 
 	def interiorColor_=(value: Color): Unit = this.shape.interiorColor = value
 
-	def borderColor = this.shape.borderColor
+	def borderColor: Color = this.shape.borderColor
 
 	def borderColor_=(color: Color): Unit = this.shape.borderColor
 
-	def interiorOpacity = this.shape.interiorOpacity
+	def interiorOpacity: Double = this.shape.interiorOpacity
 
 	def interiorOpacity_=(opacity: Double): Unit = this.shape.interiorOpacity = opacity
 
-	def borderOpacity = this.shape.borderOpacity
+	def borderOpacity: Double = this.shape.borderOpacity
 
 	def borderOpacity_=(opacity: Double): Unit = this.shape.borderOpacity = opacity
 
-	def borderWidth = this.shape.borderWidth
+	def borderWidth: Double = this.shape.borderWidth
 
 	def borderWidth_=(width: Double): Unit = this.shape.borderWidth = width
 
 	def notifySectorChanged() {
 		if (this.shape.hashSelection && this.sector != null && this.sector != previousSector) {
-			this.firePropertyChange(SECTOR_PROPERTY, this.previousSector, this.shape._sector_)
+			this.firePropertyChange(SectorSelector.SECTOR_PROPERTY, this.previousSector, this.shape._sector_)
 			this.previousSector = this.sector
 		}
 	}
@@ -142,43 +126,43 @@ class SectorSelector(
 			Logging.logger.log(java.util.logging.Level.FINE, msg)
 			throw new IllegalArgumentException(msg)
 		}
-		if (this.operatiron == NONE && event.getTopObject != null && !(event.getTopPickedObject.getParentLayer == this.layer)) {
+		if (this.operatiron == SectorSelector.NONE && event.getTopObject != null && !(event.getTopPickedObject.getParentLayer == this.layer)) {
 			this.setCursor(null)
 			return
 		}
 		if (event.getEventAction == SelectEvent.LEFT_PRESS)
 			this.previousPosition = this.wwd.getCurrentPosition
 		else if (event.getEventAction == SelectEvent.DRAG) {
-			val dragEvent = event.asInstanceOf[DragSelectEvent]
-			val topObject = dragEvent.getTopObject
+			val dragEvent: DragSelectEvent = event.asInstanceOf[DragSelectEvent]
+			val topObject: AnyRef = dragEvent.getTopObject
 			if (topObject == null)
 				return
-			val dragObject = this.shape
-			if (this.operatiron == SIZING) {
-				val newSector = this.resizeShape(dragObject, this.side)
+			val dragObject: RegionShape = this.shape
+			if (this.operatiron == SectorSelector.SIZING) {
+				val newSector: Sector = this.resizeShape(dragObject, this.side)
 				if (newSector != null)
-					dragObject.setSector(newSector)
+					dragObject._sector_ = newSector
 				event.consume()
 			} else {
 				this.side = this.determineAdjustmentSide(dragObject, this.edgeFactor)
-				if (this.side == NONE || this.operatiron == MOVING) {
-					this.operatiron = MOVING
+				if (this.side == SectorSelector.NONE || this.operatiron == SectorSelector.MOVING) {
+					this.operatiron = SectorSelector.MOVING
 					this.dragWholeShape(dragEvent, dragObject)
 				} else {
-					val newSector = this.resizeShape(dragObject, this.side)
+					val newSector: Sector = this.resizeShape(dragObject, this.side)
 					if (newSector != null) {
 						dragObject._sector_ = newSector
 					}
-					this.operatiron = SIZING
+					this.operatiron = SectorSelector.SIZING
 				}
 				event.consume()
 			}
 			this.previousPosition = this.wwd.getCurrentPosition
 			this.notifySectorChanged()
 		} else if (event.getEventAction == SelectEvent.DRAG_END) {
-			this.operatiron = NONE
+			this.operatiron = SectorSelector.NONE
 			this.previousPosition = null
-		} else if (event.getEventAction == SelectEvent.ROLLOVER && this.operatiron == NONE) {
+		} else if (event.getEventAction == SelectEvent.ROLLOVER && this.operatiron == SectorSelector.NONE) {
 			if (!this.wwd.isInstanceOf[Component]) {
 				return
 			}
@@ -199,7 +183,7 @@ class SectorSelector(
 				val s = quar.getSector
 				val p = this.wwd.getCurrentPosition
 				if (p == null) {
-					NONE
+					SectorSelector.NONE
 				} else {
 					import Math.abs
 					val dN: Double = abs(s.getMaxLatitude.subtract(p.getLatitude).degrees)
@@ -210,49 +194,49 @@ class SectorSelector(
 					val sLon: Double = factor * s.getDeltaLonDegrees
 
 					if (dN < sLat && dW < sLon)
-						NORTHWEST
+						SectorSelector.NORTHWEST
 					else if (dN < sLat && dE < sLon)
-						NORTHEAST
+						SectorSelector.NORTHEAST
 					else if (dS < sLat && dW < sLon)
-						SOUTHWEST
+						SectorSelector.SOUTHWEST
 					else if (dS < sLat && dE < sLon)
-						SOUTHEAST
+						SectorSelector.SOUTHEAST
 					else if (dN < sLat)
-						NORTH
+						SectorSelector.NORTH
 					else if (dS < sLat)
-						SOUTH
+						SectorSelector.SOUTH
 					else if (dW < sLon)
-						WEST
+						SectorSelector.WEST
 					else if (dE < sLon)
-						EAST
+						SectorSelector.EAST
 					else
-						NONE
+						SectorSelector.NONE
 				}
 			case _ =>
-				NONE
+				SectorSelector.NONE
 		}
 	}
 
 	def setCursor(sideName: Int) {
 		var cursor: Cursor = null
 		sideName match {
-			case NONE =>
+			case SectorSelector.NONE =>
 				cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
-			case NORTH =>
+			case SectorSelector.NORTH =>
 				cursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR)
-			case SOUTH =>
+			case SectorSelector.SOUTH =>
 				cursor = Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR)
-			case EAST =>
+			case SectorSelector.EAST =>
 				cursor = Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR)
-			case WEST =>
+			case SectorSelector.WEST =>
 				cursor = Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR)
-			case NORTHWEST =>
+			case SectorSelector.NORTHWEST =>
 				cursor = Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR)
-			case NORTHEAST =>
+			case SectorSelector.NORTHEAST =>
 				cursor = Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR)
-			case SOUTHWEST =>
+			case SectorSelector.SOUTHWEST =>
 				cursor = Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR)
-			case SOUTHEAST =>
+			case SectorSelector.SOUTHEAST =>
 				cursor = Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR)
 		}
 		this.setCursor(cursor)
@@ -273,31 +257,31 @@ class SectorSelector(
 					var newMaxLat: Angle = s.getMaxLatitude
 					var newMaxLon: Angle = s.getMaxLongitude
 
-					if (side == NORTH) {
+					if (side == SectorSelector.NORTH) {
 						newMaxLat = s.getMaxLatitude.add(dLat)
 					}
-					else if (side == SOUTH) {
+					else if (side == SectorSelector.SOUTH) {
 						newMinLat = s.getMinLatitude.add(dLat)
 					}
-					else if (side == EAST) {
+					else if (side == SectorSelector.EAST) {
 						newMaxLon = s.getMaxLongitude.add(dLon)
 					}
-					else if (side == WEST) {
+					else if (side == SectorSelector.WEST) {
 						newMinLon = s.getMinLongitude.add(dLon)
 					}
-					else if (side == NORTHWEST) {
+					else if (side == SectorSelector.NORTHWEST) {
 						newMaxLat = s.getMaxLatitude.add(dLat)
 						newMinLon = s.getMinLongitude.add(dLon)
 					}
-					else if (side == NORTHEAST) {
+					else if (side == SectorSelector.NORTHEAST) {
 						newMaxLat = s.getMaxLatitude.add(dLat)
 						newMaxLon = s.getMaxLongitude.add(dLon)
 					}
-					else if (side == SOUTHWEST) {
+					else if (side == SectorSelector.SOUTHWEST) {
 						newMinLat = s.getMinLatitude.add(dLat)
 						newMinLon = s.getMinLongitude.add(dLon)
 					}
-					else if (side == SOUTHEAST) {
+					else if (side == SectorSelector.SOUTHEAST) {
 						newMinLat = s.getMinLatitude.add(dLat)
 						newMaxLon = s.getMaxLongitude.add(dLon)
 					}
@@ -328,7 +312,7 @@ class SectorSelector(
 	}
 
 	override def stageChanged(event: RenderingEvent): Unit = {
-		if (event.getStage != RenderingEvent.AFTER_BUFFER_SWAP) {
+		if (event.getStage == RenderingEvent.AFTER_BUFFER_SWAP) {
 			this.notifySectorChanged()
 		}
 	}
@@ -350,7 +334,7 @@ class SectorSelector(
 
 			e.consume()
 
-			this.firePropertyChange(SECTOR_PROPERTY, this.previousSector, null)
+			this.firePropertyChange(SectorSelector.SECTOR_PROPERTY, this.previousSector, null)
 		}
 	}
 
@@ -379,170 +363,20 @@ class SectorSelector(
 	}
 }
 
-protected class RegionShape(var __sector: Sector) extends SurfaceSector(__sector) {
+object SectorSelector {
+	val SECTOR_PROPERTY = "gov.nasa.worldwind.SectorSelector"
 
-	var resizeable = false
-	var startPosition: Position = null
-	var endPosition: Position = null
-	private var borderShape: SurfaceSector = null
+	val NONE = 0
+	val MOVING = 1
+	val SIZING = 2
 
-	// The edges of the region shape should be constant lines of latitude and longitude.
-	this.border = new SurfaceSector(_sector_)
-	this.setPathType(AVKey.LINEAR)
-	this.border.setPathType(AVKey.LINEAR)
+	val NORTH = 1
+	val SOUTH = 2
+	val EAST = 4
+	val WEST = 8
 
-	// Setup default interior rendering attributes. Note that the interior rendering attributes are
-	// configured so only the SurfaceSector's interior is rendered.
-	val interiorAttrs: ShapeAttributes = new BasicShapeAttributes
-	interiorAttrs.setDrawOutline(false)
-	interiorAttrs.setInteriorMaterial(new Material(Color.WHITE))
-	interiorAttrs.setInteriorOpacity(0.1)
-	this.setAttributes(interiorAttrs)
-	this.setHighlightAttributes(interiorAttrs)
-
-	val borderAttrs = new BasicShapeAttributes
-	borderAttrs.setDrawInterior(false)
-	borderAttrs.setOutlineMaterial(new Material(Color.RED))
-	borderAttrs.setOutlineOpacity(0.7)
-	borderAttrs.setOutlineWidth(3)
-	this.border.setAttributes(borderAttrs)
-	this.border.setHighlightAttributes(borderAttrs)
-
-	def interiorColor = this.getAttributes.getInteriorMaterial.getDiffuse
-
-	def interiorColor_=(value: Color): Unit = {
-		val attr = this.getAttributes
-		attr.setInteriorMaterial(new Material(value))
-		this.setAttributes(attr)
-	}
-
-	def borderColor = this.border.getAttributes.getOutlineMaterial.getDiffuse
-
-	def borderColor_=(value: Color): Unit = {
-		val attr = this.border.getAttributes
-		attr.setOutlineMaterial(new Material(value))
-		border.setAttributes(attr)
-	}
-
-	def interiorOpacity = this.getAttributes.getInteriorOpacity
-
-	def interiorOpacity_=(opacity: Double): Unit = {
-		val attr: ShapeAttributes = this.getAttributes
-		attr.setInteriorOpacity(opacity)
-		this.setAttributes(attr)
-	}
-
-	def borderOpacity: Double = this.border.getAttributes.getOutlineOpacity
-
-	def borderOpacity_=(opacity: Double): Unit = {
-		val attr: ShapeAttributes = this.border.getAttributes
-		attr.setOutlineOpacity(opacity)
-		this.border.setAttributes(attr)
-	}
-
-	def borderWidth: Double = this.border.getAttributes.getOutlineWidth
-
-	def borderWidth_=(width: Double): Unit = {
-		val attr: ShapeAttributes = this.border.getAttributes
-		attr.setOutlineWidth(width)
-		this.border.setAttributes(attr)
-	}
-
-	def _sector_ = this.__sector
-
-	def _sector__=(value: Sector): Unit = {
-		super.setSector(value)
-		border.setSector(value)
-	}
-
-	def border_=(value: SurfaceSector): Unit = {
-		if (value == null) {
-			val message = Logging.getMessage("nullValue.Shape")
-			Logging.logger().severe(message)
-			throw new IllegalArgumentException
-		}
-		this.borderShape = value
-	}
-
-	def border = borderShape
-
-	def hashSelection: Boolean = startPosition != null && endPosition != null
-
-	def clear() {
-		startPosition = null
-		endPosition = null
-		_sector_ = Sector.EMPTY_SECTOR
-	}
-
-	override def preRender(dc: DrawContext) {
-		// This is called twice: once during normal rendering, then again during ordered surface rendering. During
-		// normal renering we pre-render both the interior and border shapes. During ordered surface rendering, both
-		// shapes are already added to the DrawContext and both will be individually processed. Therefore we just
-		// call our superclass behavior
-		if (dc.isOrderedRenderingMode) {
-			super.preRender(dc)
-		} else {
-			this.doPreRender(dc)
-		}
-	}
-
-	override def render(dc: DrawContext) {
-		if (dc.isPickingMode && this.resizeable)
-			return
-		// This is called twice: once during normal rendering, then again during ordered surface rendering. During
-		// normal renering we render both the interior and border shapes. During ordered surface rendering, both
-		// shapes are already added to the DrawContext and both will be individually processed. Therefore we just
-		// call our superclass behavior
-		if (!dc.isOrderedRenderingMode) {
-			if (this.resizeable) {
-				val pos: PickedObjectList = dc.getPickedObjects
-				val terrainObject = if (pos != null) pos.getTerrainObject else null
-
-				if (terrainObject != null) {
-					if (this.startPosition != null) {
-						val end = terrainObject.getPosition
-						if (this.startPosition != end) {
-							this.endPosition = end
-							this._sector_ = Sector.boundingSector(this.startPosition, this.endPosition)
-							this.doRender(dc)
-						}
-					} else {
-						this.startPosition = pos.getTerrainObject.getPosition
-					}
-				}
-			} else {
-				if (this.hashSelection) {
-					this.doRender(dc)
-				}
-			}
-		} else {
-			super.render(dc)
-		}
-	}
-
-	def doPreRender(dc: DrawContext) {
-		this.doPreRenderInterior(dc)
-		this.doPreRenderBorder(dc)
-	}
-
-	def doPreRenderInterior(context: DrawContext) {
-		super.preRender(context)
-	}
-
-	def doPreRenderBorder(context: DrawContext) {
-		this.border.preRender(context)
-	}
-
-	def doRender(dc: DrawContext) {
-		this.doRenderInterior(dc)
-		this.doRenderBorder(dc)
-	}
-
-	def doRenderInterior(dc: DrawContext) {
-		super.render(dc)
-	}
-
-	def doRenderBorder(dc: DrawContext) {
-		this.border.render(dc)
-	}
+	val NORTHWEST = NORTH + WEST
+	val NORTHEAST = NORTH + EAST
+	val SOUTHWEST = SOUTH + WEST
+	val SOUTHEAST = SOUTH + EAST
 }
