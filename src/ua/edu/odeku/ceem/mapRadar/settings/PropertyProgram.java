@@ -131,5 +131,9 @@ public class PropertyProgram {
 
     static {
         Locale.setDefault(CURRENT_LOCALE);
+        PropertyManager.save();
+        PropertyManager.load();
     }
+
+
 }
