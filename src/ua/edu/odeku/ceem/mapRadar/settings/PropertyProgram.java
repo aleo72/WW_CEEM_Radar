@@ -132,7 +132,9 @@ public class PropertyProgram {
     static {
         Locale.setDefault(CURRENT_LOCALE);
         PropertyManager.save();
+        PropertyManager.store();
         PropertyManager.load();
+        PropertyManager.store();
     }
 
 

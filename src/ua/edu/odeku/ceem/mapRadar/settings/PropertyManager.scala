@@ -37,7 +37,7 @@ object PropertyManager {
 
 			for(property <- Property.values){
 				val value = properties.getProperty(property.name, property.value.toString)
-				property.stringToValue(value)
+				property.value = value
 			}
 		} catch {
 			case ex: Exception =>
@@ -60,7 +60,9 @@ object PropertyManager {
 		var output: FileOutputStream = null
 		try{
 			output = createFileOutputStream(fileName = fileProperty)
-			properties.store(output, Calendar.getInstance.toString)
+			properties.store(output, null)
+			output.flush()
+			output.close()
 		} catch {
 			case ex: Exception =>
 				if(output != null){
