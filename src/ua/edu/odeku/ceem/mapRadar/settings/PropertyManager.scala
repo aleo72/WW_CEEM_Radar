@@ -15,7 +15,7 @@ import java.io.{FileInputStream, FileOutputStream}
  */
 object PropertyManager {
 
-	val fileProperty = "CeemRadarConfig.property"
+	val fileProperty = "CeemRadarConfig.properties"
 	val properties = new Properties()
 
 	def save(property: Property.PropertyValue){
@@ -31,8 +31,9 @@ object PropertyManager {
 	def save() = saveAll()
 
 	def load(){
-		val input: FileInputStream = null
+		var input: FileInputStream = null
 		try{
+			input = createFileInputStream(fileProperty)
 			properties.load(input)
 
 			for(property <- Property.values){
