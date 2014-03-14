@@ -20,8 +20,8 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspa
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
 import scala.collection.mutable
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
+import ua.edu.odeku.ceem.mapRadar.settings.Property
 
 /**
  * User: Aleo Bakalov
@@ -96,10 +96,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	def initSpinners() {
 		form.altitudeSpinner = new JSpinner(
 			new SpinnerNumberModel(
-				PropertyProgram.getDefaultAltitudeForRadar,
-				PropertyProgram.getMinAltitudeForRadar,
-				PropertyProgram.getMaxAltitudeForRadar,
-				PropertyProgram.getStepAltitudeForRadar
+				Property.DEFAULT_ALTITUDE_FOR_RADAR.toInt,
+				Property.MIN_ALTITUDE_FOR_RADAR.toInt,
+				Property.MAX_ALTITUDE_FOR_RADAR.toInt,
+				Property.STEP_ALTITUDE_FOR_RADAR.toInt
 			))
 	}
 

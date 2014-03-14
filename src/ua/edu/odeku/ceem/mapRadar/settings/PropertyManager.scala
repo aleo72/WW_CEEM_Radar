@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.settings
 
-import java.util.{Calendar, Properties}
+import java.util.{Locale, Calendar, Properties}
 import java.io.{FileInputStream, FileOutputStream}
 
 /**
@@ -18,25 +18,39 @@ object PropertyManager {
 	val fileProperty = "CeemRadarConfig.properties"
 	val properties = new Properties()
 
+	/**
+	 * Сохраняем одну найстройку
+	 * @param property Экземпляр который необходимо сохранить
+	 */
 	def save(property: Property.PropertyValue){
 		properties.setProperty(property.name, property.value.toString)
 	}
 
+	/**
+	 * Сохранение всех настроек
+	 */
 	def saveAll(){
 		for(property <- Property.values){
 			properties.setProperty(property.name, property.value.toString)
 		}
 	}
 
+	/**
+	 * Сохранение всех настроек
+	 */
 	def save() = saveAll()
 
+	/**
+	 * Загрузка настроек из файла
+	 */
 	def load(){
 		var input: FileInputStream = null
 		try{
 			input = createFileInputStream(fileProperty)
 			properties.load(input)
 
-			for(property <- Property.values){
+			for(i: Int <- 0 until Property.values.size){
+				val property = Property.values(i)
 				val value = properties.getProperty(property.name, property.value.toString)
 				property.value = value
 			}
@@ -49,14 +63,9 @@ object PropertyManager {
 		}
 	}
 
-	def createFileOutputStream(fileName: String = fileProperty) = {
-		new FileOutputStream(fileName)
-	}
-
-	def createFileInputStream(fileName: String = fileProperty) = {
-		new FileInputStream(fileName)
-	}
-
+	/**
+	 * Запись настроек в файл
+	 */
 	def store(){
 		var output: FileOutputStream = null
 		try{
@@ -71,5 +80,13 @@ object PropertyManager {
 				}
 				ex.printStackTrace()
 		}
+	}
+
+	private def createFileOutputStream(fileName: String = fileProperty) = {
+		new FileOutputStream(fileName)
+	}
+
+	private def createFileInputStream(fileName: String = fileProperty) = {
+		new FileInputStream(fileName)
 	}
 }

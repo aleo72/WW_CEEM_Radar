@@ -1,10 +1,11 @@
 package ua.edu.odeku.ceem.mapRadar.db.models;
 
+import gov.nasa.worldwind.util.xml.BooleanIntegerXMLEventParser;
 import org.hibernate.annotations.Index;
 import ua.edu.odeku.ceem.mapRadar.db.models.geoNameEnum.*;
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
+import ua.edu.odeku.ceem.mapRadar.settings.Property;
 import ua.edu.odeku.ceem.mapRadar.utils.translate.TranslateManager;
 
 import javax.persistence.*;
@@ -34,7 +35,7 @@ public class GeoName {
         this.lon = lon;
         this.featureClass = featureClass;
         this.featureCode = featureCode;
-        if(PropertyProgram.isTranslateGeoName()){
+        if(Property.TRANSLATE_GEO_NAME().toBoolean()){
             this.translateName =
                     TranslateManager.getTranslatable(this.countryCode).translate(this.asciiname);
         } else {
@@ -389,7 +390,7 @@ public class GeoName {
             geoName.setFeatureCode(columns[7]);
             geoName.setCountryCode(columns[8]);
 
-            if(PropertyProgram.isTranslateGeoName()){
+            if(Property.TRANSLATE_GEO_NAME().toBoolean()){
                 geoName.translateName =
                         TranslateManager.getTranslatable(geoName.countryCode).translate(geoName.asciiname);
             } else {

@@ -6,9 +6,8 @@
 package ua.edu.odeku.ceem.mapRadar
 
 import gov.nasa.worldwind.Configuration
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.settings.Property
 import javax.swing.{JFrame, JWindow}
-import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import java.io.File
 import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel
@@ -25,18 +24,18 @@ import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
 object CeemRadarApplication extends App {
 
 	Application.initSystemProperty()
-	Application.initLookAndFeel(PropertyProgram.getLookAndFeelInfo)
+	Application.initLookAndFeel(Property.LOOK_AND_FEEL_INFO.toString)
 	Application.initConfigurationProgram()
 
 	try {
 		Application.showStartWindow(visible = true)
 
-		if (PropertyProgram.INIT_DB) {
+		if (Property.INIT_DB.toBoolean) {
 			DB.createEntityManager()
 		}
 
 		val frameProgram = new AppCeemRadarFrame
-		frameProgram.setTitle(PropertyProgram.getNameProgram)
+		frameProgram.setTitle(Property.NAME_PROGRAM.toString)
 		frameProgram.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 		java.awt.EventQueue.invokeLater(new Runnable {
 			override def run(): Unit = {
@@ -58,7 +57,7 @@ private object Application {
 		System.setProperty("java.net.useSystemProxies", "true")
 		if (Configuration.isMacOS) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true")
-			System.setProperty("com.apple.mrj.application.apple.menu.about.name", PropertyProgram.getNameProgram)
+			System.setProperty("com.apple.mrj.application.apple.menu.about.name", Property.NAME_PROGRAM.toString)
 			System.setProperty("com.apple.mrj.application.growbox.intrudes", "false")
 			System.setProperty("apple.awt.brushMetalLook", "true")
 		}
@@ -125,7 +124,7 @@ private object Application {
 
 				override def run(): Unit = {
 					try {
-						val image = ImageIO.read(new File(PropertyProgram.getFileStartWindow))
+						val image = ImageIO.read(new File(Property.FILE_START_WINDOW.toString))
 						val panel = new ImagePanel(image)
 
 						startWindow.add(panel)

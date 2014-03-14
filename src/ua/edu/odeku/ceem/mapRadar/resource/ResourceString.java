@@ -1,6 +1,6 @@
 package ua.edu.odeku.ceem.mapRadar.resource;
 
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
+import ua.edu.odeku.ceem.mapRadar.settings.Property;
 
 import java.util.ResourceBundle;
 
@@ -15,7 +15,7 @@ public final class ResourceString {
     private static final String PREFIX = "string_";
 
     static {
-        resource = ResourceBundle.getBundle("strings", PropertyProgram.getCurrentLocale());
+        resource = ResourceBundle.getBundle("strings", Property.CURRENT_LOCALE_LANGUAGE().toLocale());
     }
 
     public static String get(String key) {

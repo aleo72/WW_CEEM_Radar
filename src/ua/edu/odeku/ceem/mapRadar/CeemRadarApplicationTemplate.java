@@ -4,7 +4,7 @@ import gov.nasa.worldwind.Configuration;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
 import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame;
 import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel;
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
+import ua.edu.odeku.ceem.mapRadar.settings.Property;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class CeemRadarApplicationTemplate {
         System.setProperty("java.net.useSystemProxies", "true");
         if (Configuration.isMacOS()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", PropertyProgram.getNameProgram());
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", Property.NAME_PROGRAM().toString());
             System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
             System.setProperty("apple.awt.brushMetalLook", "true");
         } else if (Configuration.isWindowsOS()) {
@@ -57,7 +57,7 @@ public class CeemRadarApplicationTemplate {
 
             showStartImageWindow();
 
-            if(PropertyProgram.INIT_DB){
+            if(Property.INIT_DB().toBoolean()){
                 // Init DB
                 DB.createEntityManager();
             }
@@ -81,7 +81,7 @@ public class CeemRadarApplicationTemplate {
     }
 
     public static void main(String[] args) {
-        start(PropertyProgram.getNameProgram(), AppCeemRadarFrame.class);
+        start(Property.NAME_PROGRAM().toString(), AppCeemRadarFrame.class);
     }
 
     private static void showStartImageWindow(){

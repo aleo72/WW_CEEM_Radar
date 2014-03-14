@@ -16,7 +16,7 @@ import scala.collection.mutable.ArrayBuffer
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
 import gov.nasa.worldwind.geom.Position
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.settings.Property
 
 /**
  * User: Aleo Bakalov
@@ -331,7 +331,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 	def goToSelectionAirspace(){
 		val latLon = selectedEntry.airspace.asInstanceOf[SphereAirspace].getLocation
-		val elevation = selectedEntry.radar.altitude + 2 * selectedEntry.radar.radius + PropertyProgram.getAltitudeForGoToAirspace
+		val elevation = selectedEntry.radar.altitude + 2.0 * selectedEntry.radar.radius + Property.ALTITUDE_FOR_GO_TO_AIRSPACE.toInt
 		val position = new Position(latLon, elevation )
 		ceemTool.appFrame.getWwd.getView.goTo(position, elevation)
 	}

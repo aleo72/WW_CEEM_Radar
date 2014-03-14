@@ -5,6 +5,10 @@
 
 package ua.edu.odeku.ceem.mapRadar;
 
+import ua.edu.odeku.ceem.mapRadar.settings.Property;
+
+import java.util.Locale;
+
 /**
  * Вход программы
  *
@@ -13,6 +17,9 @@ package ua.edu.odeku.ceem.mapRadar;
 public class CeemRadar {
 
     public static void main(String[] args){
+
+        Locale.setDefault(Property.CURRENT_LOCALE_LANGUAGE().toLocale());
+
         CeemRadarApplication.main(args);
     }
 }

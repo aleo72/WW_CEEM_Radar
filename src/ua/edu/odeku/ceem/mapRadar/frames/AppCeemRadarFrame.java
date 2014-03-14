@@ -11,7 +11,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.RenderingExceptionListener;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.exception.WWAbsentRequirementException;
-import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.ViewControlsLayer;
 import gov.nasa.worldwind.layers.ViewControlsSelectListener;
@@ -23,14 +22,10 @@ import gov.nasa.worldwindx.examples.util.ToolTipController;
 import ua.edu.odeku.ceem.mapRadar.layers.CeemRadarLayers;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
-import ua.edu.odeku.ceem.mapRadar.testing.dome.DomeView;
+import ua.edu.odeku.ceem.mapRadar.settings.Property;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
-import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
-import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
 import ua.edu.odeku.ceem.mapRadar.tools.cacheManager.CacheManagerTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
-import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
 
@@ -57,7 +52,7 @@ public class AppCeemRadarFrame extends JFrame {
     private static AppCeemRadarFrame appCeemRadarFrame = null;
     private Dimension canvasSize = new Dimension(800, 600);
 
-    ResourceBundle resource = ResourceBundle.getBundle("strings", PropertyProgram.getCurrentLocale());
+    ResourceBundle resource = ResourceBundle.getBundle("strings", Property.CURRENT_LOCALE_LANGUAGE().toLocale());
 
     protected AppMainPanel wwjPanel;
     protected StatisticsPanel statsPanel;

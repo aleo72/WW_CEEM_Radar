@@ -29,6 +29,16 @@ object Property {
 				_value = v
 			}
 		}
+
+		def toBoolean = value.toBoolean
+
+		def toInt = value.toInt
+
+		def toDouble = value.toDouble
+
+		def toLocale = Locale.forLanguageTag(value)
+
+		override def toString = value
 	}
 
 	/**
@@ -39,12 +49,12 @@ object Property {
 	/**
 	 * Локаль программы
 	 */
-	val CURRENT_LOCALE = PropertyValue("CURRENT_LOCALE", Locale.getDefault.getLanguage)
+	val CURRENT_LOCALE_LANGUAGE = PropertyValue("CURRENT_LOCALE_LANGUAGE", Locale.getDefault.toLanguageTag)
 
 	/**
 	 * Инициализация базы данных
 	 */
-	val INIT_DB = PropertyValue("INIT_DB", true.toString, changesValue = false )
+	val INIT_DB = PropertyValue("INIT_DB", true.toString )
 
 	/**
 	 * Визуальный стиль
@@ -84,4 +94,7 @@ object Property {
 	 * Значение высоты которую необходимо дополнительно установить над куполом радара, при переходе к нему
 	 */
 	val ALTITUDE_FOR_GO_TO_AIRSPACE = PropertyValue("ALTITUDE_FOR_GO_TO_AIRSPACE", 100000.toString)
+
+	PropertyManager.load()
+	PropertyManager.store()
 }
