@@ -22,7 +22,7 @@ public class PropertyProgram {
     /**
      * TODO флаг на начальную инициализацию базы данных в программе
      */
-    public final static boolean INIT_DB = false;
+    public final static boolean INIT_DB = true;
 
     /**
      * Название как будет отображаться программа

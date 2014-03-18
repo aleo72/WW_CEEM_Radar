@@ -31,9 +31,7 @@ object CeemRadarApplication extends App {
 	try {
 		Application.showStartWindow(visible = true)
 
-		if (PropertyProgram.INIT_DB) {
-			DB.createEntityManager()
-		}
+		Application.initDatabaseConnection()
 
 		val frameProgram = new AppCeemRadarFrame
 		frameProgram.setTitle(PropertyProgram.getNameProgram)
@@ -154,6 +152,15 @@ private object Application {
 				startWindow.dispose()
 			}
 			startWindow = null
+		}
+	}
+
+	/**
+	 * Метод инициализации базы данных
+	 */
+	def initDatabaseConnection() {
+		if(PropertyProgram.INIT_DB){
+			DB.initDBConnection()
 		}
 	}
 }
