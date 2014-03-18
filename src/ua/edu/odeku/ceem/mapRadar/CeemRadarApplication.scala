@@ -151,7 +151,7 @@ private object Application {
 		 */
 		def stopShowStartImageWindow() {
 			if (startWindow != null && startWindow.isVisible) {
-				startWindow = null
+				startWindow.dispose()
 			}
 			startWindow = null
 		}
