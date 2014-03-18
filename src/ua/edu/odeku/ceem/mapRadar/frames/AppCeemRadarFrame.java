@@ -11,7 +11,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.RenderingExceptionListener;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.exception.WWAbsentRequirementException;
-import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.ViewControlsLayer;
 import gov.nasa.worldwind.layers.ViewControlsSelectListener;
@@ -24,11 +23,9 @@ import ua.edu.odeku.ceem.mapRadar.layers.CeemRadarLayers;
 import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
-import ua.edu.odeku.ceem.mapRadar.testing.dome.DomeView;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
-import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoName;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
@@ -149,7 +146,7 @@ public class AppCeemRadarFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame ceemRadarTool = null;
-                String toolName = ImportGeoName.class.getName();
+                String toolName = ImportGeoNameTool.class.getName();
                 if (toolsComponents.containsKey(toolName)){
                     ceemRadarTool = toolsComponents.get(toolName);
                     if(!ceemRadarTool.isVisible())
