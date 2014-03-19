@@ -8,20 +8,23 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm
 import javax.swing._
 import ua.edu.odeku.ceem.mapRadar.models.radar.{RadarTypeParameters, RadarFactory, RadarTypes, Radar}
-import java.awt.event.{ActionEvent, ActionListener, ItemEvent, ItemListener}
+import java.awt.event._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntryMessage, AirspaceEntry}
 import gov.nasa.worldwind.render.airspaces.SphereAirspace
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes._
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
 import com.jgoodies.forms.layout.{FormLayout, CellConstraints}
+import scala.collection.mutable
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.utils.gui.{UserMessage, VisibleUtils}
+import gov.nasa.worldwind.geom.LatLon
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.EditAirspaceEntryMessage
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspaceEntryMessage
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
-import scala.collection.mutable
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
-import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
+import ua.edu.odeku.ceem.mapRadar.db.DB
+import org.hibernate.ScrollMode
 
 /**
  * User: Aleo Bakalov
@@ -69,6 +72,43 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		}
 	}
 
+	val locationNameComboBoxKeyListener: KeyListener = new KeyListener {
+
+		override def keyReleased(e: KeyEvent): Unit = Unit
+
+		override def keyTyped(e: KeyEvent): Unit = Unit
+
+		override def keyPressed(e: KeyEvent): Unit = {
+			e.getSource match {
+				case source: javax.swing.JTextField =>
+					if (e.getKeyCode == KeyEvent.VK_ENTER) {
+						val text = source.getText
+
+						if (text.trim.length >= 3) {
+							val list = Settlement.getSettlements(text.trim)
+							println(list.size)
+
+							form.locationNameComboBox.removeAllItems()
+							for(settlement: Settlement <- list){
+								form.locationNameComboBox.addItem(settlement)
+							}
+
+						} else {
+							UserMessage.warning(form.$$$getRootComponent$$$(), "Введите больше двух символов")
+						}
+					}
+				case sourse =>
+					println(sourse)
+			}
+		}
+	}
+
+	val locationNameHelpButton: ActionListener = new ActionListener {
+		override def actionPerformed(e: ActionEvent): Unit = {
+			UserMessage.inform(form.$$$getRootComponent$$$(), "Введите более трех символов и нажмите ENTER для поиска")
+		}
+	}
+
 	initComboBoxes()
 	form.panelParm = new JPanel()
 	updateRadar()
@@ -104,12 +144,25 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def initComboBoxes() {
-		form.typeRadarComboBox = new JComboBox[RadarType]()
+		form.typeRadarComboBox = new JComboBox[RadarType]
 		for (radarType <- RadarTypes.values) {
 			form.typeRadarComboBox.addItem(radarType)
 		}
 		form.typeRadarComboBox.setSelectedIndex(0)
 		form.typeRadarComboBox.addItemListener(typeRadarComboBoxItemListener)
+
+		form.locationNameComboBox = new JComboBox[Settlement]
+		form.locationNameComboBox.setEditable(true)
+		form.locationNameComboBox.getEditor.getEditorComponent.addKeyListener(locationNameComboBoxKeyListener)
+	}
+
+	def updateRadarLocation(){
+		form.locationNameComboBox.getSelectedItem match {
+			case settlement: Settlement =>
+				radar.latLon = settlement.latlon
+			case _ =>
+
+		}
 	}
 
 	def updateRadar(): Radar = {
@@ -123,11 +176,12 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			updateForm()
 		}
 		updateRadarParameter()
+		updateRadarLocation()
 		radarTypeMap.put(radarName, radar)
 		radar
 	}
 
-	def airspaceEntry = _airspaceEntry
+	def airspaceEntry: AirspaceEntry = _airspaceEntry
 
 	private def airspaceEntry_=(value: AirspaceEntry): Unit = {
 		_airspaceEntry = value
@@ -146,6 +200,9 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	 * Метод генирить данные формы
 	 */
 	def updateForm() {
+		form.locationHelp = new JButton()
+		form.locationHelp.addActionListener(locationNameHelpButton)
+
 		form.panelParm.removeAll()
 		comboBoxParameterCurrentRadar.clear()
 
@@ -198,7 +255,68 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 			radar.setRadarParameters.update(tuple._1, tuple._2.getSelectedItem.asInstanceOf[Double])
 		}
 
-		if(form.altitudeSpinner != null)
+		if (form.altitudeSpinner != null)
 			radar.altitude = form.altitudeSpinner.getValue.asInstanceOf[Int]
+	}
+}
+
+case class Settlement(name: String, latlon: LatLon){
+
+	override def toString = {
+		name
+	}
+}
+
+object Settlement {
+
+	def getSettlements(text: String): List[Settlement] = {
+		val list = new mutable.MutableList[Settlement]
+
+		val sql = """
+			SELECT
+				CASE WHEN TRANSLATE IS NOT NULL THEN TRANSLATE ELSE NAME END AS NAME,
+				LAT,
+				LON
+			FROM
+				GEO_NAME
+			WHERE
+		        FEATURE_CLASS != 'A'
+		            AND
+				(
+					UPPER(NAME) LIKE :startName
+						OR
+					UPPER(TRANSLATE) LIKE :startName
+				)
+			ORDER BY
+				NAME;
+		          """
+
+		val session = DB.createHibernateSession()
+
+		val sqlQuery = session.createSQLQuery(sql)
+
+		sqlQuery.addScalar("NAME", DB.STRING_TYPE)
+		sqlQuery.addScalar("LAT", DB.DOUBLE_TYPE)
+		sqlQuery.addScalar("LON", DB.DOUBLE_TYPE)
+
+		sqlQuery.setParameter("startName", text.trim.toUpperCase + "%", DB.STRING_TYPE)
+
+		val result = sqlQuery.scroll(ScrollMode.FORWARD_ONLY)
+
+		while(result.next()){
+			val name = result.getString(0)
+			val lat = result.getDouble(1)
+			val lon = result.getDouble(2)
+			val latLon = LatLon.fromDegrees(lat, lon)
+
+			val settlement = new Settlement(name, latLon)
+
+			list += settlement
+		}
+
+		result.close()
+		session.close()
+
+		list.toList
 	}
 }

@@ -18,6 +18,10 @@ public class UserMessage {
         JOptionPane.showMessageDialog(component, message, "Warning!", JOptionPane.WARNING_MESSAGE);
     }
 
+    public static void inform(JComponent component, String message){
+        JOptionPane.showMessageDialog(component, message, "Information!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public static boolean ConfirmDialog(JComponent component, String title, String message){
         return JOptionPane.showConfirmDialog(
                 component, message, title, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE

@@ -51,9 +51,9 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 //		form.checkBoxResizeNewShapes.addActionListener(controller)
 //		form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
 
-		form.checkBoxEnableEdit.setActionCommand(ENABLE_EDIT)
-		form.checkBoxEnableEdit.addActionListener(controller)
-		form.checkBoxEnableEdit.setSelected(controller.enableEdit)
+//		form.checkBoxEnableEdit.setActionCommand(ENABLE_EDIT)
+//		form.checkBoxEnableEdit.addActionListener(controller)
+//		form.checkBoxEnableEdit.setSelected(controller.enableEdit)
 
 		form.table.setModel(model)
 		form.table.setColumnSelectionAllowed(false)
@@ -93,7 +93,7 @@ class AirspaceManagerView(val model: AirspaceBuilderModel, val controller: Airsp
 					case SIZE_NEW_SHAPES_TO_VIEWPORT =>
 //						form.checkBoxResizeNewShapes.setSelected(controller.resizeNewShapesToViewport)
 					case ENABLE_EDIT =>
-						form.checkBoxEnableEdit.setSelected(controller.enableEdit)
+//						form.checkBoxEnableEdit.setSelected(controller.enableEdit)
 					case _ =>
 				}
 			}

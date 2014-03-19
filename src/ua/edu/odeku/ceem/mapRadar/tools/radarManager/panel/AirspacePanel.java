@@ -25,7 +25,6 @@ public class AirspacePanel implements CeemPanel {
     public JButton buttonRemove;
     public JButton buttonClearSelection;
     public JTable table;
-    public JCheckBox checkBoxEnableEdit;
     public JCheckBox checkBoxResizeNewShapes;
 
     @Override
@@ -49,7 +48,7 @@ public class AirspacePanel implements CeemPanel {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow,top:4dlu:noGrow,center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new FormLayout("fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):grow", "center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         CellConstraints cc = new CellConstraints();
@@ -65,16 +64,9 @@ public class AirspacePanel implements CeemPanel {
         panel2.add(buttonClearSelection, cc.xy(5, 3));
         final JScrollPane scrollPane1 = new JScrollPane();
         scrollPane1.setToolTipText(ResourceBundle.getBundle("strings").getString("table_radarManager_airspace_table_toolTip"));
-        panel1.add(scrollPane1, cc.xy(3, 5, CellConstraints.FILL, CellConstraints.FILL));
+        panel1.add(scrollPane1, cc.xy(3, 3, CellConstraints.FILL, CellConstraints.FILL));
         table = new JTable();
         scrollPane1.setViewportView(table);
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout("fill:d:grow", "center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
-        panel1.add(panel3, cc.xy(3, 3));
-        checkBoxEnableEdit = new JCheckBox();
-        checkBoxEnableEdit.setSelected(true);
-        this.$$$loadButtonText$$$(checkBoxEnableEdit, ResourceBundle.getBundle("strings").getString("checkBox_radarManager_airspace_enable_shape_editing"));
-        panel3.add(checkBoxEnableEdit, cc.xy(1, 3));
     }
 
     /**
