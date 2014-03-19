@@ -9,6 +9,7 @@ import java.util.ResourceBundle
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
 import scala.collection.mutable
+import gov.nasa.worldwind.geom.LatLon
 
 /**
  * User: Aleo Bakalov
@@ -19,7 +20,8 @@ abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 
 	val radarParameters : mutable.LinkedHashMap[RadarTypeParameter, Array[Double]]
 	lazy val setRadarParameters : mutable.HashMap[RadarTypeParameter, Double] = initParameter()
-	var _altitude = 10
+	var _altitude: Int = 10
+	var latLon: LatLon = null
 
 	/**
 	 * Метод возращает радус радара

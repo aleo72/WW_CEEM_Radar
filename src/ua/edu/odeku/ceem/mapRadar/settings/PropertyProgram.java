@@ -30,6 +30,10 @@ public class PropertyProgram {
     private final static String LOOK_AND_FEEL_INFO = "Nimbus";
 
     /**
+     * Флаг указывающий на режим отладки
+     */
+    public final static boolean DEBUG = true;
+    /**
      * Название как будет отображаться программа
      * @return Строка названия класса отображения программы
      */

@@ -7,9 +7,10 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes;
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.HandlerRadarEditorFrom;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.Settlement;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -24,10 +25,12 @@ public class RadarEditorForm {
     public JSpinner altitudeSpinner;
     public JTextField nameAirspaceTextField;
     public LocationForm locationForm = new LocationForm();
-    public JComboBox<RadarTypes.RadarType> typeRadarComboBox;
+    public JComboBox<RadarType> typeRadarComboBox;
     public JPanel panelParm;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
+    public JComboBox<Settlement> locationNameComboBox;
+    public JButton locationHelp;
 
     public final HandlerRadarEditorFrom handler;
     public final JFrame parent;
@@ -61,7 +64,7 @@ public class RadarEditorForm {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:max(d;4px):grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:max(d;4px):grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):grow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new FormLayout("fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         CellConstraints cc = new CellConstraints();
@@ -92,6 +95,16 @@ public class RadarEditorForm {
         panelParm.add(label5, cc.xy(1, 3));
         comboBox2 = new JComboBox();
         panelParm.add(comboBox2, cc.xy(3, 3));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:grow,center:max(d;4px):noGrow"));
+        panel1.add(panel3, cc.xy(1, 7));
+        locationNameComboBox.setEditable(true);
+        panel3.add(locationNameComboBox, cc.xy(3, 2));
+        final JLabel label6 = new JLabel();
+        this.$$$loadLabelText$$$(label6, ResourceBundle.getBundle("label").getString("radarManager_airspace_locationName"));
+        panel3.add(label6, cc.xy(1, 2));
+        this.$$$loadButtonText$$$(locationHelp, ResourceBundle.getBundle("strings").getString("button_help-?"));
+        panel3.add(locationHelp, cc.xy(5, 2));
     }
 
     /**
@@ -117,6 +130,33 @@ public class RadarEditorForm {
         component.setText(result.toString());
         if (haveMnemonic) {
             component.setDisplayedMnemonic(mnemonic);
+            component.setDisplayedMnemonicIndex(mnemonicIndex);
+        }
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private void $$$loadButtonText$$$(AbstractButton component, String text) {
+        StringBuffer result = new StringBuffer();
+        boolean haveMnemonic = false;
+        char mnemonic = '\0';
+        int mnemonicIndex = -1;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '&') {
+                i++;
+                if (i == text.length()) break;
+                if (!haveMnemonic && text.charAt(i) != '&') {
+                    haveMnemonic = true;
+                    mnemonic = text.charAt(i);
+                    mnemonicIndex = result.length();
+                }
+            }
+            result.append(text.charAt(i));
+        }
+        component.setText(result.toString());
+        if (haveMnemonic) {
+            component.setMnemonic(mnemonic);
             component.setDisplayedMnemonicIndex(mnemonicIndex);
         }
     }

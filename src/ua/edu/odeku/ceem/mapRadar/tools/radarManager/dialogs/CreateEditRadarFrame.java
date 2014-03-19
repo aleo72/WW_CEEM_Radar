@@ -31,7 +31,7 @@ public class CreateEditRadarFrame extends JFrame {
         this.airspaceEntryMessage = airspaceEntryMessage;
         $$$setupUI$$$();
         setContentPane(contentPane);
-        getRootPane().setDefaultButton(buttonSave);
+        //getRootPane().setDefaultButton(buttonSave);
 
         buttonClose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -14,7 +14,7 @@
         <class>ua.edu.odeku.ceem.mapRadar.db.models.Settings</class>
 
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:h2:~/.odeku/mapRadar;MVCC=true;DB_CLOSE_ON_EXIT=FALSE"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:CeemRadarData/database/h2/mapRadar;MVCC=true;DB_CLOSE_ON_EXIT=FALSE"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
             <property name="hibernate.connection.username" value="ceem"/>
             <property name="hibernate.connection.password" value="db_ceem"/>

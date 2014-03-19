@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CeemRadarApplication" type="Application" factoryName="Application">
+  <configuration default="false" name="CeemRadarApplication_debug" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="MAIN_CLASS_NAME" value="ua.edu.odeku.ceem.mapRadar.CeemRadar" />
     <option name="VM_PARAMETERS" value="-Xmx1024m -Dsun.java2d.noddraw=true -Dsun.awt.noerasebackground=true -Djava.util.logging.config.file=logging.properties -Dgov.nasa.worldwind.stereo.mode=none" />

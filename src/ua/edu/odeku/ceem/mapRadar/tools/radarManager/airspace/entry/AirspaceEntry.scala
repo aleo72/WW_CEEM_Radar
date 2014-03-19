@@ -13,6 +13,7 @@ import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
 import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import gov.nasa.worldwind.geom.LatLon
 
 /**
  * User: Aleo Bakalov
@@ -38,6 +39,9 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 		_radar = value
 		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.radius)
 		airspace.asInstanceOf[SphereAirspace].setAltitude(_radar.altitude)
+		if(_radar.latLon != null){
+			airspace.asInstanceOf[SphereAirspace].setLocation(_radar.latLon)
+		}
 	}
 
 	def nameAirspaceEntry = _nameAirspaceEntry
