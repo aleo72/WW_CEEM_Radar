@@ -17,7 +17,7 @@ import java.awt.event.{ActionEvent, ActionListener}
 class ImportGeoNameTool extends CeemRadarTool {
 
   val importGeoName = new ImportGeoName
-  val importer = new GeoNameImporter(importGeoName.progressBar, closeFrame _)
+  val importer = new GeoNameImporter(importGeoName.progressBar, closeFrame)
 
   def closeFrame() = parentToolFrame.dispose()
 
