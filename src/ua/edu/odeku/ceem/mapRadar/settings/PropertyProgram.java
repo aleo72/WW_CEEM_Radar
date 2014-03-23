@@ -33,6 +33,9 @@ public class PropertyProgram {
      * Флаг указывающий на режим отладки
      */
     public final static boolean DEBUG = true;
+
+    public final static String CEEM_RADAR_DATA = "CeemRadarData/";
+
     /**
      * Название как будет отображаться программа
      * @return Строка названия класса отображения программы

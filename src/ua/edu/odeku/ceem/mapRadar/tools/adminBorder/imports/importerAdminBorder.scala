@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileFilter
 import java.io.File
 import java.util.ResourceBundle
 import java.awt.Component
+import ua.edu.odeku.ceem.mapRadar.utils.thread.StopProcess
 
 /**
  * Данный класс занят импортом данных
@@ -32,7 +33,7 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 				form.cancelButton.setEnabled(true)
 
 				if(importer != null)
-					importer.stopImporter = true
+					importer.stopProcess = true
 
 				importer = new Importer(chooserFileButtonListener.file, tool)
 
@@ -44,7 +45,7 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 	form.cancelButton.addActionListener(new ActionListener {
 		override def actionPerformed(e: ActionEvent): Unit = {
 			if(importer != null){
-				importer.stopImporter = true
+				importer.stopProcess = true
 				form.cancelButton.setEnabled(false)
 				form.importButton.setEnabled(true)
 			}
@@ -99,21 +100,21 @@ private class ChooserFileButtonListener(val importer: ImporterAdminBorder) exten
 	}
 }
 
-private class Importer(val file: File, val tool: ImportAdminBorderTool) extends Thread {
+private class Importer(val file: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
 
-	var stopImporter = false
+	stopProcess = false
 
 	/**
 	 * Импорт стран
 	 * @return
 	 */
-	def startImportMapUnits(): Boolean = ???
+	def startImportMapUnits(): Boolean = ImportMapUnits(file, this)
 
 	/**
 	 * Импорт региональных границ
 	 * @return
 	 */
-	def startImportStatesProvincesShp(): Boolean = ???
+	def startImportStatesProvincesShp(): Boolean = false
 
 	override def run() {
 		val fileName = file.getName
