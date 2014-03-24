@@ -25,6 +25,25 @@ object Admin0 {
 }
 
 /**
+ * Класс для сериализации данных по провинциям
+ * @param name0
+ * @param name1
+ * @param iso
+ * @param polygons
+ */
+case class Admin1(name0: String, name1: String, iso: String, polygons: Array[Polygon]) extends Serializable
+
+object Admin1 {
+	def apply(name0: String, name1:String, iso: String, polygons: List[List[List[List[Double]]]]): Admin1 = {
+		val bufferPolygon = new ArrayBuffer[Polygon]
+		for (polygon <- polygons){
+			bufferPolygon += Polygon(polygon)
+		}
+		new Admin1(name0, name1, iso, bufferPolygon.toArray)
+	}
+}
+
+/**
  * Класс для сериализации Polygon
  *
  * Created by Aleo on 23.03.2014.

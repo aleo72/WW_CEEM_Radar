@@ -9,16 +9,16 @@ import java.io.{FileOutputStream, ObjectOutputStream, File}
 import ua.edu.odeku.ceem.mapRadar.utils.thread.StopProcess
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage
 import scala.io.Source
-import scala.collection.mutable.ArrayBuffer
-import scala.util.parsing.json.{JSON, JSONObject}
+import scala.util.parsing.json.JSON
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.AdminBorder
+import scala.collection.mutable.ArrayBuffer
 
 /**
- * Объект который импортирует границы стран
- *
- * Created by Aleo on 23.03.14.
+ * User: Aleo Bakalov
+ * Date: 24.03.2014
+ * Time: 15:35
  */
-object ImportMapUnits {
+object ImportStatesProvinces {
 
 	private var file: File = null
 	private var stopFlag: StopProcess = null
