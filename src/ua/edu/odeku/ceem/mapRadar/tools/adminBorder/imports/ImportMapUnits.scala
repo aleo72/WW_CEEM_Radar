@@ -30,7 +30,7 @@ object ImportMapUnits {
 	def apply(file: File, stopFlag: StopProcess): Boolean = {
 		this.file = file
 		this.stopFlag = stopFlag
-		try{
+		try {
 			importFromFile()
 			true
 		} catch {
@@ -42,17 +42,17 @@ object ImportMapUnits {
 	}
 
 
-	private def importFromFile(){
+	private def importFromFile() {
 		val source = Source.fromFile(file).getLines()
 
 		val header = source.next() // Получим первую строку
 		val headerMap: Map[String, Int] = headerToMap(header) // Создаем Map заголовка
 
-		for(line <- source if !stopFlag.stopProcess){
+		for (line <- source if !stopFlag.stopProcess) {
 			val array = rowToArray(line) // Преобразовали в массив
 			handlerMapUnitRow(headerMap, array)
 		}
-
+		println("end")
 	}
 
 	/**
@@ -62,18 +62,22 @@ object ImportMapUnits {
 	 */
 	private def handlerMapUnitRow(header: Map[String, Int], array: Array[String]) {
 		val name = array(header(NAME_SORT))
-		val geounit = array(header("geounit"))
+		val admin = array(header("admin"))
+		val admin0a3 = array(header("adm0_a3"))
+		val popEst = array(header("pop_est"))
+		val postal = array(header("postal"))
+
 		val jsonString = array(header(COORDINATES_JSON)).replace("\"\"", "\"")
 
 		val json: Map[String, Any] = JSON.parseFull(jsonString).get.asInstanceOf[Map[String, Any]]
 
 		val typePolygon: String = json("type").asInstanceOf[String]
 		val coordinates: List[List[List[List[Double]]]] = typePolygon match {
-			case "Polygon" =>	List(json("coordinates").asInstanceOf[List[List[List[Double]]]])
+			case "Polygon" => List(json("coordinates").asInstanceOf[List[List[List[Double]]]])
 			case "MultiPolygon" => json("coordinates").asInstanceOf[List[List[List[List[Double]]]]]
 		}
 
-		saveToFile(name, geounit, coordinates)
+		saveToFile(name, admin, admin0a3, popEst, postal, coordinates)
 	}
 
 	/**
@@ -87,12 +91,19 @@ object ImportMapUnits {
 	 *                    List[List[List[List[Double]...
 
 	 */
-	private def saveToFile(name:String, geoUnit:String, coordinates: List[List[List[List[Double]]]]){
-		val admin0 = Admin0(name, geoUnit, coordinates)
-		val fileString = AdminBorder.CEEM_RADAR_DATA_FOR_ADMIN_BORDER_0 + name + ".admin0"
-		val file = new File(fileString)
+	private def saveToFile(name: String, admin: String, admin0a3: String, popEst: String, postal: String, coordinates: List[List[List[List[Double]]]]) {
+		val admin0 = Admin0(name, admin, admin0a3, coordinates)
+		val dirString = AdminBorder.CEEM_RADAR_DATA_FOR_ADMIN_BORDER_0
+		val dir = new File(dirString)
 
-		if(file.exists()){
+		if (!dir.exists()) {
+			dir.mkdirs()
+		}
+
+		val file = new File(dirString + popEst + "_" + admin0a3 + "_" + postal + ".admin0")
+
+		if (file.exists()) {
+			println("delete: " + file.getName)
 			file.delete()
 		}
 
