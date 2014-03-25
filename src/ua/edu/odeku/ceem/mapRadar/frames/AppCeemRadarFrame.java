@@ -24,6 +24,7 @@ import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.imports.ImportAdminBorderTool;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
@@ -177,9 +178,28 @@ public class AppCeemRadarFrame extends JFrame {
             }
         });
 
+        JMenuItem menuAdminBorderImporter = new JMenuItem("Admin Border Importer");
+        menuAdminBorderImporter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame ceemRadarTool = null;
+                String toolName = ImportAdminBorderTool.class.getName();
+                if (toolsComponents.containsKey(toolName)){
+                    ceemRadarTool = toolsComponents.get(toolName);
+                    if(!ceemRadarTool.isVisible())
+                        ceemRadarTool.setVisible(true);
+                } else {
+                    ceemRadarTool = new ToolFrame(toolName , "Admin Border Importer");
+                    ceemRadarTool.setVisible(true);
+                    toolsComponents.put(toolName, ceemRadarTool);
+                }
+            }
+        });
+
         menuParent.add(menuDownloadCache);
         menuParent.add(menuGeoNameImporter);
         menuParent.add(menuGeoNameView);
+        menuParent.add(menuAdminBorderImporter);
     }
 
     protected void fillMenuView(JMenu menu) {

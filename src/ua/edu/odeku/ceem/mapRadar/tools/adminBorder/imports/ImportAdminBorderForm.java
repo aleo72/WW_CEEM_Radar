@@ -82,7 +82,7 @@ public class ImportAdminBorderForm implements PanelTool {
         panel5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         panel1.add(panel5, cc.xy(2, 6, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         importButton = new JButton();
-        this.$$$loadButtonText$$$(importButton, ResourceBundle.getBundle("frameTitle").getString("importAdminBorder_dialog_fileChooser_title"));
+        this.$$$loadButtonText$$$(importButton, ResourceBundle.getBundle("button").getString("import"));
         panel5.add(importButton);
         cancelButton = new JButton();
         cancelButton.setHorizontalAlignment(11);

@@ -29,15 +29,13 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 	form.importButton.addActionListener(new ActionListener {
 		override def actionPerformed(e: ActionEvent): Unit = {
 			if(chooserFileButtonListener.file != null){
-				form.importButton.setEnabled(false)
-				form.cancelButton.setEnabled(true)
-
 				if(importer != null)
 					importer.stopProcess = true
 
 				importer = new Importer(chooserFileButtonListener.file, tool)
 
 				importer.start()
+				viewStartImport()
 			}
 		}
 	})
@@ -46,14 +44,25 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 		override def actionPerformed(e: ActionEvent): Unit = {
 			if(importer != null){
 				importer.stopProcess = true
-				form.cancelButton.setEnabled(false)
-				form.importButton.setEnabled(true)
+				viewStopImport()
 			}
 		}
 	})
 
 	def changeSelectedFileName(file: File) {
 		form.selectedFileTextField.setText(file.getAbsolutePath)
+	}
+
+	def viewStartImport(){
+		form.progressBar.setIndeterminate(true)
+		form.importButton.setEnabled(false)
+		form.cancelButton.setEnabled(true)
+	}
+
+	def viewStopImport(){
+		form.progressBar.setIndeterminate(false)
+		form.importButton.setEnabled(true)
+		form.cancelButton.setEnabled(false)
 	}
 }
 
@@ -128,8 +137,7 @@ private class Importer(val file: File, val tool: ImportAdminBorderTool) extends 
 		if(resultMatch){
 			tool.endFunction.apply(tool.parentToolFrame)
 		} else {
-			tool.form.cancelButton.setEnabled(false)
-			tool.form.importButton.setEnabled(true)
+			tool.importer.viewStopImport()
 		}
 	}
 }
