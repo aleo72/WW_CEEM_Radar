@@ -36,7 +36,7 @@ public class PropertyProgram {
 
     public final static String CEEM_RADAR_DATA = "CeemRadarData/";
 
-    public final static String CEEM_RADAR_CONFIG = "CeemRadarConfigs/";
+    public final static String CEEM_RADAR_CONFIG = "CeemRadarDataConfigs/";
 
     public final static String CEEM_RADAR_CONFIG_ADMIN_BORDER = CEEM_RADAR_CONFIG + "adminBorderConfig/";
 

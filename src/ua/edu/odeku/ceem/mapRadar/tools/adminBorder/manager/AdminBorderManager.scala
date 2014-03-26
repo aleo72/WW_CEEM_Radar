@@ -6,7 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager
 
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.Admin0
-import scala.xml.XML
+import scala.xml.{Attribute, XML}
 import java.io.{FileInputStream, ObjectInputStream, File}
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import scala.collection.mutable
@@ -19,10 +19,10 @@ import scala.collection.mutable
 object AdminBorderManager {
 
 
-	private val _admins0: Map[String, Admin0] = initAdmins0()
+	private val _admins0: mutable.Map[String, Admin0] = initAdmins0()
 
-	private var _viewCountryBorder: Map[String, Boolean] = null
-	private var _viewProvincesBorder: Map[String, Boolean] = null
+	private var _viewCountryBorder: mutable.Map[String, Boolean] = null
+	private var _viewProvincesBorder: mutable.Map[String, Boolean] = null
 
 	update()
 
@@ -34,7 +34,7 @@ object AdminBorderManager {
 	 * Заполним ассоциативный массив
 	 * @return  ассоциативный массив с элиментами Admin0 которые у нас есть в наличии
 	 */
-	def initAdmins0(): Map[String, Admin0] = {
+	private def initAdmins0(): mutable.Map[String, Admin0] = {
 		val dir = new File(PropertyProgram.CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR)
 		var map: mutable.Map[String, Admin0] = mutable.Map()
 		for (file <- dir.listFiles()) {
@@ -44,7 +44,7 @@ object AdminBorderManager {
 				case admin: Admin0 => map += (admin.admin0a3 -> admin)
 			}
 		}
-		map.asInstanceOf[Map[String, Admin0]]
+		map
 	}
 
 	/**
@@ -53,7 +53,7 @@ object AdminBorderManager {
 	def update() {
 		var mapForCountry: mutable.Map[String, Boolean] = mutable.Map()
 		var mapForProvinces: mutable.Map[String, Boolean] = mutable.Map()
-		val xml = XML.loadFile(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER)
+		val xml = XML.loadFile(new File(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER))
 		for (node <- xml \ "admin0") {
 			val iso = node.attribute("iso").getOrElse("").toString
 			val viewCountry = node.attribute("viewCountryBorder").getOrElse("false").toString
@@ -61,19 +61,20 @@ object AdminBorderManager {
 			mapForCountry += (iso -> viewCountry.toBoolean)
 			mapForProvinces += (iso -> viewProvinces.toBoolean)
 		}
-		_viewCountryBorder = mapForCountry.asInstanceOf[Map[String,Boolean]]
-		_viewProvincesBorder = mapForProvinces.asInstanceOf[Map[String,Boolean]]
+		_viewCountryBorder = mapForCountry
+		_viewProvincesBorder = mapForProvinces
 	}
 
-	def save(iso: String, flag: Boolean) {
+	def save() {
 		var xml = XML.loadFile(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER)
 		xml = xml.copy(child = Seq().asInstanceOf[Seq[scala.xml.Node]])
 
+		val tagAdmin0 = <admin0/>
+
 		for((iso, admin) <- _admins0){
-
+			val tag = tagAdmin0 % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null ) % Attribute(null, "viewProvincesBorder", _viewProvincesBorder(iso).toString, scala.xml.Null) % Attribute(null, "iso", iso, scala.xml.Null)
+			xml = xml.copy(child = xml.child ++ tag)
 		}
-		var tagAdmin0 = <admin0/>
-
-
+		XML.save(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER, xml)
 	}
 }
