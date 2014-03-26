@@ -19,7 +19,10 @@ class ImportAdminBorderTool extends CeemRadarTool {
 
 	override def rootPanel: JPanel = form.$$$getRootComponent$$$().asInstanceOf[JPanel]
 
-	override def endFunction: (ToolFrame) => Unit = (toolFrame: ToolFrame) => {toolFrame.dispose()}
+	override def endFunction: (ToolFrame) => Unit = (toolFrame: ToolFrame) => {
+		toolFrame.dispose()
+		importer.viewStopImport()
+	}
 
 	override def startFunction: (ToolFrame) => Unit = (toolFrame: ToolFrame) => ()
 }

@@ -123,7 +123,7 @@ private class Importer(val file: File, val tool: ImportAdminBorderTool) extends 
 	 * Импорт региональных границ
 	 * @return
 	 */
-	def startImportStatesProvincesShp(): Boolean = false
+	def startImportStatesProvincesShp(): Boolean = ImportStatesProvinces(file, this)
 
 	override def run() {
 		val fileName = file.getName
