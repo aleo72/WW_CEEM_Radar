@@ -14,6 +14,15 @@ import scala.collection.mutable.ArrayBuffer
  */
 package object imports {
 
+	val ADMIN_BORDER_FOLDER = "admin_border"
+
+	val SUFFIX_ADMIN_BORDER_FILE = ".csv"
+
+	val MAP_UNITS = "10m_admin_0_countries" + SUFFIX_ADMIN_BORDER_FILE
+	val STATES_PROVINCES_SHP = "10m_admin_1_states_provinces_shp" + SUFFIX_ADMIN_BORDER_FILE
+
+	val VALID_NAME_ADMIN_BORDER_FILES = Array(MAP_UNITS, STATES_PROVINCES_SHP)
+
 	/**
 	 * Преобразует строчку в ассоциативный массив
 	 * @param header строка с заголовком таблицы

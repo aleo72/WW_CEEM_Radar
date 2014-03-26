@@ -66,17 +66,6 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 	}
 }
 
-object ImporterAdminBorder {
-	val ADMIN_BORDER_FOLDER = "admin_border"
-
-	val SUFFIX_ADMIN_BORDER_FILE = ".csv"
-
-	val MAP_UNITS = "10m_admin_0_map_units" + SUFFIX_ADMIN_BORDER_FILE
-	val STATES_PROVINCES_SHP = "10m_admin_1_states_provinces_shp" + SUFFIX_ADMIN_BORDER_FILE
-
-	val VALID_NAME_ADMIN_BORDER_FILES = Array(MAP_UNITS, STATES_PROVINCES_SHP)
-}
-
 private class ChooserFileButtonListener(val importer: ImporterAdminBorder) extends ActionListener {
 
 	var file: File = null
@@ -87,7 +76,7 @@ private class ChooserFileButtonListener(val importer: ImporterAdminBorder) exten
 			if (f.isDirectory)
 				return true
 			val nameFile = f.getName
-			for (validName: String <- ImporterAdminBorder.VALID_NAME_ADMIN_BORDER_FILES) {
+			for (validName: String <- VALID_NAME_ADMIN_BORDER_FILES) {
 				if (validName == nameFile)
 					return true
 			}
@@ -117,7 +106,7 @@ private class Importer(val file: File, val tool: ImportAdminBorderTool) extends 
 	 * Импорт стран
 	 * @return
 	 */
-	def startImportMapUnits(): Boolean = ImportMapUnits(file, this)
+	def startImportMapUnits(): Boolean = ImportAdmin0Countries(file, this)
 
 	/**
 	 * Импорт региональных границ
@@ -129,8 +118,8 @@ private class Importer(val file: File, val tool: ImportAdminBorderTool) extends 
 		val fileName = file.getName
 
 		val resultMatch: Boolean = fileName match {
-			case ImporterAdminBorder.MAP_UNITS => startImportMapUnits()
-			case ImporterAdminBorder.STATES_PROVINCES_SHP => startImportStatesProvincesShp()
+			case MAP_UNITS => startImportMapUnits()
+			case STATES_PROVINCES_SHP => startImportStatesProvincesShp()
 			case _ => false
 		}
 

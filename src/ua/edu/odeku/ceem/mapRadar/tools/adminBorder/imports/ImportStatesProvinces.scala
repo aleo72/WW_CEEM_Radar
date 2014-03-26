@@ -10,7 +10,7 @@ import ua.edu.odeku.ceem.mapRadar.utils.thread.StopProcess
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage
 import scala.io.Source
 import scala.util.parsing.json.JSON
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.AdminBorder
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.{Admin1, AdminBorder}
 import scala.collection.mutable.ArrayBuffer
 
 /**
