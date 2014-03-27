@@ -41,7 +41,7 @@ object AdminBorderManager {
 			val input = new ObjectInputStream(new FileInputStream(file))
 			val ob = input.readObject()
 			ob match {
-				case admin: Admin0 => map += (admin.admin0a3 -> admin)
+				case admin: Admin0 => map += (admin.admin0a3 -> null)
 			}
 		}
 		map
