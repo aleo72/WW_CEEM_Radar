@@ -26,7 +26,27 @@ object AdminBorderManager {
 
 	update()
 
-	def admins = _admins0
+	def admin(iso: String): Admin0 = {
+		val admin = _admins0.get(iso)
+		if(admin.nonEmpty){
+			admin.get
+		} else {
+			val file = new File(PropertyProgram.CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR + iso + ".admin0")
+			if(file.exists()){
+				val input = new ObjectInputStream(new FileInputStream(file))
+				val ob = input.readObject()
+				ob match {
+					case admin: Admin0 => {
+						_admins0 += (admin.admin0a3 -> admin)
+						admin
+					}
+				}
+			} else {
+				throw new Exception(iso+ ".admin0 is not exists")
+			}
+		}
+
+	}
 
 	def viewCountryBorder = _viewCountryBorder
 
