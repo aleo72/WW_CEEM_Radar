@@ -19,10 +19,10 @@ import scala.collection.mutable
 object AdminBorderManager {
 
 
-	private val _admins0: mutable.Map[String, Admin0] = initAdmins0()
+	private val _admins0: mutable.HashMap[String, Admin0] = initAdmins0()
 
-	private var _viewCountryBorder: mutable.Map[String, Boolean] = null
-	private var _viewProvincesBorder: mutable.Map[String, Boolean] = null
+	private var _viewCountryBorder: mutable.HashMap[String, Boolean] = null
+	private var _viewProvincesBorder: mutable.HashMap[String, Boolean] = null
 
 	update()
 
@@ -54,9 +54,9 @@ object AdminBorderManager {
 	 * Заполним ассоциативный массив
 	 * @return  ассоциативный массив с элиментами Admin0 которые у нас есть в наличии
 	 */
-	private def initAdmins0(): mutable.Map[String, Admin0] = {
+	private def initAdmins0(): mutable.HashMap[String, Admin0] = {
 		val dir = new File(PropertyProgram.CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR)
-		var map: mutable.Map[String, Admin0] = mutable.Map()
+		var map: mutable.HashMap[String, Admin0] = mutable.HashMap()
 		for (file <- dir.listFiles()) {
 			val input = new ObjectInputStream(new FileInputStream(file))
 			val ob = input.readObject()
@@ -71,8 +71,8 @@ object AdminBorderManager {
 	 * Метод должен обновить список загруженых в память стран
 	 */
 	def update() {
-		var mapForCountry: mutable.Map[String, Boolean] = mutable.Map()
-		var mapForProvinces: mutable.Map[String, Boolean] = mutable.Map()
+		var mapForCountry: mutable.HashMap[String, Boolean] = mutable.HashMap()
+		var mapForProvinces: mutable.HashMap[String, Boolean] = mutable.HashMap()
 		val xml = XML.loadFile(new File(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER))
 		for (node <- xml \ "admin0") {
 			val iso = node.attribute("iso").getOrElse("").toString
@@ -96,5 +96,13 @@ object AdminBorderManager {
 			xml = xml.copy(child = xml.child ++ tag)
 		}
 		XML.save(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER, xml)
+	}
+
+	def clear() {
+		for((string, boolean) <- this._viewCountryBorder){
+			if(boolean){
+				this._admins0.remove(string)
+			}
+		}
 	}
 }
