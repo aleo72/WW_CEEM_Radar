@@ -17,9 +17,16 @@ import gov.nasa.worldwind.avlist.AVKey;
 
 public class Earth extends EllipsoidalGlobe
 {
-    public static final double WGS84_EQUATORIAL_RADIUS = 6378137.0; // ellipsoid equatorial getRadius, in meters
-    public static final double WGS84_POLAR_RADIUS = 6356752.3; // ellipsoid polar getRadius, in meters
-    public static final double WGS84_ES = 0.00669437999013; // eccentricity squared, semi-major axis
+//    public static final double WGS84_EQUATORIAL_RADIUS = 6378137.0; // ellipsoid equatorial getRadius, in meters
+//    public static final double WGS84_POLAR_RADIUS = 6356752.3; // ellipsoid polar getRadius, in meters
+//    public static final double WGS84_ES = 0.00669437999013; // eccentricity squared, semi-major axis
+
+    /*
+        Данные изменения внесены так как нам для расчета работы РЛС необходим Эквивалентный радиус Земли = R * 4/3
+     */
+    public static final double WGS84_EQUATORIAL_RADIUS = 6378137.0 * 4 / 3; // ellipsoid equatorial getRadius, in meters
+    public static final double WGS84_POLAR_RADIUS = 6356752.3 * 4 / 3; // ellipsoid polar getRadius, in meters
+    public static final double WGS84_ES = 0.00669437999013 * 4 / 3; // eccentricity squared, semi-major axis
 
     public static final double ELEVATION_MIN = -11000d; // Depth of Marianas trench
     public static final double ELEVATION_MAX = 8500d; // Height of Mt. Everest.

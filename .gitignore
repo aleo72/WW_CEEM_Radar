@@ -5,8 +5,20 @@ doc/
 /classes
 /testClasses
 
+#dictionaries
+/.idea/dictionaries
+
+#workspace
+/.idea/~workspace.xml
+/.idea/workspace.xml
+
+#idea dataStore
+/.idea/dataSources.ids
+/.idea/dataSources.xml
+
 #Cache
 /MyCache
+/CeemRadarData
 
 # Click-Once directory
 publish/
