@@ -33,6 +33,17 @@ public class PropertyProgram {
      * Флаг указывающий на режим отладки
      */
     public final static boolean DEBUG = true;
+
+    public final static String CEEM_RADAR_DATA = "CeemRadarData/";
+
+    public final static String CEEM_RADAR_CONFIG = "CeemRadarDataConfigs/";
+
+    public final static String CEEM_RADAR_CONFIG_ADMIN_BORDER = CEEM_RADAR_CONFIG + "adminBorderConfig/";
+
+    public final static String CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER = CEEM_RADAR_CONFIG_ADMIN_BORDER + "manageAdminBorder.xml";
+
+    public final static String CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR = "CeemRadarData/admin_border/admin_0/";
+
     /**
      * Название как будет отображаться программа
      * @return Строка названия класса отображения программы

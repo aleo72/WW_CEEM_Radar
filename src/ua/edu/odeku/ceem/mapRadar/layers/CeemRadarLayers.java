@@ -7,6 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.layers;
 
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
+import ua.edu.odeku.ceem.mapRadar.layers.adminBorder.AdminBorderLayerController;
 import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.AGeoNameLayer;
 import ua.edu.odeku.ceem.mapRadar.layers.geoName.madeLayers.PGeoNameLayer;
 
@@ -55,5 +56,10 @@ public abstract class CeemRadarLayers {
             menu.add(item);
         }
 
+        {
+            final JCheckBoxMenuItem item = new JCheckBoxMenuItem("Admin Border Country", false);
+            AdminBorderLayerController.apply(worldWindow, item);
+            menu.add(item);
+        }
     }
 }
