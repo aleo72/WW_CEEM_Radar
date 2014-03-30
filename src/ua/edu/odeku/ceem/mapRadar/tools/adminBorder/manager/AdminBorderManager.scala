@@ -51,8 +51,7 @@ object AdminBorderManager {
 	def viewCountryBorder = _viewCountryBorder
 
 	def viewCountryBorderUpdate(iso: String, flag: Boolean) {
-		val value = _viewCountryBorder.put(iso, flag)
-		value
+		_viewCountryBorder.put(iso, flag)
 	}
 
 	/**
@@ -96,7 +95,7 @@ object AdminBorderManager {
 
 		val tagAdmin0 = <admin0/>
 
-		for (iso <- _viewCountryBorder.keySet) {
+		for (iso <- _viewCountryBorder.keySet.toList.sorted) {
 			val tag = tagAdmin0 % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null) % Attribute(null, "viewProvincesBorder", _viewProvincesBorder(iso).toString, scala.xml.Null) % Attribute(null, "iso", iso, scala.xml.Null)
 			xml = xml.copy(child = xml.child ++ tag)
 		}

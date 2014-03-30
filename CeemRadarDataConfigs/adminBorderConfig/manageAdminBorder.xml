@@ -227,7 +227,7 @@
     <admin0 iso="TWN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="TZA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="UGA" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="UKR" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="UKR" viewProvincesBorder="false" viewCountryBorder="true"/>
     <admin0 iso="UMI" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="URY" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="USA" viewProvincesBorder="false" viewCountryBorder="false"/>
