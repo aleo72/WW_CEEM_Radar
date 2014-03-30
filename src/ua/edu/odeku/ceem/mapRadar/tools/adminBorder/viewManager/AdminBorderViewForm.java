@@ -50,9 +50,12 @@ public class AdminBorderViewForm implements PanelTool {
         saveButton = new JButton();
         this.$$$loadButtonText$$$(saveButton, ResourceBundle.getBundle("button").getString("Save"));
         panel2.add(saveButton);
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel1.add(scrollPane1, cc.xy(1, 1, CellConstraints.FILL, CellConstraints.FILL));
         table = new JTable();
+        table.setAutoCreateRowSorter(true);
         table.putClientProperty("Table.isFileList", Boolean.FALSE);
-        panel1.add(table, cc.xy(1, 1, CellConstraints.FILL, CellConstraints.FILL));
+        scrollPane1.setViewportView(table);
     }
 
     /**

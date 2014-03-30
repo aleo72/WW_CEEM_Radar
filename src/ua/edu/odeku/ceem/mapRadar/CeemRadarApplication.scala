@@ -15,6 +15,7 @@ import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel
 import java.awt.Toolkit
 import ua.edu.odeku.ceem.mapRadar.db.DB
 import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
 
 /**
  * Объект старта программы
@@ -32,6 +33,7 @@ object CeemRadarApplication extends App {
 		Application.showStartWindow(visible = true)
 
 		Application.initDatabaseConnection()
+		Application.initAdminBorderManager()
 
 		val frameProgram = new AppCeemRadarFrame
 		frameProgram.setTitle(PropertyProgram.getNameProgram)
@@ -162,5 +164,12 @@ private object Application {
 		if(PropertyProgram.INIT_DB){
 			DB.initDBConnection()
 		}
+	}
+
+	/**
+	 * Инициализация AdminBorderManager
+	 */
+	def initAdminBorderManager() {
+		AdminBorderManager.viewCountryBorder
 	}
 }

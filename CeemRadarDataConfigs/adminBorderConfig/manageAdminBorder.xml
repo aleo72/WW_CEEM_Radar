@@ -1,6 +1,6 @@
 <ManagerAdminBorder>
-    <admin0 iso="IRN" viewProvincesBorder="false" viewCountryBorder="true"/>
-    <admin0 iso="ARM" viewProvincesBorder="false" viewCountryBorder="true"/>
+    <admin0 iso="IRN" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="ARM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GUM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="FSM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="LTU" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -13,15 +13,15 @@
     <admin0 iso="USG" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="NZL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="AUS" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="CUB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="KOR" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="CUB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="PER" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BEN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="IOT" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GIB" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="ARG" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="IRQ" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="KEN" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="IRQ" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="ARG" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CPV" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SGP" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BFA" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -48,7 +48,7 @@
     <admin0 iso="GRD" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="IDN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GNB" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="UKR" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="UKR" viewProvincesBorder="false" viewCountryBorder="true"/>
     <admin0 iso="BGR" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="DZA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SOM" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -59,13 +59,13 @@
     <admin0 iso="RUS" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="KNA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="TKM" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="TCA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BLR" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="TCA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CZE" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="DOM" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="SVN" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="SUR" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="MDV" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="SUR" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="SVN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GEO" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="HND" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="PCN" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -73,27 +73,27 @@
     <admin0 iso="WSM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="THA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="NIU" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="JAM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="NIC" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="JAM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BDI" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="STP" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="HTI" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="HUN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="DNK" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="ISL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="PRI" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="ISL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="DJI" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="LBY" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="TTO" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="TJK" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="LIE" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="TJK" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="TTO" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GNQ" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="ALD" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GTM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SHN" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="CHL" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="KHM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="KIR" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="KHM" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="CHL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SOL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="FIN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="FLK" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -191,12 +191,12 @@
     <admin0 iso="CHN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BRA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="COL" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="CRI" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="ATC" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CHE" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="ATC" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="CRI" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="HRV" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="YEM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="AZE" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="YEM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="EGY" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SWZ" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CYP" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -208,20 +208,20 @@
     <admin0 iso="TLS" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SLB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="NER" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="ARE" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="LCA" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="BGD" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="ARE" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="IND" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="SYC" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="BGD" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="PLW" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="SYC" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="PYF" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BEL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GUY" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="CYM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CNM" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="CYM" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BLM" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="SWE" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SLE" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="SWE" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="MUS" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="MLT" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="OMN" viewProvincesBorder="false" viewCountryBorder="false"/>
@@ -230,22 +230,22 @@
     <admin0 iso="VAT" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GAZ" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GIN" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="ESB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="NLD" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="MHL" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="ESB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="NAM" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="MHL" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="GAB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="BMU" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SAH" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="PAK" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="DMA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CAF" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="WSB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="LAO" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="WSB" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="IMN" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="CUW" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="SGS" viewProvincesBorder="false" viewCountryBorder="false"/>
-    <admin0 iso="LKA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="LVA" viewProvincesBorder="false" viewCountryBorder="false"/>
+    <admin0 iso="LKA" viewProvincesBorder="false" viewCountryBorder="false"/>
     <admin0 iso="EST" viewProvincesBorder="false" viewCountryBorder="false"/>
 </ManagerAdminBorder>

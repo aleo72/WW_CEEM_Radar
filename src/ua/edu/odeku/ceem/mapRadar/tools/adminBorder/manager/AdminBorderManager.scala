@@ -28,11 +28,11 @@ object AdminBorderManager {
 
 	def admin(iso: String): Admin0 = {
 		val admin = _admins0.get(iso)
-		if(admin.nonEmpty){
+		if (admin.get != null) {
 			admin.get
 		} else {
 			val file = new File(PropertyProgram.CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR + iso + ".admin0")
-			if(file.exists()){
+			if (file.exists()) {
 				val input = new ObjectInputStream(new FileInputStream(file))
 				val ob = input.readObject()
 				ob match {
@@ -42,13 +42,18 @@ object AdminBorderManager {
 					}
 				}
 			} else {
-				throw new Exception(iso+ ".admin0 is not exists")
+				throw new Exception(iso + ".admin0 is not exists")
 			}
 		}
 
 	}
 
 	def viewCountryBorder = _viewCountryBorder
+
+	def viewCountryBorderUpdate(iso: String, flag: Boolean) {
+		val value = _viewCountryBorder.put(iso, flag)
+		value
+	}
 
 	/**
 	 * Заполним ассоциативный массив
@@ -91,16 +96,16 @@ object AdminBorderManager {
 
 		val tagAdmin0 = <admin0/>
 
-		for((iso, admin) <- _admins0){
-			val tag = tagAdmin0 % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null ) % Attribute(null, "viewProvincesBorder", _viewProvincesBorder(iso).toString, scala.xml.Null) % Attribute(null, "iso", iso, scala.xml.Null)
+		for (iso <- _viewCountryBorder.keySet) {
+			val tag = tagAdmin0 % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null) % Attribute(null, "viewProvincesBorder", _viewProvincesBorder(iso).toString, scala.xml.Null) % Attribute(null, "iso", iso, scala.xml.Null)
 			xml = xml.copy(child = xml.child ++ tag)
 		}
 		XML.save(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER, xml)
 	}
 
 	def clear() {
-		for((string, boolean) <- this._viewCountryBorder){
-			if(boolean){
+		for ((string, boolean) <- this._viewCountryBorder) {
+			if (!boolean) {
 				this._admins0.remove(string)
 			}
 		}

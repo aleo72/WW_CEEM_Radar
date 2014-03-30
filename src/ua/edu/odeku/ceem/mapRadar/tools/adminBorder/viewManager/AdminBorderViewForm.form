@@ -27,18 +27,25 @@
           </component>
         </children>
       </grid>
-      <component id="53da3" class="javax.swing.JTable" binding="table">
+      <scrollpane id="fa145">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties/>
-        <clientProperties>
-          <Table.isFileList class="java.lang.Boolean" value="false"/>
-        </clientProperties>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="53da3" class="javax.swing.JTable" binding="table">
+            <constraints/>
+            <properties>
+              <autoCreateRowSorter value="true"/>
+            </properties>
+            <clientProperties>
+              <Table.isFileList class="java.lang.Boolean" value="false"/>
+            </clientProperties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

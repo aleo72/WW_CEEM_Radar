@@ -42,7 +42,7 @@ public class PropertyProgram {
 
     public final static String CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER = CEEM_RADAR_CONFIG_ADMIN_BORDER + "manageAdminBorder.xml";
 
-    public final static String CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR = "CeemRadarData/admin_border/admin_0";
+    public final static String CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR = "CeemRadarData/admin_border/admin_0/";
 
     /**
      * Название как будет отображаться программа

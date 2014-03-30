@@ -9,6 +9,8 @@ import javax.swing.table.TableModel
 import javax.swing.event.TableModelListener
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
 import scala.collection.mutable.ArrayBuffer
+import javax.swing.JTable
+import java.awt.event.{ActionEvent, ActionListener}
 
 
 /**
@@ -20,6 +22,15 @@ class AdminBorderViewManagerFormHandler(val tool: AdminBorderViewManagerTool) {
 	val form = tool.form
 	val tableModel = new TableModelForAdminBorderViewTable
 	form.table.setModel(tableModel)
+
+	form.saveButton.addActionListener(new ActionListener {
+		override def actionPerformed(e: ActionEvent): Unit = {
+			for( (enable, name, iso) <- tableModel.tableSource ){
+				AdminBorderManager.viewCountryBorderUpdate(iso, enable)
+			}
+			AdminBorderManager.save()
+		}
+	})
 }
 
 class TableModelForAdminBorderViewTable extends TableModel {
@@ -40,14 +51,18 @@ class TableModelForAdminBorderViewTable extends TableModel {
 
 	override def setValueAt(aValue: scala.Any, rowIndex: Int, columnIndex: Int): Unit = {
 		println("value = " + aValue + " | row = " + rowIndex + " | column = " + columnIndex)
+		columnIndex match {
+			case 0 => tableSource(rowIndex) = (aValue.asInstanceOf[Boolean], tableSource(rowIndex)._2, tableSource(rowIndex)._3)
+			case _ => println("none")
+		}
 	}
 
 	override def getValueAt(rowIndex: Int, columnIndex: Int): AnyRef = {
 		val value: (Boolean, String, String) = tableSource(rowIndex)
 		columnIndex match {
 			case 0 => new java.lang.Boolean(value._1)
-			case 1 => value._2
-			case 2 => value._3
+			case 1 => value._3
+			case 2 => value._2
 		}
 	}
 
@@ -60,7 +75,7 @@ class TableModelForAdminBorderViewTable extends TableModel {
 
 	override def getColumnClass(columnIndex: Int): Class[_] = {
 		columnIndex match {
-			case 0 => classOf[Boolean]
+			case 0 => classOf[java.lang.Boolean]
 			case 1 => classOf[String]
 			case 2 => classOf[String]
 			case _ => classOf[Object]
@@ -70,8 +85,8 @@ class TableModelForAdminBorderViewTable extends TableModel {
 	override def getColumnName(columnIndex: Int): String = {
 		columnIndex match {
 			case 0 => "Enabled"
-			case 1 => "Name"
-			case 2 => "ISO"
+			case 1 => "ISO"
+			case 2 => "Name"
 			case _ => "NONE"
 		}
 	}
