@@ -12,6 +12,7 @@ import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
 import scala.util.parsing.json.{JSON, JSONObject}
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.{Admin0, AdminBorder}
+import scala.collection.mutable
 
 /**
  * Объект который импортирует границы стран
@@ -20,14 +21,16 @@ import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.{Admin0, AdminBorder}
  */
 object ImportAdmin0Countries {
 
-	private var file: File = null
+	private var countryFile: File = null
+	private var provincesFile: File = null
 	private var stopFlag: StopProcess = null
 
 	val COORDINATES_JSON = "json_4326"
 
 
-	def apply(file: File, stopFlag: StopProcess): Boolean = {
-		this.file = file
+	def apply(countryFile: File, provincesFile: File, stopFlag: StopProcess): Boolean = {
+		this.countryFile = countryFile
+		this.provincesFile = provincesFile
 		this.stopFlag = stopFlag
 		try {
 			importFromFile()
@@ -42,16 +45,31 @@ object ImportAdmin0Countries {
 
 
 	private def importFromFile() {
-		val source = Source.fromFile(file).getLines()
+		val sourceCountry = Source.fromFile(countryFile).getLines()
+		val sourceProvinces: Iterator[String] = Source.fromFile(provincesFile).getLines()
 
-		val header = source.next() // Получим первую строку
-		val headerMap: Map[String, Int] = headerToMap(header) // Создаем Map заголовка
+		val headerCountry = sourceCountry.next() // Получим первую строку
+		val headerMapCountry: Map[String, Int] = headerToMap(headerCountry) // Создаем Map заголовка
 
-		for (line <- source if !stopFlag.stopProcess) {
+		val headerProvinces = sourceProvinces.next()
+		val headerMapProvinces: Map[String, Int] = headerToMap(headerProvinces)
+
+		for (line <- sourceCountry if !stopFlag.stopProcess) {
 			val array = rowToArray(line) // Преобразовали в массив
-			handlerMapUnitRow(headerMap, array)
+			handlerMapUnitRow(headerMapCountry, array)
 		}
 		println("end")
+	}
+
+	private def provincesToMapIsoString(provinces: Iterator[String], headerMapProvinces: Map[String, Int]): Map[String, List[Array[String]]] = {
+		val map = new scala.collection.mutable.HashMap[String, List[String]]
+		for(line <- provinces) {
+			val array = rowToArray(line)
+			val iso = array(headerMapProvinces("iso"))
+			var listProvinces = map.getOrElse(iso, List(Array[String]()))
+			listProvinces = listProvinces +=
+		}
+
 	}
 
 	/**
@@ -109,4 +127,68 @@ object ImportAdmin0Countries {
 		out.close()
 	}
 
+
+	/**
+	 * Преобразует строчку в ассоциативный массив
+	 * @param header строка с заголовком таблицы
+	 * @return Map[String, Int]
+	 */
+	def headerToMap(header: String): Map[String, Int] = {
+		val res = header.split(",")
+		val z = res.zip(0 until res.length)
+		z.toMap
+	}
+
+	/**
+	 * Конверктация строки таблицы в массив
+	 * @param line строка таблицы
+	 * @return массив значений из стоки
+	 */
+	def rowToArray(line: String): Array[String] = {
+		val buffer = new ArrayBuffer[String]()
+
+		var exitLoop = false
+
+
+		var indexStart = 0
+		var index = 0
+		while (!exitLoop) {
+			index = line.indexOf(',', Math.max(indexStart, index))
+
+			var _index = index
+			var _indexStart = indexStart
+
+			if (index > 0) {
+				val subStr = line.substring(indexStart, index)
+
+				val findString = subStr.startsWith("\"") // Проверка это строка?
+
+				if (!findString) {
+					// Это не строка
+					buffer += subStr
+					indexStart = index + 1
+				} else {
+					// строка, необходимо найти конец строки
+					if (subStr.endsWith("\"") && !subStr.endsWith("\"\"")) {
+						// строка должна заканчиваться на кавычки, но не не две подряд
+						buffer += subStr.substring(1, subStr.length - 1) // отрубаем кавычки в начале и в конце
+						indexStart = index + 1
+					} else {
+						index += 1
+					}
+				}
+
+			}
+			if (index == -1) {
+				exitLoop = true
+			}
+			_index = index
+			_indexStart = indexStart
+		}
+		if (indexStart > 0) {
+			val subStr = line.substring(indexStart)
+			buffer += subStr
+		}
+		buffer.toArray
+	}
 }
