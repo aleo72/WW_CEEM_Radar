@@ -15,12 +15,12 @@ import scala.collection.mutable.ArrayBuffer
 case class Admin0(name: String, admin: String, admin0a3: String, polygons: Array[Polygon], admin1Array: Array[Admin1]) extends Serializable
 
 object Admin0 {
-	def apply(name: String, admin: String, admin0a3: String, polygons: List[List[List[List[Double]]]], admin1List: List[Admin1] = List.empty): Admin0 = {
+	def apply(name: String, admin: String, admin0a3: String, polygons: List[List[List[List[Double]]]], admin1List: Array[Admin1] = Array()): Admin0 = {
 		val bufferPolygon = new ArrayBuffer[Polygon]
 		for (polygon <- polygons) {
 			bufferPolygon += Polygon(polygon)
 		}
-		new Admin0(name, admin, admin0a3, bufferPolygon.toArray, admin1List.toArray)
+		new Admin0(name, admin, admin0a3, bufferPolygon.toArray, admin1List)
 	}
 }
 

@@ -106,7 +106,7 @@ private class Importer(val countryFile: File, val provincesFile: File, val tool:
 
 	override def run() {
 
-		if(countryFile.getName == MAP_COUNTRIES && (provincesFile == null || provincesFile.getName == STATES_PROVINCES_SHP ) {
+		if(countryFile.getName == MAP_COUNTRIES && (provincesFile == null || provincesFile.getName == STATES_PROVINCES_SHP )) {
 			ImportAdmin0Countries(countryFile, provincesFile, this)
 			tool.endFunction.apply(tool.parentToolFrame)
 		} else {
