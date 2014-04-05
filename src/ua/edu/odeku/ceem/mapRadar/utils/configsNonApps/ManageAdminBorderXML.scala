@@ -17,13 +17,12 @@ import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.Admin0
 object ManageAdminBorderXML extends App {
 
 	val fileConfig = new File("CeemRadarDataConfigs/adminBorderConfig/manageAdminBorder.xml")
-	val dirWithAdmin0 = new File("CeemRadarData/admin_border/admin_0")
-	val dirWithAdmin1 = new File("CeemRadarData/admin_border/admin_1")
+	val dirWithAdmin0 = new File("CeemRadarData/admin_border/admin_country")
 	val emptySeqOfNone = Seq().asInstanceOf[Seq[scala.xml.Node]]
 
 	var xml = XML.loadFile(fileConfig)
 
-	val tagAdmin0 = <admin0 iso="" viewCountryBorder="false" viewProvincesBorder="false"/>
+	val tagAdmin0 = <admin0 iso="" viewCountryBorder="false"/>
 
 	def initWithAdmin0(){
 		val files = dirWithAdmin0.listFiles()
