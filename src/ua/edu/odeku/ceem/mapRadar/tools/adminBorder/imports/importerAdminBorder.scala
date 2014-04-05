@@ -22,14 +22,17 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 
 	private val form = tool.form.asInstanceOf[ImportAdminBorderForm]
 	private var importer: Importer = null
-	private var countryFile: File = null
-	private var provincesFile: File = null
-
-	form.chooserCountryButton.addActionListener(new ChooserFileButtonListener(this, form.fileCountry))
-	form.chooserProvincesButton.addActionListener(new ChooserFileButtonListener(this, form.fileProvinces))
+	private val chooserCountryButtonListener = new ChooserFileButtonListener(this, form.fileCountry)
+	private val chooserProvincesButtonListener = new ChooserFileButtonListener(this, form.fileProvinces)
+	form.chooserCountryButton.addActionListener(chooserCountryButtonListener)
+	form.chooserProvincesButton.addActionListener(chooserProvincesButtonListener)
 
 	form.importButton.addActionListener(new ActionListener {
 		override def actionPerformed(e: ActionEvent): Unit = {
+
+			val countryFile: File = chooserCountryButtonListener.file
+			val provincesFile: File = chooserProvincesButtonListener.file
+
 			if(countryFile != null){
 				if(importer != null)
 					importer.stopProcess = true
@@ -90,6 +93,7 @@ private class ChooserFileButtonListener(val importer: ImporterAdminBorder, val t
 
 	val fileChooser = new JFileChooser()
 	fileChooser.setFileFilter(fileFilter)
+	fileChooser.setCurrentDirectory(new File("resources/"))
 
 	override def actionPerformed(e: ActionEvent): Unit = {
 		val res = fileChooser.showDialog(importer.tool.form.rootPanel().asInstanceOf[Component], ResourceBundle.getBundle("frameTitle").getString("importAdminBorder_dialog_fileChooser_title"))
