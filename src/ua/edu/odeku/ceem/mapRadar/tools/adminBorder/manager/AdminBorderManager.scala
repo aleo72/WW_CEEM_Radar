@@ -6,7 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager
 
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.Admin0
-import scala.xml.{Attribute, XML}
+import scala.xml.{Node, Attribute, XML}
 import java.io.{FileInputStream, ObjectInputStream, File}
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import scala.collection.mutable
@@ -58,13 +58,16 @@ object AdminBorderManager {
 	 * @return  ассоциативный массив с элиментами Admin0 которые у нас есть в наличии
 	 */
 	private def initAdmins0(): mutable.HashMap[String, Admin0] = {
-		val dir = new File(PropertyProgram.CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR)
+		val fileConfig = new File(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER)
 		var map: mutable.HashMap[String, Admin0] = mutable.HashMap()
-		for (file <- dir.listFiles()) {
-			val input = new ObjectInputStream(new FileInputStream(file))
-			val ob = input.readObject()
-			ob match {
-				case admin: Admin0 => map += (admin.admin0a3 -> null)
+		val xml = XML.loadFile(fileConfig)
+
+		for (adminTag <- xml \ "admin0") {
+
+			val option = adminTag.attribute("iso")
+			val seq: Seq[Node] = option.orNull
+			if (seq != null){
+				map += (seq.text -> null)
 			}
 		}
 		map
