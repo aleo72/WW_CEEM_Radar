@@ -6,7 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.imports
 
 import java.awt.event.{ActionEvent, ActionListener}
-import javax.swing.{JProgressBar, JFileChooser}
+import javax.swing.{JTextField, JProgressBar, JFileChooser}
 import javax.swing.filechooser.FileFilter
 import java.io.File
 import java.util.ResourceBundle
@@ -22,17 +22,22 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 
 	private val form = tool.form.asInstanceOf[ImportAdminBorderForm]
 	private var importer: Importer = null
-	private val chooserFileButtonListener: ChooserFileButtonListener = new ChooserFileButtonListener(this)
-
-	form.chooserButton.addActionListener(chooserFileButtonListener)
+	private val chooserCountryButtonListener = new ChooserFileButtonListener(this, form.fileCountry)
+	private val chooserProvincesButtonListener = new ChooserFileButtonListener(this, form.fileProvinces)
+	form.chooserCountryButton.addActionListener(chooserCountryButtonListener)
+	form.chooserProvincesButton.addActionListener(chooserProvincesButtonListener)
 
 	form.importButton.addActionListener(new ActionListener {
 		override def actionPerformed(e: ActionEvent): Unit = {
-			if(chooserFileButtonListener.file != null){
+
+			val countryFile: File = chooserCountryButtonListener.file
+			val provincesFile: File = chooserProvincesButtonListener.file
+
+			if(countryFile != null){
 				if(importer != null)
 					importer.stopProcess = true
 
-				importer = new Importer(chooserFileButtonListener.file, tool)
+				importer = new Importer(countryFile, provincesFile, tool)
 
 				importer.start()
 				viewStartImport()
@@ -50,7 +55,7 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 	})
 
 	def changeSelectedFileName(file: File) {
-		form.selectedFileTextField.setText(file.getAbsolutePath)
+		form.fileCountry.setText(file.getAbsolutePath)
 	}
 
 	def viewStartImport(){
@@ -66,7 +71,7 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 	}
 }
 
-private class ChooserFileButtonListener(val importer: ImporterAdminBorder) extends ActionListener {
+private class ChooserFileButtonListener(val importer: ImporterAdminBorder, val textFieldButton: JTextField) extends ActionListener {
 
 	var file: File = null
 
@@ -88,42 +93,25 @@ private class ChooserFileButtonListener(val importer: ImporterAdminBorder) exten
 
 	val fileChooser = new JFileChooser()
 	fileChooser.setFileFilter(fileFilter)
+	fileChooser.setCurrentDirectory(new File("resources/"))
 
 	override def actionPerformed(e: ActionEvent): Unit = {
 		val res = fileChooser.showDialog(importer.tool.form.rootPanel().asInstanceOf[Component], ResourceBundle.getBundle("frameTitle").getString("importAdminBorder_dialog_fileChooser_title"))
 		if (res == JFileChooser.APPROVE_OPTION) {
 			file = fileChooser.getSelectedFile
-			importer.changeSelectedFileName(file)
+			textFieldButton.setText(file.getAbsolutePath)
 		}
 	}
 }
 
-private class Importer(val file: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
+private class Importer(val countryFile: File, val provincesFile: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
 
 	stopProcess = false
 
-	/**
-	 * Импорт стран
-	 * @return
-	 */
-	def startImportMapUnits(): Boolean = ImportAdmin0Countries(file, this)
-
-	/**
-	 * Импорт региональных границ
-	 * @return
-	 */
-	def startImportStatesProvincesShp(): Boolean = ImportStatesProvinces(file, this)
-
 	override def run() {
-		val fileName = file.getName
 
-		val resultMatch: Boolean = fileName match {
-			case MAP_UNITS => startImportMapUnits()
-			case STATES_PROVINCES_SHP => startImportStatesProvincesShp()
-			case _ => false
-		}
-
-		if(resultMatch){
+		if(countryFile.getName == MAP_COUNTRIES && (provincesFile == null || provincesFile.getName == STATES_PROVINCES_SHP )) {
+			ImportAdmin0Countries(countryFile, provincesFile, this)
 			tool.endFunction.apply(tool.parentToolFrame)
 		} else {
 			tool.importer.viewStopImport()

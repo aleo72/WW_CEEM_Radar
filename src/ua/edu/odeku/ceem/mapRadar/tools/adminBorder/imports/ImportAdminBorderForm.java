@@ -23,8 +23,10 @@ public class ImportAdminBorderForm implements PanelTool {
     public JButton importButton;
     public JProgressBar progressBar;
     public JTextPane messagesTextPane;
-    public JTextField selectedFileTextField;
-    public JButton chooserButton;
+    public JTextField fileCountry;
+    public JButton chooserCountryButton;
+    public JTextField fileProvinces;
+    public JButton chooserProvincesButton;
 
     @Override
     public JPanel rootPanel() {
@@ -66,18 +68,28 @@ public class ImportAdminBorderForm implements PanelTool {
         messagesTextPane.setText(ResourceBundle.getBundle("messages").getString("importAdminBorder_importFileMessage"));
         panel3.add(messagesTextPane, cc.xy(2, 1, CellConstraints.FILL, CellConstraints.FILL));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new FormLayout("fill:m:noGrow,left:4dlu:noGrow,fill:max(d;250px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel4.setLayout(new FormLayout("fill:m:noGrow,left:4dlu:noGrow,fill:max(d;250px):grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:grow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         panel2.add(panel4, cc.xy(1, 3));
         final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("label").getString("importAdminBorder_importFile"));
-        panel4.add(label1, cc.xy(1, 3));
-        selectedFileTextField = new JTextField();
-        selectedFileTextField.setEditable(false);
-        selectedFileTextField.setText("...");
-        panel4.add(selectedFileTextField, cc.xy(3, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
-        chooserButton = new JButton();
-        this.$$$loadButtonText$$$(chooserButton, ResourceBundle.getBundle("button").getString("chooserFile"));
-        panel4.add(chooserButton, cc.xy(5, 3));
+        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("label").getString("importAdminBorder_file_Country"));
+        panel4.add(label1, cc.xy(1, 2));
+        fileCountry = new JTextField();
+        fileCountry.setEditable(false);
+        fileCountry.setText("...");
+        panel4.add(fileCountry, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
+        chooserCountryButton = new JButton();
+        this.$$$loadButtonText$$$(chooserCountryButton, ResourceBundle.getBundle("button").getString("chooserFile"));
+        panel4.add(chooserCountryButton, cc.xy(5, 2));
+        final JLabel label2 = new JLabel();
+        this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("label").getString("importAdminBorder_file_Provinces"));
+        panel4.add(label2, cc.xy(1, 4));
+        fileProvinces = new JTextField();
+        fileProvinces.setEditable(false);
+        fileProvinces.setText("...");
+        panel4.add(fileProvinces, cc.xy(3, 4, CellConstraints.FILL, CellConstraints.DEFAULT));
+        chooserProvincesButton = new JButton();
+        this.$$$loadButtonText$$$(chooserProvincesButton, ResourceBundle.getBundle("button").getString("chooserFile"));
+        panel4.add(chooserProvincesButton, cc.xy(5, 4));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         panel1.add(panel5, cc.xy(2, 6, CellConstraints.RIGHT, CellConstraints.DEFAULT));
