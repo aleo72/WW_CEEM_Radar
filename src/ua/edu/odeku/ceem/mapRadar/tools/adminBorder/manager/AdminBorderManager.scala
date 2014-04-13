@@ -79,7 +79,7 @@ object AdminBorderManager {
 	def update() {
 		var mapForCountry: mutable.HashMap[String, Boolean] = mutable.HashMap()
 		val xml = XML.loadFile(new File(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER))
-		for (node <- xml \ "admin0") {
+		for (node <- xml \\ "admin0") {
 			val iso = node.attribute("iso").getOrElse("").toString
 			val viewCountry = node.attribute("viewCountryBorder").getOrElse("false").toString
 			mapForCountry += (iso -> viewCountry.toBoolean)
@@ -94,7 +94,7 @@ object AdminBorderManager {
 		val tagAdmin0 = <admin0/>
 
 		for (iso <- _viewCountryBorder.keySet.toList.sorted) {
-			val tag = tagAdmin0 % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null)
+			val tag = tagAdmin0 % Attribute(null, "iso", iso, scala.xml.Null) % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null)
 			xml = xml.copy(child = xml.child ++ tag)
 		}
 		XML.save(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER, xml)
