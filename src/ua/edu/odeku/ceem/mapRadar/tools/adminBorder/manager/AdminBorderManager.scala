@@ -6,7 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager
 
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.Admin0
-import scala.xml.{Attribute, XML}
+import scala.xml.{Node, Attribute, XML}
 import java.io.{FileInputStream, ObjectInputStream, File}
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import scala.collection.mutable
@@ -22,7 +22,6 @@ object AdminBorderManager {
 	private val _admins0: mutable.HashMap[String, Admin0] = initAdmins0()
 
 	private var _viewCountryBorder: mutable.HashMap[String, Boolean] = null
-	private var _viewProvincesBorder: mutable.HashMap[String, Boolean] = null
 
 	update()
 
@@ -59,13 +58,16 @@ object AdminBorderManager {
 	 * @return  ассоциативный массив с элиментами Admin0 которые у нас есть в наличии
 	 */
 	private def initAdmins0(): mutable.HashMap[String, Admin0] = {
-		val dir = new File(PropertyProgram.CEEM_RADAR_DATA_ADMIN_BORDER_0_DIR)
+		val fileConfig = new File(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER)
 		var map: mutable.HashMap[String, Admin0] = mutable.HashMap()
-		for (file <- dir.listFiles()) {
-			val input = new ObjectInputStream(new FileInputStream(file))
-			val ob = input.readObject()
-			ob match {
-				case admin: Admin0 => map += (admin.admin0a3 -> null)
+		val xml = XML.loadFile(fileConfig)
+
+		for (adminTag <- xml \ "admin0") {
+
+			val option = adminTag.attribute("iso")
+			val seq: Seq[Node] = option.orNull
+			if (seq != null){
+				map += (seq.text -> null)
 			}
 		}
 		map
@@ -76,17 +78,13 @@ object AdminBorderManager {
 	 */
 	def update() {
 		var mapForCountry: mutable.HashMap[String, Boolean] = mutable.HashMap()
-		var mapForProvinces: mutable.HashMap[String, Boolean] = mutable.HashMap()
 		val xml = XML.loadFile(new File(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER))
-		for (node <- xml \ "admin0") {
+		for (node <- xml \\ "admin0") {
 			val iso = node.attribute("iso").getOrElse("").toString
 			val viewCountry = node.attribute("viewCountryBorder").getOrElse("false").toString
-			val viewProvinces = node.attribute("viewProvincesBorder").getOrElse("false").toString
 			mapForCountry += (iso -> viewCountry.toBoolean)
-			mapForProvinces += (iso -> viewProvinces.toBoolean)
 		}
 		_viewCountryBorder = mapForCountry
-		_viewProvincesBorder = mapForProvinces
 	}
 
 	def save() {
@@ -96,7 +94,7 @@ object AdminBorderManager {
 		val tagAdmin0 = <admin0/>
 
 		for (iso <- _viewCountryBorder.keySet.toList.sorted) {
-			val tag = tagAdmin0 % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null) % Attribute(null, "viewProvincesBorder", _viewProvincesBorder(iso).toString, scala.xml.Null) % Attribute(null, "iso", iso, scala.xml.Null)
+			val tag = tagAdmin0 % Attribute(null, "iso", iso, scala.xml.Null) % Attribute(null, "viewCountryBorder", _viewCountryBorder(iso).toString, scala.xml.Null)
 			xml = xml.copy(child = xml.child ++ tag)
 		}
 		XML.save(PropertyProgram.CEEM_RADAR_CONFIG_ADMIN_BORDER_MANAGER, xml)

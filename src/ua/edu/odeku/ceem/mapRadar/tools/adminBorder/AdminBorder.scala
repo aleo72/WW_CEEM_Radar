@@ -15,7 +15,5 @@ import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 object AdminBorder {
 
 	val CEEM_RADAR_DATA_FOR_ADMIN_BORDER = PropertyProgram.CEEM_RADAR_DATA + "admin_border/"
-	val CEEM_RADAR_DATA_FOR_ADMIN_BORDER_0 = CEEM_RADAR_DATA_FOR_ADMIN_BORDER + "admin_0/"
-	val CEEM_RADAR_DATA_FOR_ADMIN_BORDER_1 = CEEM_RADAR_DATA_FOR_ADMIN_BORDER + "admin_1/"
-
+	val CEEM_RADAR_DATA_FOR_ADMIN_BORDER_0 = CEEM_RADAR_DATA_FOR_ADMIN_BORDER + "admin_country/"
 }
