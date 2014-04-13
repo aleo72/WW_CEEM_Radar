@@ -60,6 +60,7 @@
           </grid>
           <grid id="bfa62" layout-manager="FormLayout">
             <rowspec value="center:d:grow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
             <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
             <colspec value="fill:m:noGrow"/>
@@ -76,16 +77,16 @@
             <children>
               <component id="246fc" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="label" key="importAdminBorder_importFile"/>
+                  <text resource-bundle="label" key="importAdminBorder_file_Country"/>
                 </properties>
               </component>
-              <component id="c59f" class="javax.swing.JTextField" binding="selectedFileTextField">
+              <component id="c59f" class="javax.swing.JTextField" binding="fileCountry">
                 <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                   <forms defaultalign-horz="false"/>
@@ -95,9 +96,39 @@
                   <text value="..."/>
                 </properties>
               </component>
-              <component id="dfe43" class="javax.swing.JButton" binding="chooserButton">
+              <component id="dfe43" class="javax.swing.JButton" binding="chooserCountryButton">
                 <constraints>
-                  <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="button" key="chooserFile"/>
+                </properties>
+              </component>
+              <component id="7c575" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="label" key="importAdminBorder_file_Provinces"/>
+                </properties>
+              </component>
+              <component id="7621c" class="javax.swing.JTextField" binding="fileProvinces">
+                <constraints>
+                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <text value="..."/>
+                </properties>
+              </component>
+              <component id="f7a01" class="javax.swing.JButton" binding="chooserProvincesButton">
+                <constraints>
+                  <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
