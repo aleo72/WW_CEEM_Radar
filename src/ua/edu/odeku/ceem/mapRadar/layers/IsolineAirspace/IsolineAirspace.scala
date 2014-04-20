@@ -118,9 +118,7 @@ class IsolineAirspace(var _location: LatLon = IsolineAirspace.DEFAULT_LOCATION, 
 
 	protected override def computeMinimalGeometry(globe: Globe, verticalExaggeration: Double): util.List[Vec4] = null
 
-	protected override def computeExtent(globe: Globe, verticalExaggeration: Double): Extent = {
-
-	}
+	protected override def computeExtent(globe: Globe, verticalExaggeration: Double): Extent = ???
 }
 
 object IsolineAirspace {

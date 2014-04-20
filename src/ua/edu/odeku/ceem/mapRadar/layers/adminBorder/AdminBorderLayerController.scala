@@ -7,16 +7,14 @@ package ua.edu.odeku.ceem.mapRadar.layers.adminBorder
 
 import gov.nasa.worldwind.WorldWindow
 import javax.swing.JCheckBoxMenuItem
-import gov.nasa.worldwind.layers.AirspaceLayer
+import gov.nasa.worldwind.layers.{RenderableLayer, AirspaceLayer}
 import gov.nasa.worldwind.render.airspaces.{Curtain, Airspace}
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.{Admin1, Polygon, Admin0}
 import scala.collection.mutable.ArrayBuffer
 import gov.nasa.worldwind.geom.LatLon
-import gov.nasa.worldwind.avlist.AVKey
 import java.awt.Color
-import gov.nasa.worldwind.render.Material
-import gov.nasa.worldwind.util.WWUtil
+import gov.nasa.worldwind.render._
 import java.util
 import java.awt.event.{ActionEvent, ActionListener}
 
@@ -27,23 +25,26 @@ import java.awt.event.{ActionEvent, ActionListener}
  */
 object AdminBorderLayerController {
 
-	val airspaceLayers = new AirspaceLayer
-	airspaceLayers.setEnableBatchPicking(false)
-
+	val renderableLayer = new RenderableLayer
+//	renderableLayer.setEnableBatchPicking(false)
+	val foregroundAttrs: ShapeAttributes = new BasicShapeAttributes
+	foregroundAttrs.setOutlineMaterial(new Material(Color.YELLOW))
+	foregroundAttrs.setOutlineStipplePattern(0xAAAA.asInstanceOf[Short])
+	foregroundAttrs.setOutlineStippleFactor(8)
 
 	def apply(world: WorldWindow, menuItem: JCheckBoxMenuItem) {
 
 		// Добавим если не существует
-		if (!world.getModel.getLayers.contains(airspaceLayers)) {
-			world.getModel.getLayers.add(world.getModel.getLayers.size(), airspaceLayers)
+		if (!world.getModel.getLayers.contains(renderableLayer)) {
+			world.getModel.getLayers.add(world.getModel.getLayers.size(), renderableLayer)
 		}
 		menuItem.addActionListener(new ActionListener {
 			override def actionPerformed(e: ActionEvent): Unit = {
-				airspaceLayers.removeAllAirspaces()
+				renderableLayer.removeAllRenderables();
 				if (e.getSource.asInstanceOf[JCheckBoxMenuItem].isSelected) {
-					val collectionsOfAirspace: Array[Airspace] = createCollectionOfAirspaces()
-					for (airspace <- collectionsOfAirspace) {
-						airspaceLayers.addAirspace(airspace)
+					val collections: Array[Renderable] = createCollectionOfLines()
+					for (border <- collections) {
+						renderableLayer.addRenderable(border)
 					}
 				}
 				world.redraw()
@@ -51,44 +52,58 @@ object AdminBorderLayerController {
 		})
 	}
 
-	def createCollectionOfAirspaces(): Array[Airspace] = {
-		val arrayBuffer = new ArrayBuffer[Airspace]()
+	def createCollectionOfLines(): Array[Renderable] = {
+		val arrayBuffer = new ArrayBuffer[Renderable]()
 
 		for ((iso, enabled) <- AdminBorderManager.viewCountryBorder.filter(_._2)) {
 			val admin0: Admin0 = AdminBorderManager.admin(iso)
-			arrayBuffer ++= createAirspace(admin0)
-
+			arrayBuffer ++= createBorders(admin0)
 		}
 		arrayBuffer.toArray
 	}
 
-	def createAirspace(admins: Array[Admin1]): Array[Airspace] = {
-		val buffer = new ArrayBuffer[Airspace]()
+	def createBorders(admins: Array[Admin1]): Array[Renderable] = {
+		val buffer = new ArrayBuffer[Renderable]()
 		for (admin <- admins) {
-			buffer ++= createAirspace(admin.polygons)
+			buffer ++= createSurfacePolylines(admin.polygons)
+			//buffer ++= createPolylines(admin.polygons)
 		}
 		buffer.toArray
 	}
 
-	def createAirspace(admin0: Admin0): Array[Airspace] = {
+	def createBorders(admin0: Admin0): Array[Renderable] = {
 		if (admin0.admin1Array.isEmpty) {
-			createAirspace(admin0.polygons)
+			createSurfacePolylines(admin0.polygons) //++: createPolylines(admin0.polygons)
 		} else {
-			createAirspace(admin0.admin1Array)
+			createBorders(admin0.admin1Array)
 		}
 	}
 
-	def createAirspace(polygons: Array[Polygon]): Array[Airspace] = {
-		for {polygon <- polygons} yield createAirspace(polygon)
+	def createSurfacePolylines(polygons: Array[Polygon]): Array[Renderable] = {
+		for {polygon <- polygons} yield createSurfacePolyline(polygon)
 	}
 
-	def createAirspace(polygon: Polygon): Airspace = {
-		val border = new Curtain
+	def createPolylines(polygons: Array[Polygon]): Array[Renderable] = {
+		for {polygon <- polygons} yield createPolyline(polygon)
+	}
+
+	def createSurfacePolyline(polygon: Polygon): Renderable = {
+		val border = new SurfacePolyline
 		border.setLocations(createLocations(polygon))
-		border.setAltitudes(0.0, 100.0)
-		border.setTerrainConforming(false, true)
-		//		border.setValue(AVKey.DISPLAY_NAME, admin.name)
-		setupDefaultMaterial(border, Color.CYAN)
+		border.setClosed(true)
+		border.setAttributes(foregroundAttrs)
+		border
+	}
+
+	def createPolyline(polygon: Polygon): Renderable = {
+		val border = new Polyline(createLocations(polygon), 0)
+		border.setFollowTerrain(true)
+		border.setClosed(true)
+		border.setPathType(Polyline.RHUMB_LINE)
+		border.setColor(foregroundAttrs.getOutlineMaterial.getDiffuse)
+		border.setLineWidth(foregroundAttrs.getOutlineWidth)
+		border.setStipplePattern(foregroundAttrs.getOutlineStipplePattern)
+		border.setStippleFactor(foregroundAttrs.getOutlineStippleFactor)
 		border
 	}
 
@@ -96,6 +111,14 @@ object AdminBorderLayerController {
 		val list = new util.LinkedList[LatLon]()
 		for (coordinates <- polygon.listCoordinates) {
 			list.add(LatLon.fromDegrees(coordinates._1, coordinates._2))
+		}
+		list
+	}
+
+	def createLocationsForPolyLine(polygon: Polygon): java.util.LinkedList[LatLon] = {
+		val list = new util.LinkedList[LatLon]()
+		for (coordinates <- polygon.listCoordinates) {
+			list.add(LatLon.fromDegrees(coordinates._1, coordinates._2).add(LatLon.fromDegrees(2,0)))
 		}
 		list
 	}
