@@ -8,8 +8,9 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceAc
 import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditEvent, AirspaceEditListener}
 import javax.swing.text.JTextComponent
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.LocationForm
-import gov.nasa.worldwind.render.airspaces.SphereAirspace
+import gov.nasa.worldwind.render.airspaces.{CappedCylinder, SphereAirspace}
 import gov.nasa.worldwind.geom.LatLon
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.CeemRadarAirspace
 
 /**
  * Слушатель изменяет значения JTextComponent в зависимости от перемещения Airspace
@@ -31,8 +32,9 @@ class AirspaceChangeLocationOnFormListener(val lat: JTextComponent, val lon: JTe
 
 	def airspaceMoved(e: AirspaceEditEvent): Unit = {
 		e.getAirspace match {
-			case airspace: SphereAirspace =>
-				updateFields(airspace.getLocation)
+			case airspace: SphereAirspace => updateFields(airspace.getLocation)
+			case airspace: CappedCylinder => updateFields(airspace.getCenter)
+			case airspace: CeemRadarAirspace => updateFields(airspace.location)
 		}
 	}
 

@@ -8,7 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry
 import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.render.airspaces.{SphereAirspace, Airspace, AirspaceAttributes}
 import gov.nasa.worldwind.avlist.AVKey
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.{CeemRadarAirspaceFactory, AirspaceFactory}
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
@@ -20,9 +20,9 @@ import gov.nasa.worldwind.geom.LatLon
  * Date: 08.01.14
  * Time: 11:04
  */
-class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
+class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl {
 
-	val airspace: Airspace = factory.airspace
+	val airspace: CeemRadarAirspace = factory.airspace
 	val editor: AirspaceEditor = factory.editor
 
 	var _nameAirspaceEntry: String = airspace.getValue(AVKey.DISPLAY_NAME).toString

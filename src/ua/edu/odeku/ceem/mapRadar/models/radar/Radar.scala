@@ -23,6 +23,8 @@ abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 	var _altitude: Int = 10
 	var latLon: LatLon = null
 
+	private val id = System.currentTimeMillis()
+
 	/**
 	 * Метод возращает радус радара
 	 * По умолчанию вернет значения RadarTypeParameter.WORKING_RADIUS
@@ -58,6 +60,13 @@ abstract class Radar(val radarName: RadarType, val FREQUENCY_BAND: Char) {
 		else
 			throw new IllegalArgumentException
 	}
+
+	override def equals(o: Any): Boolean = o match {
+		case r: Radar => this.id == r.id
+		case _ => false
+	}
+
+	override def hashCode = this.id.hashCode()
 }
 
 object RadarTypeParameters extends Enumeration {

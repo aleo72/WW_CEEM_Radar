@@ -11,7 +11,7 @@ import ua.edu.odeku.ceem.mapRadar.models.radar.{RadarTypeParameters, RadarFactor
 import java.awt.event._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntryMessage, AirspaceEntry}
 import gov.nasa.worldwind.render.airspaces.SphereAirspace
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.{CeemRadarAirspaceFactory, SphereAirspaceFactory}
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes._
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
@@ -130,7 +130,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
-		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
+		new AirspaceEntry(new CeemRadarAirspaceFactory(radar, message.wwd, false))
 	}
 
 	def initSpinners() {
