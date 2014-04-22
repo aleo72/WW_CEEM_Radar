@@ -23,7 +23,7 @@ import gov.nasa.worldwind.geom.LatLon
 class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl {
 
 	val airspace: CeemRadarAirspace = factory.airspace
-	val editor: AirspaceEditor = factory.editor
+	val editor: CeemRadarAirspaceEditor = factory.editor
 
 	var _nameAirspaceEntry: String = airspace.getValue(AVKey.DISPLAY_NAME).toString
 

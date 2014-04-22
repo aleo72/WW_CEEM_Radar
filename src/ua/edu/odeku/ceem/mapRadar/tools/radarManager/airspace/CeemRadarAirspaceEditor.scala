@@ -17,140 +17,176 @@ import gov.nasa.worldwind.WorldWindow
 import gov.nasa.worldwind.event.Message
 
 /**
+ *  Класс который скрывает в себе возможноть различного режима отображения
+ *
  * Created by Aleo on 21.04.2014.
  */
 class CeemRadarAirspaceEditor(val ceemRadarAirspace: CeemRadarAirspace) extends AirspaceEditor {
 
 	val radarAirspaceEditor = ceemRadarAirspace.editorRadarAirspace
 	val isolineAirspaceEditor = ceemRadarAirspace.editorIsolineAirspace
+	val radar = ceemRadarAirspace.radar
 
-	override def propertyChange(evt: PropertyChangeEvent): Unit = ???
+	private val editors = Array(radarAirspaceEditor, isolineAirspaceEditor)
 
-	override def dispose(): Unit = ???
+	private def editorOfVisibleAirspace: AirspaceEditor = {
+		if (ceemRadarAirspace.radarAirspace.isVisible) {
+			radarAirspaceEditor
+		} else if (ceemRadarAirspace.isolineAirspace.isVisible) {
+			isolineAirspaceEditor
+		} else {
+			throw new IllegalArgumentException("Non visible airspace")
+		}
 
-	override def onMessage(msg: Message): Unit = ???
+	}
 
-	override def resizeAtControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = ???
+	override def propertyChange(evt: PropertyChangeEvent): Unit = editors.foreach(_.propertyChange(evt))
 
-	override def moveControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = ???
+	override def dispose(): Unit = editors.foreach(_.dispose())
 
-	override def removeControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint): Unit = ???
+	override def onMessage(msg: Message): Unit = editors.foreach(_.onMessage(msg))
 
-	override def addControlPoint(wwd: WorldWindow, airspace: Airspace, mousePoint: Point): AirspaceControlPoint = ???
+	override def resizeAtControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.resizeAtControlPoint(wwd, controlPoint, mousePoint, previousMousePoint))
 
-	override def moveAirspaceVertically(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = ???
+	override def moveControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.moveControlPoint(wwd, controlPoint, mousePoint, previousMousePoint))
 
-	override def moveAirspaceLaterally(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = ???
+	override def removeControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint): Unit = editors.foreach(_.removeControlPoint(wwd, controlPoint))
 
-	override def removeEditListener(listener: AirspaceEditListener): Unit = ???
+	override def addControlPoint(wwd: WorldWindow, airspace: Airspace, mousePoint: Point): AirspaceControlPoint = {
+		val v = editorOfVisibleAirspace.addControlPoint(wwd, airspace, mousePoint)
+		editors.foreach(_.addControlPoint(wwd, airspace, mousePoint))
+		v
+	}
 
-	override def addEditListener(listener: AirspaceEditListener): Unit = ???
+	override def moveAirspaceVertically(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.moveAirspaceVertically(wwd, airspace, mousePoint, previousMousePoint))
 
-	override def getEditListeners: Array[AirspaceEditListener] = ???
+	override def moveAirspaceLaterally(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.moveAirspaceLaterally(wwd, airspace, mousePoint, previousMousePoint))
 
-	override def setControlPointRenderer(renderer: AirspaceControlPointRenderer): Unit = ???
+	override def removeEditListener(listener: AirspaceEditListener): Unit = editors.foreach(_.removeEditListener(listener))
 
-	override def getControlPointRenderer: AirspaceControlPointRenderer = ???
+	override def addEditListener(listener: AirspaceEditListener): Unit = editors.foreach(_.addEditListener(listener))
 
-	override def setKeepControlPointsAboveTerrain(state: Boolean): Unit = ???
+	override def getEditListeners: Array[AirspaceEditListener] = editorOfVisibleAirspace.getEditListeners
 
-	override def isKeepControlPointsAboveTerrain: Boolean = ???
+	override def setControlPointRenderer(renderer: AirspaceControlPointRenderer): Unit = editors.foreach(_.setControlPointRenderer(renderer))
 
-	override def setUseRubberBand(state: Boolean): Unit = ???
+	override def getControlPointRenderer: AirspaceControlPointRenderer = editorOfVisibleAirspace.getControlPointRenderer
 
-	override def isUseRubberBand: Boolean = ???
+	override def setKeepControlPointsAboveTerrain(state: Boolean): Unit = editors.foreach(_.setKeepControlPointsAboveTerrain(state))
 
-	override def setArmed(armed: Boolean): Unit = ???
+	override def isKeepControlPointsAboveTerrain: Boolean = editorOfVisibleAirspace.isKeepControlPointsAboveTerrain
 
-	override def isArmed: Boolean = ???
+	override def setUseRubberBand(state: Boolean): Unit = editors.foreach(_.setUseRubberBand(state))
 
-	override def getAirspace: Airspace = ???
+	override def isUseRubberBand: Boolean = editorOfVisibleAirspace.isUseRubberBand
 
-	override def clearList(): AVList = ???
+	override def setArmed(armed: Boolean): Unit = editors.foreach(_.setArmed(armed))
 
-	override def copy(): AVList = ???
+	override def isArmed: Boolean = editorOfVisibleAirspace.isArmed
 
-	override def firePropertyChange(propertyChangeEvent: PropertyChangeEvent): Unit = ???
+	override def getAirspace: Airspace = editorOfVisibleAirspace.getAirspace
 
-	override def firePropertyChange(propertyName: String, oldValue: scala.Any, newValue: scala.Any): Unit = ???
+	override def clearList(): AVList = {
+		val list = editorOfVisibleAirspace.clearList()
+		editors.foreach(_.clearList())
+		list
+	}
 
-	override def removePropertyChangeListener(listener: PropertyChangeListener): Unit = ???
+	override def copy(): AVList = editorOfVisibleAirspace.copy()
 
-	override def addPropertyChangeListener(listener: PropertyChangeListener): Unit = ???
+	override def firePropertyChange(propertyChangeEvent: PropertyChangeEvent): Unit = editors.foreach(_.firePropertyChange(propertyChangeEvent))
 
-	override def removePropertyChangeListener(propertyName: String, listener: PropertyChangeListener): Unit = ???
+	override def firePropertyChange(propertyName: String, oldValue: scala.Any, newValue: scala.Any): Unit = editors.foreach(_.firePropertyChange(propertyName, oldValue, newValue))
 
-	override def addPropertyChangeListener(propertyName: String, listener: PropertyChangeListener): Unit = ???
+	override def removePropertyChangeListener(listener: PropertyChangeListener): Unit = editors.foreach(_.removePropertyChangeListener(listener))
 
-	override def removeKey(key: String): AnyRef = ???
+	override def addPropertyChangeListener(listener: PropertyChangeListener): Unit = editors.foreach(_.addPropertyChangeListener(listener))
 
-	override def hasKey(key: String): Boolean = ???
+	override def removePropertyChangeListener(propertyName: String, listener: PropertyChangeListener): Unit = editors.foreach(_.removePropertyChangeListener(propertyName, listener))
 
-	override def getEntries: util.Set[Entry[String, AnyRef]] = ???
+	override def addPropertyChangeListener(propertyName: String, listener: PropertyChangeListener): Unit = editors.foreach(_.addPropertyChangeListener(propertyName, listener))
 
-	override def getStringValue(key: String): String = ???
+	override def removeKey(key: String): AnyRef = {
+		val v = editorOfVisibleAirspace.removeKey(key)
+		editors.foreach(_.removeKey(key))
+		v
+	}
 
-	override def getValues: util.Collection[AnyRef] = ???
+	override def hasKey(key: String): Boolean = editorOfVisibleAirspace.hasKey(key)
 
-	override def getValue(key: String): AnyRef = ???
+	override def getEntries: util.Set[Entry[String, AnyRef]] = editorOfVisibleAirspace.getEntries
 
-	override def setValues(avList: AVList): AVList = ???
+	override def getStringValue(key: String): String = editorOfVisibleAirspace.getStringValue(key)
 
-	override def setValue(key: String, value: scala.Any): AnyRef = ???
+	override def getValues: util.Collection[AnyRef] = editorOfVisibleAirspace.getValues
 
-	override def restoreState(stateInXml: String): Unit = ???
+	override def getValue(key: String): AnyRef = editorOfVisibleAirspace.getValue(key)
 
-	override def getRestorableState: String = ???
+	override def setValues(avList: AVList): AVList = {
+		val v = editorOfVisibleAirspace.setValues(avList)
+		editors.foreach(_.setValues(avList))
+		v
+	}
 
-	override def getMinEffectiveAltitude(radius: lang.Double): lang.Double = ???
+	override def setValue(key: String, value: scala.Any): AnyRef = {
+		val v = editorOfVisibleAirspace.setValue(key, value)
+		editors.foreach(_.setValue(key, value))
+		v
+	}
 
-	override def getMaxEffectiveAltitude(radius: lang.Double): lang.Double = ???
+	override def restoreState(stateInXml: String): Unit = editors.foreach(_.restoreState(stateInXml))
 
-	override def isLayerActive(dc: DrawContext): Boolean = ???
+	override def getRestorableState: String = editorOfVisibleAirspace.getRestorableState
 
-	override def isLayerInView(dc: DrawContext): Boolean = ???
+	override def getMinEffectiveAltitude(radius: lang.Double): lang.Double = editorOfVisibleAirspace.getMinEffectiveAltitude(radius)
 
-	override def setMaxActiveAltitude(maxActiveAltitude: Double): Unit = ???
+	override def getMaxEffectiveAltitude(radius: lang.Double): lang.Double = editorOfVisibleAirspace.getMaxEffectiveAltitude(radius)
 
-	override def getMaxActiveAltitude: Double = ???
+	override def isLayerActive(dc: DrawContext): Boolean = editorOfVisibleAirspace.isLayerActive(dc)
 
-	override def setMinActiveAltitude(minActiveAltitude: Double): Unit = ???
+	override def isLayerInView(dc: DrawContext): Boolean = editorOfVisibleAirspace.isLayerActive(dc)
 
-	override def getMinActiveAltitude: Double = ???
+	override def setMaxActiveAltitude(maxActiveAltitude: Double): Unit = editors.foreach(_.setMaxActiveAltitude(maxActiveAltitude))
 
-	override def getExpiryTime: Long = ???
+	override def getMaxActiveAltitude: Double = editorOfVisibleAirspace.getMaxActiveAltitude
 
-	override def setExpiryTime(expiryTime: Long): Unit = ???
+	override def setMinActiveAltitude(minActiveAltitude: Double): Unit = editors.foreach(_.setMinActiveAltitude(minActiveAltitude))
 
-	override def setNetworkRetrievalEnabled(networkRetrievalEnabled: Boolean): Unit = ???
+	override def getMinActiveAltitude: Double = editorOfVisibleAirspace.getMinActiveAltitude
 
-	override def isNetworkRetrievalEnabled: Boolean = ???
+	override def getExpiryTime: Long = editorOfVisibleAirspace.getExpiryTime
 
-	override def getScale: Double = ???
+	override def setExpiryTime(expiryTime: Long): Unit = editors.foreach(_.setExpiryTime(expiryTime))
 
-	override def isMultiResolution: Boolean = ???
+	override def setNetworkRetrievalEnabled(networkRetrievalEnabled: Boolean): Unit = editors.foreach(_.setNetworkRetrievalEnabled(networkRetrievalEnabled))
 
-	override def isAtMaxResolution: Boolean = ???
+	override def isNetworkRetrievalEnabled: Boolean = editorOfVisibleAirspace.isNetworkRetrievalEnabled
 
-	override def pick(dc: DrawContext, pickPoint: Point): Unit = ???
+	override def getScale: Double = editorOfVisibleAirspace.getScale
 
-	override def render(dc: DrawContext): Unit = ???
+	override def isMultiResolution: Boolean = editorOfVisibleAirspace.isMultiResolution
 
-	override def preRender(dc: DrawContext): Unit = ???
+	override def isAtMaxResolution: Boolean = editorOfVisibleAirspace.isAtMaxResolution
 
-	override def setPickEnabled(isPickable: Boolean): Unit = ???
+	override def pick(dc: DrawContext, pickPoint: Point): Unit = editors.foreach(_.pick(dc, pickPoint))
 
-	override def isPickEnabled: Boolean = ???
+	override def render(dc: DrawContext): Unit = editors.foreach(_.render(dc))
 
-	override def setOpacity(opacity: Double): Unit = ???
+	override def preRender(dc: DrawContext): Unit = editors.foreach(_.preRender(dc))
 
-	override def getOpacity: Double = ???
+	override def setPickEnabled(isPickable: Boolean): Unit = editors.foreach(_.setPickEnabled(isPickEnabled))
 
-	override def setName(name: String): Unit = ???
+	override def isPickEnabled: Boolean = editorOfVisibleAirspace.isPickEnabled
 
-	override def getName: String = ???
+	override def setOpacity(opacity: Double): Unit = editors.foreach(_.setOpacity(opacity))
 
-	override def setEnabled(enabled: Boolean): Unit = ???
+	override def getOpacity: Double = editorOfVisibleAirspace.getOpacity
 
-	override def isEnabled: Boolean = ???
+	override def setName(name: String): Unit = editors.foreach(_.setName(name))
+
+	override def getName: String = editorOfVisibleAirspace.getName
+
+	override def setEnabled(enabled: Boolean): Unit = editors.foreach(_.setEnabled(enabled))
+
+	override def isEnabled: Boolean = editorOfVisibleAirspace.isEnabled
 }
