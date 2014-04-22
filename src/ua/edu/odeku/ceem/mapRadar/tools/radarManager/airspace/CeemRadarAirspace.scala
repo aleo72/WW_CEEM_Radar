@@ -8,7 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 import gov.nasa.worldwind.geom.{Extent, LatLon}
 import scala.beans.BeanProperty
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
-import gov.nasa.worldwind.render.airspaces.{AirspaceRenderer, DetailLevel, AirspaceAttributes, Airspace}
+import gov.nasa.worldwind.render.airspaces._
 import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
 import gov.nasa.worldwind.avlist.AVList
 import java.util
@@ -32,8 +32,24 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: Airspace, val edito
 
 	CeemRadarAirspace.listOfCeemRadarAirspace += this
 
+	def radarAirspaceAs[T] = radarAirspace.asInstanceOf[T]
+
+	def isolineAirspaceAs[T] = isolineAirspace.asInstanceOf[T]
+
 	@BeanProperty
 	def location: LatLon = radar.latLon
+
+	def location_=(latLon: LatLon): Unit = {
+		radar.latLon = latLon
+		radarAirspaceAs[SphereAirspace].setLocation(latLon)
+		isolineAirspaceAs[SphereAirspace].setLocation(latLon)
+	}
+
+	@BeanProperty
+	def radius = radarAirspaceAs[SphereAirspace].getRadius
+
+	@BeanProperty
+	def radius_=(d: Double): Unit = radarAirspaceAs[SphereAirspace].setRadius(d)
 
 	def visibleAirspace: Airspace = {
 		if (radarAirspace.isVisible) {

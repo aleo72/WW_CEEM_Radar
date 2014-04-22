@@ -37,10 +37,10 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 
 	def radar_=(value: Radar): Unit = {
 		_radar = value
-		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.radius)
-		airspace.asInstanceOf[SphereAirspace].setAltitude(_radar.altitude)
-		if(_radar.latLon != null){
-			airspace.asInstanceOf[SphereAirspace].setLocation(_radar.latLon)
+		airspace.radius = _radar.radius
+		airspace.setAltitude(_radar.altitude)
+		if (_radar.latLon != null) {
+			airspace.location = _radar.latLon
 		}
 	}
 
