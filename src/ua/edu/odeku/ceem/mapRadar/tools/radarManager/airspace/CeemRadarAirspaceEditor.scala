@@ -24,7 +24,7 @@ import gov.nasa.worldwind.event.Message
 class CeemRadarAirspaceEditor(val ceemRadarAirspace: CeemRadarAirspace) extends AirspaceEditor {
 
 	val radarAirspaceEditor = ceemRadarAirspace.editorRadarAirspace
-	val isolineAirspaceEditor = ceemRadarAirspace.editorIsolineAirspace
+	val isolineAirspaceEditor = radarAirspaceEditor
 	val radar = ceemRadarAirspace.radar
 
 	private val editors = Array(radarAirspaceEditor, isolineAirspaceEditor)

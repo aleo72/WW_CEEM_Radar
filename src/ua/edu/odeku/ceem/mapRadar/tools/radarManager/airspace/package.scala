@@ -48,7 +48,7 @@ package object airspace {
 		val attributes: AirspaceAttributes = new BasicAirspaceAttributes
 		attributes.setMaterial(new Material(Color.BLACK, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, 0.0f))
 		attributes.setOutlineMaterial(Material.DARK_GRAY)
-		attributes.setDrawOutline(true)
+		attributes.setDrawOutline(false)
 		attributes.setOpacity(0.95)
 		attributes.setOutlineOpacity(.95)
 		attributes.setOutlineWidth(2)
@@ -71,7 +71,7 @@ package object airspace {
 		val attributes: AirspaceAttributes = new BasicAirspaceAttributes
 		attributes.setMaterial(Material.GREEN)
 		attributes.setOutlineMaterial(Material.BLACK)
-		attributes.setDrawOutline(true)
+		attributes.setDrawOutline(false)
 		attributes.setOpacity(0.8)
 		attributes.setOutlineOpacity(0.8)
 		attributes.setOutlineWidth(2)

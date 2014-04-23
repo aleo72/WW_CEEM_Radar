@@ -7,7 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories
 
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 import gov.nasa.worldwind.WorldWindow
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.{CeemRadarAirspaceEditor, CeemRadarAirspace}
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.{IsolineAirspace, RadarAirspace, CeemRadarAirspaceEditor, CeemRadarAirspace}
 import gov.nasa.worldwind.render.airspaces.SphereAirspace
 
 /**
@@ -15,12 +15,12 @@ import gov.nasa.worldwind.render.airspaces.SphereAirspace
  */
 class CeemRadarAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: Boolean){
 
-	private val radarAirspaceFactory = new SphereAirspaceFactory(radar, wwd, fitShapeToViewport)
-	private val isolinesAirspaceFactory = new SphereAirspaceFactory(radar, wwd, fitShapeToViewport)
+	private val radarAirspaceFactory = new RadarAirspaceFactory(radar, wwd, fitShapeToViewport)
+	private val isolinesAirspaceFactory = new IsolineAirspaceFactory(radar, wwd, fitShapeToViewport)
 
 	radar.latLon = radarAirspaceFactory.airspace.asInstanceOf[SphereAirspace].getLocation
 
-	val airspace = new CeemRadarAirspace(radar, radarAirspaceFactory.airspace, radarAirspaceFactory.editor, isolinesAirspaceFactory.airspace, isolinesAirspaceFactory.editor)
+	val airspace = new CeemRadarAirspace(radar, radarAirspaceFactory.airspace.asInstanceOf[RadarAirspace], radarAirspaceFactory.editor, isolinesAirspaceFactory.airspace.asInstanceOf[IsolineAirspace], isolinesAirspaceFactory.editor)
 	val editor = new CeemRadarAirspaceEditor(airspace)
 
 }

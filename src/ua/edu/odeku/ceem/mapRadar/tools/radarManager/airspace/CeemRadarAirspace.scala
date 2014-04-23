@@ -24,7 +24,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * Created by Aleo on 21.04.2014.
  */
-class CeemRadarAirspace(val radar: Radar, val radarAirspace: Airspace, val editorRadarAirspace: AirspaceEditor, val isolineAirspace: Airspace, val editorIsolineAirspace: AirspaceEditor) extends Airspace {
+class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val editorRadarAirspace: AirspaceEditor, val isolineAirspace: IsolineAirspace, val editorIsolineAirspace: AirspaceEditor) extends Airspace {
 
 	private val airspaces = Array(radarAirspace, isolineAirspace)
 
@@ -43,15 +43,15 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: Airspace, val edito
 
 	def location_=(latLon: LatLon): Unit = {
 		radar.latLon = latLon
-		radarAirspaceAs[SphereAirspace].setLocation(latLon)
-		isolineAirspaceAs[SphereAirspace].setLocation(latLon)
+		radarAirspace.location = latLon
+		isolineAirspace.location = latLon
 	}
 
 	@BeanProperty
-	def radius = radarAirspaceAs[SphereAirspace].getRadius
+	def radius = radarAirspace.radius
 
 	@BeanProperty
-	def radius_=(d: Double): Unit = radarAirspaceAs[SphereAirspace].setRadius(d)
+	def radius_=(d: Double): Unit = radarAirspace.radius = d
 
 	def visibleAirspace: Airspace = {
 		if (radarAirspace.isVisible) {
@@ -75,7 +75,8 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: Airspace, val edito
 	}
 
 	def updateIsolineAirspace(): Unit = {
-		this.isolineAirspaceAs[SphereAirspace].setLocation(radarAirspaceAs[SphereAirspace].getLocation)
+		this.isolineAirspace.location = radarAirspace.location
+		this.isolineAirspace.setAltitude(10000)
 	}
 
 	def remove(): Unit = CeemRadarAirspace.remove(this)
