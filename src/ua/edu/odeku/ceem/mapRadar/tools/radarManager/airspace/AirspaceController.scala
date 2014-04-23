@@ -269,6 +269,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 		this.updateShapeIntersection()
 
 		entry.removeAirspaceFromAirspaceLayer(ceemTool.airspaceLayer)
+		entry.remove()
 		ceemTool.appFrame.getWwd.redraw()
 	}
 

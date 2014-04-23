@@ -30,6 +30,8 @@ import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
 import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry;
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry$;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
 
 import javax.swing.*;
@@ -121,7 +123,17 @@ public class AppCeemRadarFrame extends JFrame {
             }
         });
 
+        JCheckBoxMenuItem isoLinesMenuItem = new JCheckBoxMenuItem("View isolines");
+        isoLinesMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+                AirspaceEntry.showIsolineViewMode(item.getState());
+            }
+        });
+
         menuParent.add(menuRadarManager);
+        menuParent.add(isoLinesMenuItem);
     }
 
     private void fillMenuUtils(final JMenu menuParent) {

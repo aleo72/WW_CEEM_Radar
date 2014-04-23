@@ -16,6 +16,7 @@ import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditorController, Air
 import gov.nasa.worldwind.geom.LatLon
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
 import gov.nasa.worldwind.layers.AirspaceLayer
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * User: Aleo Bakalov
@@ -23,21 +24,6 @@ import gov.nasa.worldwind.layers.AirspaceLayer
  * Time: 11:04
  */
 class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl {
-
-	def removeAirspaceFromAirspaceLayer(layer: AirspaceLayer) = {
-		layer.removeAirspace(airspace.radarAirspace)
-		layer.removeAirspace(airspace.isolineAirspace)
-	}
-
-	def addEditListener(controller: AirspaceController):Unit = this.editor.addEditListener(controller)
-
-	def addAirspaceToAirspaceLayer(layer: AirspaceLayer):Unit = {
-		layer.addAirspace(airspace.radarAirspace)
-		layer.addAirspace(airspace.isolineAirspace)
-	}
-
-	def setArmedForAirspaceEditor(b: Boolean) = editor.setArmed(b)
-
 
 	val airspace: CeemRadarAirspace = factory.airspace
 	val editor: AirspaceEditor = factory.editor.radarAirspaceEditor
@@ -50,6 +36,8 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 	var _intersecting: Boolean = false
 
 	private var _radar: Radar = _
+
+	AirspaceEntry.bufferOfAirspaceEntry += this
 
 	def radar = _radar
 
@@ -128,12 +116,48 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 		}
 	}
 
-	def addAirspaceEditorListener(listener:  AirspaceEditListener): Unit = editor.addEditListener(listener)
+	def addAirspaceEditorListener(listener: AirspaceEditListener): Unit = editor.addEditListener(listener)
 
-	def removeEditListener(listener:  AirspaceEditListener): Unit = editor.removeEditListener(listener)
+	def removeEditListener(listener: AirspaceEditListener): Unit = editor.removeEditListener(listener)
+
+	def removeAirspaceFromAirspaceLayer(layer: AirspaceLayer) = {
+		layer.removeAirspace(airspace.radarAirspace)
+		layer.removeAirspace(airspace.isolineAirspace)
+	}
+
+	def addEditListener(controller: AirspaceController): Unit = this.editor.addEditListener(controller)
+
+	def addAirspaceToAirspaceLayer(layer: AirspaceLayer): Unit = {
+		layer.addAirspace(airspace.radarAirspace)
+		layer.addAirspace(airspace.isolineAirspace)
+	}
+
+	def setArmedForAirspaceEditor(b: Boolean) = editor.setArmed(b)
+
+	def remove(): Unit = AirspaceEntry.bufferOfAirspaceEntry -= this
 }
 
 object AirspaceEntry {
+
+	val bufferOfAirspaceEntry = new ArrayBuffer[AirspaceEntry]()
+
+	def showIsolineViewMode(b: Boolean): Unit = {
+		if (b) {
+			bufferOfAirspaceEntry.foreach(
+				(entry: AirspaceEntry) => {
+					entry.airspace.showIsolineAirspace()
+					entry.editor.setEnabled(false)
+				}
+			)
+		} else {
+			bufferOfAirspaceEntry.foreach(
+				(entry: AirspaceEntry) => {
+					entry.airspace.showRadarAirspace()
+					entry.editor.setEnabled(true)
+				}
+			)
+		}
+	}
 
 	private var numberNewAirspaceEntry = 1
 

@@ -70,7 +70,12 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: Airspace, val edito
 
 	def showIsolineAirspace() {
 		this.setVisible(visible = false)
+		updateIsolineAirspace()
 		isolineAirspace.setVisible(true)
+	}
+
+	def updateIsolineAirspace(): Unit = {
+		this.isolineAirspaceAs[SphereAirspace].setLocation(radarAirspaceAs[SphereAirspace].getLocation)
 	}
 
 	def remove(): Unit = CeemRadarAirspace.remove(this)
