@@ -12,8 +12,10 @@ import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.{CeemRad
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
-import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditorController, AirspaceEditListener, AirspaceEditor}
 import gov.nasa.worldwind.geom.LatLon
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
+import gov.nasa.worldwind.layers.AirspaceLayer
 
 /**
  * User: Aleo Bakalov
@@ -22,8 +24,23 @@ import gov.nasa.worldwind.geom.LatLon
  */
 class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl {
 
+	def removeAirspaceFromAirspaceLayer(layer: AirspaceLayer) = {
+		layer.removeAirspace(airspace.radarAirspace)
+		layer.removeAirspace(airspace.isolineAirspace)
+	}
+
+	def addEditListener(controller: AirspaceController):Unit = this.editor.addEditListener(controller)
+
+	def addAirspaceToAirspaceLayer(layer: AirspaceLayer):Unit = {
+		layer.addAirspace(airspace.radarAirspace)
+		layer.addAirspace(airspace.isolineAirspace)
+	}
+
+	def setArmedForAirspaceEditor(b: Boolean) = editor.setArmed(b)
+
+
 	val airspace: CeemRadarAirspace = factory.airspace
-	val editor: CeemRadarAirspaceEditor = factory.editor
+	val editor: AirspaceEditor = factory.editor.radarAirspaceEditor
 
 	var _nameAirspaceEntry: String = airspace.getValue(AVKey.DISPLAY_NAME).toString
 
@@ -31,6 +48,7 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 	private var _editing: Boolean = false
 	private var _selected: Boolean = false
 	var _intersecting: Boolean = false
+
 	private var _radar: Radar = _
 
 	def radar = _radar
@@ -43,6 +61,8 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 			airspace.location = _radar.latLon
 		}
 	}
+
+	def location = airspace.location
 
 	def nameAirspaceEntry = _nameAirspaceEntry
 
@@ -78,13 +98,14 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 
 	def updateAttributes() {
 		if (this.selected && this.intersecting) {
-			this.airspace.setAttributes(getSelectionAndIntersectionAttributes)
+			this.airspace.setAttributes(getSelectionAttributes)
 		}
-		else if (this.selected) {
+		else
+		if (this.selected) {
 			this.airspace.setAttributes(getSelectionAttributes)
 		}
 		else if (this.intersecting) {
-			this.airspace.setAttributes(getIntersectionAttributes)
+			this.airspace.setAttributes(getDefaultAttributes)
 		}
 		else {
 			this.airspace.setAttributes(this.attributes)
@@ -106,6 +127,10 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 			super.setValue(key, value)
 		}
 	}
+
+	def addAirspaceEditorListener(listener:  AirspaceEditListener): Unit = editor.addEditListener(listener)
+
+	def removeEditListener(listener:  AirspaceEditListener): Unit = editor.removeEditListener(listener)
 }
 
 object AirspaceEntry {

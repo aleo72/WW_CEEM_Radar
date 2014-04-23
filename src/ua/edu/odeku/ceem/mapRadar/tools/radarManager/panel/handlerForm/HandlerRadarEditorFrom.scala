@@ -124,7 +124,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	initSpinners()
 	initTextField()
 
-	changeLocationListener.updateFields(airspaceEntry.airspace.location)
+	changeLocationListener.updateFields(airspaceEntry.location)
 
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
@@ -184,7 +184,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 	private def airspaceEntry_=(value: AirspaceEntry): Unit = {
 		_airspaceEntry = value
-		_airspaceEntry.editor.addEditListener(changeLocationListener)
+		_airspaceEntry.addAirspaceEditorListener(changeLocationListener)
 	}
 
 	def initTextField() {
@@ -192,7 +192,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def eventCloseForm() {
-		airspaceEntry.editor.removeEditListener(changeLocationListener)
+		airspaceEntry.removeEditListener(changeLocationListener)
 	}
 
 	/**

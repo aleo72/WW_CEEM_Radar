@@ -99,15 +99,15 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 		this.selectedEntry.editing = editing
 
-		val editor: AirspaceEditor = this.selectedEntry.editor
-		editor.setArmed(editing)
+		this.selectedEntry.setArmedForAirspaceEditor(editing)
 
 		if (editing) {
-			this.editorController.setEditor(editor)
-			VisibleUtils.insertBeforeCompass(ceemTool.appFrame.getWwd, editor)
+//			selectedEntry.registerEditorForEditController(this.editorController)
+			this.editorController.setEditor(selectedEntry.editor)
+			VisibleUtils.insertBeforeCompass(ceemTool.appFrame.getWwd, selectedEntry.editor)
 		} else {
 			this.editorController.setEditor(null)
-			this.ceemTool.appFrame.getWwd.getModel.getLayers.remove(editor)
+			this.ceemTool.appFrame.getWwd.getModel.getLayers.remove(selectedEntry.editor)
 		}
 		val index: Int = this.model.getIndexForEntry(this.selectedEntry)
 		this.model.fireTableRowsUpdated(index, index)
@@ -252,23 +252,23 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def addEntry(entry: AirspaceEntry) {
-		entry.editor.addEditListener(this)
+		entry.addAirspaceEditorListener(this)
 		this.model.addEntry(entry)
 		this.updateShapeIntersection()
 
-		ceemTool.airspaceLayer.addAirspace(entry.airspace)
+		entry.addAirspaceToAirspaceLayer(ceemTool.airspaceLayer)
 		ceemTool.appFrame.getWwd.redraw()
 	}
 
 	def removeEntry(entry: AirspaceEntry) {
-		entry.editor.removeEditListener(this)
+		entry.removeEditListener(this)
 		if (this.selectedEntry == entry) {
 			this.selectEntry(null, updateView = true)
 		}
 		this.model.removeEntry(entry)
 		this.updateShapeIntersection()
 
-		ceemTool.airspaceLayer.removeAirspace(entry.airspace)
+		entry.removeAirspaceFromAirspaceLayer(ceemTool.airspaceLayer)
 		ceemTool.appFrame.getWwd.redraw()
 	}
 
@@ -330,7 +330,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def goToSelectionAirspace(){
-		val latLon = selectedEntry.airspace.asInstanceOf[SphereAirspace].getLocation
+		val latLon = selectedEntry.airspace.location
 		val elevation = selectedEntry.radar.altitude + 2 * selectedEntry.radar.radius + PropertyProgram.getAltitudeForGoToAirspace
 		val position = new Position(latLon, elevation )
 		ceemTool.appFrame.getWwd.getView.goTo(position, elevation)

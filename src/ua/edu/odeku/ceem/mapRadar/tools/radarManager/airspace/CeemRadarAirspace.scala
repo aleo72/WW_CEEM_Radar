@@ -32,6 +32,8 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: Airspace, val edito
 
 	CeemRadarAirspace.listOfCeemRadarAirspace += this
 
+	showRadarAirspace()
+
 	def radarAirspaceAs[T] = radarAirspace.asInstanceOf[T]
 
 	def isolineAirspaceAs[T] = isolineAirspace.asInstanceOf[T]
