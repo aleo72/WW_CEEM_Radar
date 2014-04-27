@@ -31,9 +31,9 @@ class RadarManagerTool extends CeemRadarTool {
 
 	controller.resizeNewShapesToViewport = true
 
-	def startFunction = (ToolFrame) => { println("RadarManagerTool_startFunction") }
+	def startFunction: (ToolFrame) => Unit = (ToolFrame) => { println("RadarManagerTool_startFunction") }
 
-	def endFunction = (ToolFrame) => {println("RadarManagerTool_endFunction")}
+	def endFunction: (ToolFrame) => Unit = (ToolFrame) => {println("RadarManagerTool_endFunction")}
 
 	def rootPanel: JPanel = view.getRootPanel
 }

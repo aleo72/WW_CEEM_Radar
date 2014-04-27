@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools
 
-import javax.swing.{JPanel, JComponent}
+import javax.swing.JPanel
 
 /**
  * User: Aleo Bakalov

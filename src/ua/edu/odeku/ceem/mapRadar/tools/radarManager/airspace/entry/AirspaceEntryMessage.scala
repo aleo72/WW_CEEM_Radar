@@ -12,7 +12,7 @@ import gov.nasa.worldwind.WorldWindow
  * Так как редается через несколько java классов
  * Created by Aleo on 18.01.14.
  */
-class AirspaceEntryMessage(val wwd: WorldWindow, val method: AirspaceEntry => Unit);
+class AirspaceEntryMessage(val wwd: WorldWindow, val method: AirspaceEntry => Unit)
 
 /**
  * Класс сообщение на создание

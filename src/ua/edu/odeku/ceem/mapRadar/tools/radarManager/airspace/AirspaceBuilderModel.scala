@@ -20,7 +20,7 @@ import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypePara
  */
 class AirspaceBuilderModel extends AbstractTableModel {
 
-	val entryList = new util.ArrayList[AirspaceEntry]()
+	val entryList: util.ArrayList[AirspaceEntry] = new util.ArrayList[AirspaceEntry]()
 
 	override def getColumnName(columnIndex: Int): String = AirspaceBuilderModel.columnName(columnIndex)
 
