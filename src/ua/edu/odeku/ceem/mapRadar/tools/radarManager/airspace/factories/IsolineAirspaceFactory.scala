@@ -43,8 +43,8 @@ class IsolineAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport:
 	private def initializeSphere(wwd: WorldWindow, airspace: LocationAirspace with RadiusAirspace, fitShapeToViewport: Boolean) {
 		val position: Position = ShapeUtils.getNewShapePosition(wwd)
 		val sizeInMeters: Double = if (fitShapeToViewport) ShapeUtils.getViewportScaleFactor(wwd) else radar.radius
-		airspace.location = new LatLon(position)
-		airspace.radius = sizeInMeters
+		airspace.locationCenter = new LatLon(position)
+		airspace.radiusAirspace = sizeInMeters
 	}
 
 	override def toString = {

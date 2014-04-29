@@ -15,11 +15,11 @@ import gov.nasa.worldwind.geom.LatLon
  */
 class IsolineAirspace extends CappedCylinder with LocationAirspace with RadiusAirspace {
 
-	override def location_=(latLon: LatLon): Unit = this.setCenter(latLon)
+  override def locationCenter_=(latLon: LatLon): Unit = this.setCenter(latLon)
 
-	override def location: LatLon = this.getCenter
+  override def locationCenter: LatLon = this.getCenter
 
-	override def radius_=(r: Double): Unit = this.setRadius(r)
+  override def radiusAirspace_=(r: Double): Unit = this.setRadius(r)
 
-	override def radius: Double = this.getRadii.array(1)
+  override def radiusAirspace: Double = this.getRadii.array(1)
 }

@@ -43,15 +43,15 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val 
 
 	def location_=(latLon: LatLon): Unit = {
 		radar.latLon = latLon
-		radarAirspace.location = latLon
-		isolineAirspace.location = latLon
+		radarAirspace.locationCenter = latLon
+		isolineAirspace.locationCenter = latLon
 	}
 
 	@BeanProperty
-	def radius = radarAirspace.radius
+	def radius = radarAirspace.radiusAirspace
 
 	@BeanProperty
-	def radius_=(d: Double): Unit = radarAirspace.radius = d
+	def radius_=(d: Double): Unit = radarAirspace.radiusAirspace = d
 
 	def visibleAirspace: Airspace = {
 		if (radarAirspace.isVisible) {
@@ -75,7 +75,7 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val 
 	}
 
 	def updateIsolineAirspace(): Unit = {
-		this.isolineAirspace.location = radarAirspace.location
+		this.isolineAirspace.locationCenter = radarAirspace.locationCenter
 		this.isolineAirspace.setAltitude(10000)
 	}
 

@@ -13,7 +13,7 @@ import gov.nasa.worldwind.geom.LatLon
  */
 trait LocationAirspace {
 
-	def location: LatLon
+	def locationCenter: LatLon
 
-	def location_=(latLon: LatLon): Unit
+	def locationCenter_=(latLon: LatLon): Unit
 }

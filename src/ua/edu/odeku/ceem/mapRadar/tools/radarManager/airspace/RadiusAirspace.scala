@@ -11,8 +11,8 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
  */
 trait RadiusAirspace {
 
-	def radius: Double
+	def radiusAirspace: Double
 
-	def radius_=(r: Double): Unit
+	def radiusAirspace_=(r: Double): Unit
 
 }

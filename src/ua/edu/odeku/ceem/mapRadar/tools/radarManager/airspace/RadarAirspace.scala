@@ -15,12 +15,12 @@ import gov.nasa.worldwind.geom.LatLon
  */
 class RadarAirspace extends SphereAirspace with LocationAirspace with RadiusAirspace {
 
-	override def location_=(latLon: LatLon): Unit = this.setLocation(latLon)
+	override def locationCenter_=(latLon: LatLon): Unit = this.setLocation(latLon)
 
-	override def location: LatLon = this.getLocation
+	override def locationCenter: LatLon = this.getLocation
 
-	override def radius_=(r: Double): Unit = this.setRadius(r)
+	override def radiusAirspace_=(r: Double): Unit = this.setRadius(r)
 
-	override def radius: Double = this.getRadius
+	override def radiusAirspace: Double = this.getRadius
 
 }

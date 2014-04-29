@@ -45,8 +45,8 @@ class RadarAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: B
 	private def initializeSphere(wwd: WorldWindow, radarAirspace: LocationAirspace with RadiusAirspace, fitShapeToViewport: Boolean) {
 		val position: Position = ShapeUtils.getNewShapePosition(wwd)
 		val sizeInMeters: Double = if (fitShapeToViewport) ShapeUtils.getViewportScaleFactor(wwd) else radar.radius
-		radarAirspace.location = new LatLon(position)
-		radarAirspace.radius = sizeInMeters
+		radarAirspace.locationCenter = new LatLon(position)
+		radarAirspace.radiusAirspace = sizeInMeters
 	}
 
 	override def toString = {
