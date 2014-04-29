@@ -25,13 +25,10 @@ class IsolineAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport:
 
 	final val DEFAULT_SHAPE_SIZE_METERS: Double = 200000.0
 
-	private var countIsoline = 1
-
 	def createAirspace(wwd: WorldWindow, fitShapeToViewport: Boolean): Airspace = {
 		val isoLineAirspace = new IsolineAirspace
 		isoLineAirspace.setAttributes(this.initAttribute(isoLineAirspace))
-		isoLineAirspace.setValue(AVKey.DISPLAY_NAME, this.toString + countIsoline)
-		countIsoline += 1
+		isoLineAirspace.setValue(AVKey.DISPLAY_NAME, this.toString + IsolineAirspaceFactory.countEntry)
 		isoLineAirspace.setAltitudes(100000.0, 500000.0)
 		isoLineAirspace.setTerrainConforming(false)
 		this.initializeSphere(wwd, isoLineAirspace, fitShapeToViewport)
@@ -60,4 +57,15 @@ class IsolineAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport:
 		a.getAttributes.setOutlineWidth(3.0)
 		a.getAttributes
 	}
+}
+
+object IsolineAirspaceFactory {
+
+	private var _countEntry = 0
+
+	def countEntry = {
+		_countEntry += 1
+		_countEntry
+	}
+
 }

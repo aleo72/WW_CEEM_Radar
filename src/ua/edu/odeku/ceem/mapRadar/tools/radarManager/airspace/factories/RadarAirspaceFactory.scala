@@ -22,13 +22,10 @@ class RadarAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: B
 
 	final val DEFAULT_SHAPE_SIZE_METERS: Double = 200000.0
 
-	private var countRadar = 1
-
 	def createAirspace(wwd: WorldWindow, fitShapeToViewport: Boolean): Airspace = {
 		val radarAirspace = new RadarAirspace
 		radarAirspace.setAttributes(getDefaultAttributes)
-		radarAirspace.setValue(AVKey.DISPLAY_NAME, this.toString + countRadar)
-		countRadar += 1
+		radarAirspace.setValue(AVKey.DISPLAY_NAME, this.toString + RadarAirspaceFactory.countEntry)
 		radarAirspace.setAltitude(0.0)
 		radarAirspace.setTerrainConforming(true)
 		this.initializeSphere(wwd, radarAirspace, fitShapeToViewport)
@@ -52,4 +49,15 @@ class RadarAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: B
 	override def toString = {
 		"Radar "
 	}
+}
+
+object RadarAirspaceFactory {
+
+	private var _countEntry = 0
+
+	def countEntry = {
+		_countEntry += 1
+		_countEntry
+	}
+
 }
