@@ -36,10 +36,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -106,6 +103,7 @@ public class AppCeemRadarFrame extends JFrame {
 
     private void fillMenuRadar(final JMenu menuParent){
         JMenuItem menuRadarManager = new JMenuItem(ResourceString.get("menu_radar_manager"));
+        menuRadarManager.setAccelerator(KeyStroke.getKeyStroke('R', InputEvent.CTRL_DOWN_MASK));
         menuRadarManager.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,6 +122,7 @@ public class AppCeemRadarFrame extends JFrame {
         });
 
         JCheckBoxMenuItem isoLinesMenuItem = new JCheckBoxMenuItem("View isolines");
+        isoLinesMenuItem.setAccelerator(KeyStroke.getKeyStroke('V', InputEvent.ALT_DOWN_MASK));
         isoLinesMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
