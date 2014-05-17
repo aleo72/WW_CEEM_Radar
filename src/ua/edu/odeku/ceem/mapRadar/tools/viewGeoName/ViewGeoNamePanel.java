@@ -8,28 +8,10 @@ package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
-import org.hibernate.SQLQuery;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import ua.edu.odeku.ceem.mapRadar.db.DB;
-import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
-import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel;
-import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
-import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs.EditGeoNameDialog;
-import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 
 /**

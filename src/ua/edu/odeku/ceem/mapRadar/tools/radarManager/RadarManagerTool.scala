@@ -10,6 +10,7 @@ import javax.swing.JPanel
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.{AirspaceBuilderModel, AirspaceController, AirspaceManagerView}
 import gov.nasa.worldwind.layers.AirspaceLayer
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
+import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 
 /**
  * User: Aleo Bakalov
@@ -27,7 +28,7 @@ class RadarManagerTool extends CeemRadarTool {
 
 	val airspaceLayer: AirspaceLayer = new AirspaceLayer
 	this.airspaceLayer.setName(airspace.AIRSPACE_LAYER_NAME)
-	VisibleUtils.insertBeforePlaceNames(this.appFrame.getWwd, this.airspaceLayer)
+	VisibleUtils.insertBeforePlaceNames(AppCeemRadarFrame.wwd, this.airspaceLayer)
 
 	controller.resizeNewShapesToViewport = true
 

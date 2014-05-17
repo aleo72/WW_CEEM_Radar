@@ -13,8 +13,8 @@ import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
 import gov.nasa.worldwind.geom.{Angle, Position, Vec4, LatLon}
 import gov.nasa.worldwind.SceneController
 import gov.nasa.worldwind.globes.Globe
-import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
 import gov.nasa.worldwind.view.orbit.BasicOrbitView
+import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 
 /**
  * Класс пакет
@@ -107,8 +107,8 @@ package object airspace {
 
 	def getSurfacePoint(latlon: LatLon, elevation: Double): Vec4 = {
 		var point: Vec4 = null
-		val sc: SceneController = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getSceneController
-		val globe: Globe = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getModel.getGlobe
+		val sc: SceneController = AppCeemRadarFrame.wwd.getSceneController
+		val globe: Globe = AppCeemRadarFrame.wwd.getModel.getGlobe
 		if (sc.getTerrain != null) {
 			point = sc.getTerrain.getSurfacePoint(latlon.getLatitude, latlon.getLongitude, elevation * sc.getVerticalExaggeration)
 		}
@@ -120,14 +120,14 @@ package object airspace {
 	}
 
 	def getPoint(latlon: LatLon, elevation: Double): Vec4 = {
-		val sc: SceneController = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getSceneController
-		val globe: Globe = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getModel.getGlobe
+		val sc: SceneController = AppCeemRadarFrame.wwd.getSceneController
+		val globe: Globe = AppCeemRadarFrame.wwd.getModel.getGlobe
 		val e: Double = globe.getElevation(latlon.getLatitude, latlon.getLongitude)
 		globe.computePointFromPosition(latlon.getLatitude, latlon.getLongitude, (e + elevation) * sc.getVerticalExaggeration)
 	}
 
 	def zoomTo(latLon: LatLon, heading: Angle, pitch: Angle, zoom: Double) {
-		val view: BasicOrbitView = AppCeemRadarFrame.getAppCeemRadarFrame.getWwd.getView.asInstanceOf[BasicOrbitView]
+		val view: BasicOrbitView = AppCeemRadarFrame.wwd.getView.asInstanceOf[BasicOrbitView]
 		view.stopMovement()
 		view.addPanToAnimator(new Position(latLon, 0), heading, pitch, zoom, true)
 	}

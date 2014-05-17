@@ -8,6 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.cache
 import ua.edu.odeku.ceem.mapRadar.tools.{ToolFrame, CeemRadarTool}
 import javax.swing.JPanel
 import gov.nasa.worldwind.WorldWindow
+import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 
 /**
  * User: Aleo Bakalov
@@ -16,7 +17,7 @@ import gov.nasa.worldwind.WorldWindow
  */
 class CacheDownloadTool extends CeemRadarTool {
 
-  val cacheDownload = this.appFrame.getWwjPanel
+  val cacheDownload = AppCeemRadarFrame.wwjPanel
 
   def startFunction = (frame : ToolFrame ) => {}
 

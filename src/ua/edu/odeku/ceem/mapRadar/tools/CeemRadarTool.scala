@@ -5,8 +5,6 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools
 
-import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
-
 /**
  * User: Aleo Bakalov
  * Date: 10.12.13
@@ -19,8 +17,6 @@ trait CeemRadarTool extends NamingTool with PanelTool {
 	def setParent(frame: ToolFrame) {
 		parentToolFrame = frame
 	}
-
-	def appFrame: AppCeemRadarFrame = AppCeemRadarFrame.getAppCeemRadarFrame
 
 	def startFunction: (ToolFrame) => Unit
 
