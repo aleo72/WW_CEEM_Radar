@@ -7,16 +7,17 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace
 
 import gov.nasa.worldwind.WWObjectImpl
 import java.awt.event.{MouseEvent, ActionEvent, MouseListener, ActionListener}
-import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditor, AirspaceEditorController, AirspaceEditEvent, AirspaceEditListener}
+import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditorController, AirspaceEditEvent, AirspaceEditListener}
 import javax.swing.{AbstractButton, JFileChooser}
 import gov.nasa.worldwind.pick.PickedObjectList
-import gov.nasa.worldwind.render.airspaces.{SphereAirspace, Airspace}
+import gov.nasa.worldwind.render.airspaces.Airspace
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 import scala.collection.mutable.ArrayBuffer
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
 import gov.nasa.worldwind.geom.Position
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 
 /**
  * User: Aleo Bakalov
@@ -29,8 +30,8 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	private var _model: AirspaceBuilderModel = _
 	private var _view: AirspaceManagerView = _
 
-	val editorController: AirspaceEditorController = new AirspaceEditorController(ceemTool.appFrame.getWwd)
-	ceemTool.appFrame.getWwd.getInputHandler.addMouseListener(this)
+	val editorController: AirspaceEditorController = new AirspaceEditorController(AppCeemRadarFrame.wwd)
+	AppCeemRadarFrame.wwd.getInputHandler.addMouseListener(this)
 
 	private var _enabled = true
 	private var _enableEdit = true
@@ -51,7 +52,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	def enabled_=(value: Boolean): Unit = {
 		this._enabled = value
 		view.panel.setEnabled(value)
-		ceemTool.appFrame.setEnabled(value)
+		AppCeemRadarFrame.setEnabled(value)
 	}
 
 	def enableEdit: Boolean = _enableEdit
@@ -99,15 +100,15 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
 		this.selectedEntry.editing = editing
 
-		val editor: AirspaceEditor = this.selectedEntry.editor
-		editor.setArmed(editing)
+		this.selectedEntry.setArmedForAirspaceEditor(editing)
 
 		if (editing) {
-			this.editorController.setEditor(editor)
-			VisibleUtils.insertBeforeCompass(ceemTool.appFrame.getWwd, editor)
+//			selectedEntry.registerEditorForEditController(this.editorController)
+			this.editorController.setEditor(selectedEntry.editor)
+			VisibleUtils.insertBeforeCompass(AppCeemRadarFrame.wwd, selectedEntry.editor)
 		} else {
 			this.editorController.setEditor(null)
-			this.ceemTool.appFrame.getWwd.getModel.getLayers.remove(editor)
+			AppCeemRadarFrame.wwd.getModel.getLayers.remove(selectedEntry.editor)
 		}
 		val index: Int = this.model.getIndexForEntry(this.selectedEntry)
 		this.model.fireTableRowsUpdated(index, index)
@@ -192,7 +193,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def handleSelect() {
-		val pickedObjects: PickedObjectList = ceemTool.appFrame.getWwd.getObjectsAtCurrentPosition
+		val pickedObjects: PickedObjectList = AppCeemRadarFrame.wwd.getObjectsAtCurrentPosition
 		val topObject: AnyRef = pickedObjects.getTopObject
 		topObject match {
 			case airspace: Airspace =>
@@ -228,14 +229,14 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	private def editSelectedEntry(){
-		AirspaceEntry.edit(selectedEntry, ceemTool.appFrame.getWwd, selectedEntry_=)
+		AirspaceEntry.edit(selectedEntry, AppCeemRadarFrame.wwd, selectedEntry_=)
 	}
 	
 	/**
 	 * Метод дает сигнал на открытие формы для создания нового Airspace
 	 */
 	private def createNewEntry() {
-		AirspaceEntry(ceemTool.appFrame.getWwd, createNewEntry)
+		AirspaceEntry(AppCeemRadarFrame.wwd, createNewEntry)
 	}
 
 	def createNewEntry(entry: AirspaceEntry) {
@@ -252,24 +253,25 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def addEntry(entry: AirspaceEntry) {
-		entry.editor.addEditListener(this)
+		entry.addAirspaceEditorListener(this)
 		this.model.addEntry(entry)
 		this.updateShapeIntersection()
 
-		ceemTool.airspaceLayer.addAirspace(entry.airspace)
-		ceemTool.appFrame.getWwd.redraw()
+		entry.addAirspaceToAirspaceLayer(ceemTool.airspaceLayer)
+		AppCeemRadarFrame.wwd.redraw()
 	}
 
 	def removeEntry(entry: AirspaceEntry) {
-		entry.editor.removeEditListener(this)
+		entry.removeEditListener(this)
 		if (this.selectedEntry == entry) {
 			this.selectEntry(null, updateView = true)
 		}
 		this.model.removeEntry(entry)
 		this.updateShapeIntersection()
 
-		ceemTool.airspaceLayer.removeAirspace(entry.airspace)
-		ceemTool.appFrame.getWwd.redraw()
+		entry.removeAirspaceFromAirspaceLayer(ceemTool.airspaceLayer)
+		entry.remove()
+		AppCeemRadarFrame.wwd.redraw()
 	}
 
 	def selectEntry(entry: AirspaceEntry, updateView: Boolean) {
@@ -288,7 +290,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 			}
 		}
 		this.updateShapeIntersection()
-		ceemTool.appFrame.getWwd.redraw()
+		AppCeemRadarFrame.wwd.redraw()
 	}
 
 	def viewSelectionChanged() {
@@ -298,7 +300,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 				this.selectEntry(entry, updateView = false)
 			}
 		}
-		ceemTool.appFrame.getWwd.redraw()
+		AppCeemRadarFrame.wwd.redraw()
 	}
 
 	def selectedEntries: Array[AirspaceEntry] = {
@@ -330,9 +332,9 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 	}
 
 	def goToSelectionAirspace(){
-		val latLon = selectedEntry.airspace.asInstanceOf[SphereAirspace].getLocation
+		val latLon = selectedEntry.airspace.location
 		val elevation = selectedEntry.radar.altitude + 2 * selectedEntry.radar.radius + PropertyProgram.getAltitudeForGoToAirspace
 		val position = new Position(latLon, elevation )
-		ceemTool.appFrame.getWwd.getView.goTo(position, elevation)
+		AppCeemRadarFrame.wwd.getView.goTo(position, elevation)
 	}
 }

@@ -8,22 +8,25 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry
 import gov.nasa.worldwind.{WorldWindow, WWObjectImpl}
 import gov.nasa.worldwind.render.airspaces.{SphereAirspace, Airspace, AirspaceAttributes}
 import gov.nasa.worldwind.avlist.AVKey
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.AirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.{CeemRadarAirspaceFactory, AirspaceFactory}
 import ua.edu.odeku.ceem.mapRadar.models.radar.Radar
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.dialogs.CreateEditRadarFrame
-import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import gov.nasa.worldwind.render.airspaces.editor.{AirspaceEditorController, AirspaceEditListener, AirspaceEditor}
 import gov.nasa.worldwind.geom.LatLon
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
+import gov.nasa.worldwind.layers.AirspaceLayer
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * User: Aleo Bakalov
  * Date: 08.01.14
  * Time: 11:04
  */
-class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
+class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl {
 
-	val airspace: Airspace = factory.airspace
-	val editor: AirspaceEditor = factory.editor
+	val airspace: CeemRadarAirspace = factory.airspace
+	val editor: AirspaceEditor = factory.editor.radarAirspaceEditor
 
 	var _nameAirspaceEntry: String = airspace.getValue(AVKey.DISPLAY_NAME).toString
 
@@ -31,18 +34,23 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 	private var _editing: Boolean = false
 	private var _selected: Boolean = false
 	var _intersecting: Boolean = false
+
 	private var _radar: Radar = _
+
+	AirspaceEntry.bufferOfAirspaceEntry += this
 
 	def radar = _radar
 
 	def radar_=(value: Radar): Unit = {
 		_radar = value
-		airspace.asInstanceOf[SphereAirspace].setRadius(_radar.radius)
-		airspace.asInstanceOf[SphereAirspace].setAltitude(_radar.altitude)
-		if(_radar.latLon != null){
-			airspace.asInstanceOf[SphereAirspace].setLocation(_radar.latLon)
+		airspace.radius = _radar.radius
+		airspace.setAltitude(_radar.altitude)
+		if (_radar.latLon != null) {
+			airspace.location = _radar.latLon
 		}
 	}
+
+	def location = airspace.location
 
 	def nameAirspaceEntry = _nameAirspaceEntry
 
@@ -78,13 +86,14 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 
 	def updateAttributes() {
 		if (this.selected && this.intersecting) {
-			this.airspace.setAttributes(getSelectionAndIntersectionAttributes)
+			this.airspace.setAttributes(getSelectionAttributes)
 		}
-		else if (this.selected) {
+		else
+		if (this.selected) {
 			this.airspace.setAttributes(getSelectionAttributes)
 		}
 		else if (this.intersecting) {
-			this.airspace.setAttributes(getIntersectionAttributes)
+			this.airspace.setAttributes(getDefaultAttributes)
 		}
 		else {
 			this.airspace.setAttributes(this.attributes)
@@ -106,9 +115,49 @@ class AirspaceEntry(val factory: AirspaceFactory) extends WWObjectImpl {
 			super.setValue(key, value)
 		}
 	}
+
+	def addAirspaceEditorListener(listener: AirspaceEditListener): Unit = editor.addEditListener(listener)
+
+	def removeEditListener(listener: AirspaceEditListener): Unit = editor.removeEditListener(listener)
+
+	def removeAirspaceFromAirspaceLayer(layer: AirspaceLayer) = {
+		layer.removeAirspace(airspace.radarAirspace)
+		layer.removeAirspace(airspace.isolineAirspace)
+	}
+
+	def addEditListener(controller: AirspaceController): Unit = this.editor.addEditListener(controller)
+
+	def addAirspaceToAirspaceLayer(layer: AirspaceLayer): Unit = {
+		layer.addAirspace(airspace.radarAirspace)
+		layer.addAirspace(airspace.isolineAirspace)
+	}
+
+	def setArmedForAirspaceEditor(b: Boolean) = editor.setArmed(b)
+
+	def remove(): Unit = AirspaceEntry.bufferOfAirspaceEntry -= this
 }
 
 object AirspaceEntry {
+
+	val bufferOfAirspaceEntry = new ArrayBuffer[AirspaceEntry]()
+
+	def showIsolineViewMode(b: Boolean): Unit = {
+		if (b) {
+			bufferOfAirspaceEntry.foreach(
+				(entry: AirspaceEntry) => {
+					entry.airspace.showIsolineAirspace()
+					entry.editor.setEnabled(false)
+				}
+			)
+		} else {
+			bufferOfAirspaceEntry.foreach(
+				(entry: AirspaceEntry) => {
+					entry.airspace.showRadarAirspace()
+					entry.editor.setEnabled(true)
+				}
+			)
+		}
+	}
 
 	private var numberNewAirspaceEntry = 1
 

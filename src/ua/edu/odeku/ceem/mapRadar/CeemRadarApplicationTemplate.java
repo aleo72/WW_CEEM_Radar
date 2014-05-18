@@ -2,7 +2,7 @@ package ua.edu.odeku.ceem.mapRadar;
 
 import gov.nasa.worldwind.Configuration;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
-import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame;
+import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrameOld;
 import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel;
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 
@@ -48,7 +48,7 @@ public class CeemRadarApplicationTemplate {
         }
     }
 
-    public static AppCeemRadarFrame start(String appName, Class appFrameClass) {
+    public static AppCeemRadarFrameOld start(String appName, Class appFrameClass) {
         if (Configuration.isMacOS() && appName != null) {
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", appName);
         }
@@ -62,7 +62,7 @@ public class CeemRadarApplicationTemplate {
                 DB.createEntityManager();
             }
 
-            final AppCeemRadarFrame frame = (AppCeemRadarFrame) appFrameClass.newInstance();
+            final AppCeemRadarFrameOld frame = (AppCeemRadarFrameOld) appFrameClass.newInstance();
             frame.setTitle(appName);
             frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             java.awt.EventQueue.invokeLater(new Runnable() {
@@ -81,7 +81,7 @@ public class CeemRadarApplicationTemplate {
     }
 
     public static void main(String[] args) {
-        start(PropertyProgram.getNameProgram(), AppCeemRadarFrame.class);
+        start(PropertyProgram.getNameProgram(), AppCeemRadarFrameOld.class);
     }
 
     private static void showStartImageWindow(){

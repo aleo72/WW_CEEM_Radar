@@ -10,10 +10,8 @@ import javax.swing._
 import ua.edu.odeku.ceem.mapRadar.models.radar.{RadarTypeParameters, RadarFactory, RadarTypes, Radar}
 import java.awt.event._
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntryMessage, AirspaceEntry}
-import gov.nasa.worldwind.render.airspaces.SphereAirspace
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.SphereAirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.CeemRadarAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes._
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
 import com.jgoodies.forms.layout.{FormLayout, CellConstraints}
 import scala.collection.mutable
@@ -126,11 +124,11 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	initSpinners()
 	initTextField()
 
-	changeLocationListener.updateFields(airspaceEntry.airspace.asInstanceOf[SphereAirspace].getLocation)
+	changeLocationListener.updateFields(airspaceEntry.location)
 
 	def createAirspaceEntry(): AirspaceEntry = {
 		savedNewAirspaceEntry = false
-		new AirspaceEntry(new SphereAirspaceFactory(radar, message.wwd, false))
+		new AirspaceEntry(new CeemRadarAirspaceFactory(radar, message.wwd, false))
 	}
 
 	def initSpinners() {
@@ -144,9 +142,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def initComboBoxes() {
-		form.typeRadarComboBox = new JComboBox[RadarType]
-		for (radarType <- RadarTypes.values) {
-			form.typeRadarComboBox.addItem(radarType)
+		form.typeRadarComboBox = new JComboBox[RadarTypes.Value]
+		val jComboBox = form.typeRadarComboBox.asInstanceOf[JComboBox[RadarTypes.Value]]
+		for (radarType: RadarTypes.Value <- RadarTypes.values) {
+			jComboBox.addItem(radarType)
 		}
 		form.typeRadarComboBox.setSelectedIndex(0)
 		form.typeRadarComboBox.addItemListener(typeRadarComboBoxItemListener)
@@ -185,7 +184,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 	private def airspaceEntry_=(value: AirspaceEntry): Unit = {
 		_airspaceEntry = value
-		_airspaceEntry.editor.addEditListener(changeLocationListener)
+		_airspaceEntry.addAirspaceEditorListener(changeLocationListener)
 	}
 
 	def initTextField() {
@@ -193,7 +192,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 	}
 
 	def eventCloseForm() {
-		airspaceEntry.editor.removeEditListener(changeLocationListener)
+		airspaceEntry.removeEditListener(changeLocationListener)
 	}
 
 	/**

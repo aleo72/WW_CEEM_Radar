@@ -612,6 +612,7 @@ public class Airspaces extends ApplicationTemplate
             polyArc.setRadius(30000.0);
             polyArc.setAzimuths(Angle.fromDegrees(-45.0), Angle.fromDegrees(135.0));
             polyArc.setTerrainConforming(false, false);
+            polyArc.setValue(AVKey.DISPLAY_NAME, "TEST");
             this.setupDefaultMaterial(polyArc, Color.GRAY);
             airspaces.add(polyArc);
 

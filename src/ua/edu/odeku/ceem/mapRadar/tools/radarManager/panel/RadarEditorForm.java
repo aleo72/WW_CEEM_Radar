@@ -7,7 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType;
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.HandlerRadarEditorFrom;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.Settlement;
@@ -25,7 +25,7 @@ public class RadarEditorForm {
     public JSpinner altitudeSpinner;
     public JTextField nameAirspaceTextField;
     public LocationForm locationForm = new LocationForm();
-    public JComboBox<RadarType> typeRadarComboBox;
+    public JComboBox typeRadarComboBox;
     public JPanel panelParm;
     private JComboBox comboBox1;
     private JComboBox comboBox2;

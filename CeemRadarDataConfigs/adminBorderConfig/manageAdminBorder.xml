@@ -1,14 +1,14 @@
 <ManagerAdminBorder>
-    <admin0 viewCountryBorder="false" iso="ABW"/>
-    <admin0 viewCountryBorder="false" iso="AFG"/>
-    <admin0 viewCountryBorder="false" iso="AGO"/>
-    <admin0 viewCountryBorder="false" iso="AIA"/>
-    <admin0 viewCountryBorder="false" iso="ALB"/>
+    <admin0 viewCountryBorder="true" iso="ABW"/>
+    <admin0 viewCountryBorder="true" iso="AFG"/>
+    <admin0 viewCountryBorder="true" iso="AGO"/>
+    <admin0 viewCountryBorder="true" iso="AIA"/>
+    <admin0 viewCountryBorder="true" iso="ALB"/>
     <admin0 viewCountryBorder="false" iso="ALD"/>
     <admin0 viewCountryBorder="false" iso="AND"/>
     <admin0 viewCountryBorder="false" iso="ARE"/>
     <admin0 viewCountryBorder="false" iso="ARG"/>
-    <admin0 viewCountryBorder="false" iso="ARM"/>
+    <admin0 viewCountryBorder="true" iso="ARM"/>
     <admin0 viewCountryBorder="false" iso="ASM"/>
     <admin0 viewCountryBorder="false" iso="ATA"/>
     <admin0 viewCountryBorder="false" iso="ATC"/>
@@ -18,18 +18,18 @@
     <admin0 viewCountryBorder="false" iso="AUT"/>
     <admin0 viewCountryBorder="false" iso="AZE"/>
     <admin0 viewCountryBorder="false" iso="BDI"/>
-    <admin0 viewCountryBorder="false" iso="BEL"/>
-    <admin0 viewCountryBorder="false" iso="BEN"/>
-    <admin0 viewCountryBorder="false" iso="BFA"/>
-    <admin0 viewCountryBorder="false" iso="BGD"/>
-    <admin0 viewCountryBorder="false" iso="BGR"/>
-    <admin0 viewCountryBorder="false" iso="BHR"/>
+    <admin0 viewCountryBorder="true" iso="BEL"/>
+    <admin0 viewCountryBorder="true" iso="BEN"/>
+    <admin0 viewCountryBorder="true" iso="BFA"/>
+    <admin0 viewCountryBorder="true" iso="BGD"/>
+    <admin0 viewCountryBorder="true" iso="BGR"/>
+    <admin0 viewCountryBorder="true" iso="BHR"/>
     <admin0 viewCountryBorder="false" iso="BHS"/>
     <admin0 viewCountryBorder="false" iso="BIH"/>
     <admin0 viewCountryBorder="false" iso="BLM"/>
-    <admin0 viewCountryBorder="false" iso="BLR"/>
-    <admin0 viewCountryBorder="false" iso="BLZ"/>
-    <admin0 viewCountryBorder="false" iso="BMU"/>
+    <admin0 viewCountryBorder="true" iso="BLR"/>
+    <admin0 viewCountryBorder="true" iso="BLZ"/>
+    <admin0 viewCountryBorder="true" iso="BMU"/>
     <admin0 viewCountryBorder="false" iso="BOL"/>
     <admin0 viewCountryBorder="false" iso="BRA"/>
     <admin0 viewCountryBorder="false" iso="BRB"/>
@@ -92,7 +92,7 @@
     <admin0 viewCountryBorder="false" iso="GRD"/>
     <admin0 viewCountryBorder="false" iso="GRL"/>
     <admin0 viewCountryBorder="false" iso="GTM"/>
-    <admin0 viewCountryBorder="false" iso="GUM"/>
+    <admin0 viewCountryBorder="true" iso="GUM"/>
     <admin0 viewCountryBorder="false" iso="GUY"/>
     <admin0 viewCountryBorder="false" iso="HKG"/>
     <admin0 viewCountryBorder="false" iso="HMD"/>
@@ -106,7 +106,7 @@
     <admin0 viewCountryBorder="false" iso="IOA"/>
     <admin0 viewCountryBorder="false" iso="IOT"/>
     <admin0 viewCountryBorder="false" iso="IRL"/>
-    <admin0 viewCountryBorder="false" iso="IRN"/>
+    <admin0 viewCountryBorder="true" iso="IRN"/>
     <admin0 viewCountryBorder="false" iso="IRQ"/>
     <admin0 viewCountryBorder="false" iso="ISL"/>
     <admin0 viewCountryBorder="false" iso="ISR"/>
@@ -125,10 +125,10 @@
     <admin0 viewCountryBorder="false" iso="KNA"/>
     <admin0 viewCountryBorder="false" iso="KNM"/>
     <admin0 viewCountryBorder="false" iso="KOR"/>
-    <admin0 viewCountryBorder="false" iso="KOS"/>
-    <admin0 viewCountryBorder="false" iso="KWT"/>
-    <admin0 viewCountryBorder="false" iso="LAO"/>
-    <admin0 viewCountryBorder="false" iso="LBN"/>
+    <admin0 viewCountryBorder="true" iso="KOS"/>
+    <admin0 viewCountryBorder="true" iso="KWT"/>
+    <admin0 viewCountryBorder="true" iso="LAO"/>
+    <admin0 viewCountryBorder="true" iso="LBN"/>
     <admin0 viewCountryBorder="false" iso="LBR"/>
     <admin0 viewCountryBorder="false" iso="LBY"/>
     <admin0 viewCountryBorder="false" iso="LCA"/>
@@ -142,7 +142,7 @@
     <admin0 viewCountryBorder="false" iso="MAF"/>
     <admin0 viewCountryBorder="false" iso="MAR"/>
     <admin0 viewCountryBorder="false" iso="MCO"/>
-    <admin0 viewCountryBorder="false" iso="MDA"/>
+    <admin0 viewCountryBorder="true" iso="MDA"/>
     <admin0 viewCountryBorder="false" iso="MDG"/>
     <admin0 viewCountryBorder="false" iso="MDV"/>
     <admin0 viewCountryBorder="false" iso="MEX"/>
@@ -206,14 +206,14 @@
     <admin0 viewCountryBorder="false" iso="SRB"/>
     <admin0 viewCountryBorder="false" iso="STP"/>
     <admin0 viewCountryBorder="false" iso="SUR"/>
-    <admin0 viewCountryBorder="false" iso="SVK"/>
-    <admin0 viewCountryBorder="false" iso="SVN"/>
-    <admin0 viewCountryBorder="false" iso="SWE"/>
+    <admin0 viewCountryBorder="true" iso="SVK"/>
+    <admin0 viewCountryBorder="true" iso="SVN"/>
+    <admin0 viewCountryBorder="true" iso="SWE"/>
     <admin0 viewCountryBorder="false" iso="SWZ"/>
     <admin0 viewCountryBorder="false" iso="SYC"/>
-    <admin0 viewCountryBorder="false" iso="SYR"/>
-    <admin0 viewCountryBorder="false" iso="TCA"/>
-    <admin0 viewCountryBorder="false" iso="TCD"/>
+    <admin0 viewCountryBorder="true" iso="SYR"/>
+    <admin0 viewCountryBorder="true" iso="TCA"/>
+    <admin0 viewCountryBorder="true" iso="TCD"/>
     <admin0 viewCountryBorder="false" iso="TGO"/>
     <admin0 viewCountryBorder="false" iso="THA"/>
     <admin0 viewCountryBorder="false" iso="TJK"/>
@@ -228,12 +228,12 @@
     <admin0 viewCountryBorder="false" iso="TZA"/>
     <admin0 viewCountryBorder="false" iso="UGA"/>
     <admin0 viewCountryBorder="true" iso="UKR"/>
-    <admin0 viewCountryBorder="false" iso="UMI"/>
+    <admin0 viewCountryBorder="true" iso="UMI"/>
     <admin0 viewCountryBorder="true" iso="URY"/>
-    <admin0 viewCountryBorder="false" iso="USA"/>
-    <admin0 viewCountryBorder="false" iso="USG"/>
-    <admin0 viewCountryBorder="false" iso="UZB"/>
-    <admin0 viewCountryBorder="false" iso="VAT"/>
+    <admin0 viewCountryBorder="true" iso="USA"/>
+    <admin0 viewCountryBorder="true" iso="USG"/>
+    <admin0 viewCountryBorder="true" iso="UZB"/>
+    <admin0 viewCountryBorder="true" iso="VAT"/>
     <admin0 viewCountryBorder="false" iso="VCT"/>
     <admin0 viewCountryBorder="false" iso="VEN"/>
     <admin0 viewCountryBorder="false" iso="VGB"/>

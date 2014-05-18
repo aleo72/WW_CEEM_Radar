@@ -8,13 +8,11 @@ package ua.edu.odeku.ceem.mapRadar
 import gov.nasa.worldwind.Configuration
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import javax.swing.{JFrame, JWindow}
-import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import java.io.File
 import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel
 import java.awt.Toolkit
 import ua.edu.odeku.ceem.mapRadar.db.DB
-import ua.edu.odeku.ceem.mapRadar.frames.AppCeemRadarFrame
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
 
 /**
@@ -32,15 +30,14 @@ object CeemRadarApplication extends App {
 	try {
 		Application.showStartWindow(visible = true)
 
-		Application.initDatabaseConnection()
+//		Application.initDatabaseConnection()
 		Application.initAdminBorderManager()
 
-		val frameProgram = new AppCeemRadarFrame
-		frameProgram.setTitle(PropertyProgram.getNameProgram)
-		frameProgram.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+		AppCeemRadarFrame.setTitle(PropertyProgram.getNameProgram)
+		AppCeemRadarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 		java.awt.EventQueue.invokeLater(new Runnable {
 			override def run(): Unit = {
-				frameProgram.setVisible(true)
+				AppCeemRadarFrame.setVisible(true)
 			}
 		})
 
