@@ -83,7 +83,7 @@ public class AppCeemRadarFrameOld extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuMain = new JMenu(ResourceString.get("string_program")); // Пункт меню "Программа"
 
-        JMenu menuView = new JMenu(ResourceString.get("menu_view")); // Пункт меню "Программа"
+        JMenu menuView = new JMenu(ResourceString.get("view")); // Пункт меню "Программа"
         fillMenuView(menuView);
 
         JMenu menuTools = new JMenu(ResourceString.get("menu_tools"));
