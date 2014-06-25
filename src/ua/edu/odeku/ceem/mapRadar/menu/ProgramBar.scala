@@ -18,7 +18,7 @@ object ProgramBar {
 		MainMenu
 		,MenuView
 //		,MenuTools
-//		,MenuRadar
+		,MenuRadar
 	)
 
 	def createProgramMainBar(): JMenuBar = {
