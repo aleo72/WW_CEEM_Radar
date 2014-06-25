@@ -32,7 +32,7 @@ object MenuRadar extends MenuCreator {
 				val toolName = classOf[RadarManagerTool].getName
 				val tool = AppCeemRadarFrame.toolsComponents.get(toolName)
 				if (tool.isEmpty) {
-					val frame = new ToolFrame(toolName, resourceBundle.getString("radar_manager"))
+					val frame = new ToolFrame(toolName)//, resourceBundle.getString("radar_manager"))
 					frame.setVisible(true)
 					AppCeemRadarFrame.toolsComponents.put(toolName, frame)
 				} else {
