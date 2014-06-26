@@ -23,4 +23,12 @@ class AdminBorderViewManagerTool extends CeemRadarTool {
 	override def endFunction: (ToolFrame) => Unit = (tool: ToolFrame) => {}
 
 	override def startFunction: (ToolFrame) => Unit = (tool: ToolFrame) => {}
+
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	override def init(): Unit = {
+		//none
+	}
 }

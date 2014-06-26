@@ -37,4 +37,12 @@ class RadarManagerTool extends CeemRadarTool {
 	def endFunction: (ToolFrame) => Unit = (ToolFrame) => {println("RadarManagerTool_endFunction")}
 
 	def rootPanel: JPanel = view.getRootPanel
+
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	override def init(): Unit = {
+
+	}
 }

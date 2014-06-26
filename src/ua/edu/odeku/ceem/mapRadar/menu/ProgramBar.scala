@@ -17,7 +17,7 @@ object ProgramBar {
 	val menuCreators: Array[MenuCreator] = Array(
 		MainMenu
 		, MenuView
-//		, MenuTools
+		, MenuTools
 		, MenuRadar
 	)
 

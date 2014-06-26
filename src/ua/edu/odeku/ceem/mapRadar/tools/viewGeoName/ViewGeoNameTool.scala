@@ -27,10 +27,6 @@ class ViewGeoNameTool extends CeemRadarTool {
 
 	val viewPanel = new ViewGeoNamePanel
 
-	refreshTable()
-	refreshCountry()
-	refreshFeatureClass()
-
 	viewPanel.featureClassComboBox.addActionListener(new ActionListener {
 		def actionPerformed(e: ActionEvent) {
 			refreshFeatureCode()
@@ -183,5 +179,15 @@ class ViewGeoNameTool extends CeemRadarTool {
 				viewPanel.table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS)
 			}
 		}).start()
+	}
+
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	override def init(): Unit = {
+		refreshTable()
+		refreshCountry()
+		refreshFeatureClass()
 	}
 }

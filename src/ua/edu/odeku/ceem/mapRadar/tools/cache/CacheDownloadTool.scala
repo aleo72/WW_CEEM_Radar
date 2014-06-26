@@ -17,11 +17,17 @@ import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
  */
 class CacheDownloadTool extends CeemRadarTool {
 
-  val cacheDownload = AppCeemRadarFrame.wwjPanel
+	val cacheDownload = AppCeemRadarFrame.wwjPanel
 
-  def startFunction = (frame : ToolFrame ) => {}
+	def startFunction = (frame: ToolFrame) => {}
 
-  def endFunction = (frame : ToolFrame ) => {}
+	def endFunction = (frame: ToolFrame) => {}
 
-  def rootPanel: JPanel = cacheDownload
+	def rootPanel: JPanel = cacheDownload
+
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	override def init(): Unit = { }
 }

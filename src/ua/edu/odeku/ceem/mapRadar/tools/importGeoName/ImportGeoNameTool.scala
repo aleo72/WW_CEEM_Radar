@@ -49,4 +49,11 @@ class ImportGeoNameTool extends CeemRadarTool {
     }
   })
 
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	override def init(): Unit = {
+		// none
+	}
 }

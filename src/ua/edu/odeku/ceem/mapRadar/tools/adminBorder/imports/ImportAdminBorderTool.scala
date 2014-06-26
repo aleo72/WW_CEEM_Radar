@@ -25,4 +25,12 @@ class ImportAdminBorderTool extends CeemRadarTool {
 	}
 
 	override def startFunction: (ToolFrame) => Unit = (toolFrame: ToolFrame) => ()
+
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	override def init(): Unit = {
+		//none
+	}
 }

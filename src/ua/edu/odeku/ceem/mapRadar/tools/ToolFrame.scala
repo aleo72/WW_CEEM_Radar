@@ -50,6 +50,10 @@ class ToolFrame(val ceemRadarTool: CeemRadarTool) extends JFrame() {
 				endFunction.apply(ToolFrame.this)
 			}
 		}
+
+		override def windowOpened(e: WindowEvent){
+			ceemRadarTool.init()
+		}
 	})
 
 }
