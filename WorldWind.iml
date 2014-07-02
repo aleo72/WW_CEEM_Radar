@@ -16,6 +16,14 @@
       <configuration>
         <option name="compilerLibraryLevel" value="Project" />
         <option name="compilerLibraryName" value="scala-compiler" />
+        <option name="languageLevel" value="Scala 2.11" />
+        <option name="pluginPaths">
+          <array>
+            <option value="lib-external\scala\lib\scala-compiler.jar" />
+            <option value="lib-external\scala\lib\scala-library.jar" />
+            <option value="lib-external\scala\lib\scala-reflect.jar" />
+          </array>
+        </option>
       </configuration>
     </facet>
   </component>
@@ -47,6 +55,7 @@
     <orderEntry type="library" name="jgoodies-validation" level="project" />
     <orderEntry type="library" name="scala-compiler" level="project" />
     <orderEntry type="library" name="scala-lib" level="project" />
+    <orderEntry type="library" name="slick" level="project" />
   </component>
 </module>
 
