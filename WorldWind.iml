@@ -55,7 +55,7 @@
     <orderEntry type="library" name="jgoodies-validation" level="project" />
     <orderEntry type="library" name="scala-compiler" level="project" />
     <orderEntry type="library" name="scala-lib" level="project" />
-    <orderEntry type="library" name="slick" level="project" />
+    <orderEntry type="library" name="slf4j" level="project" />
   </component>
 </module>
 
