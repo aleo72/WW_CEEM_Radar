@@ -1,22 +1,18 @@
 <component name="libraryTable">
   <library name="scala-lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/akka-actors.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/diffutils.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/jline.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-actors-migration.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-actors.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-partest.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-swing.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scalap.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/typesafe-config.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-actors-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-actors-migration_2.11-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/config-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/akka-actor_2.11-2.3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/jline-2.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-continuations-library_2.11-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-continuations-plugin_2.11.1-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-parser-combinators_2.11-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-swing_2.11-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-xml_2.11-1.0.2.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/src/fjbg-src.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/src/msil-src.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/src/scala-actors-src.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/src/scala-partest-src.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

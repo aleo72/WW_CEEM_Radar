@@ -16,10 +16,10 @@ import java.awt.event.{WindowEvent, WindowAdapter}
  * Date: 10.12.13
  * Time: 16:28
  */
-class ToolFrame(val ceemRadarTool: CeemRadarTool, val titleToolFrame: String) extends JFrame() {
+class ToolFrame(val ceemRadarTool: CeemRadarTool) extends JFrame() {
 
-	def this(toolName: String, titleToolFrame: String){
-		this(Class.forName(toolName).newInstance().asInstanceOf[CeemRadarTool] , titleToolFrame)
+	def this(toolName: String){
+		this(Class.forName(toolName).newInstance().asInstanceOf[CeemRadarTool])
 	}
 
 	ceemRadarTool.setParent(this)
@@ -27,7 +27,7 @@ class ToolFrame(val ceemRadarTool: CeemRadarTool, val titleToolFrame: String) ex
 	protected val startFunction: (ToolFrame) => Unit = ceemRadarTool.startFunction
 	protected val endFunction: (ToolFrame) => Unit = ceemRadarTool.endFunction
 
-	this.setTitle(titleToolFrame)
+	this.setTitle(this.ceemRadarTool.name)
 
 	this.setLocationByPlatform(true)
 
@@ -49,6 +49,10 @@ class ToolFrame(val ceemRadarTool: CeemRadarTool, val titleToolFrame: String) ex
 			if (endFunction != null) {
 				endFunction.apply(ToolFrame.this)
 			}
+		}
+
+		override def windowOpened(e: WindowEvent){
+			ceemRadarTool.init()
 		}
 	})
 

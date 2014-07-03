@@ -1,15 +1,11 @@
 <component name="libraryTable">
   <library name="scala-compiler">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/compiler/scala-compiler.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/compiler/scala-library.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/compiler/scala-reflect.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-compiler.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-library.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-reflect.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/compiler/scala-library-src.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/compiler/scala-reflect-src.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/compiler/scala-compiler-src.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

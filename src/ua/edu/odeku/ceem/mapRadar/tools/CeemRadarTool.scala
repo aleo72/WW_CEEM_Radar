@@ -18,6 +18,12 @@ trait CeemRadarTool extends NamingTool with PanelTool {
 		parentToolFrame = frame
 	}
 
+	/**
+	 * Метод для инициализации инструмента,
+	 * вызовется при мервом вызове, а не в помент создания
+	 */
+	def init(): Unit
+
 	def startFunction: (ToolFrame) => Unit
 
 	def endFunction: (ToolFrame) => Unit

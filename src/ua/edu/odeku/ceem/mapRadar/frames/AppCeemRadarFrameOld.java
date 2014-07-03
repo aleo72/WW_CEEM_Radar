@@ -83,7 +83,7 @@ public class AppCeemRadarFrameOld extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuMain = new JMenu(ResourceString.get("string_program")); // Пункт меню "Программа"
 
-        JMenu menuView = new JMenu(ResourceString.get("menu_view")); // Пункт меню "Программа"
+        JMenu menuView = new JMenu(ResourceString.get("view")); // Пункт меню "Программа"
         fillMenuView(menuView);
 
         JMenu menuTools = new JMenu(ResourceString.get("menu_tools"));
@@ -113,7 +113,7 @@ public class AppCeemRadarFrameOld extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("menu_radar_manager"));
+                    ceemRadarTool = new ToolFrame(toolName);// , ResourceString.get("menu_radar_manager"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -135,22 +135,22 @@ public class AppCeemRadarFrameOld extends JFrame {
     }
 
     private void fillMenuUtils(final JMenu menuParent) {
-        JMenuItem menuDownloadCache = new JMenuItem(ResourceString.get("menu_tools_downloadCache"));
-        menuDownloadCache.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame ceemRadarTool = null;
-                if (toolsComponents.containsKey(CacheDownload.class.getName())){
-                    ceemRadarTool = toolsComponents.get(CacheDownload.class.getName());
-                    if(!ceemRadarTool.isVisible())
-                        ceemRadarTool.setVisible(true);
-                } else {
-                    ceemRadarTool = new ToolFrame( new CacheDownloadTool() , ResourceString.get("frame_title_tool_cache"));
-                    ceemRadarTool.setVisible(true);
-                    toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
-                }
-            }
-        });
+//        JMenuItem menuDownloadCache = new JMenuItem(ResourceString.get("menu_tools_downloadCache"));
+//        menuDownloadCache.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                JFrame ceemRadarTool = null;
+//                if (toolsComponents.containsKey(CacheDownload.class.getName())){
+//                    ceemRadarTool = toolsComponents.get(CacheDownload.class.getName());
+//                    if(!ceemRadarTool.isVisible())
+//                        ceemRadarTool.setVisible(true);
+//                } else {
+//                    ceemRadarTool = new ToolFrame( new CacheDownloadTool() , ResourceString.get("frame_title_tool_cache"));
+//                    ceemRadarTool.setVisible(true);
+//                    toolsComponents.put(CacheDownload.class.getName(), ceemRadarTool);
+//                }
+//            }
+//        });
 
 
         JMenuItem menuGeoNameImporter = new JMenuItem(ResourceString.get("menu_tools_GeoNameImport"));
@@ -164,7 +164,7 @@ public class AppCeemRadarFrameOld extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("frame_title_tool_geoName"));
+                    ceemRadarTool = new ToolFrame(toolName);// , ResourceString.get("frame_title_tool_geoName"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -182,7 +182,7 @@ public class AppCeemRadarFrameOld extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(toolName , ResourceString.get("frame_title_tool_geoNameView"));
+                    ceemRadarTool = new ToolFrame(toolName);// , ResourceString.get("frame_title_tool_geoNameView"));
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -200,7 +200,7 @@ public class AppCeemRadarFrameOld extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(toolName , "Admin Border Importer");
+                    ceemRadarTool = new ToolFrame(toolName);// , "Admin Border Importer");
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
@@ -218,14 +218,14 @@ public class AppCeemRadarFrameOld extends JFrame {
                     if(!ceemRadarTool.isVisible())
                         ceemRadarTool.setVisible(true);
                 } else {
-                    ceemRadarTool = new ToolFrame(toolName , "Admin Border View");
+                    ceemRadarTool = new ToolFrame(toolName);// , "Admin Border View");
                     ceemRadarTool.setVisible(true);
                     toolsComponents.put(toolName, ceemRadarTool);
                 }
             }
         });
 
-        menuParent.add(menuDownloadCache);
+//        menuParent.add(menuDownloadCache);
         menuParent.add(menuGeoNameImporter);
         menuParent.add(menuGeoNameView);
         menuParent.add(menuAdminBorderImporter);

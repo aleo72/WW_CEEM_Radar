@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar
 
-import javax.swing.{JOptionPane, JMenuBar, JPanel, JFrame}
+import javax.swing.{JMenu, JOptionPane, JMenuBar, JPanel, JFrame}
 import java.awt.{BorderLayout, Dimension}
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas
 import gov.nasa.worldwind.util.{WWUtil, StatusBar}
@@ -19,6 +19,8 @@ import java.util.ResourceBundle
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils
 import gov.nasa.worldwind.exception.WWAbsentRequirementException
+import scala.collection.mutable
+import ua.edu.odeku.ceem.mapRadar.menu.ProgramBar
 
 /***********************************************************************************************************************
  * Главное окно программы
@@ -35,7 +37,9 @@ object AppCeemRadarFrame extends JFrame {
 	val wwjPanel = new AppMainPanel(canvasSize, DefaultValue.createStaticPanel)
 	def wwd = wwjPanel.wwd
 
-	val frameMenuBar = createMenuBar()
+	val toolsComponents = new mutable.HashMap[String, JFrame]()
+
+	val frameMenuBar = ProgramBar.createProgramMainBar()
 	this.setJMenuBar(frameMenuBar)
 
 	this.getContentPane.add(wwjPanel, BorderLayout.CENTER)
@@ -81,6 +85,9 @@ object AppCeemRadarFrame extends JFrame {
 	def createMenuBar() = {
 		val mainMenu = new JMenuBar
 		// Todo create fill menu
+//		val mainMenu = new JMenu(ResourceBundle.getBundle("menu").getString("program"))
+
+//		val menuView = new JMenu()
 		mainMenu
 	}
 }
