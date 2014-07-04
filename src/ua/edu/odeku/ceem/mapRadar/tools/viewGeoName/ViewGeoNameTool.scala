@@ -174,7 +174,7 @@ class ViewGeoNameTool extends CeemRadarTool {
 		new Thread(new Runnable {
 			def run() {
 				viewPanel.table.setAutoCreateRowSorter(false)
-				viewPanel.table.setModel(new GeoNameTableModel(finalPrefix, finalCountry, finalFeatureClass, finalFeatureCode))
+				viewPanel.table.setModel(new GeoNamesTableModel(finalPrefix, finalCountry, finalFeatureClass, finalFeatureCode))
 				viewPanel.table.setAutoCreateRowSorter(false)
 				viewPanel.table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS)
 			}
