@@ -10,6 +10,8 @@ import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 
 import scala.slick.driver.H2Driver.simple._
+import scala.slick.lifted
+import scala.slick.lifted.WrappingQuery
 
 /**
  * User: Aleo Bakalov
@@ -61,7 +63,7 @@ class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 	/**
 	 * longitude in decimal degrees (wgs84)
 	 */
-	def lon = column[Double]("LAT", O.NotNull)
+	def lon = column[Double]("LON", O.NotNull)
 
 	/**
 	 * see http://www.geonames.org/export/codes.html, char(1)
@@ -98,6 +100,8 @@ class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 object GeoNames {
 
 	val countFieldsInGeoName = 10
+
+	val objects = TableQuery[GeoNames]
 
 	def +=(geoName: GeoName) = {
 		DB.database withSession {
@@ -139,6 +143,49 @@ object GeoNames {
 
 	def list(subName: String = null, country: String = null, featureClass: String = null, featureCode: String = null) = {
 
-		Array[GeoName]()
+		var query: Query[GeoNames, GeoNames#TableElementType, Seq] = null
+
+		query = if (country != null) objects.filter(_.countryCode === country) else query
+
+//		query = if (featureClass != null) {
+//			query = if (query == null) objects.filter(_.featureClass === featureClass) else query.filter(_.featureClass == featureClass)
+//
+//			query = if (featureCode != null) query.filter(_.featureCode === featureCode) else query
+//
+//			query
+//		} else query
+
+
+
+		query = if (subName != null && !subName.trim.isEmpty) {
+			val nameLike = s"%$subName%"
+			query.filter(_.name like nameLike) union query.filter(_.translateName like nameLike) union query.filter(_.ascii like nameLike) union query.filter(_.alternateNames like nameLike)
+		} else query
+
+		DB.database withSession {
+			implicit session =>
+
+//				objects.ddl.create
+
+				println(query.selectStatement)
+				query.list.toArray
+//				Query[GeoNames, GeoNames#TableElementType, Seq]
+		}
+//		Array[GeoName]()
 	}
+}
+
+object Test extends App {
+	DB.database withSession {
+		implicit session =>
+			GeoNames.objects.ddl.create
+	}
+
+	GeoNames += GeoName(1,"test", "test2", "test3,test4",7234.90, 7294.94, "F", "FF", "UA", null)
+
+	GeoNames.list("", "UA", "F", "FF")
+
+	println()
+
+	GeoNames.list("456", "ua", "F", "KK")
 }

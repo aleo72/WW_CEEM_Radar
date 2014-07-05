@@ -7,6 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.db
 
 import javax.persistence.{EntityManager, Persistence}
 import org.hibernate.Session
+import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
 
 import scala.slick.lifted.Tag
 
@@ -59,7 +60,7 @@ object DB {
 
 		import scala.slick.driver.H2Driver.{simple => DatabaseH2}
 
-		val pathToDB = "CeemRadarData/database/h2/mapRadar"
+		val pathToDB = "../CeemRadarData/database/h2/mapRadar"
 		val options = Array("MVCC=true", "DB_CLOSE_ON_EXIT=FALSE")
 		val driver = "org.h2.Driver"
 		val user = "ceem"
@@ -83,9 +84,9 @@ object DB {
 
 object Test extends App {
 
-	DB.database_memory withSession {
-		implicit session =>
-
-	}
+//	DB.database_memory withSession {
+//		implicit session =>
+//			GeoNames += GeoName(1,"test", "test2", "test3,test4",7234.90, 7294.94, "F", "FF", "UA", null)
+//	}
 
 }
