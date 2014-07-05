@@ -13,7 +13,7 @@ import ua.edu.odeku.ceem.mapRadar.db.DB
 import java.lang.{Object, String}
 import scala.Predef.String
 import java.awt.event.{MouseAdapter, ActionEvent, ActionListener, MouseEvent}
-import ua.edu.odeku.ceem.mapRadar.db.models.GeoName
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoName
 import gov.nasa.worldwind.geom.{Position, LatLon}
 import gov.nasa.worldwind.WorldWindow
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
@@ -44,8 +44,8 @@ class ViewGeoNameTool extends CeemRadarTool {
 		override def mouseClicked(e: MouseEvent) {
 			if (e.getClickCount == 2) {
 				val geoName: GeoName =
-					viewPanel.table.getModel.asInstanceOf[GeoNameTableModel].getListGeoName.get(viewPanel.table.getSelectedRow)
-				val latLon: LatLon = LatLon.fromDegrees(geoName.getLat, geoName.getLon)
+					viewPanel.table.getModel.asInstanceOf[GeoNamesTableModel].list(viewPanel.table.getSelectedRow)
+				val latLon: LatLon = LatLon.fromDegrees(geoName.lat, geoName.lon)
 				val elevation: Double = 0x1 << 15
 				AppCeemRadarFrame.wwd.getView.goTo(new Position(latLon, elevation), elevation)
 			}

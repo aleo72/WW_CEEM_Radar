@@ -6,11 +6,11 @@ import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.util.AbsentResourceList;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.Tile;
-import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
-import ua.edu.odeku.ceem.mapRadar.utils.models.GeoNameUtils;
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoName;
 
 import java.awt.*;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -192,7 +192,7 @@ public class GeoNames {
     }
 
     public List<GeoName> getGeoNamesFromDB() {
-        return GeoNameUtils.getList(geoNameCountry, geoNameClass, geoNameCode);
+        return Arrays.asList(ua.edu.odeku.ceem.mapRadar.db.model.GeoNames.list(null, geoNameCountry, geoNameClass, geoNameCode));
     }
 
     public synchronized final void markResourceAbsent(long tileNumber)

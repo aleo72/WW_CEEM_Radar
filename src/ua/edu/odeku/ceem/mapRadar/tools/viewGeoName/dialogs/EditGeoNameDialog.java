@@ -10,7 +10,7 @@ import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import ua.edu.odeku.ceem.mapRadar.db.DB;
-import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoName;
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
 import ua.edu.odeku.ceem.mapRadar.utils.geometry.LatitudeLongitudeUtils;
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage;
@@ -100,16 +100,16 @@ public class EditGeoNameDialog extends JDialog {
         this();
 
         this.geoName = geoName;
-        this.idTextField.setText(String.valueOf(geoName.getId()));
-        this.sourceIdTextField.setText(String.valueOf(geoName.getSourceId()));
-        this.nameTextField.setText(geoName.getName());
-        this.asciiNameTextField.setText(geoName.getAsciiname());
-        this.translateTextField.setText(geoName.getTranslateName() != null ? geoName.getTranslateName() : "");
-        this.alternativeTextField.setText(geoName.getAlternatenames() != null ? geoName.getAlternatenames() : "");
-        this.countryTextField.setText(geoName.getCountryCode());
-        this.featureClassTextField.setText(String.valueOf(geoName.getFeatureClass()));
-        this.lantitudeFormattedTextField.setText(String.valueOf(geoName.getLat()));
-        this.longitudeFormattedTextField.setText(String.valueOf(geoName.getLon()));
+        this.idTextField.setText(String.valueOf(geoName.id()));
+        this.sourceIdTextField.setText(String.valueOf(geoName.id()));
+        this.nameTextField.setText(geoName.name());
+        this.asciiNameTextField.setText(geoName.ascii());
+        this.translateTextField.setText(geoName.translateName() != null ? geoName.translateName() : "");
+        this.alternativeTextField.setText(geoName.alternateNames() != null ? geoName.alternateNames() : "");
+        this.countryTextField.setText(geoName.countryCode());
+        this.featureClassTextField.setText(String.valueOf(geoName.featureClass()));
+        this.lantitudeFormattedTextField.setText(String.valueOf(geoName.lat()));
+        this.longitudeFormattedTextField.setText(String.valueOf(geoName.lon()));
 
         initFeatureCode(geoName);
 
@@ -127,7 +127,7 @@ public class EditGeoNameDialog extends JDialog {
                 " ORDER BY FEATURE_CODE                 ;";
         SQLQuery query = session.createSQLQuery(sql);
 
-        query.setParameter("featureClass", geoName.getFeatureClass());
+        query.setParameter("featureClass", geoName.featureCode());
         query.addScalar("FEATURE_CODE", DB.STRING_TYPE());
 
         ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
@@ -140,7 +140,7 @@ public class EditGeoNameDialog extends JDialog {
         results.close();
         DB.closeSession(session);
 
-        featureCodeComboBox.setSelectedItem(geoName.getFeatureCode());
+        featureCodeComboBox.setSelectedItem(geoName.featureCode());
     }
 
     private void onOK() {
@@ -165,15 +165,15 @@ public class EditGeoNameDialog extends JDialog {
             try {
                 session = DB.createHibernateSession();
 
-                GeoName geoName = (GeoName) (session.load(GeoName.class, new Integer(this.geoName.getId())));
+//                GeoName geoName = (GeoName) (session.load(GeoName.class, new Integer(this.geoName.getId())));
 
-                geoName.setName(nameTextField.getText());
-                geoName.setAsciiname(asciiNameTextField.getText());
-                geoName.setTranslateName(translateTextField.getText());
-                geoName.setAlternatenames(alternativeTextField.getText());
-                geoName.setLat(Double.parseDouble(lantitudeFormattedTextField.getText()));
-                geoName.setLon(Double.parseDouble(longitudeFormattedTextField.getText()));
-                geoName.setFeatureCode(featureCodeComboBox.getSelectedItem().toString());
+//                geoName.setName(nameTextField.getText());
+//                geoName.setAsciiname(asciiNameTextField.getText());
+//                geoName.setTranslateName(translateTextField.getText());
+//                geoName.setAlternatenames(alternativeTextField.getText());
+//                geoName.setLat(Double.parseDouble(lantitudeFormattedTextField.getText()));
+//                geoName.setLon(Double.parseDouble(longitudeFormattedTextField.getText()));
+//                geoName.setFeatureCode(featureCodeComboBox.getSelectedItem().toString());
 
                 session.flush();
 
@@ -201,7 +201,7 @@ public class EditGeoNameDialog extends JDialog {
             String message = ResourceString.get("field_geoName_name") + " "
                     + ResourceString.get("message-must-not-be-empty");
             UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.nameTextField.setText(geoName.getName());
+            this.nameTextField.setText(geoName.name());
             return false;
         }
         data = asciiNameTextField.getText();
@@ -210,7 +210,7 @@ public class EditGeoNameDialog extends JDialog {
                     ResourceString.get("field_geoName_asciiName") + " "
                     + ResourceString.get("message-must-not-be-empty") + "!";
             UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.asciiNameTextField.setText(geoName.getAsciiname());
+            this.asciiNameTextField.setText(geoName.ascii());
             return false;
         }
         data = translateTextField.getText();
@@ -219,7 +219,7 @@ public class EditGeoNameDialog extends JDialog {
                     ResourceString.get("field_geoName_translate") + " "
                     + ResourceString.get("message-must-not-be-empty") + "!";
             UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.translateTextField.setText(geoName.getTranslateName());
+            this.translateTextField.setText(geoName.translateName());
             return false;
         }
         if (!LatitudeLongitudeUtils.isValidLatitude(lantitudeFormattedTextField.getText())) {
@@ -227,7 +227,7 @@ public class EditGeoNameDialog extends JDialog {
                     ResourceString.get("field_geoName_latitude") + " "
                     + ResourceString.get("message_Do-not-satisfy-the-format-of-the-coordinates") + "!";
             UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.lantitudeFormattedTextField.setText(String.valueOf(geoName.getLat()));
+            this.lantitudeFormattedTextField.setText(String.valueOf(geoName.lat()));
             return false;
         }
         if (!LatitudeLongitudeUtils.isValidLongitude(longitudeFormattedTextField.getText())) {
@@ -235,7 +235,7 @@ public class EditGeoNameDialog extends JDialog {
                     ResourceString.get("field_geoName_longitude") + " "
                     + ResourceString.get("message_Do-not-satisfy-the-format-of-the-coordinates") + "!";
             UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.longitudeFormattedTextField.setText(String.valueOf(this.geoName.getLon()));
+            this.longitudeFormattedTextField.setText(String.valueOf(this.geoName.lon()));
             return false;
         }
         return true;

@@ -5,6 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.db.model
 
+import ua.edu.odeku.ceem.mapRadar.db.DB
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 
@@ -98,14 +99,18 @@ object GeoNames {
 
 	val countFieldsInGeoName = 10
 
-	val objects = TableQuery[GeoNames]
-
 	def +=(geoName: GeoName) = {
-		objects += geoName
+		DB.database withSession {
+			implicit session =>
+				TableQuery[GeoNames] += geoName
+		}
 	}
 
 	def ++=(values: Iterable[GeoName]) = {
-		objects ++= values
+		DB.database withSession {
+			implicit session =>
+				TableQuery[GeoNames] ++= values
+		}
 	}
 
 	def createGeoName(line: String) = {
@@ -130,5 +135,10 @@ object GeoNames {
 				val exceptionMessage = e.getMessage
 				throw new GeoNameException(s"$message\n$line\n$exceptionMessage")
 		}
+	}
+
+	def list(subName: String = null, country: String = null, featureClass: String = null, featureCode: String = null) = {
+
+		Array[GeoName]()
 	}
 }

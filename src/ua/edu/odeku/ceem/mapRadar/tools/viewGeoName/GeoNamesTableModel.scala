@@ -23,7 +23,7 @@ class GeoNamesTableModel extends AbstractTableModel {
 
 	def this(subName: String, country: String, featureClass: String, featureCode: String) {
 		this()
-		_list = GeoName.list(subName, country, featureClass, featureCode)
+		_list = GeoNames.list(subName, country, featureClass, featureCode)
 	}
 
 	override def getRowCount: Int = _list.length

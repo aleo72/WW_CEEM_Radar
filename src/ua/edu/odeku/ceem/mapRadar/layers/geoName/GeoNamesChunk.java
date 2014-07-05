@@ -9,10 +9,10 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.GeographicText;
 import gov.nasa.worldwind.render.UserFacingText;
-import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
-import ua.edu.odeku.ceem.mapRadar.utils.models.GeoNameUtils;
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public class GeoNamesChunk {
 
     public List<GeoName> getGeoNameList(){
         if (geoNameList == null){
-            geoNameList = GeoNameUtils.getListSimple(geoNames.geoNameCountry, geoNames.geoNameClass, geoNames.geoNameCode);
+            geoNameList = Arrays.asList(ua.edu.odeku.ceem.mapRadar.db.model.GeoNames.list(null, geoNames.geoNameCountry, geoNames.geoNameClass, geoNames.geoNameCode));
         }
         return geoNameList;
     }
@@ -56,14 +56,14 @@ public class GeoNamesChunk {
     }
 
     private Position getPosition(GeoName geo) {
-        return Position.fromDegrees(geo.getLat(), geo.getLon(), 0);
+        return Position.fromDegrees(geo.lat(), geo.lon(), 0);
     }
 
     private CharSequence getText(GeoName geoName) {
-        if(geoName.getTranslateName() != null && !geoName.getTranslateName().isEmpty()){
-            return geoName.getName() + "(" + geoName.getTranslateName() + ")";
+        if(geoName.translateName() != null && !geoName.translateName().isEmpty()){
+            return geoName.name() + "(" + geoName.translateName() + ")";
         } else {
-            return geoName.getName();
+            return geoName.name();
         }
     }
 }

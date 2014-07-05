@@ -13,7 +13,7 @@ import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.GeographicText;
 import gov.nasa.worldwind.render.UserFacingText;
 import gov.nasa.worldwind.util.Logging;
-import ua.edu.odeku.ceem.mapRadar.db.models.GeoName;
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -400,8 +400,8 @@ public abstract class GeoNameLayer extends AbstractLayer {
             List<GeoName> listGeoName = geoNames.getGeoNamesFromDB();
             ArrayList<GeographicText> list = new ArrayList<GeographicText>(listGeoName.size());
             for(GeoName geoName : listGeoName){
-                CharSequence str = geoName.getName();
-                Position position = Position.fromDegrees(geoName.getLat(), geoName.getLon(), 0d);
+                CharSequence str = geoName.name();
+                Position position = Position.fromDegrees(geoName.lat(), geoName.lon(), 0d);
                 GeographicText text = new UserFacingText(str, position);
                 text.setFont(this.geoNames.font);
                 text.setColor(this.geoNames.getColor());
