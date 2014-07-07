@@ -104,7 +104,7 @@ public class EditGeoNameDialog extends JDialog {
         this.sourceIdTextField.setText(String.valueOf(geoName.id()));
         this.nameTextField.setText(geoName.name());
         this.asciiNameTextField.setText(geoName.ascii());
-        this.translateTextField.setText(geoName.translateName() != null ? geoName.translateName() : "");
+        this.translateTextField.setText(geoName.translateName().get() != null ? geoName.translateName().get() : "");
         this.alternativeTextField.setText(geoName.alternateNames() != null ? geoName.alternateNames() : "");
         this.countryTextField.setText(geoName.countryCode());
         this.featureClassTextField.setText(String.valueOf(geoName.featureClass()));
@@ -219,7 +219,7 @@ public class EditGeoNameDialog extends JDialog {
                     ResourceString.get("field_geoName_translate") + " "
                     + ResourceString.get("message-must-not-be-empty") + "!";
             UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.translateTextField.setText(geoName.translateName());
+            this.translateTextField.setText(geoName.translateName().get());
             return false;
         }
         if (!LatitudeLongitudeUtils.isValidLatitude(lantitudeFormattedTextField.getText())) {

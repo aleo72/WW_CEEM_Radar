@@ -8,10 +8,9 @@ package ua.edu.odeku.ceem.mapRadar.db.model
 import ua.edu.odeku.ceem.mapRadar.db.DB
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
 import scala.slick.driver.H2Driver.simple._
-import scala.slick.lifted
-import scala.slick.lifted.WrappingQuery
 
 /**
  * User: Aleo Bakalov
@@ -20,15 +19,15 @@ import scala.slick.lifted.WrappingQuery
  */
 
 case class GeoName(id: Long,
-				   name: String,
-				   ascii: String,
-				   alternateNames: String,
-				   lat: Double,
-				   lon: Double,
-				   featureClass: String,
-				   featureCode: String,
-				   countryCode: String,
-				   translateName: String = null) {
+                   name: String,
+                   ascii: String,
+                   alternateNames: String,
+                   lat: Double,
+                   lon: Double,
+                   featureClass: String,
+                   featureCode: String,
+                   countryCode: String,
+                   translateName: Option[String] = None) {
 
 	val fields = Array(id, name, ascii, alternateNames, lat, lon, featureClass, featureCode, countryCode, translateName)
 }
@@ -90,7 +89,7 @@ class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 	 */
 	def countryCode = column[String]("COUNTRY_CODE", O.NotNull)
 
-	def translateName = column[String]("TRANSLATE", O.Nullable)
+	def translateName = column[Option[String]]("TRANSLATE", O.Nullable)
 
 	def alternateNamesOfArray = if (alternateNames == null) Array() else alternateNames.toString().split(",")
 
@@ -147,13 +146,13 @@ object GeoNames {
 
 		query = if (country != null) objects.filter(_.countryCode === country) else query
 
-//		query = if (featureClass != null) {
-//			query = if (query == null) objects.filter(_.featureClass === featureClass) else query.filter(_.featureClass == featureClass)
-//
-//			query = if (featureCode != null) query.filter(_.featureCode === featureCode) else query
-//
-//			query
-//		} else query
+		query = if (featureClass != null) {
+			query = if (query == null) objects.filter(_.featureClass === featureClass) else query.filter(_.featureClass === featureClass)
+
+			query = if (featureCode != null) query.filter(_.featureCode === featureCode) else query
+
+			query
+		} else query
 
 
 
@@ -162,30 +161,32 @@ object GeoNames {
 			query.filter(_.name like nameLike) union query.filter(_.translateName like nameLike) union query.filter(_.ascii like nameLike) union query.filter(_.alternateNames like nameLike)
 		} else query
 
+		query  = if (query == null) GeoNames.objects.filter(_.id >= 0L ) else query
+
+		query = query.sortBy(_.alternateNames).sortBy(_.ascii).sortBy(_.name).sortBy(_.translateName)
+
 		DB.database withSession {
 			implicit session =>
 
-//				objects.ddl.create
+				if (PropertyProgram.DEBUG) println(query.selectStatement)
 
-				println(query.selectStatement)
 				query.list.toArray
-//				Query[GeoNames, GeoNames#TableElementType, Seq]
 		}
-//		Array[GeoName]()
 	}
 }
 
 object Test extends App {
 	DB.database withSession {
 		implicit session =>
+			GeoNames.objects.ddl.drop
 			GeoNames.objects.ddl.create
+
 	}
 
-	GeoNames += GeoName(1,"test", "test2", "test3,test4",7234.90, 7294.94, "F", "FF", "UA", null)
+	GeoNames += GeoName(1, "test", "test2", "test3,test4", 7234.90, 7294.94, "F", "FF", "UA", null)
 
-	GeoNames.list("", "UA", "F", "FF")
+	println(GeoNames.list("", "UA", "FF", "FF").mkString(","))
+	println(GeoNames.list("st4", "UA", "F", "FF").mkString(","))
 
-	println()
-
-	GeoNames.list("456", "ua", "F", "KK")
+	print(GeoNames.list().mkString(","))
 }

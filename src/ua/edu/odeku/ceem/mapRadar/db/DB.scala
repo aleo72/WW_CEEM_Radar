@@ -60,7 +60,7 @@ object DB {
 
 		import scala.slick.driver.H2Driver.{simple => DatabaseH2}
 
-		val pathToDB = "../CeemRadarData/database/h2/mapRadar"
+		val pathToDB = "./CeemRadarData/database/h2/mapRadar"
 		val options = Array("MVCC=true", "DB_CLOSE_ON_EXIT=FALSE")
 		val driver = "org.h2.Driver"
 		val user = "ceem"
@@ -74,7 +74,7 @@ object DB {
 
 		lazy val db = DatabaseH2.Database.forURL(url = url, user = user, password = password, driver = driver)
 
-		lazy val db_memory = DatabaseH2.Database.forURL(url = url, user = user, password = password, driver = driver)
+		lazy val db_memory = DatabaseH2.Database.forURL(url = urlForMemory, user = user, password = password, driver = driver)
 	}
 
 	def database = H2.db
