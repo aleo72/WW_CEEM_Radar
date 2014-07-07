@@ -21,42 +21,42 @@ import scala.slick.jdbc.meta.MTable
  */
 object DB {
 
-	private lazy val _entityManagerFactory = Persistence.createEntityManagerFactory("db_h2")
-	val STRING_TYPE = org.hibernate.`type`.StringType.INSTANCE
-	val DOUBLE_TYPE = org.hibernate.`type`.DoubleType.INSTANCE
-	val INTEGER_TYPE = org.hibernate.`type`.IntegerType.INSTANCE
-	val LONG_TYPE = org.hibernate.`type`.LongType.INSTANCE
-
-	/**
-	 * Создает объект EntityManager
-	 * @return EntityManager
-	 */
-	def createEntityManager(): EntityManager = _entityManagerFactory.createEntityManager()
-
-	/**
-	 * Создает object org.hibernate.Session
-	 * @return org.hibernate.Session
-	 */
-	def createHibernateSession(): Session = createEntityManager().unwrap(classOf[Session])
-
-	/**
-	 * Закрывает org.hibernate.Session переданую в качестве параметра
-	 * @param session
-	 */
-	def closeSession(session: Session) {
-		if (session != null && session.isOpen) {
-			session.close()
-		}
-	}
-
-	/**
-	 * Метод подключается к базе данных и закрывает ее
-	 */
-	def initDBConnection() {
-		new Thread(new Runnable {
-			def run(): Unit = DB.createEntityManager().close()
-		}).start()
-	}
+//	private lazy val _entityManagerFactory = Persistence.createEntityManagerFactory("db_h2")
+//	val STRING_TYPE = org.hibernate.`type`.StringType.INSTANCE
+//	val DOUBLE_TYPE = org.hibernate.`type`.DoubleType.INSTANCE
+//	val INTEGER_TYPE = org.hibernate.`type`.IntegerType.INSTANCE
+//	val LONG_TYPE = org.hibernate.`type`.LongType.INSTANCE
+//
+//	/**
+//	 * Создает объект EntityManager
+//	 * @return EntityManager
+//	 */
+//	def createEntityManager(): EntityManager = _entityManagerFactory.createEntityManager()
+//
+//	/**
+//	 * Создает object org.hibernate.Session
+//	 * @return org.hibernate.Session
+//	 */
+//	def createHibernateSession(): Session = createEntityManager().unwrap(classOf[Session])
+//
+//	/**
+//	 * Закрывает org.hibernate.Session переданую в качестве параметра
+//	 * @param session
+//	 */
+//	def closeSession(session: Session) {
+//		if (session != null && session.isOpen) {
+//			session.close()
+//		}
+//	}
+//
+//	/**
+//	 * Метод подключается к базе данных и закрывает ее
+//	 */
+//	def initDBConnection() {
+//		new Thread(new Runnable {
+//			def run(): Unit = DB.createEntityManager().close()
+//		}).start()
+//	}
 
 	object H2 {
 		val pathToDB = "./CeemRadarData/database/h2/mapRadar"

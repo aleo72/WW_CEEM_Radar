@@ -5,14 +5,21 @@
 
 package ua.edu.odeku.ceem.mapRadar.db.model
 
+import gov.nasa.worldwind.geom.LatLon
+import org.hibernate.ScrollMode
 import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
 import scala.slick.jdbc.meta.MTable
+import scala.slick.jdbc.{GetResult, StaticQuery => Q}
+import scala.slick.jdbc.JdbcBackend.Database
+import Q.interpolation
 
 /**
  * User: Aleo Bakalov
@@ -109,7 +116,7 @@ object GeoNames extends CeemTableObject {
 	override def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database) {
 		if (!existsTables.exists(_.name.name == tableName)) {
 			db withSession { implicit session =>
-				if(PropertyProgram.DEBUG) println(objects.ddl.createStatements.mkString("\n"))
+				if (PropertyProgram.DEBUG) println(objects.ddl.createStatements.mkString("\n"))
 				objects.ddl.create
 			}
 		}
@@ -161,13 +168,9 @@ object GeoNames extends CeemTableObject {
 
 		query = if (featureClass != null) {
 			query = if (query == null) objects.filter(_.featureClass === featureClass) else query.filter(_.featureClass === featureClass)
-
 			query = if (featureCode != null) query.filter(_.featureCode === featureCode) else query
-
 			query
 		} else query
-
-
 
 		query = if (subName != null && !subName.trim.isEmpty) {
 			val nameLike = s"%$subName%"
@@ -186,20 +189,95 @@ object GeoNames extends CeemTableObject {
 				query.list.toArray
 		}
 	}
-}
 
-object Test extends App {
-//	DB.database withSession {
-//		implicit session =>
-//			GeoNames.objects.ddl.drop
-//			GeoNames.objects.ddl.create
-//
-//	}
-	for(i <- 1 to 1000) {
-		GeoNames += GeoName(i, "test"+ i, i+"test2", i+"test3,test4"+i, 7234.90, 7294.94, "F", "FF", "UA", null)
+	/**
+	 * Возращает список feature codes
+	 * @param featureClass класс фич, из которых необходимо выбрать коды фич
+	 * @return список код фич
+	 */
+	def featureCodes(featureClass: String): List[String] = {
+		DB.database withSession { implicit session =>
+			GeoNames.objects.filter(_.featureClass === featureClass).filter(_.featureCode isNotNull).map(_.featureCode desc).list
+		}
 	}
 
-//	GeoNames += GeoName(1, "test", "test2", "test3,test4", 7234.90, 7294.94, "F", "FF", "UA", null)
+	def featureClass: List[String] = {
+		DB.database withSession{ implicit session =>
+			GeoNames.objects.filter(_.featureClass isNotNull).map(_.featureClass desc).list
+		}
+	}
+
+	def coutres = {
+		DB.database withSession {implicit session=>
+			GeoNames.objects.filter(_.countryCode isNotNull).map(_.countryCode desc).list
+		}
+	}
+}
+
+case class GeoNamesWithNameAndCoordinates(name: String, latlon: LatLon) {
+
+	override def toString = name
+}
+
+object GeoNamesWithNameAndCoordinates {
+
+	def getSettlements(text: String): List[GeoNamesWithNameAndCoordinates] = {
+		val table = GeoNames.objects.baseTableRow
+		val geoNameTable = table.tableName
+		val nameColumn = table.name.toString()
+		val translateNameColumn = table.translateName.toString()
+		val latColumn = table.lat.toString()
+		val lonColumn = table.lon.toString()
+		val featureClassColumn = table.featureClass.toString()
+
+		val sql = Q.queryNA[(String, Double, Double)](
+			s"""
+			  SELECT
+			    CASE
+			      WHEN $translateNameColumn IS NOT NULL
+			        THEN $translateNameColumn
+			        ELSE NAME
+			    END AS $nameColumn,
+
+			    $latColumn,
+			  	$lonColumn
+			  FROM
+			    $geoNameTable
+				WHERE
+					$featureClassColumn != 'A'
+			  	AND (
+						UPPER($nameColumn) LIKE '$text'
+							OR
+						UPPER($translateNameColumn) LIKE '$text'
+			  	)
+			  	ORDER BY
+			  				$nameColumn;
+			""")
+
+		val list = new mutable.MutableList[GeoNamesWithNameAndCoordinates]
+
+		DB.database withSession { implicit session =>
+			sql foreach {
+				v => list += GeoNamesWithNameAndCoordinates(v._1, LatLon.fromDegrees(v._2, v._3))
+			}
+		}
+		list.toList
+	}
+}
+
+
+object Test extends App {
+	//	DB.database withSession {
+	//		implicit session =>
+	//			GeoNames.objects.ddl.drop
+	//			GeoNames.objects.ddl.create
+	//
+	//	}
+	for (i <- 1 to 1000) {
+		GeoNames += GeoName(i, "test" + i, i + "test2", i + "test3,test4" + i, 7234.90, 7294.94, "F", "FF", "UA", null)
+	}
+
+	//	GeoNames += GeoName(1, "test", "test2", "test3,test4", 7234.90, 7294.94, "F", "FF", "UA", null)
 
 	println(GeoNames.list("", "UA", "FF", "FF").mkString(","))
 	println(GeoNames.list("st4", "UA", "F", "FF").mkString(","))

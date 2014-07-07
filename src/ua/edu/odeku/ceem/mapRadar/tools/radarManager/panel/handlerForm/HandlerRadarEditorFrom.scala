@@ -5,24 +5,22 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm
 
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm
-import javax.swing._
-import ua.edu.odeku.ceem.mapRadar.models.radar.{RadarTypeParameters, RadarFactory, RadarTypes, Radar}
 import java.awt.event._
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntryMessage, AirspaceEntry}
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.CeemRadarAirspaceFactory
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
-import com.jgoodies.forms.layout.{FormLayout, CellConstraints}
-import scala.collection.mutable
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
-import ua.edu.odeku.ceem.mapRadar.utils.gui.{UserMessage, VisibleUtils}
-import gov.nasa.worldwind.geom.LatLon
+import javax.swing._
+
+import com.jgoodies.forms.layout.{CellConstraints, FormLayout}
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates
 import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypeParameters.RadarTypeParameter
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.EditAirspaceEntryMessage
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.CreateAirspaceEntryMessage
-import ua.edu.odeku.ceem.mapRadar.db.DB
-import org.hibernate.ScrollMode
+import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes.RadarType
+import ua.edu.odeku.ceem.mapRadar.models.radar.{Radar, RadarFactory, RadarTypeParameters, RadarTypes}
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.ActionListeners.airspaceActionListeners.AirspaceChangeLocationOnFormListener
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.{AirspaceEntry, AirspaceEntryMessage, CreateAirspaceEntryMessage, EditAirspaceEntryMessage}
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.factories.CeemRadarAirspaceFactory
+import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.RadarEditorForm
+import ua.edu.odeku.ceem.mapRadar.utils.gui.{UserMessage, VisibleUtils}
+
+import scala.collection.mutable
 
 /**
  * User: Aleo Bakalov
@@ -83,11 +81,11 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 						val text = source.getText
 
 						if (text.trim.length >= 3) {
-							val list = Settlement.getSettlements(text.trim)
+							val list = GeoNamesWithNameAndCoordinates.getSettlements(text.trim)
 							println(list.size)
 
 							form.locationNameComboBox.removeAllItems()
-							for(settlement: Settlement <- list){
+							for (settlement: GeoNamesWithNameAndCoordinates <- list) {
 								form.locationNameComboBox.addItem(settlement)
 							}
 
@@ -150,14 +148,14 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 		form.typeRadarComboBox.setSelectedIndex(0)
 		form.typeRadarComboBox.addItemListener(typeRadarComboBoxItemListener)
 
-		form.locationNameComboBox = new JComboBox[Settlement]
+		form.locationNameComboBox = new JComboBox[GeoNamesWithNameAndCoordinates]
 		form.locationNameComboBox.setEditable(true)
 		form.locationNameComboBox.getEditor.getEditorComponent.addKeyListener(locationNameComboBoxKeyListener)
 	}
 
-	def updateRadarLocation(){
+	def updateRadarLocation() {
 		form.locationNameComboBox.getSelectedItem match {
-			case settlement: Settlement =>
+			case settlement: GeoNamesWithNameAndCoordinates =>
 				radar.latLon = settlement.latlon
 			case _ =>
 
@@ -256,66 +254,5 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
 
 		if (form.altitudeSpinner != null)
 			radar.altitude = form.altitudeSpinner.getValue.asInstanceOf[Int]
-	}
-}
-
-case class Settlement(name: String, latlon: LatLon){
-
-	override def toString = {
-		name
-	}
-}
-
-object Settlement {
-
-	def getSettlements(text: String): List[Settlement] = {
-		val list = new mutable.MutableList[Settlement]
-
-		val sql = """
-			SELECT
-				CASE WHEN TRANSLATE IS NOT NULL THEN TRANSLATE ELSE NAME END AS NAME,
-				LAT,
-				LON
-			FROM
-				GEO_NAME
-			WHERE
-		        FEATURE_CLASS != 'A'
-		            AND
-				(
-					UPPER(NAME) LIKE :startName
-						OR
-					UPPER(TRANSLATE) LIKE :startName
-				)
-			ORDER BY
-				NAME;
-		          """
-
-		val session = DB.createHibernateSession()
-
-		val sqlQuery = session.createSQLQuery(sql)
-
-		sqlQuery.addScalar("NAME", DB.STRING_TYPE)
-		sqlQuery.addScalar("LAT", DB.DOUBLE_TYPE)
-		sqlQuery.addScalar("LON", DB.DOUBLE_TYPE)
-
-		sqlQuery.setParameter("startName", text.trim.toUpperCase + "%", DB.STRING_TYPE)
-
-		val result = sqlQuery.scroll(ScrollMode.FORWARD_ONLY)
-
-		while(result.next()){
-			val name = result.getString(0)
-			val lat = result.getDouble(1)
-			val lon = result.getDouble(2)
-			val latLon = LatLon.fromDegrees(lat, lon)
-
-			val settlement = new Settlement(name, latLon)
-
-			list += settlement
-		}
-
-		result.close()
-		session.close()
-
-		list.toList
 	}
 }

@@ -13,7 +13,7 @@ import ua.edu.odeku.ceem.mapRadar.db.DB
 import java.lang.{Object, String}
 import scala.Predef.String
 import java.awt.event.{MouseAdapter, ActionEvent, ActionListener, MouseEvent}
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoName
+import ua.edu.odeku.ceem.mapRadar.db.model.{GeoNames, GeoName}
 import gov.nasa.worldwind.geom.{Position, LatLon}
 import gov.nasa.worldwind.WorldWindow
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
@@ -67,25 +67,9 @@ class ViewGeoNameTool extends CeemRadarTool {
 				def run() {
 					viewPanel.featureCodeComboBox.removeAllItems()
 					viewPanel.featureCodeComboBox.addItem("")
-					val session: Session = DB.createHibernateSession()
-					val sql: String = """
-                      SELECT G.FEATURE_CODE
-                      FROM GEO_NAME G
-                      WHERE G.FEATURE_CLASS = :featureClass
-                        AND G.FEATURE_CODE IS NOT NULL
-                      GROUP BY G.FEATURE_CODE
-                      ORDER BY G.FEATURE_CODE;
-					                  """
-					val sqlQuery: SQLQuery = session.createSQLQuery(sql)
-					sqlQuery.setParameter("featureClass", featureClass)
-					sqlQuery.addScalar("FEATURE_CODE", DB.STRING_TYPE)
-					val results: ScrollableResults = sqlQuery.scroll(ScrollMode.FORWARD_ONLY)
-					results.beforeFirst()
-					while (results.next) {
-						viewPanel.featureCodeComboBox.addItem(results.getString(0))
+					for (code <- GeoNames.featureCodes(featureClass)) {
+						viewPanel.featureCodeComboBox.addItem(code)
 					}
-					results.close()
-					DB.closeSession(session)
 				}
 			}).start()
 		}
@@ -96,26 +80,9 @@ class ViewGeoNameTool extends CeemRadarTool {
 			def run() {
 				viewPanel.featureClassComboBox.removeAllItems()
 				viewPanel.featureClassComboBox.addItem("")
-				val session: Session = DB.createHibernateSession()
-				val sql: String = """
-
-                  SELECT G.FEATURE_CLASS
-                  FROM GEO_NAME G
-                  WHERE G.FEATURE_CLASS IS NOT NULL
-                  GROUP BY G.FEATURE_CLASS
-                  ORDER BY G.FEATURE_CLASS
-
-				                  """
-
-				val sqlQuery: SQLQuery = session.createSQLQuery(sql)
-				sqlQuery.addScalar("FEATURE_CLASS", DB.STRING_TYPE)
-				val results: ScrollableResults = sqlQuery.scroll(ScrollMode.FORWARD_ONLY)
-				while (results.next) {
-					val s: String = results.getString(0)
-					viewPanel.featureClassComboBox.addItem(s)
+				for (clazz <- GeoNames.featureClass) {
+					viewPanel.featureClassComboBox.addItem(clazz)
 				}
-				results.close()
-				DB.closeSession(session)
 			}
 		}).start()
 	}
@@ -125,23 +92,9 @@ class ViewGeoNameTool extends CeemRadarTool {
 			def run() {
 				viewPanel.countryComboBox.removeAllItems()
 				viewPanel.countryComboBox.addItem("")
-				val session: Session = DB.createHibernateSession()
-				val sql: String = """
-
-                SELECT COUNTRY_CODE  FROM GEO_NAME
-                WHERE COUNTRY_CODE IS NOT NULL
-                GROUP BY COUNTRY_CODE
-                ORDER BY COUNTRY_CODE;
-
-				                  """
-				val sqlQuery: SQLQuery = session.createSQLQuery(sql)
-				sqlQuery.addScalar("COUNTRY_CODE", DB.STRING_TYPE)
-				val results: ScrollableResults = sqlQuery.scroll(ScrollMode.FORWARD_ONLY)
-				while (results.next) {
-					viewPanel.countryComboBox.addItem(results.getString(0))
+				for (country <- GeoNames.coutres) {
+					viewPanel.countryComboBox.addItem(country)
 				}
-				results.close()
-				DB.closeSession(session)
 			}
 		}).start()
 	}

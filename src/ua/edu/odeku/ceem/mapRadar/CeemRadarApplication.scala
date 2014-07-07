@@ -27,22 +27,22 @@ object CeemRadarApplication extends App {
 	Application.initLookAndFeel(PropertyProgram.getLookAndFeelInfo)
 	Application.initConfigurationProgram()
 
-	try {
-		Application.showStartWindow(visible = true)
 
-//		Application.initDatabaseConnection()
-		Application.initAdminBorderManager()
+	Application.showStartWindow(visible = true)
 
-		AppCeemRadarFrame.setTitle(PropertyProgram.getNameProgram)
-		AppCeemRadarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-		java.awt.EventQueue.invokeLater(new Runnable {
-			override def run(): Unit = {
-				AppCeemRadarFrame.setVisible(true)
-			}
-		})
+	Application.initDatabaseConnection()
+	Application.initAdminBorderManager()
 
-		Application.showStartWindow(visible = false)
-	}
+	AppCeemRadarFrame.setTitle(PropertyProgram.getNameProgram)
+	AppCeemRadarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+	java.awt.EventQueue.invokeLater(new Runnable {
+		override def run(): Unit = {
+			AppCeemRadarFrame.setVisible(true)
+		}
+	})
+
+	Application.showStartWindow(visible = false)
+
 
 }
 
@@ -85,10 +85,10 @@ private object Application {
 	/**
 	 * Метод инициализации конфигурации WorldWind
 	 */
-	def initConfigurationProgram(){
+	def initConfigurationProgram() {
 
 		// Файл с настройками путей сохранения Cache
-		Configuration.setValue (
+		Configuration.setValue(
 			"gov.nasa.worldwind.avkey.DataFileStoreConfigurationFileName",
 			"ua/edu/odeku/ceem/mapRadar/config/DataFileStore.xml"
 		)
@@ -101,9 +101,9 @@ private object Application {
 	 * Показ стартового окна
 	 * @param visible true если нужно показать, false скрыть окно
 	 */
-	def showStartWindow(visible: Boolean){
+	def showStartWindow(visible: Boolean) {
 
-		if(visible)
+		if (visible)
 			showStartImageWindow()
 		else
 			stopShowStartImageWindow()
@@ -113,7 +113,7 @@ private object Application {
 		 */
 		def showStartImageWindow() {
 
-			if(startWindow != null)
+			if (startWindow != null)
 				startWindow.dispose()
 
 			startWindow = new JWindow
@@ -157,11 +157,8 @@ private object Application {
 	/**
 	 * Метод инициализации базы данных
 	 */
-	def initDatabaseConnection() {
-		if(PropertyProgram.INIT_DB){
-			DB.initDBConnection()
-		}
-	}
+	def initDatabaseConnection(): Unit = if (PropertyProgram.INIT_DB) DB.database
+
 
 	/**
 	 * Инициализация AdminBorderManager
