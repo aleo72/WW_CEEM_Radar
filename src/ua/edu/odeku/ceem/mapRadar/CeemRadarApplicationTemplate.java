@@ -59,7 +59,7 @@ public class CeemRadarApplicationTemplate {
 
             if(PropertyProgram.INIT_DB){
                 // Init DB
-                DB.createEntityManager();
+//                DB.createEntityManager();
             }
 
             final AppCeemRadarFrameOld frame = (AppCeemRadarFrameOld) appFrameClass.newInstance();

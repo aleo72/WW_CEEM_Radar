@@ -6,20 +6,16 @@
 package ua.edu.odeku.ceem.mapRadar.db.model
 
 import gov.nasa.worldwind.geom.LatLon
-import org.hibernate.ScrollMode
 import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
 import scala.slick.jdbc.meta.MTable
-import scala.slick.jdbc.{GetResult, StaticQuery => Q}
-import scala.slick.jdbc.JdbcBackend.Database
-import Q.interpolation
+import scala.slick.jdbc.{StaticQuery => Q}
 
 /**
  * User: Aleo Bakalov
@@ -111,7 +107,18 @@ object GeoNames extends CeemTableObject {
 
 	val objects = TableQuery[GeoNames]
 
+	val table = GeoNames.objects.baseTableRow
+
 	def tableName: String = this.objects.baseTableRow.tableName
+
+	def geoNameTable = tableName
+	def nameColumn = table.name.toString()
+	def translateNameColumn = table.translateName.toString()
+	def latColumn = table.lat.toString()
+	def lonColumn = table.lon.toString()
+	def featureClassColumn = table.featureClass.toString()
+	def countryColumn = table.countryCode.toString()
+	def featureCodeColumn = table.featureCode.toString()
 
 	override def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database) {
 		if (!existsTables.exists(_.name.name == tableName)) {
@@ -196,20 +203,63 @@ object GeoNames extends CeemTableObject {
 	 * @return список код фич
 	 */
 	def featureCodes(featureClass: String): List[String] = {
+		val selectedColumn = featureCodeColumn
 		DB.database withSession { implicit session =>
-			GeoNames.objects.filter(_.featureClass === featureClass).filter(_.featureCode isNotNull).map(_.featureCode desc).list
+			val sql = Q.queryNA[String](
+				s"""
+					SELECT
+						$selectedColumn
+		      FROM
+						$geoNameTable
+					WHERE
+		        $selectedColumn IS NOT NULL
+						AND $featureClassColumn = '$featureClass'
+					GROUP BY
+		        $selectedColumn
+					ORDER BY
+						$selectedColumn
+				 """)
+			sql.list
 		}
 	}
 
 	def featureClass: List[String] = {
-		DB.database withSession{ implicit session =>
-			GeoNames.objects.filter(_.featureClass isNotNull).map(_.featureClass desc).list
+		val selectedColumn = featureClassColumn
+		DB.database withSession { implicit session =>
+			val sql = Q.queryNA[String](
+				s"""
+					SELECT
+						$selectedColumn
+		      FROM
+						$geoNameTable
+					WHERE
+		        $selectedColumn IS NOT NULL
+					GROUP BY
+		        $selectedColumn
+					ORDER BY
+						$selectedColumn
+				 """)
+			sql.list
 		}
 	}
 
-	def coutres = {
-		DB.database withSession {implicit session=>
-			GeoNames.objects.filter(_.countryCode isNotNull).map(_.countryCode desc).list
+	def coutres: List[String] = {
+		val selectedColumn = featureCodeColumn
+		DB.database withSession { implicit session =>
+			val sql = Q.queryNA[String](
+				s"""
+					SELECT
+						$selectedColumn
+		      FROM
+						$geoNameTable
+					WHERE
+		        $selectedColumn IS NOT NULL
+					GROUP BY
+		        $selectedColumn
+					ORDER BY
+						$selectedColumn
+				 """)
+			sql.list
 		}
 	}
 }
@@ -220,15 +270,9 @@ case class GeoNamesWithNameAndCoordinates(name: String, latlon: LatLon) {
 }
 
 object GeoNamesWithNameAndCoordinates {
+	import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames._
 
 	def getSettlements(text: String): List[GeoNamesWithNameAndCoordinates] = {
-		val table = GeoNames.objects.baseTableRow
-		val geoNameTable = table.tableName
-		val nameColumn = table.name.toString()
-		val translateNameColumn = table.translateName.toString()
-		val latColumn = table.lat.toString()
-		val lonColumn = table.lon.toString()
-		val featureClassColumn = table.featureClass.toString()
 
 		val sql = Q.queryNA[(String, Double, Double)](
 			s"""
