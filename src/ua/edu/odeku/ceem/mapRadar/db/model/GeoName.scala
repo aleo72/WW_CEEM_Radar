@@ -5,12 +5,14 @@
 
 package ua.edu.odeku.ceem.mapRadar.db.model
 
-import ua.edu.odeku.ceem.mapRadar.db.DB
+import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
+import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
+import scala.slick.jdbc.meta.MTable
 
 /**
  * User: Aleo Bakalov
@@ -96,11 +98,22 @@ class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 	override def * = (id, name, ascii, alternateNames, lat, lon, featureClass, featureCode, countryCode, translateName) <>(GeoName.tupled, GeoName.unapply)
 }
 
-object GeoNames {
+object GeoNames extends CeemTableObject {
 
 	val countFieldsInGeoName = 10
 
 	val objects = TableQuery[GeoNames]
+
+	def tableName: String = this.objects.baseTableRow.tableName
+
+	override def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database) {
+		if (!existsTables.exists(_.name.name == tableName)) {
+			db withSession { implicit session =>
+				if(PropertyProgram.DEBUG) println(objects.ddl.createStatements.mkString("\n"))
+				objects.ddl.create
+			}
+		}
+	}
 
 	def +=(geoName: GeoName) = {
 		DB.database withSession {
@@ -161,7 +174,7 @@ object GeoNames {
 			query.filter(_.name like nameLike) union query.filter(_.translateName like nameLike) union query.filter(_.ascii like nameLike) union query.filter(_.alternateNames like nameLike)
 		} else query
 
-		query  = if (query == null) GeoNames.objects.filter(_.id >= 0L ) else query
+		query = if (query == null) GeoNames.objects.filter(_.id >= 0L) else query
 
 		query = query.sortBy(_.alternateNames).sortBy(_.ascii).sortBy(_.name).sortBy(_.translateName)
 
@@ -176,14 +189,17 @@ object GeoNames {
 }
 
 object Test extends App {
-	DB.database withSession {
-		implicit session =>
-			GeoNames.objects.ddl.drop
-			GeoNames.objects.ddl.create
-
+//	DB.database withSession {
+//		implicit session =>
+//			GeoNames.objects.ddl.drop
+//			GeoNames.objects.ddl.create
+//
+//	}
+	for(i <- 1 to 1000) {
+		GeoNames += GeoName(i, "test"+ i, i+"test2", i+"test3,test4"+i, 7234.90, 7294.94, "F", "FF", "UA", null)
 	}
 
-	GeoNames += GeoName(1, "test", "test2", "test3,test4", 7234.90, 7294.94, "F", "FF", "UA", null)
+//	GeoNames += GeoName(1, "test", "test2", "test3,test4", 7234.90, 7294.94, "F", "FF", "UA", null)
 
 	println(GeoNames.list("", "UA", "FF", "FF").mkString(","))
 	println(GeoNames.list("st4", "UA", "F", "FF").mkString(","))

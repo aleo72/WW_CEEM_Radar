@@ -8,8 +8,10 @@ package ua.edu.odeku.ceem.mapRadar.db
 import javax.persistence.{EntityManager, Persistence}
 import org.hibernate.Session
 import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
+import scala.slick.driver.H2Driver
+import scala.slick.driver.H2Driver.{simple => DatabaseH2}
 
-import scala.slick.lifted.Tag
+import scala.slick.jdbc.meta.MTable
 
 /**
  * Класс инкапсулирует работу с базой данных
@@ -57,9 +59,6 @@ object DB {
 	}
 
 	object H2 {
-
-		import scala.slick.driver.H2Driver.{simple => DatabaseH2}
-
 		val pathToDB = "./CeemRadarData/database/h2/mapRadar"
 		val options = Array("MVCC=true", "DB_CLOSE_ON_EXIT=FALSE")
 		val driver = "org.h2.Driver"
@@ -72,9 +71,25 @@ object DB {
 
 		def urlForMemory = s"jdbc:h2:mem;$option"
 
-		lazy val db = DatabaseH2.Database.forURL(url = url, user = user, password = password, driver = driver)
+		private lazy val _db: H2Driver.backend.DatabaseDef = DatabaseH2.Database.forURL(url = url, user = user, password = password, driver = driver)
 
 		lazy val db_memory = DatabaseH2.Database.forURL(url = urlForMemory, user = user, password = password, driver = driver)
+
+		val ceemTables = List(GeoNames)
+
+		def db = {
+			var tableList: List[MTable] = null
+
+			_db withSession { implicit session =>
+				tableList = MTable.getTables.list
+			}
+
+			GeoNames.createIfNotExists(tableList, _db)
+
+			_db
+		}
+
+
 	}
 
 	def database = H2.db
@@ -82,11 +97,16 @@ object DB {
 	def database_memory = H2.db_memory
 }
 
+trait CeemTableObject {
+
+	def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database): Unit
+}
+
 object Test extends App {
 
-//	DB.database_memory withSession {
-//		implicit session =>
-//			GeoNames += GeoName(1,"test", "test2", "test3,test4",7234.90, 7294.94, "F", "FF", "UA", null)
-//	}
+	//	DB.database_memory withSession {
+	//		implicit session =>
+	//			GeoNames += GeoName(1,"test", "test2", "test3,test4",7234.90, 7294.94, "F", "FF", "UA", null)
+	//	}
 
 }
