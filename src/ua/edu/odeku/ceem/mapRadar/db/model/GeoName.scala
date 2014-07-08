@@ -12,6 +12,7 @@ import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
 import scala.slick.jdbc.meta.MTable
@@ -129,22 +130,32 @@ object GeoNames extends CeemTableObject {
 		}
 	}
 
-	def +=(geoName: GeoName) = {
-		DB.database withSession {
-			implicit session =>
+	def += (geoName: GeoName) = {
+		DB.database withSession { implicit session =>
 				TableQuery[GeoNames] += geoName
 		}
 	}
 
 	def ++=(values: Iterable[GeoName]) = {
-		DB.database withSession {
-			implicit session =>
+		DB.database withSession { implicit session =>
 				TableQuery[GeoNames] ++= values
 		}
 	}
 
+	def -= (geoName: GeoName): Int = {
+		DB.database withSession { implicit session =>
+			TableQuery[GeoNames].filter(_.id === geoName.id).delete
+		}
+	}
+
+	def ! (geoName: GeoName): Int = {
+		DB.database withSession { implicit session =>
+			TableQuery[GeoNames].filter(_.id === geoName.id).update(geoName)
+		}
+	}
+
 	def createGeoName(line: String) = {
-		val c = line.split(",")
+		val c = line.split("\t")
 
 		try {
 			GeoName(
@@ -261,6 +272,27 @@ object GeoNames extends CeemTableObject {
 				 """)
 			sql.list
 		}
+	}
+
+	object SavingCache {
+		private val list = new ArrayBuffer[GeoName]()
+
+		val LIMIT = 500
+
+		def += (geo: GeoName): Unit = {
+			list += geo
+
+			if(list.size >= LIMIT){
+				saveCache()
+			}
+		}
+
+		def saveCache() {
+			GeoNames ++= list
+			list.clear()
+		}
+
+		def flush(): Unit = saveCache()
 	}
 }
 

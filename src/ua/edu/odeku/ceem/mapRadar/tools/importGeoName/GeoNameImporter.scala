@@ -7,6 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.importGeoName
 
 import java.io.{IOException, File}
 import javax.swing.JProgressBar
+import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
 import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler
 import ua.edu.odeku.ceem.mapRadar.db.DB
 import ua.edu.odeku.ceem.mapRadar.db.model.{GeoNames, GeoName}
@@ -41,23 +42,20 @@ class GeoNameImporter(val progressBar: JProgressBar, val closeHandler: Function0
 				lines = readFile
 				try {
 					if (lines != null && lines.length > 0) {
-
 						progressBar.setMaximum(lines.length)
-
-						DB.database withSession {
-							implicit session =>
-								for (line <- lines; if !stopFlag) {
-
-									progressBar.setValue(progressBar.getValue + 1)
-									val geoName = GeoNames.createGeoName(line)
-
-									try {
-										GeoNames += geoName
-									}
-									catch {
-										case e: Exception => System.err.println(e.getMessage)
-									}
+						DB.database withSession { implicit session =>
+							for (line <- lines; if !stopFlag) {
+								progressBar.setValue(progressBar.getValue + 1)
+								val geoName = GeoNames.createGeoName(line)
+								try {
+									GeoNames.SavingCache += geoName
+									if(PropertyProgram.DEBUG) println(geoName)
 								}
+								catch {
+									case e: Exception => System.err.println(e.getMessage)
+								}
+							}
+							GeoNames.SavingCache.flush()
 						}
 					}
 				}

@@ -3,7 +3,7 @@
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="450" height="350"/>
+      <xy x="48" y="54" width="450" height="372"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -265,7 +265,7 @@
                   <text resource-bundle="strings" key="label_geoName_latitude"/>
                 </properties>
               </component>
-              <component id="c22e8" class="javax.swing.JFormattedTextField" binding="lantitudeFormattedTextField" custom-create="true">
+              <component id="c22e8" class="javax.swing.JFormattedTextField" binding="latitudeFormattedTextField" custom-create="true">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -327,16 +327,12 @@
               <text resource-bundle="strings" key="label_geoName_country:"/>
             </properties>
           </component>
-          <component id="68edb" class="javax.swing.JTextField" binding="countryTextField">
+          <component id="5ab4c" class="javax.swing.JComboBox" binding="countryComboBox" custom-create="true">
             <constraints>
-              <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-              <forms defaultalign-horz="false"/>
+              <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
             </constraints>
-            <properties>
-              <editable value="false"/>
-            </properties>
+            <properties/>
           </component>
         </children>
       </grid>

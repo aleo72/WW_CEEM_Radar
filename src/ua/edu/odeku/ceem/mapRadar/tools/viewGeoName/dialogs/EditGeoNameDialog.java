@@ -5,41 +5,28 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import org.hibernate.SQLQuery;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import ua.edu.odeku.ceem.mapRadar.db.DB;
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoName;
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.utils.geometry.LatitudeLongitudeUtils;
-import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage;
 
-import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ResourceBundle;
 
 public class EditGeoNameDialog extends JDialog {
 
-    private GeoName geoName;
-
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JTextField idTextField;
-    private JTextField sourceIdTextField;
-    private JTextField nameTextField;
-    private JTextField asciiNameTextField;
-    private JTextField translateTextField;
-    private JTextField featureClassTextField;
-    private JComboBox<String> featureCodeComboBox;
-    private JFormattedTextField lantitudeFormattedTextField;
-    private JFormattedTextField longitudeFormattedTextField;
-    private JTextField alternativeTextField;
-    private JTextField countryTextField;
-    private JButton deleteButton;
+    protected JPanel contentPane;
+    protected JButton buttonOK;
+    protected JButton buttonCancel;
+    protected JTextField idTextField;
+    protected JTextField sourceIdTextField;
+    protected JTextField nameTextField;
+    protected JTextField asciiNameTextField;
+    protected JTextField translateTextField;
+    protected JTextField featureClassTextField;
+    protected JComboBox<String> featureCodeComboBox;
+    protected JFormattedTextField latitudeFormattedTextField;
+    protected JFormattedTextField longitudeFormattedTextField;
+    protected JTextField alternativeTextField;
+    protected JButton deleteButton;
+    protected JComboBox<String> countryComboBox;
 
     public EditGeoNameDialog() {
         $$$setupUI$$$();
@@ -47,198 +34,14 @@ public class EditGeoNameDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (UserMessage.ConfirmDialog(EditGeoNameDialog.this.$$$getRootComponent$$$(),
-                        ResourceString.get("title_confirmDialog_delete"),
-                        ResourceString.get("message_geoName_delete-item"))
-                        ) {
-                    EntityManager entityManager = DB.createEntityManager();
-                    entityManager.getTransaction().begin();
-
-                    GeoName geoNameMerge = entityManager.merge(geoName);
-                    entityManager.remove(geoNameMerge);
-
-                    entityManager.getTransaction().commit();
-
-                    entityManager.close();
-
-                    onCancel();
-                }
-            }
-        });
     }
 
-    public EditGeoNameDialog(GeoName geoName) {
-        this();
-
-        this.geoName = geoName;
-        this.idTextField.setText(String.valueOf(geoName.id()));
-        this.sourceIdTextField.setText(String.valueOf(geoName.id()));
-        this.nameTextField.setText(geoName.name());
-        this.asciiNameTextField.setText(geoName.ascii());
-        this.translateTextField.setText(geoName.translateName().get() != null ? geoName.translateName().get() : "");
-        this.alternativeTextField.setText(geoName.alternateNames() != null ? geoName.alternateNames() : "");
-        this.countryTextField.setText(geoName.countryCode());
-        this.featureClassTextField.setText(String.valueOf(geoName.featureClass()));
-        this.lantitudeFormattedTextField.setText(String.valueOf(geoName.lat()));
-        this.longitudeFormattedTextField.setText(String.valueOf(geoName.lon()));
-
-        initFeatureCode(geoName);
-
+    protected void freezeSize() {
         this.pack();
         this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
         this.setMaximumSize(new Dimension(800, this.getHeight()));
-    }
-
-    private void initFeatureCode(GeoName geoName) {
-        Session session = DB.createHibernateSession();
-
-        String sql = " SELECT DISTINCT FEATURE_CODE           " +
-                " FROM GEO_NAME                          " +
-                " WHERE FEATURE_CLASS = :featureClass    " +
-                " ORDER BY FEATURE_CODE                 ;";
-        SQLQuery query = session.createSQLQuery(sql);
-
-        query.setParameter("featureClass", geoName.featureCode());
-        query.addScalar("FEATURE_CODE", DB.STRING_TYPE());
-
-        ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
-        results.beforeFirst();
-
-        while (results.next()) {
-            featureCodeComboBox.addItem(results.getString(0));
-        }
-
-        results.close();
-        DB.closeSession(session);
-
-        featureCodeComboBox.setSelectedItem(geoName.featureCode());
-    }
-
-    private void onOK() {
-        if (saveData())
-            dispose();
-    }
-
-    private void onCancel() {
-        dispose();
-    }
-
-    /**
-     * Метод сохраняет данные этой формы, если она не валидно то, возращает false.
-     *
-     * @return true если данные были сохранены
-     */
-    private boolean saveData() {
-
-        if (isValidData()) {
-            Session session = null;
-            boolean res = false;
-            try {
-                session = DB.createHibernateSession();
-
-//                GeoName geoName = (GeoName) (session.load(GeoName.class, new Integer(this.geoName.getId())));
-
-//                geoName.setName(nameTextField.getText());
-//                geoName.setAsciiname(asciiNameTextField.getText());
-//                geoName.setTranslateName(translateTextField.getText());
-//                geoName.setAlternatenames(alternativeTextField.getText());
-//                geoName.setLat(Double.parseDouble(lantitudeFormattedTextField.getText()));
-//                geoName.setLon(Double.parseDouble(longitudeFormattedTextField.getText()));
-//                geoName.setFeatureCode(featureCodeComboBox.getSelectedItem().toString());
-
-                session.flush();
-
-                res = true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                UserMessage.error(this.$$$getRootComponent$$$(), e.getMessage());
-                res = false;
-            } finally {
-                DB.closeSession(session);
-            }
-            return res;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isValidData() {
-
-        String data;
-
-        data = nameTextField.getText();
-        if (data.trim().isEmpty()) {
-            String message = ResourceString.get("field_geoName_name") + " "
-                    + ResourceString.get("message-must-not-be-empty");
-            UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.nameTextField.setText(geoName.name());
-            return false;
-        }
-        data = asciiNameTextField.getText();
-        if (data.trim().isEmpty()) {
-            String message = ResourceString.get("string_field") + " " +
-                    ResourceString.get("field_geoName_asciiName") + " "
-                    + ResourceString.get("message-must-not-be-empty") + "!";
-            UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.asciiNameTextField.setText(geoName.ascii());
-            return false;
-        }
-        data = translateTextField.getText();
-        if (data.trim().isEmpty()) {
-            String message = ResourceString.get("string_field") + " " +
-                    ResourceString.get("field_geoName_translate") + " "
-                    + ResourceString.get("message-must-not-be-empty") + "!";
-            UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.translateTextField.setText(geoName.translateName().get());
-            return false;
-        }
-        if (!LatitudeLongitudeUtils.isValidLatitude(lantitudeFormattedTextField.getText())) {
-            String message = ResourceString.get("string_field") + " " +
-                    ResourceString.get("field_geoName_latitude") + " "
-                    + ResourceString.get("message_Do-not-satisfy-the-format-of-the-coordinates") + "!";
-            UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.lantitudeFormattedTextField.setText(String.valueOf(geoName.lat()));
-            return false;
-        }
-        if (!LatitudeLongitudeUtils.isValidLongitude(longitudeFormattedTextField.getText())) {
-            String message = ResourceString.get("string_field") + " " +
-                    ResourceString.get("field_geoName_longitude") + " "
-                    + ResourceString.get("message_Do-not-satisfy-the-format-of-the-coordinates") + "!";
-            UserMessage.warning(this.$$$getRootComponent$$$(), message);
-            this.longitudeFormattedTextField.setText(String.valueOf(this.geoName.lon()));
-            return false;
-        }
-        return true;
     }
 
     public static void main(String[] args) {
@@ -249,10 +52,11 @@ public class EditGeoNameDialog extends JDialog {
     }
 
     private void createUIComponents() {
-        lantitudeFormattedTextField = new JFormattedTextField();
+        latitudeFormattedTextField = new JFormattedTextField();
         longitudeFormattedTextField = new JFormattedTextField();
 
         featureCodeComboBox = new JComboBox<String>();
+        countryComboBox = new JComboBox<String>();
     }
 
     /**
@@ -344,8 +148,8 @@ public class EditGeoNameDialog extends JDialog {
         label8.setHorizontalAlignment(4);
         this.$$$loadLabelText$$$(label8, ResourceBundle.getBundle("strings").getString("label_geoName_latitude"));
         panel5.add(label8, cc.xy(1, 2));
-        lantitudeFormattedTextField.setColumns(8);
-        panel5.add(lantitudeFormattedTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
+        latitudeFormattedTextField.setColumns(8);
+        panel5.add(latitudeFormattedTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JLabel label9 = new JLabel();
         this.$$$loadLabelText$$$(label9, ResourceBundle.getBundle("strings").getString("label_geoName_longitude"));
         panel5.add(label9, cc.xy(5, 2));
@@ -361,9 +165,7 @@ public class EditGeoNameDialog extends JDialog {
         label11.setHorizontalAlignment(4);
         this.$$$loadLabelText$$$(label11, ResourceBundle.getBundle("strings").getString("label_geoName_country:"));
         panel4.add(label11, cc.xy(1, 13));
-        countryTextField = new JTextField();
-        countryTextField.setEditable(false);
-        panel4.add(countryTextField, cc.xy(3, 13, CellConstraints.FILL, CellConstraints.DEFAULT));
+        panel4.add(countryComboBox, cc.xy(3, 13));
     }
 
     /**

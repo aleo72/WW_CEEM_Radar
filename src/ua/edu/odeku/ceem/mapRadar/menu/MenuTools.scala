@@ -23,10 +23,10 @@ import java.awt.event.{ActionEvent, ActionListener}
 object MenuTools extends MenuCreator {
 
 	val tools = Array(
-		classOf[ImportGeoNameTool],
-		classOf[ViewGeoNameTool],
-		classOf[ImportAdminBorderTool],
-		classOf[AdminBorderViewManagerTool]
+		classOf[ImportGeoNameTool]
+		,classOf[ViewGeoNameTool]
+		//,classOf[ImportAdminBorderTool]
+		//,classOf[AdminBorderViewManagerTool]
 	)
 
 	override def nameMenu: String = resourceBundle.getString("tools")
