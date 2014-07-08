@@ -5,6 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName
 
+import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs.HandlerEditGeoNameDialog
 import ua.edu.odeku.ceem.mapRadar.tools.{ToolFrame, CeemRadarTool}
 import javax.swing.{JTable, JPanel, JFrame, JComponent}
 import java.awt.Dimension
@@ -36,6 +37,20 @@ class ViewGeoNameTool extends CeemRadarTool {
 	viewPanel.refreshButton.addActionListener(new ActionListener {
 		def actionPerformed(e: ActionEvent) {
 			refreshTable()
+		}
+	})
+
+	viewPanel.editButton.addActionListener(new ActionListener {
+		override def actionPerformed(e: ActionEvent): Unit = {
+			val row = viewPanel.table.getSelectedRow
+			if(row > 0) {
+				val id = viewPanel.table.getModel.getValueAt(row, 0).asInstanceOf[Long]
+				if (id > 0) {
+					val dialog = new HandlerEditGeoNameDialog(GeoNames.get(id))
+					dialog.show()
+					if(dialog.needRefresh) refreshTable()
+				}
+			}
 		}
 	})
 

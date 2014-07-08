@@ -104,6 +104,7 @@ class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 
 object GeoNames extends CeemTableObject {
 
+
 	val countFieldsInGeoName = 10
 
 	val objects = TableQuery[GeoNames]
@@ -132,24 +133,26 @@ object GeoNames extends CeemTableObject {
 
 	def += (geoName: GeoName) = {
 		DB.database withSession { implicit session =>
-				TableQuery[GeoNames] += geoName
+			TableQuery[GeoNames] += geoName
 		}
 	}
 
 	def ++=(values: Iterable[GeoName]) = {
 		DB.database withSession { implicit session =>
-				TableQuery[GeoNames] ++= values
+			TableQuery[GeoNames] ++= values
 		}
 	}
 
 	def -= (geoName: GeoName): Int = {
 		DB.database withSession { implicit session =>
+			if(PropertyProgram.DEBUG) println(TableQuery[GeoNames].filter(_.id === geoName.id).deleteStatement)
 			TableQuery[GeoNames].filter(_.id === geoName.id).delete
 		}
 	}
 
 	def ! (geoName: GeoName): Int = {
 		DB.database withSession { implicit session =>
+			if(PropertyProgram.DEBUG) println(TableQuery[GeoNames].filter(_.id === geoName.id).updateStatement)
 			TableQuery[GeoNames].filter(_.id === geoName.id).update(geoName)
 		}
 	}
@@ -159,15 +162,15 @@ object GeoNames extends CeemTableObject {
 
 		try {
 			GeoName(
-				id = c(0).toInt,
-				name = c(1),
-				ascii = c(2),
-				alternateNames = c(3),
-				lat = c(4).toDouble,
-				lon = c(5).toDouble,
-				featureClass = c(6),
-				featureCode = c(7),
-				countryCode = c(8)
+			id = c(0).toInt,
+			name = c(1),
+			ascii = c(2),
+			alternateNames = c(3),
+			lat = c(4).toDouble,
+			lon = c(5).toDouble,
+			featureClass = c(6),
+			featureCode = c(7),
+			countryCode = c(8)
 			)
 		} catch {
 
@@ -175,6 +178,13 @@ object GeoNames extends CeemTableObject {
 				val message = ResourceString.get("exception_GeoName")
 				val exceptionMessage = e.getMessage
 				throw new GeoNameException(s"$message\n$line\n$exceptionMessage")
+		}
+	}
+
+	def get(id: Long): GeoName = {
+		DB.database withSession {implicit session =>
+			if(PropertyProgram.DEBUG) println(TableQuery[GeoNames].filter(_.id === id).selectStatement)
+		  TableQuery[GeoNames].filter(_.id === id).first
 		}
 	}
 

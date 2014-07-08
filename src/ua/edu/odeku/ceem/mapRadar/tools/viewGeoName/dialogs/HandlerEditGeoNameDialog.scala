@@ -20,6 +20,8 @@ import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage
 class HandlerEditGeoNameDialog(val geoName: GeoName) {
 
 	val dialog: EditGeoNameDialog = new EditGeoNameDialog
+	var _needRefresh = false
+	def needRefresh = _needRefresh
 
 	dialog.sourceIdTextField.setText(geoName.id.toString)
 	dialog.nameTextField.setText(geoName.name)
@@ -38,7 +40,10 @@ class HandlerEditGeoNameDialog(val geoName: GeoName) {
 	dialog.buttonOK.addActionListener(
 		new ActionListener {
 			override def actionPerformed(e: ActionEvent): Unit = {
-				if (saveData) onClose()
+				if (saveData) {
+					_needRefresh = true
+					onClose()
+				}
 			}
 		}
 	)
@@ -59,10 +64,15 @@ class HandlerEditGeoNameDialog(val geoName: GeoName) {
 				ResourceString.get("title_confirmDialog_delete"),
 				ResourceString.get("message_geoName_delete-item"))) {
 				GeoNames -= geoName
+				_needRefresh = true
 				onClose()
 			}
 		}
 	})
+
+	def show() {
+		dialog.setVisible(true)
+	}
 
 	def onClose() {
 		dialog.dispose()
