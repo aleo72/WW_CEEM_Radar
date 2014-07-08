@@ -31,9 +31,9 @@ class HandlerEditGeoNameDialog(val geoName: GeoName) {
 	dialog.featureClassTextField.setText(geoName.featureClass)
 	dialog.latitudeFormattedTextField.setText(geoName.lat.toString)
 	dialog.longitudeFormattedTextField.setText(geoName.lon.toString)
+	dialog.countryComboBox.addItem(geoName.countryCode)
+	dialog.featureCodeComboBox.addItem(geoName.featureCode)
 
-	initFeatureCode(geoName)
-	initCountry(geoName)
 
 	dialog.freezeSize()
 
@@ -109,13 +109,6 @@ class HandlerEditGeoNameDialog(val geoName: GeoName) {
 			val message = ResourceString.get("string_field") + " " + ResourceString.get("field_geoName_asciiName") + " " + ResourceString.get("message-must-not-be-empty") + "!"
 			UserMessage.warning(dialog.$$$getRootComponent$$$(), message)
 			dialog.asciiNameTextField.setText(geoName.ascii)
-			return false
-		}
-		data = dialog.translateTextField.getText
-		if (data.trim().isEmpty) {
-			val message = ResourceString.get("string_field") + " " + ResourceString.get("field_geoName_translate") + " " + ResourceString.get("message-must-not-be-empty") + "!"
-			UserMessage.warning(dialog.$$$getRootComponent$$$(), message)
-			dialog.translateTextField.setText(geoName.translateName.getOrElse(""))
 			return false
 		}
 		if (!LatitudeLongitudeUtils.isValidLatitude(dialog.latitudeFormattedTextField.getText)) {

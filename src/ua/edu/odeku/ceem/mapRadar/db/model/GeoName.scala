@@ -190,7 +190,7 @@ object GeoNames extends CeemTableObject {
 
 	def list(subName: String = null, country: String = null, featureClass: String = null, featureCode: String = null) = {
 
-		var query: Query[GeoNames, GeoNames#TableElementType, Seq] = null
+		var query: Query[GeoNames, GeoNames#TableElementType, Seq] = GeoNames.objects.filter(_.id >= 0L)
 
 		query = if (country != null && !country.isEmpty) objects.filter(_.countryCode === country) else query
 
@@ -204,8 +204,6 @@ object GeoNames extends CeemTableObject {
 			val nameLike = s"%$subName%"
 			query.filter(_.name like nameLike) union query.filter(_.translateName like nameLike) union query.filter(_.ascii like nameLike) union query.filter(_.alternateNames like nameLike)
 		} else query
-
-		query = if (query == null) GeoNames.objects.filter(_.id >= 0L) else query
 
 		query = query.sortBy(_.alternateNames).sortBy(_.ascii).sortBy(_.name).sortBy(_.translateName)
 

@@ -140,6 +140,7 @@ public class EditGeoNameDialog extends JDialog {
         label7.setHorizontalAlignment(4);
         this.$$$loadLabelText$$$(label7, ResourceBundle.getBundle("strings").getString("label_geoName_featureClass"));
         panel4.add(label7, cc.xy(1, 15));
+        featureCodeComboBox.setEnabled(false);
         panel4.add(featureCodeComboBox, cc.xy(3, 17));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow"));
@@ -165,6 +166,7 @@ public class EditGeoNameDialog extends JDialog {
         label11.setHorizontalAlignment(4);
         this.$$$loadLabelText$$$(label11, ResourceBundle.getBundle("strings").getString("label_geoName_country:"));
         panel4.add(label11, cc.xy(1, 13));
+        countryComboBox.setEnabled(false);
         panel4.add(countryComboBox, cc.xy(3, 13));
     }
 
