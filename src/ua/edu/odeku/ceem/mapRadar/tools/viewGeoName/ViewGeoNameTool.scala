@@ -66,7 +66,6 @@ class ViewGeoNameTool extends CeemRadarTool {
 			new Thread(new Runnable {
 				def run() {
 					viewPanel.featureCodeComboBox.removeAllItems()
-					viewPanel.featureCodeComboBox.addItem("")
 					for (code <- GeoNames.featureCodes(featureClass)) {
 						viewPanel.featureCodeComboBox.addItem(code)
 					}
@@ -126,10 +125,12 @@ class ViewGeoNameTool extends CeemRadarTool {
 
 		new Thread(new Runnable {
 			def run() {
+				val model = new GeoNamesTableModel(finalPrefix, finalCountry, finalFeatureClass, finalFeatureCode)
 				viewPanel.table.setAutoCreateRowSorter(false)
-				viewPanel.table.setModel(new GeoNamesTableModel(finalPrefix, finalCountry, finalFeatureClass, finalFeatureCode))
+				viewPanel.table.setModel(model)
 				viewPanel.table.setAutoCreateRowSorter(false)
 				viewPanel.table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS)
+				viewPanel.table.setEnabled(model.getRowCount > 0)
 			}
 		}).start()
 	}

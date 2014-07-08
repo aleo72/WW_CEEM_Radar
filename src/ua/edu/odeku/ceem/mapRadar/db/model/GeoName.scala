@@ -182,11 +182,11 @@ object GeoNames extends CeemTableObject {
 
 		var query: Query[GeoNames, GeoNames#TableElementType, Seq] = null
 
-		query = if (country != null) objects.filter(_.countryCode === country) else query
+		query = if (country != null && !country.isEmpty) objects.filter(_.countryCode === country) else query
 
-		query = if (featureClass != null) {
+		query = if (featureClass != null && !featureClass.isEmpty) {
 			query = if (query == null) objects.filter(_.featureClass === featureClass) else query.filter(_.featureClass === featureClass)
-			query = if (featureCode != null) query.filter(_.featureCode === featureCode) else query
+			query = if (featureCode != null && !featureCode.isEmpty) query.filter(_.featureCode === featureCode) else query
 			query
 		} else query
 
@@ -255,7 +255,7 @@ object GeoNames extends CeemTableObject {
 	}
 
 	def coutres: List[String] = {
-		val selectedColumn = featureCodeColumn
+		val selectedColumn = countryColumn
 		DB.database withSession { implicit session =>
 			val sql = Q.queryNA[String](
 				s"""
