@@ -35,7 +35,7 @@ case class GeoName(id: Long,
                    countryCode: String,
                    translateName: Option[String] = None) {
 
-	val fields = Array(id, name, ascii, alternateNames, lat, lon, featureClass, featureCode, countryCode, translateName)
+	val fields = Array(id, name, ascii, translateName, alternateNames, countryCode, featureClass, featureCode, lat, lon)
 }
 
 class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
