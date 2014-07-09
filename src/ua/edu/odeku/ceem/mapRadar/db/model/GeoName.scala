@@ -16,8 +16,8 @@ import scala.collection.mutable.ArrayBuffer
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
 import scala.slick.jdbc.meta.MTable
-import scala.slick.jdbc.{StaticQuery => Q}
-
+import scala.slick.jdbc.{StaticQuery => Q, GetResult}
+import ua.edu.odeku.ceem.mapRadar.utils.CeemUtilsFunctions.{stringToBoolean}
 /**
  * User: Aleo Bakalov
  * Date: 04.07.2014
@@ -37,6 +37,7 @@ case class GeoName(id: Long,
 
 	val fields = Array(id, name, ascii, translateName, alternateNames, countryCode, featureClass, featureCode, lat, lon)
 }
+
 
 class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 	/**
@@ -114,24 +115,32 @@ object GeoNames extends CeemTableObject {
 	def tableName: String = this.objects.baseTableRow.tableName
 
 	def geoNameTable = tableName
+
 	def nameColumn = table.name.toString()
+
+	def asiiColumn = table.ascii.toString()
+
 	def translateNameColumn = table.translateName.toString()
+
 	def latColumn = table.lat.toString()
+
 	def lonColumn = table.lon.toString()
+
 	def featureClassColumn = table.featureClass.toString()
+
 	def countryColumn = table.countryCode.toString()
+
 	def featureCodeColumn = table.featureCode.toString()
 
 	override def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database) {
 		if (!existsTables.exists(_.name.name == tableName)) {
 			db withSession { implicit session =>
-				if (PropertyProgram.DEBUG) println(objects.ddl.createStatements.mkString("\n"))
 				objects.ddl.create
 			}
 		}
 	}
 
-	def += (geoName: GeoName) = {
+	def +=(geoName: GeoName) = {
 		DB.database withSession { implicit session =>
 			TableQuery[GeoNames] += geoName
 		}
@@ -143,16 +152,14 @@ object GeoNames extends CeemTableObject {
 		}
 	}
 
-	def -= (geoName: GeoName): Int = {
+	def -=(geoName: GeoName): Int = {
 		DB.database withSession { implicit session =>
-			if(PropertyProgram.DEBUG) println(TableQuery[GeoNames].filter(_.id === geoName.id).deleteStatement)
 			TableQuery[GeoNames].filter(_.id === geoName.id).delete
 		}
 	}
 
-	def ! (geoName: GeoName): Int = {
+	def !(geoName: GeoName): Int = {
 		DB.database withSession { implicit session =>
-			if(PropertyProgram.DEBUG) println(TableQuery[GeoNames].filter(_.id === geoName.id).updateStatement)
 			TableQuery[GeoNames].filter(_.id === geoName.id).update(geoName)
 		}
 	}
@@ -162,15 +169,15 @@ object GeoNames extends CeemTableObject {
 
 		try {
 			GeoName(
-			id = c(0).toInt,
-			name = c(1),
-			ascii = c(2),
-			alternateNames = c(3),
-			lat = c(4).toDouble,
-			lon = c(5).toDouble,
-			featureClass = c(6),
-			featureCode = c(7),
-			countryCode = c(8)
+				id = c(0).toInt,
+				name = c(1),
+				ascii = c(2),
+				alternateNames = c(3),
+				lat = c(4).toDouble,
+				lon = c(5).toDouble,
+				featureClass = c(6),
+				featureCode = c(7),
+				countryCode = c(8)
 			)
 		} catch {
 
@@ -182,37 +189,44 @@ object GeoNames extends CeemTableObject {
 	}
 
 	def get(id: Long): GeoName = {
-		DB.database withSession {implicit session =>
-			if(PropertyProgram.DEBUG) println(TableQuery[GeoNames].filter(_.id === id).selectStatement)
-		  TableQuery[GeoNames].filter(_.id === id).first
+		DB.database withSession { implicit session =>
+			TableQuery[GeoNames].filter(_.id === id).first
 		}
 	}
 
+	/**
+	 * Метод возращает список GeoName который удовлетворяет заданым параметрам
+	 * @param subName подстрока которая должна присутствовать в полях Name, translateName, ascii, alternateNames
+	 * @param country код города
+	 * @param featureClass класс фичи
+	 * @param featureCode код фичи
+	 * @return List[GeoName]
+	 */
 	def list(subName: String = null, country: String = null, featureClass: String = null, featureCode: String = null) = {
 
-		var query: Query[GeoNames, GeoNames#TableElementType, Seq] = GeoNames.objects.filter(_.id >= 0L)
+		val sqlSelect = s" SELECT * FROM $geoNameTable WHERE 1 = 1"
+		val whereConditions = new ArrayBuffer[String]
 
-		query = if (country != null && !country.isEmpty) objects.filter(_.countryCode === country) else query
+		if (country) whereConditions += s"$countryColumn = '$country'"
+		if (featureClass) {
+			whereConditions += s"$featureClassColumn = '$featureClass'"
+			if (featureCodeColumn) whereConditions += s"$featureCodeColumn = '$featureCode'"
+		}
 
-		query = if (featureClass != null && !featureClass.isEmpty) {
-			query = if (query == null) objects.filter(_.featureClass === featureClass) else query.filter(_.featureClass === featureClass)
-			query = if (featureCode != null && !featureCode.isEmpty) query.filter(_.featureCode === featureCode) else query
-			query
-		} else query
+		val sqlSimple = if (whereConditions.size > 0) sqlSelect + " AND " + whereConditions.mkString(" AND ") else sqlSelect
 
-		query = if (subName != null && !subName.trim.isEmpty) {
-			val nameLike = s"%$subName%"
-			query.filter(_.name like nameLike) union query.filter(_.translateName like nameLike) union query.filter(_.ascii like nameLike) union query.filter(_.alternateNames like nameLike)
-		} else query
-
-		query = query.sortBy(_.alternateNames).sortBy(_.ascii).sortBy(_.name).sortBy(_.translateName)
+		val sql = if (subName) {
+			val sqlUnionA = new ArrayBuffer[String]
+			for(column <- Array(nameColumn, asiiColumn, translateNameColumn)) {
+				sqlUnionA += s"$column like '%$subName%''"
+			}
+			s"$sqlSimple AND (${sqlUnionA.mkString(" OR ")}"
+		} else sqlSimple
 
 		DB.database withSession {
 			implicit session =>
 
-				if (PropertyProgram.DEBUG) println(query.selectStatement)
-
-				query.list.toArray
+				Q.queryNA[GeoName](sql).list
 		}
 	}
 
@@ -278,6 +292,7 @@ object GeoNames extends CeemTableObject {
 					ORDER BY
 						$selectedColumn
 				 """)
+
 			sql.list
 		}
 	}
@@ -287,10 +302,10 @@ object GeoNames extends CeemTableObject {
 
 		val LIMIT = 500
 
-		def += (geo: GeoName): Unit = {
+		def +=(geo: GeoName): Unit = {
 			list += geo
 
-			if(list.size >= LIMIT){
+			if (list.size >= LIMIT) {
 				saveCache()
 			}
 		}
@@ -302,6 +317,7 @@ object GeoNames extends CeemTableObject {
 
 		def flush(): Unit = saveCache()
 	}
+
 }
 
 case class GeoNamesWithNameAndCoordinates(name: String, latlon: LatLon) {
@@ -310,6 +326,7 @@ case class GeoNamesWithNameAndCoordinates(name: String, latlon: LatLon) {
 }
 
 object GeoNamesWithNameAndCoordinates {
+
 	import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames._
 
 	def getSettlements(text: String): List[GeoNamesWithNameAndCoordinates] = {
@@ -357,14 +374,14 @@ object Test extends App {
 	//			GeoNames.objects.ddl.create
 	//
 	//	}
-	for (i <- 1 to 1000) {
-		GeoNames += GeoName(i, "test" + i, i + "test2", i + "test3,test4" + i, 7234.90, 7294.94, "F", "FF", "UA", null)
-	}
+//	for (i <- 1 to 1000) {
+//		GeoNames += GeoName(i, "test" + i, i + "test2", i + "test3,test4" + i, 7234.90, 7294.94, "F", "FF", "UA", null)
+//	}
 
 	//	GeoNames += GeoName(1, "test", "test2", "test3,test4", 7234.90, 7294.94, "F", "FF", "UA", null)
 
-	println(GeoNames.list("", "UA", "FF", "FF").mkString(","))
-	println(GeoNames.list("st4", "UA", "F", "FF").mkString(","))
-
-	print(GeoNames.list().mkString(","))
+//	println(GeoNames.list("", "UA", "FF", "FF").mkString(","))
+//	println(GeoNames.list("st4", "UA", "F", "FF").mkString(","))
+//
+//	print(GeoNames.list().mkString(","))
 }
