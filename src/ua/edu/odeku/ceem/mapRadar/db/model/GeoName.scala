@@ -227,7 +227,7 @@ object GeoNames extends CeemTableObject {
 		DB.database withSession {
 			implicit session =>
 
-				Q.queryNA[GeoName](sql).list.toArray
+				Q.queryNA[GeoName](sql).list
 		}
 	}
 
