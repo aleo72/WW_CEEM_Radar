@@ -105,12 +105,13 @@ class GeoNames(tag: Tag) extends Table[GeoName](tag, "GEO_NAMES") {
 
 object GeoNames extends CeemTableObject {
 
-
 	val countFieldsInGeoName = 10
 
 	val objects = TableQuery[GeoNames]
 
 	val table = GeoNames.objects.baseTableRow
+
+	implicit val getGeoNameResult = GetResult(r => GeoName(r.<<[Long], r.<<[String], r.<<[String], r.<<[String], r.<<[Double], r.<<[Double],r.<<[String],r.<<[String], r.<<[String],r.<<?[String]))
 
 	def tableName: String = this.objects.baseTableRow.tableName
 
@@ -226,7 +227,7 @@ object GeoNames extends CeemTableObject {
 		DB.database withSession {
 			implicit session =>
 
-				Q.queryNA[GeoName](sql).list
+				Q.queryNA[GeoName](sql).list.toArray
 		}
 	}
 
