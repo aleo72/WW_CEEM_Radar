@@ -19,7 +19,7 @@ import gov.nasa.worldwind.util.{AbsentResourceList, Tile, Logging}
 class GeoNames(val country: String, val geoClass: String, val geoCode: String, val sector: Sector, val tileDelta: LatLon, val font: Font) {
 
 	private val absentTiles = new AbsentResourceList(GeoNames.MAX_ABSENT_TILE_TRIES, GeoNames.MIN_ABSENT_TILE_CHECK_INTERVAL)
-	private var _enable = true
+	var enable = true
 	var color = Color.WHITE
 	private var _backgroundColor: Color = null
 	var minDisplayDistance = Double.MinValue
