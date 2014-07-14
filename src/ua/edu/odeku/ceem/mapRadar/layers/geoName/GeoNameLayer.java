@@ -27,7 +27,7 @@ import java.util.logging.Level;
  * Date: 12.11.13
  * Time: 22:00
  */
-public abstract class GeoNameLayer extends AbstractLayer {
+public abstract class _GeoNameLayer extends AbstractLayer {
 
     protected static String prefix = "Earth/GeoNamePlaceNames/";
 

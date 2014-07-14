@@ -21,20 +21,15 @@ class GeoNamesChunk(val geoNames: GeoNames) {
 
 	val geoNameList = ua.edu.odeku.ceem.mapRadar.db.model.GeoNames.list(null, geoNames.country, geoNames.geoClass, geoNames.geoCode)
 
-	def iterable(dc: DrawContext) = {
-		val buff = new ArrayBuffer[GeographicText]()
-		for(geoName <- geoNameList){
-			val nameGeo = GeoNamesChunk.mkText(geoName)
+	def iterable(dc: DrawContext) = for(geoName <- geoNameList) yield {
 			val pos = GeoNamesChunk.mkPosition(geoName)
-			val text = new UserFacingText(nameGeo, pos)
+			val text = new UserFacingText(GeoNamesChunk.mkText(geoName), pos)
 			text.setFont(this.geoNames.font)
 			text.setColor(this.geoNames.color)
 			text.setBackgroundColor(this.geoNames.backgroundColor)
 			text.setVisible(GeoNameLayer.isNameVisible(dc,this.geoNames, pos))
 			text.setPriority(this.geoNames.maxDisplayDistance)
-			buff += text
-		}
-		buff.toList
+			text
 	}
 }
 

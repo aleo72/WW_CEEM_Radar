@@ -28,5 +28,11 @@ object CeemUtilsFunctions {
 
 	}
 
+  implicit class NumberPower(value: Double) {
+    def ** (i: Int) = Math.pow(value, i)
+  }
+
+
+
 
 }
