@@ -9,7 +9,7 @@ import java.awt.{Color, Font}
 import java.io.File
 
 import gov.nasa.worldwind.geom.{Angle, LatLon, Sector}
-import gov.nasa.worldwind.util.{AbsentResourceList, Tile, Logging}
+import gov.nasa.worldwind.util.{AbsentResourceList, Tile => WWTile, Logging}
 
 /**
  * User: Aleo Bakalov
@@ -52,8 +52,8 @@ class GeoNames(val country: String, val geoClass: String, val geoCode: String, v
 	}
 
 	def numColumnsInLevel = {
-		val firstCol = Tile.computeColumn(this.tileDelta.getLongitude, GeoNames.TILING_SECTOR.getMinLongitude, Angle.NEG180)
-		val lastCol = Tile.computeColumn(this.tileDelta.getLongitude, GeoNames.TILING_SECTOR.getMaxLongitude.subtract(this.tileDelta.getLongitude), Angle.NEG180)
+		val firstCol = WWTile.computeColumn(this.tileDelta.getLongitude, GeoNames.TILING_SECTOR.getMinLongitude, Angle.NEG180)
+		val lastCol = WWTile.computeColumn(this.tileDelta.getLongitude, GeoNames.TILING_SECTOR.getMaxLongitude.subtract(this.tileDelta.getLongitude), Angle.NEG180)
 		lastCol - firstCol + 1
 	}
 
@@ -94,7 +94,7 @@ class GeoNames(val country: String, val geoClass: String, val geoCode: String, v
 	}
 
 	def createFileCachePathFromTile(row: Int, column: Int): String = {
-		val message: String = Logging.getMessage("GeoNames.RowOrColumnOutOfRange", row, column)
+		val message: String = s"GeoNames.RowOrColumnOutOfRange row = $row, column = $column"
 		Logging.logger.severe(message)
 		throw new IllegalArgumentException(message)
 	}

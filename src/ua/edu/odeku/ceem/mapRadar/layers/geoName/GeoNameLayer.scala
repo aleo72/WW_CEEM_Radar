@@ -15,7 +15,6 @@ import gov.nasa.worldwind.render.{DrawContext, GeographicText, UserFacingText}
 import gov.nasa.worldwind.util.Logging
 import gov.nasa.worldwind.{View, WorldWind}
 import ua.edu.odeku.ceem.mapRadar.db.model.GeoName
-import ua.edu.odeku.ceem.mapRadar.layers.geoName.GeoNameLayer.Tile
 import ua.edu.odeku.ceem.mapRadar.utils.CeemUtilsFunctions.NumberPower
 
 import scala.collection.mutable
@@ -85,7 +84,7 @@ class GeoNameLayer(val geoNamesSet: GeoNamesSet) {
     }
   }
 
-  override def doRender(dc: DrawContext) {
+  def doRender(dc: DrawContext): Unit = {
     referencePoint = this.computeReferencePoint(dc)
     var index = -1
     for (geoNames: GeoNames <- geoNamesSet.list) {
@@ -129,7 +128,13 @@ class GeoNameLayer(val geoNamesSet: GeoNamesSet) {
     }
     val viewport: Rectangle2D = drawContext.getView.getViewport
     val x = (viewport.getWidth / 2).toInt
-
+    for( y <- (viewport.getHeight / 2).toInt.to(0, -1)){
+      val pos = drawContext.getView.computePositionFromScreenPoint(x, y)
+      if(pos != null){
+        return drawContext.getGlobe.computePointFromPosition(pos.getLatitude, pos.getLongitude, 0.0)
+      }
+    }
+    null
   }
 
 

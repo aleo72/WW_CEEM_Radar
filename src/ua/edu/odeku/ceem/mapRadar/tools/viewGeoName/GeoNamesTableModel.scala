@@ -17,7 +17,7 @@ import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
  */
 class GeoNamesTableModel extends AbstractTableModel {
 
-	private var _list = Array[GeoName]()
+	private var _list: List[GeoName] = null
 
 	def list = _list
 
