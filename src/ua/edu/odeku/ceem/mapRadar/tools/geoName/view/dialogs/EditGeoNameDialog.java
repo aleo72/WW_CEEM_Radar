@@ -1,4 +1,4 @@
-package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs;
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;

@@ -3,13 +3,12 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.layers.geoName
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.layer
 
 import java.awt.{Color, Font}
-import java.io.File
 
 import gov.nasa.worldwind.geom.{Angle, LatLon, Sector}
-import gov.nasa.worldwind.util.{AbsentResourceList, Tile => WWTile, Logging}
+import gov.nasa.worldwind.util.{AbsentResourceList, Logging, Tile => WWTile}
 
 /**
  * User: Aleo Bakalov
@@ -69,7 +68,6 @@ class GeoNames(val country: String, val geoClass: String, val geoCode: String, v
 	def backgroundColor_=(value: Color): Unit = _backgroundColor = value
 
 	override def equals(o: Any): Boolean = {
-		if (this == o) return true
 		if (o == null || this.getClass != o.getClass) return false
 		val other: GeoNames = o.asInstanceOf[GeoNames]
 		if (this.typeGeoNames != other.typeGeoNames) {

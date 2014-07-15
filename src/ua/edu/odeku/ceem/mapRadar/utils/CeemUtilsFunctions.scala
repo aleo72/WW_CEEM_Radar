@@ -16,6 +16,8 @@ object CeemUtilsFunctions {
 
 	implicit def stringToBoolean(string: String) = notNullAndEmpty(string)
 
+  implicit def charToBoolean(char: Char) = if (char != null) true else false
+
 	implicit class StringPower(string: String) {
 
 		def unary_~  = stringToBoolean(string)

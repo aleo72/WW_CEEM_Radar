@@ -1,17 +1,12 @@
-package ua.edu.odeku.ceem.mapRadar.tools.importGeoName;
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.imports;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel;
-import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
-import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
-import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.panels.FileChooserForm;
-import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.panels.FileChooserForm;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 /**

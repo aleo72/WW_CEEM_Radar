@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs
 
 import java.awt.event.{WindowEvent, WindowAdapter, ActionEvent, ActionListener}
 

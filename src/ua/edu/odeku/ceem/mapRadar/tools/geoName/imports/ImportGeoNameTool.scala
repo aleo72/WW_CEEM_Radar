@@ -3,7 +3,7 @@
  * Copyright (C) 2013
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.importGeoName
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.imports
 
 import ua.edu.odeku.ceem.mapRadar.tools.{ToolFrame, CeemRadarTool}
 import javax.swing.{JFrame, JPanel}

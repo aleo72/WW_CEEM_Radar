@@ -5,9 +5,9 @@
 
 package ua.edu.odeku.ceem.mapRadar
 
-import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.ImportGeoNameTool
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
-import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.ViewGeoNameTool
 import scala.Predef._
 import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool
 

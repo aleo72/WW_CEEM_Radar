@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.layers.geoName
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.layer
 
 import java.awt.geom.Rectangle2D
 import java.util.concurrent.PriorityBlockingQueue
@@ -11,6 +11,7 @@ import java.util.logging.Level
 
 import gov.nasa.worldwind.cache.Cacheable
 import gov.nasa.worldwind.geom._
+import gov.nasa.worldwind.layers.AbstractLayer
 import gov.nasa.worldwind.render.{DrawContext, GeographicText, UserFacingText}
 import gov.nasa.worldwind.util.Logging
 import gov.nasa.worldwind.{View, WorldWind}
@@ -25,7 +26,7 @@ import scala.collection.mutable.ArrayBuffer
  * Date: 10.07.2014
  * Time: 14:07
  */
-class GeoNameLayer(val geoNamesSet: GeoNamesSet) {
+class GeoNameLayer(val geoNamesSet: GeoNamesSet) extends AbstractLayer {
 
   if (geoNamesSet == null) {
     val message: String = Logging.getMessage("nullValue.GeoNamesSetIsNull")
@@ -84,7 +85,7 @@ class GeoNameLayer(val geoNamesSet: GeoNamesSet) {
     }
   }
 
-  def doRender(dc: DrawContext): Unit = {
+  override def doRender(dc: DrawContext): Unit = {
     referencePoint = this.computeReferencePoint(dc)
     var index = -1
     for (geoNames: GeoNames <- geoNamesSet.list) {

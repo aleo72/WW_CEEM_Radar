@@ -1,4 +1,4 @@
-package ua.edu.odeku.ceem.mapRadar.tools.importGeoName.panels;
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.panels;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;

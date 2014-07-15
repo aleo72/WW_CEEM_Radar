@@ -3,9 +3,9 @@
  * Copyright (C) 2013
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.view
 
-import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs.HandlerEditGeoNameDialog
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs.HandlerEditGeoNameDialog
 import ua.edu.odeku.ceem.mapRadar.tools.{ToolFrame, CeemRadarTool}
 import javax.swing.{JTable, JPanel, JFrame, JComponent}
 import java.awt.Dimension

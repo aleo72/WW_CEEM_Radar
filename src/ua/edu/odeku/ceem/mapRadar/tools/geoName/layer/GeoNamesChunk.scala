@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.layers.geoName
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.layer
 
 import gov.nasa.worldwind.geom.Position
 import gov.nasa.worldwind.render.{GeographicText, UserFacingText, DrawContext}

@@ -4,12 +4,12 @@
  * All Rights Reserved.
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.viewGeoName;
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.view;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import ua.edu.odeku.ceem.mapRadar.tools.CeemPanel;
-import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.dialogs.EditGeoNameDialog;
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs.EditGeoNameDialog;
 
 import javax.swing.*;
 import java.util.ResourceBundle;

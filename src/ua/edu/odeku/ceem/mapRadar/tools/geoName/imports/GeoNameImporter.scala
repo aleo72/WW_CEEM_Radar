@@ -3,7 +3,7 @@
  * Copyright (C) 2013
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.importGeoName
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.imports
 
 import java.io.{IOException, File}
 import javax.swing.JProgressBar
