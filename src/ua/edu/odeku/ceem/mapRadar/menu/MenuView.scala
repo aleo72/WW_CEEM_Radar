@@ -60,7 +60,7 @@ object MenuView extends MenuCreator {
 	private def ceemRadarLayers() = {
 		val buff = new ArrayBuffer[JCheckBoxMenuItem]
 
-		var layer: Layer = GeoNameLayerFactory.createLayer(null, GeoNamesFeatureClasses.A, GeoNamesFeatureClasses.A.featureCodes.toList, Font.decode("Arial-BOLD-12"), Color.GREEN, GeoNameLayer.LEVEL_G, GeoNameLayer.LEVEL_C)
+		var layer: Layer = GeoNameLayerFactory.createLayer(null, GeoNamesFeatureClasses.A, GeoNamesFeatureClasses.A.featureCodes.toList, Font.decode("Arial-BOLD-12"), Color.GREEN, GeoNameLayer.LEVEL_P, GeoNameLayer.LEVEL_A)
 		var item: JCheckBoxMenuItem = new JCheckBoxMenuItem("GeoName A", false)
 		layer.setEnabled(false)
 		AppCeemRadarFrame.wwd.getModel.getLayers.add(layer)
@@ -72,17 +72,17 @@ object MenuView extends MenuCreator {
 		})
 		buff += item
 
-		layer = GeoNameLayerFactory.createLayer(null, GeoNamesFeatureClasses.P, GeoNamesFeatureClasses.P.featureCodes.toList, Font.decode("Arial-BOLD-12"), Color.WHITE, 0.0, GeoNameLayer.LEVEL_I)
-		item = new JCheckBoxMenuItem("GeoName P", false)
-		layer.setEnabled(false)
-		AppCeemRadarFrame.wwd.getModel.getLayers.add(layer)
-		item.addActionListener(new ActionListener {
-			def actionPerformed(e: ActionEvent) {
-				val item: JCheckBoxMenuItem = e.getSource.asInstanceOf[JCheckBoxMenuItem]
-				layer.setEnabled(item.isSelected)
-			}
-		})
-		buff += item
+//		layer = GeoNameLayerFactory.createLayer(null, GeoNamesFeatureClasses.P, GeoNamesFeatureClasses.P.featureCodes.toList, Font.decode("Arial-BOLD-12"), Color.WHITE, 0.0, GeoNameLayer.LEVEL_I)
+//		item = new JCheckBoxMenuItem("GeoName P", false)
+//		layer.setEnabled(false)
+//		AppCeemRadarFrame.wwd.getModel.getLayers.add(layer)
+//		item.addActionListener(new ActionListener {
+//			def actionPerformed(e: ActionEvent) {
+//				val item: JCheckBoxMenuItem = e.getSource.asInstanceOf[JCheckBoxMenuItem]
+//				layer.setEnabled(item.isSelected)
+//			}
+//		})
+//		buff += item
 
 
 		item = new JCheckBoxMenuItem("Admin Border Country", false)

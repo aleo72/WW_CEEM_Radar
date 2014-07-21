@@ -186,7 +186,7 @@ class GeoNameLayer(val geoNamesSet: GeoNamesSet) extends AbstractLayer {
       if (eyePos == null) {
         return false
       }
-      if (Double.NaN != eyePos.getLatitude.getDegrees || Double.NaN != eyePos.getLongitude.getDegrees) {
+      if (Double.NaN == eyePos.getLatitude.getDegrees || Double.NaN == eyePos.getLongitude.getDegrees) {
         return false
       }
       val lat: Angle = GeoNameLayer.clampAngle(eyePos.getLatitude, navSector.getMinLatitude, navSector.getMaxLatitude)
