@@ -8,6 +8,10 @@ package ua.edu.odeku.ceem.mapRadar.menu
 import javax.swing.JMenuItem
 import java.awt.event.{ActionEvent, ActionListener}
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
+import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.ImportGeoNameTool
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.ViewGeoNameTool
+import ua.edu.odeku.ceem.mapRadar.tools.settings.SettingTool
 
 /***********************************************************************************************************************
   * Об'єкт який створює головне меню
@@ -21,7 +25,12 @@ object MainMenu extends MenuCreator {
 	override def menuItems: Array[JMenuItem] = createMenus()
 
 
+  val tools: Array[Class[_ <: CeemRadarTool]] = Array(
+    classOf[SettingTool]
+  )
+
 	private def createMenus() = {
+
 		val close = new JMenuItem("Close")
 		close.addActionListener(new ActionListener {
 			override def actionPerformed(e: ActionEvent): Unit = {
@@ -31,6 +40,6 @@ object MainMenu extends MenuCreator {
 			}
 		})
 
-		Array(close)
+		createMenuItemsForCeemRadarTool(tools) ++ Array(close)
 	}
 }
