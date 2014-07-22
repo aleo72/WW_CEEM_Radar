@@ -26,12 +26,10 @@ import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.imports.ImportAdminBorderTool;
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.viewManager.AdminBorderViewManagerTool;
-import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownload;
-import ua.edu.odeku.ceem.mapRadar.tools.cache.CacheDownloadTool;
-import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.ImportGeoNameTool;
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.ImportGeoNameTool;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry;
-import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool;
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.ViewGeoNameTool;
 
 import javax.swing.*;
 import java.awt.*;

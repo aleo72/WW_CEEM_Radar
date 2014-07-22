@@ -7,8 +7,8 @@ package ua.edu.odeku.ceem.mapRadar.menu
 
 import javax.swing.JMenuItem
 import scala.collection.mutable.ArrayBuffer
-import ua.edu.odeku.ceem.mapRadar.tools.importGeoName.{ImportGeoNameTool, ImportGeoName}
-import ua.edu.odeku.ceem.mapRadar.tools.viewGeoName.ViewGeoNameTool
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.{ImportGeoNameTool, ImportGeoName}
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.ViewGeoNameTool
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.imports.ImportAdminBorderTool
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.viewManager.AdminBorderViewManagerTool
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
@@ -23,10 +23,10 @@ import java.awt.event.{ActionEvent, ActionListener}
 object MenuTools extends MenuCreator {
 
 	val tools = Array(
-		classOf[ImportGeoNameTool],
-		classOf[ViewGeoNameTool],
-		classOf[ImportAdminBorderTool],
-		classOf[AdminBorderViewManagerTool]
+		classOf[ImportGeoNameTool]
+		,classOf[ViewGeoNameTool]
+		//,classOf[ImportAdminBorderTool]
+		//,classOf[AdminBorderViewManagerTool]
 	)
 
 	override def nameMenu: String = resourceBundle.getString("tools")

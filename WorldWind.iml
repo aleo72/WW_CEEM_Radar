@@ -38,7 +38,7 @@
       <sourceFolder url="file://$MODULE_DIR$/CeemResourceBundle" type="java-resource" />
     </content>
     <orderEntry type="library" name="jsobjectplugin" level="project" />
-    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jogl" level="project" />
     <orderEntry type="library" name="gdal" level="project" />
@@ -55,6 +55,7 @@
     <orderEntry type="library" name="jgoodies-validation" level="project" />
     <orderEntry type="library" name="scala-compiler" level="project" />
     <orderEntry type="library" name="scala-lib" level="project" />
+    <orderEntry type="library" name="slf4j" level="project" />
     <orderEntry type="library" name="slick" level="project" />
   </component>
 </module>

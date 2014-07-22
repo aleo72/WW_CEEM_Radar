@@ -7,10 +7,9 @@ package ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.models.radar.RadarTypes;
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.HandlerRadarEditorFrom;
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.panel.handlerForm.Settlement;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -29,7 +28,7 @@ public class RadarEditorForm {
     public JPanel panelParm;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    public JComboBox<Settlement> locationNameComboBox;
+    public JComboBox<GeoNamesWithNameAndCoordinates> locationNameComboBox;
     public JButton locationHelp;
 
     public final HandlerRadarEditorFrom handler;
