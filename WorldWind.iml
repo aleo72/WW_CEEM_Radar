@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="db_h2" value="7c73f76f-f0ba-449b-bbdd-1ac94fef453c" />
-          <factory-entry name="db_h2_server" value="fd501654-e3af-42db-b854-5bd4aba37230" />
-        </datasource-mapping>
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
-      </configuration>
-    </facet>
     <facet type="scala" name="Scala">
       <configuration>
         <option name="compilerLibraryLevel" value="Project" />
@@ -44,9 +33,6 @@
     <orderEntry type="library" name="gdal" level="project" />
     <orderEntry type="library" name="junit" level="project" />
     <orderEntry type="library" name="h2" level="project" />
-    <orderEntry type="library" name="hibernate-entitymanager-4.2.6.Final" level="project" />
-    <orderEntry type="library" name="Hibernate" level="project" />
-    <orderEntry type="library" name="Hibernate" level="project" />
     <orderEntry type="library" name="jgoodies-forms" level="project" />
     <orderEntry type="library" name="jgoodies-animation" level="project" />
     <orderEntry type="library" name="jgoodies-binding" level="project" />

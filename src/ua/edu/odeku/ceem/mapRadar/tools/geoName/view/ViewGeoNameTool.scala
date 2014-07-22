@@ -5,19 +5,15 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.geoName.view
 
-import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs.HandlerEditGeoNameDialog
-import ua.edu.odeku.ceem.mapRadar.tools.{ToolFrame, CeemRadarTool}
-import javax.swing.{JTable, JPanel, JFrame, JComponent}
 import java.awt.Dimension
-import org.hibernate.{ScrollMode, ScrollableResults, SQLQuery, Session}
-import ua.edu.odeku.ceem.mapRadar.db.DB
-import java.lang.{Object, String}
-import scala.Predef.String
-import java.awt.event.{MouseAdapter, ActionEvent, ActionListener, MouseEvent}
-import ua.edu.odeku.ceem.mapRadar.db.model.{GeoNames, GeoName}
-import gov.nasa.worldwind.geom.{Position, LatLon}
-import gov.nasa.worldwind.WorldWindow
+import java.awt.event.{ActionEvent, ActionListener, MouseAdapter, MouseEvent}
+import javax.swing.{JPanel, JTable}
+
+import gov.nasa.worldwind.geom.{LatLon, Position}
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
+import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs.HandlerEditGeoNameDialog
+import ua.edu.odeku.ceem.mapRadar.tools.{CeemRadarTool, ToolFrame}
 
 /**
  * User: Aleo Bakalov
