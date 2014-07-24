@@ -62,7 +62,7 @@ object MenuRadar extends MenuCreator {
 //    })
     val isoLinesMenu = new JMenu(resourceBundle.getString("view_isoline"))
 
-    val altitudes = Array(100, 300, 500, 800, 1000, 2000, 3000)
+    val altitudes = Array(100, 300, 500, 800, 1000, 2000, 3000, 10000, 20000, 100000, 150000, 200000)
     val menuItems = new ArrayBuffer[JCheckBoxMenuItem]()
     for(altitude <- altitudes) {
       val item = new JCheckBoxMenuItem()
