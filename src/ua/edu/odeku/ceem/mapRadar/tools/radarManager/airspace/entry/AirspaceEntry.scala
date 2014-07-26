@@ -139,13 +139,21 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 
 object AirspaceEntry {
 
+  private var numberNewAirspaceEntry = 1
+
 	val bufferOfAirspaceEntry = new ArrayBuffer[AirspaceEntry]()
 
-	def showIsolineViewMode(b: Boolean): Unit = {
-		if (b) {
+  /**
+   * Переменная указывающая на то, на какой выстоте необходимо отображать изолинию
+   */
+  private var altitudeIsolineView: Int = 0
+
+	def showIsolineViewMode(altituteIsoline: Int): Unit = {
+		if (altituteIsoline > 0) {
+      this.altitudeIsolineView = altituteIsoline
 			bufferOfAirspaceEntry.foreach(
 				(entry: AirspaceEntry) => {
-					entry.airspace.showIsolineAirspace()
+					entry.airspace.showIsolineAirspace(altitudeIsolineView)
 					entry.editor.setEnabled(false)
 				}
 			)
@@ -158,8 +166,6 @@ object AirspaceEntry {
 			)
 		}
 	}
-
-	private var numberNewAirspaceEntry = 1
 
 	def create(wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
 		apply(wwd, methodOfController)

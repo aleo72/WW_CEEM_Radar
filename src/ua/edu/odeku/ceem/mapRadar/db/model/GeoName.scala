@@ -339,8 +339,7 @@ object GeoNamesWithNameAndCoordinates {
 			      WHEN $translateNameColumn IS NOT NULL
 			        THEN $translateNameColumn
 			        ELSE NAME
-			    END AS $nameColumn,
-
+			    END AS NAME,
 			    $latColumn,
 			  	$lonColumn
 			  FROM
@@ -353,7 +352,7 @@ object GeoNamesWithNameAndCoordinates {
 						UPPER($translateNameColumn) LIKE '$text'
 			  	)
 			  	ORDER BY
-			  				$nameColumn;
+			  				$nameColumn
 			""")
 
 		val list = new mutable.MutableList[GeoNamesWithNameAndCoordinates]
