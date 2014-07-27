@@ -8,10 +8,10 @@ package ua.edu.odeku.ceem.mapRadar.menu
 import javax.swing.{JMenu, JCheckBoxMenuItem, KeyStroke, JMenuItem}
 import scala.collection.mutable.ArrayBuffer
 import java.awt.event.{ActionEvent, ActionListener, InputEvent}
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool
+import ua.edu.odeku.ceem.mapRadar.tools.radar.RadarManagerTool
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry
+import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.entry.AirspaceEntry
 
 /** *********************************************************************************************************************
   *

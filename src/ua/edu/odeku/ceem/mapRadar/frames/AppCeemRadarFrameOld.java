@@ -5,39 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.frames;
 
-import gov.nasa.worldwind.Model;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.event.RenderingExceptionListener;
-import gov.nasa.worldwind.event.SelectListener;
-import gov.nasa.worldwind.exception.WWAbsentRequirementException;
-import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.layers.ViewControlsLayer;
-import gov.nasa.worldwind.layers.ViewControlsSelectListener;
-import gov.nasa.worldwind.util.StatisticsPanel;
-import gov.nasa.worldwind.util.StatusBar;
-import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.util.HighlightController;
-import gov.nasa.worldwindx.examples.util.ToolTipController;
-import ua.edu.odeku.ceem.mapRadar.panels.AppMainPanel;
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram;
-import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.imports.ImportAdminBorderTool;
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.viewManager.AdminBorderViewManagerTool;
-import ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.ImportGeoNameTool;
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.RadarManagerTool;
-import ua.edu.odeku.ceem.mapRadar.tools.radarManager.airspace.entry.AirspaceEntry;
-import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.ViewGeoNameTool;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import static ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils.insertBeforeCompass;
 
 /**
  * Класс главного Фрейма программы

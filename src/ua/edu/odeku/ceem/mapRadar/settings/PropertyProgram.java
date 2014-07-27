@@ -144,6 +144,8 @@ public class PropertyProgram {
         return translateGeoName;
     }
 
+    public static Long radarCounter() { return 1L; }
+
     static {
         Locale.setDefault(CURRENT_LOCALE);
     }
