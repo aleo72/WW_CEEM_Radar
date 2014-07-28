@@ -55,50 +55,13 @@ public class RadarEditorForm {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        createUIComponents();
         panel1 = new JPanel();
         panel1.setLayout(new FormLayout("fill:max(d;4px):grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new FormLayout("fill:max(d;100px):noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:grow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
-        CellConstraints cc = new CellConstraints();
-        panel1.add(panel2, cc.xy(1, 1));
-        final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("label").getString("airspace_name"));
-        panel2.add(label1, cc.xy(1, 2, CellConstraints.RIGHT, CellConstraints.FILL));
-        panel2.add(nameAirspaceTextField, cc.xy(3, 2, CellConstraints.FILL, CellConstraints.DEFAULT));
-        final JLabel label2 = new JLabel();
-        this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("strings").getString("label_airspace_Altitude"));
-        panel2.add(label2, cc.xy(1, 4, CellConstraints.RIGHT, CellConstraints.FILL));
-        panel2.add(altitudeSpinner, cc.xy(3, 4, CellConstraints.FILL, CellConstraints.DEFAULT));
         locationForm = new LocationForm();
+        CellConstraints cc = new CellConstraints();
         panel1.add(locationForm.$$$getRootComponent$$$(), cc.xy(1, 3));
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private void $$$loadLabelText$$$(JLabel component, String text) {
-        StringBuffer result = new StringBuffer();
-        boolean haveMnemonic = false;
-        char mnemonic = '\0';
-        int mnemonicIndex = -1;
-        for (int i = 0; i < text.length(); i++) {
-            if (text.charAt(i) == '&') {
-                i++;
-                if (i == text.length()) break;
-                if (!haveMnemonic && text.charAt(i) != '&') {
-                    haveMnemonic = true;
-                    mnemonic = text.charAt(i);
-                    mnemonicIndex = result.length();
-                }
-            }
-            result.append(text.charAt(i));
-        }
-        component.setText(result.toString());
-        if (haveMnemonic) {
-            component.setDisplayedMnemonic(mnemonic);
-            component.setDisplayedMnemonicIndex(mnemonicIndex);
-        }
+        final RadarParameterForm nestedForm1 = new RadarParameterForm();
+        panel1.add(nestedForm1.$$$getRootComponent$$$(), cc.xy(1, 1));
     }
 
     /**

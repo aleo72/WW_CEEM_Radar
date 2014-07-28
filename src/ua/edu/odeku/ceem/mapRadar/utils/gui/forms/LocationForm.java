@@ -48,11 +48,13 @@ public class LocationForm {
         this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("label").getString("radarManager_airspace_edit_latitude"));
         panel2.add(label1, cc.xy(1, 3, CellConstraints.DEFAULT, CellConstraints.FILL));
         latTextField = new JTextField();
+        latTextField.setEditable(false);
         panel2.add(latTextField, cc.xy(3, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JLabel label2 = new JLabel();
         this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("label").getString("radarManager_airspace_edit_longitude"));
         panel2.add(label2, cc.xy(5, 3, CellConstraints.DEFAULT, CellConstraints.FILL));
         lonTextField = new JTextField();
+        lonTextField.setEditable(false);
         panel2.add(lonTextField, cc.xy(7, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:grow,center:max(d;4px):noGrow"));
