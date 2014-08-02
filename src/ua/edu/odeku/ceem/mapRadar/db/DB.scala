@@ -5,10 +5,13 @@
 
 package ua.edu.odeku.ceem.mapRadar.db
 
-import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
+import java.util.ResourceBundle
+
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
+
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.{simple => DatabaseH2}
-
 import scala.slick.jdbc.meta.MTable
 
 /**
@@ -56,6 +59,8 @@ object DB {
 }
 
 trait CeemTableObject {
+
+  val resourceBundle: ResourceBundle = ResourceBundle.getBundle("strings", Settings.Program.locale)
 
 	def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database): Unit
 }

@@ -5,11 +5,11 @@
 
 package ua.edu.odeku.ceem.mapRadar.settings
 
-import java.io.{FileOutputStream, FileInputStream, File}
-import java.util.{Locale}
+import java.io.{File, FileInputStream, FileOutputStream}
+import java.util.Locale
 
-import ua.edu.odeku.ceem.mapRadar.properties.{LongProperties, BooleanProperties, LocaleProperties, StringProperties}
 import ua.edu.odeku.ceem.mapRadar.properties.PropertiesUtils._
+import ua.edu.odeku.ceem.mapRadar.properties.{BooleanProperties, LocaleProperties, LongProperties, StringProperties}
 
 /**
  * Обїект який маніпулює конфігурацієй
@@ -18,7 +18,7 @@ import ua.edu.odeku.ceem.mapRadar.properties.PropertiesUtils._
  */
 object Settings {
 
-  private val file = new File("CeemRadarDataConfig/program.properties")
+  private val file = new File("CeemRadarDataConfigs/program.properties")
   file.createNewFile()
   private implicit val in = new FileInputStream(file)
   private implicit val out = new FileOutputStream(file)
@@ -75,6 +75,7 @@ object Settings {
         private val defaultAltitudeForRadar: LongProperties = ("program.tools.radar.altitude.default", 10L)
         private val stepAltitudeForRadar: LongProperties = ("program.tools.radar.altitude.step", 5L)
         private val _counterRadar: LongProperties = ("program.tools.radar.counter", 1L)
+        private val _viewToRadarHeight: LongProperties = ("program.tools.radar.viewToRadarHeight", 100000L)
 
         def maxAltitude = maxAltitudeForRadar.value
         def maxAltitude_=(value: Long): Unit = maxAltitudeForRadar.value = value
@@ -89,6 +90,10 @@ object Settings {
         def stepAltitude_=(value: Long): Unit = stepAltitudeForRadar.value = value
 
         def counterRadar = _counterRadar.inc
+
+        def viewToRadarHeight = _viewToRadarHeight.value
+
+        def viewToRadarHeight_=(value: Long): Unit = _viewToRadarHeight.value = value
       }
     }
 

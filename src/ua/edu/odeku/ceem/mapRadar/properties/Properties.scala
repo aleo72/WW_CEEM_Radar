@@ -19,7 +19,7 @@ trait PropertiesTrait[T] {
 
   val defaultValue: T
 
-  def store(properties: java.util.Properties, comment: String = "")(implicit out: FileOutputStream) : Unit = {
+  def store(properties: java.util.Properties, comment: String = "")(implicit out: FileOutputStream): Unit = {
     properties.store(out, comment)
   }
 
@@ -29,18 +29,19 @@ trait PropertiesTrait[T] {
     p
   }
 
-  def putAndStore(string: String)(implicit in: FileInputStream, out: FileOutputStream)  = {
+  def putAndStore(string: String)(implicit in: FileInputStream, out: FileOutputStream) = {
     val prop = properties
     prop.setProperty(key, string)
     store(prop)
   }
 
-  protected def stringToObject (valueString: String): T
+  protected def stringToObject(valueString: String): T
 
-  protected def objectToString (value: T): String
+  protected def objectToString(value: T): String
 
-  def value(implicit in: FileInputStream): T = stringToObject (properties.getProperty(key, objectToString(defaultValue)))
-  def value_=(obj: T)(implicit in: FileInputStream, out: FileOutputStream) : Unit = putAndStore(objectToString(obj))
+  def value(implicit in: FileInputStream): T = stringToObject(properties.getProperty(key, objectToString(defaultValue)))
+
+  def value_=(obj: T)(implicit in: FileInputStream, out: FileOutputStream): Unit = putAndStore(objectToString(obj))
 
 }
 
@@ -86,7 +87,7 @@ case class LongProperties(key: String, defaultValue: Long) extends PropertiesTra
 
   override protected def objectToString(value: Long): String = value.toString
 
-  def inc = {
+  def inc(implicit in: FileInputStream, out: FileOutputStream) = {
     val v = this.value
     this.value = v + 1
     v
@@ -95,6 +96,7 @@ case class LongProperties(key: String, defaultValue: Long) extends PropertiesTra
 }
 
 object Test extends App {
+
   import java.io.{File, FileInputStream, FileOutputStream}
 
   val file = new File("test.properties")
@@ -111,6 +113,6 @@ object Test extends App {
 
   test.value = "none"
 
-  println(test.value )
+  println(test.value)
 
 }

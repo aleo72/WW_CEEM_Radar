@@ -2,7 +2,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.geoName.imports.panels;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
+import ua.edu.odeku.ceem.mapRadar.settings.Settings;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -28,6 +28,7 @@ public class FileChooserForm {
     private String fileName;
     private File file;
     private JFileChooser fileChooser = new JFileChooser();
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("strings", Settings.Program$.MODULE$.locale());
 
     {
         fileChooser.setFileFilter(new FileFilter() {
@@ -62,7 +63,7 @@ public class FileChooserForm {
         chooserFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int res = fileChooser.showDialog(FileChooserForm.this.panel, ResourceString.get("frame_fileChooser_choose-file"));
+                int res = fileChooser.showDialog(FileChooserForm.this.panel, resourceBundle.getString("frame_fileChooser_choose-file"));
                 if (res == JFileChooser.APPROVE_OPTION) {
                     file = fileChooser.getSelectedFile();
                     fileName = file.getName();
@@ -75,7 +76,7 @@ public class FileChooserForm {
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(panel, ResourceString.get("message_geoName_for-import"), ResourceString.get("title_help"), JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(panel, resourceBundle.getString("message_geoName_for-import"), resourceBundle.getString("title_help"), JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }

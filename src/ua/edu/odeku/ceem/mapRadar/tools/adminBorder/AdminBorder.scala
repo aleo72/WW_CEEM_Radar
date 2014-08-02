@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder
 
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 
 /**
  * Объект для хранения общих данных этого расширения
@@ -14,6 +14,6 @@ import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
  */
 object AdminBorder {
 
-	val CEEM_RADAR_DATA_FOR_ADMIN_BORDER = PropertyProgram.CEEM_RADAR_DATA + "admin_border/"
-	val CEEM_RADAR_DATA_FOR_ADMIN_BORDER_0 = CEEM_RADAR_DATA_FOR_ADMIN_BORDER + "admin_country/"
+  val CEEM_RADAR_DATA_FOR_ADMIN_BORDER = Settings.Program.Data.folder + "admin_border/"
+  val CEEM_RADAR_DATA_FOR_ADMIN_BORDER_0 = CEEM_RADAR_DATA_FOR_ADMIN_BORDER + "admin_country/"
 }

@@ -17,10 +17,7 @@ import gov.nasa.worldwind.retrieve.BulkRetrievable;
 import gov.nasa.worldwind.retrieve.BulkRetrievalThread;
 import gov.nasa.worldwind.terrain.CompoundElevationModel;
 import gov.nasa.worldwindx.examples.util.SectorSelector;
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
-import ua.edu.odeku.ceem.mapRadar.tools.CeemRadarTool;
-import ua.edu.odeku.ceem.mapRadar.tools.ToolFrame;
-import ua.edu.odeku.ceem.mapRadar.utils.thread.Handler;
+import ua.edu.odeku.ceem.mapRadar.settings.Settings;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -32,6 +29,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Панель с помощью которой можно управлять скачиванием кеш данных
@@ -54,6 +52,7 @@ public class CacheDownload extends JPanel {
     protected SectorSelector selector;
 
     protected JFrame parent;
+    private java.util.ResourceBundle resourceBundle = ResourceBundle.getBundle("strings", Settings.Program$.MODULE$.locale());
 
     public CacheDownload(WorldWindow wwd) {
         this.wwd = wwd;
@@ -93,12 +92,12 @@ public class CacheDownload extends JPanel {
         if (this.currentSector != null) {
             // Update sector description
             this.sectorLabel.setText(makeSectorDescription(this.currentSector));
-            this.selectButton.setText(ResourceString.get("string_Clear_sector"));
+            this.selectButton.setText(resourceBundle.getString("string_Clear_sector"));
             this.startButton.setEnabled(true);
         } else {
             // null sector
             this.sectorLabel.setText("-");
-            this.selectButton.setText(ResourceString.get("string_Select_sector"));
+            this.selectButton.setText(resourceBundle.getString("string_Select_sector"));
             this.startButton.setEnabled(false);
         }
         updateRetrievablePanels(this.currentSector);
@@ -212,11 +211,11 @@ public class CacheDownload extends JPanel {
         int border = 6;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(
-                new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder(ResourceString.get("string_Download"))));
+                new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder(resourceBundle.getString("string_Download"))));
         this.setToolTipText("Layer imagery bulk download.");
 
         final JPanel locationPanel = new JPanel(new BorderLayout(5, 5));
-        JLabel locationLabel = new JLabel(" " + ResourceString.get("string_Cache") + ":");
+        JLabel locationLabel = new JLabel(" " + resourceBundle.getString("string_Cache") + ":");
         final JLabel locationName = new JLabel("");
         JButton locationButton = new JButton("...");
         locationPanel.add(locationLabel, BorderLayout.WEST);
@@ -244,8 +243,8 @@ public class CacheDownload extends JPanel {
         // Select sector button
         JPanel sectorPanel = new JPanel(new GridLayout(0, 1, 0, 0));
         sectorPanel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
-        selectButton = new JButton(ResourceString.get("string_Select_sector"));
-        selectButton.setToolTipText(ResourceString.get("message_cache_for-button-Select-sector"));
+        selectButton = new JButton(resourceBundle.getString("string_Select_sector"));
+        selectButton.setToolTipText(resourceBundle.getString("message_cache_for-button-Select-sector"));
         selectButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 selectButtonActionPerformed(event);
@@ -272,7 +271,7 @@ public class CacheDownload extends JPanel {
         // Start button
         JPanel startPanel = new JPanel(new GridLayout(0, 1, 0, 0));
         startPanel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
-        startButton = new JButton(ResourceString.get("string_Start_download"));
+        startButton = new JButton(resourceBundle.getString("string_Start_download"));
         startButton.setEnabled(false);
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {

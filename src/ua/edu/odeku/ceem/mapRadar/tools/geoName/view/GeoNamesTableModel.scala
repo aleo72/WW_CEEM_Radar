@@ -5,10 +5,11 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.geoName.view
 
+import java.util.ResourceBundle
 import javax.swing.table.AbstractTableModel
 
 import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 
 /**
  * User: Aleo Bakalov
@@ -18,6 +19,8 @@ import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 class GeoNamesTableModel extends AbstractTableModel {
 
 	private var _list: List[GeoName] = null
+
+  val resourceBundle: ResourceBundle = ResourceBundle.getBundle("strings", Settings.Program.locale)
 
 	def list = _list
 
@@ -56,16 +59,16 @@ class GeoNamesTableModel extends AbstractTableModel {
 
 	override def getColumnName(column: Int): String = {
 		column match {
-			case 0 => ResourceString.get("table_geoName_row")
-			case 1 => ResourceString.get("table_geoName_name")
-			case 2 => ResourceString.get("table_geoName_asciiName")
-			case 3 => ResourceString.get("table_geoName_translate")
-			case 4 => ResourceString.get("table_geoName_alternate-names")
-			case 5 => ResourceString.get("table_geoName_country-code")
-			case 6 => ResourceString.get("table_geoName_feature-class")
-			case 7 => ResourceString.get("table_geoName_feature-code")
-			case 8 => ResourceString.get("table_geoName_lat")
-			case 9 => ResourceString.get("table_geoName_lon")
+      case 0 => resourceBundle.getString("table_geoName_row")
+      case 1 => resourceBundle.getString("table_geoName_name")
+      case 2 => resourceBundle.getString("table_geoName_asciiName")
+      case 3 => resourceBundle.getString("table_geoName_translate")
+      case 4 => resourceBundle.getString("table_geoName_alternate-names")
+      case 5 => resourceBundle.getString("table_geoName_country-code")
+      case 6 => resourceBundle.getString("table_geoName_feature-class")
+      case 7 => resourceBundle.getString("table_geoName_feature-code")
+      case 8 => resourceBundle.getString("table_geoName_lat")
+      case 9 => resourceBundle.getString("table_geoName_lon")
 		}
 	}
 }

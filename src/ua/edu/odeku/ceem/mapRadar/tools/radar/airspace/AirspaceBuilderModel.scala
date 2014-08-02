@@ -5,12 +5,13 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radar.airspace
 
-import javax.swing.table.AbstractTableModel
-import java.lang.String
-import gov.nasa.worldwind.avlist.AVKey
 import java.util
+import java.util.ResourceBundle
+import javax.swing.table.AbstractTableModel
+
+import gov.nasa.worldwind.avlist.AVKey
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.entry.AirspaceEntry
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar
 
 /**
@@ -83,9 +84,12 @@ class AirspaceBuilderModel extends AbstractTableModel {
 }
 
 object AirspaceBuilderModel {
+
+  val resourceBundle: ResourceBundle = ResourceBundle.getBundle("strings", Settings.Program.locale)
+
 	val columnName: Array[String] = Array(
-		ResourceString.get("table_airspace_name"),
-		ResourceString.get("table_airspace_radar-type")
+    resourceBundle.getString("table_airspace_name"),
+    resourceBundle.getString("table_airspace_radar-type")
 	)
 	val columnClass: Array[Class[_]] = Array(classOf[String], classOf[Radar])
 	val columnAttribute: Array[String] = Array(AVKey.DISPLAY_NAME)

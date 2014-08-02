@@ -5,15 +5,16 @@
 
 package ua.edu.odeku.ceem.mapRadar
 
-import gov.nasa.worldwind.Configuration
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
-import javax.swing.{JFrame, JWindow}
-import javax.imageio.ImageIO
-import java.io.File
-import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel
 import java.awt.Toolkit
+import java.io.File
+import java.util.Locale
+import javax.imageio.ImageIO
+import javax.swing.{JFrame, JWindow}
+
+import gov.nasa.worldwind.Configuration
 import ua.edu.odeku.ceem.mapRadar.db.DB
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
+import ua.edu.odeku.ceem.mapRadar.panels.ImagePanel
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 
 /**
  * Объект старта программы
@@ -23,8 +24,9 @@ import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
  */
 object CeemRadarApplication extends App {
 
+  Application.initLocale()
 	Application.initSystemProperty()
-	Application.initLookAndFeel(PropertyProgram.getLookAndFeelInfo)
+  Application.initLookAndFeel(Settings.Program.Style.lookAndFeelInfo)
 	Application.initConfigurationProgram()
 
 
@@ -33,7 +35,7 @@ object CeemRadarApplication extends App {
 	Application.initDatabaseConnection()
 	Application.initAdminBorderManager()
 
-	AppCeemRadarFrame.setTitle(PropertyProgram.getNameProgram)
+  AppCeemRadarFrame.setTitle(Settings.Program.name)
 	AppCeemRadarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 	java.awt.EventQueue.invokeLater(new Runnable {
 		override def run(): Unit = {
@@ -48,6 +50,13 @@ object CeemRadarApplication extends App {
 
 private object Application {
 
+  /**
+   * Ініціализация локалізації программи
+   */
+  def initLocale() {
+    Locale.setDefault(Settings.Program.locale)
+  }
+
 	/**
 	 * Инициализация системных настроек
 	 */
@@ -55,7 +64,7 @@ private object Application {
 		System.setProperty("java.net.useSystemProxies", "true")
 		if (Configuration.isMacOS) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true")
-			System.setProperty("com.apple.mrj.application.apple.menu.about.name", PropertyProgram.getNameProgram)
+      System.setProperty("com.apple.mrj.application.apple.menu.about.name", Settings.Program.name)
 			System.setProperty("com.apple.mrj.application.growbox.intrudes", "false")
 			System.setProperty("apple.awt.brushMetalLook", "true")
 		}
@@ -122,7 +131,7 @@ private object Application {
 
 				override def run(): Unit = {
 					try {
-						val image = ImageIO.read(new File(PropertyProgram.getFileStartWindow))
+            val image = ImageIO.read(new File(Settings.Program.Start.fileStartWindow))
 						val panel = new ImagePanel(image)
 
 						startWindow.add(panel)
@@ -157,13 +166,13 @@ private object Application {
 	/**
 	 * Метод инициализации базы данных
 	 */
-	def initDatabaseConnection(): Unit = if (PropertyProgram.INIT_DB) DB.database
+  def initDatabaseConnection(): Unit = if (false) DB.database
 
 
 	/**
 	 * Инициализация AdminBorderManager
 	 */
 	def initAdminBorderManager() {
-		AdminBorderManager.viewCountryBorder
+    //		AdminBorderManager.viewCountryBorder
 	}
 }

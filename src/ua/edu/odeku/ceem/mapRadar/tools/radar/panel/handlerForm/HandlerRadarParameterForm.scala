@@ -5,10 +5,9 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radar.panel.handlerForm
 
-import javax.swing.{SpinnerNumberModel, SpinnerModel}
-import javax.swing.event.ChangeListener
+import javax.swing.SpinnerNumberModel
 
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 import ua.edu.odeku.ceem.mapRadar.tools.radar.panel.RadarParameterForm
 
 /**
@@ -18,10 +17,10 @@ class HandlerRadarParameterForm(val form: RadarParameterForm) {
 
   def initSpinners() {
     form.altitudeSpinner.setModel(new SpinnerNumberModel(
-      PropertyProgram.getDefaultAltitudeForRadar,
-      PropertyProgram.getMinAltitudeForRadar,
-      PropertyProgram.getMaxAltitudeForRadar,
-      PropertyProgram.getStepAltitudeForRadar)
+      Settings.Program.Tools.Radar.defaultAltitude,
+      Settings.Program.Tools.Radar.minAltitude,
+      Settings.Program.Tools.Radar.maxAltitude,
+      Settings.Program.Tools.Radar.stepAltitude)
     )
 
 
