@@ -12,11 +12,12 @@ import javax.swing.*;
 import java.util.ResourceBundle;
 
 /**
+ * Форма призначена для відображення параметрів радару
  * Created by Aleo on 28.07.2014.
  */
 public class RadarParameterForm {
     private JPanel panel1;
-    public  JTextField nameTextField;
+    public JTextField nameTextField;
     private JPanel namePanel;
     public JSpinner altitudeSpinner;
     private JPanel attributePanel;
@@ -45,7 +46,7 @@ public class RadarParameterForm {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new FormLayout("fill:d:grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
+        panel1.setLayout(new FormLayout("fill:d:grow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         namePanel = new JPanel();
         namePanel.setLayout(new FormLayout("fill:d:noGrow,left:4dlu:noGrow,fill:d:grow", "center:d:noGrow"));
         CellConstraints cc = new CellConstraints();
