@@ -23,6 +23,16 @@ trait PropertiesTrait[T] {
   val defaultValue: T
 
   /**
+   * Название bundle где хранится описание
+   */
+  val nameResourceBundle: String
+
+  /**
+   * Ключ в указаном bundle
+   */
+  val keyInResourceBundle: String
+
+  /**
    * Настройки які були останнього разу зчитані
    */
   private var _properties: java.util.Properties = null
@@ -119,16 +129,21 @@ trait PropertiesTrait[T] {
  * Об’єкт у якому зберігаються методі перетворення у об’єкти настроєк
  */
 object PropertiesUtils {
+
   implicit def tupleToProperties(tuple: (String, String)) = StringProperties(tuple._1, tuple._2)
+  implicit def tupleToProperties(tuple: (String, String, String, String)) = StringProperties(tuple._1, tuple._2, tuple._3, tuple._4 )
 
   implicit def tupleToProperties(tuple: (String, java.util.Locale)) = LocaleProperties(tuple._1, tuple._2)
+  implicit def tupleToProperties(tuple: (String, java.util.Locale, String, String)) = LocaleProperties(tuple._1, tuple._2, tuple._3, tuple._4)
 
   implicit def tupleToProperties(tuple: (String, Boolean)) = BooleanProperties(tuple._1, tuple._2)
+  implicit def tupleToProperties(tuple: (String, Boolean, String, String)) = BooleanProperties(tuple._1, tuple._2, tuple._3, tuple._4)
 
   implicit def tupleToProperties(tuple: (String, Long)) = LongProperties(tuple._1, tuple._2)
+  implicit def tupleToProperties(tuple: (String, Long, String, String)) = LongProperties(tuple._1, tuple._2, tuple._3, tuple._4)
 }
 
-case class StringProperties(key: String, defaultValue: String) extends PropertiesTrait[String] {
+case class StringProperties(key: String, defaultValue: String, nameResourceBundle: String = null, keyInResourceBundle: String = null) extends PropertiesTrait[String] {
 
   override protected def stringToObject(valueString: String): String = valueString
 
@@ -136,7 +151,7 @@ case class StringProperties(key: String, defaultValue: String) extends Propertie
 
 }
 
-case class BooleanProperties(key: String, defaultValue: Boolean) extends PropertiesTrait[Boolean] {
+case class BooleanProperties(key: String, defaultValue: Boolean, nameResourceBundle: String = null, keyInResourceBundle: String = null) extends PropertiesTrait[Boolean] {
 
   override protected def stringToObject(valueString: String): Boolean = valueString.toBoolean
 
@@ -144,7 +159,7 @@ case class BooleanProperties(key: String, defaultValue: Boolean) extends Propert
 
 }
 
-case class LocaleProperties(key: String, defaultValue: java.util.Locale) extends PropertiesTrait[java.util.Locale] {
+case class LocaleProperties(key: String, defaultValue: java.util.Locale, nameResourceBundle: String = null, keyInResourceBundle: String = null) extends PropertiesTrait[java.util.Locale] {
 
   override protected def stringToObject(valueString: String): java.util.Locale = {
     val a = valueString.split("-")
@@ -154,7 +169,7 @@ case class LocaleProperties(key: String, defaultValue: java.util.Locale) extends
   override protected def objectToString(value: java.util.Locale): String = s"${value.getLanguage}-${value.getCountry}"
 }
 
-case class LongProperties(key: String, defaultValue: Long) extends PropertiesTrait[Long] {
+case class LongProperties(key: String, defaultValue: Long, nameResourceBundle: String = null, keyInResourceBundle: String = null) extends PropertiesTrait[Long] {
 
   override protected def stringToObject(valueString: String): Long = valueString.toLong
 
