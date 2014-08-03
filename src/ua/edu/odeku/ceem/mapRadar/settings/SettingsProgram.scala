@@ -18,11 +18,7 @@ import ua.edu.odeku.ceem.mapRadar.properties.{BooleanProperties, LocalePropertie
  */
 object Settings {
 
-  private val file = new File("CeemRadarDataConfigs/program.properties")
-  file.createNewFile()
-  private implicit val in = new FileInputStream(file)
-  private implicit val out = new FileOutputStream(file)
-
+  private implicit val file = new File("CeemRadarDataConfigs/program.properties")
 
   object Program {
 
