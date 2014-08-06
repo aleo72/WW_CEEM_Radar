@@ -43,6 +43,7 @@
     <orderEntry type="library" name="scala-lib" level="project" />
     <orderEntry type="library" name="slf4j" level="project" />
     <orderEntry type="library" name="slick" level="project" />
+    <orderEntry type="library" name="serious-panda-settings-assembly-0.3" level="project" />
   </component>
 </module>
 
