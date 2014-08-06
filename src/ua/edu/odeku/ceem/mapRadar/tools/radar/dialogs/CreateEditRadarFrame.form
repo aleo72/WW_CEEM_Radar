@@ -35,7 +35,7 @@
                 </constraints>
                 <properties>
                   <actionCommand value="close"/>
-                  <text resource-bundle="button" key="close"/>
+                  <text resource-bundle="button_uk_UA" key="close"/>
                 </properties>
               </component>
             </children>
@@ -57,7 +57,7 @@
                 <properties>
                   <actionCommand value="saveAirspace"/>
                   <label value="Сохранить"/>
-                  <text resource-bundle="button" key="Save"/>
+                  <text resource-bundle="button_uk_UA" key="Save"/>
                 </properties>
               </component>
             </children>

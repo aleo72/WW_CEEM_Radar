@@ -52,10 +52,10 @@ public class ImportGeoName implements CeemPanel {
         CellConstraints cc = new CellConstraints();
         panel.add(panel1, cc.xy(2, 5));
         importButton = new JButton();
-        this.$$$loadButtonText$$$(importButton, ResourceBundle.getBundle("strings").getString("button_geoName_import"));
+        this.$$$loadButtonText$$$(importButton, ResourceBundle.getBundle("strings_uk_UA").getString("button_geoName_import"));
         panel1.add(importButton);
         cancelButton = new JButton();
-        this.$$$loadButtonText$$$(cancelButton, ResourceBundle.getBundle("strings").getString("button_cancel"));
+        this.$$$loadButtonText$$$(cancelButton, ResourceBundle.getBundle("strings_uk_UA").getString("button_cancel"));
         panel1.add(cancelButton);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout(0, 0));

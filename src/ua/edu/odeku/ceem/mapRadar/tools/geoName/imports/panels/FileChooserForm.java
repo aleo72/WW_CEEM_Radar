@@ -99,11 +99,11 @@ public class FileChooserForm {
     private void $$$setupUI$$$() {
         panel = new JPanel();
         panel.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:noGrow,left:7dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:max(d;4px):noGrow", "center:d:noGrow"));
-        panel.setBorder(BorderFactory.createTitledBorder(ResourceBundle.getBundle("strings").getString("title_border_import-geoName")));
+        panel.setBorder(BorderFactory.createTitledBorder(ResourceBundle.getBundle("strings_uk_UA").getString("title_border_import-geoName")));
         label = new JLabel();
         label.setHorizontalAlignment(2);
         label.setHorizontalTextPosition(2);
-        this.$$$loadLabelText$$$(label, ResourceBundle.getBundle("strings").getString("string_label_for_import_geoNames"));
+        this.$$$loadLabelText$$$(label, ResourceBundle.getBundle("strings_uk_UA").getString("string_label_for_import_geoNames"));
         CellConstraints cc = new CellConstraints();
         panel.add(label, cc.xy(3, 1));
         fileNameTextField = new JTextField();
@@ -116,10 +116,10 @@ public class FileChooserForm {
         panel.add(panel1, cc.xy(7, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
         chooserFileButton = new JButton();
         chooserFileButton.setHorizontalAlignment(4);
-        this.$$$loadButtonText$$$(chooserFileButton, ResourceBundle.getBundle("strings").getString("gui_button_file_chooser"));
+        this.$$$loadButtonText$$$(chooserFileButton, ResourceBundle.getBundle("strings_uk_UA").getString("gui_button_file_chooser"));
         panel1.add(chooserFileButton);
         helpButton = new JButton();
-        this.$$$loadButtonText$$$(helpButton, ResourceBundle.getBundle("strings").getString("button_help-?"));
+        this.$$$loadButtonText$$$(helpButton, ResourceBundle.getBundle("strings_uk_UA").getString("button_help-?"));
         panel1.add(helpButton);
     }
 

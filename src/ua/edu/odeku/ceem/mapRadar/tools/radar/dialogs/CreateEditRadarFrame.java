@@ -107,7 +107,7 @@ public class CreateEditRadarFrame extends JFrame {
         panel1.add(panel2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonClose = new JButton();
         buttonClose.setActionCommand("close");
-        this.$$$loadButtonText$$$(buttonClose, ResourceBundle.getBundle("button").getString("close"));
+        this.$$$loadButtonText$$$(buttonClose, ResourceBundle.getBundle("button_uk_UA").getString("close"));
         panel2.add(buttonClose, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new FormLayout("fill:d:grow", "center:d:grow"));
@@ -115,7 +115,7 @@ public class CreateEditRadarFrame extends JFrame {
         buttonSave = new JButton();
         buttonSave.setActionCommand("saveAirspace");
         buttonSave.setLabel("Сохранить");
-        this.$$$loadButtonText$$$(buttonSave, ResourceBundle.getBundle("button").getString("Save"));
+        this.$$$loadButtonText$$$(buttonSave, ResourceBundle.getBundle("button_uk_UA").getString("Save"));
         CellConstraints cc = new CellConstraints();
         panel3.add(buttonSave, cc.xy(1, 1));
         final JPanel panel4 = new JPanel();

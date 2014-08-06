@@ -5,9 +5,11 @@
 
 package ua.edu.odeku.ceem.mapRadar.menu
 
+import java.util.ResourceBundle
 import javax.swing.JMenuItem
 import java.awt.event.{ActionEvent, ActionListener}
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
+import ua.edu.odeku.ceem.mapRadar.settings.SettingsFrame
 
 /***********************************************************************************************************************
   * Об'єкт який створює головне меню
@@ -22,7 +24,7 @@ object MainMenu extends MenuCreator {
 
 
 	private def createMenus() = {
-		val close = new JMenuItem("Close")
+		val close = new JMenuItem(ResourceBundle.getBundle("menu").getString("close"))
 		close.addActionListener(new ActionListener {
 			override def actionPerformed(e: ActionEvent): Unit = {
 				System.exit(0)
@@ -31,6 +33,14 @@ object MainMenu extends MenuCreator {
 			}
 		})
 
-		Array(close)
+    val settings = new JMenuItem(ResourceBundle.getBundle("menu").getString("settings"))
+    settings.addActionListener(new ActionListener {
+      override def actionPerformed(p1: ActionEvent): Unit = {
+        val dialog = new SettingsFrame
+        dialog.setVisible(true)
+      }
+    })
+
+		Array(settings, close)
 	}
 }

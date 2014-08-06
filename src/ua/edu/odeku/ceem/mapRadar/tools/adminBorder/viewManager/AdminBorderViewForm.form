@@ -22,7 +22,7 @@
           <component id="56c70" class="javax.swing.JButton" binding="saveButton">
             <constraints/>
             <properties>
-              <text resource-bundle="button" key="Save"/>
+              <text resource-bundle="button_uk_UA" key="Save"/>
             </properties>
           </component>
         </children>

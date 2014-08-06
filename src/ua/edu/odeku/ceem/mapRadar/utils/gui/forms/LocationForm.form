@@ -35,7 +35,7 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="radarManager_airspace_edit_latitude"/>
+              <text resource-bundle="label_uk_UA" key="radarManager_airspace_edit_latitude"/>
             </properties>
           </component>
           <component id="38e39" class="javax.swing.JTextField" binding="latTextField">
@@ -55,7 +55,7 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="radarManager_airspace_edit_longitude"/>
+              <text resource-bundle="label_uk_UA" key="radarManager_airspace_edit_longitude"/>
             </properties>
           </component>
           <component id="91d09" class="javax.swing.JTextField" binding="lonTextField">
@@ -101,7 +101,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="radarManager_airspace_locationName"/>
+              <text resource-bundle="label_uk_UA" key="radarManager_airspace_locationName"/>
             </properties>
           </component>
           <component id="477ca" class="javax.swing.JButton" binding="locationHelp">
@@ -110,7 +110,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="strings" key="button_help-?"/>
+              <text resource-bundle="strings_uk_UA" key="button_help-?"/>
             </properties>
           </component>
         </children>

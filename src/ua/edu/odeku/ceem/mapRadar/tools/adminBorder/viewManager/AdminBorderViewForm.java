@@ -48,7 +48,7 @@ public class AdminBorderViewForm implements PanelTool {
         CellConstraints cc = new CellConstraints();
         panel1.add(panel2, cc.xy(1, 3));
         saveButton = new JButton();
-        this.$$$loadButtonText$$$(saveButton, ResourceBundle.getBundle("button").getString("Save"));
+        this.$$$loadButtonText$$$(saveButton, ResourceBundle.getBundle("button_uk_UA").getString("Save"));
         panel2.add(saveButton);
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, cc.xy(1, 1, CellConstraints.FILL, CellConstraints.FILL));

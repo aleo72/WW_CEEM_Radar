@@ -29,7 +29,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_name"/>
+              <text resource-bundle="label_uk_UA" key="airspace_name"/>
             </properties>
           </component>
           <component id="1d87f" class="javax.swing.JTextField" binding="nameTextField">
@@ -79,7 +79,7 @@
             </constraints>
             <properties>
               <labelFor value="cc58"/>
-              <text resource-bundle="label" key="airspace_altitude"/>
+              <text resource-bundle="label_uk_UA" key="airspace_altitude"/>
             </properties>
           </component>
           <component id="cce4d" class="javax.swing.JSpinner" binding="altitudeSpinner">
@@ -95,7 +95,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_durationPulse"/>
+              <text resource-bundle="label_uk_UA" key="airspace_durationPulse"/>
             </properties>
           </component>
           <component id="cc58" class="javax.swing.JSpinner" binding="durationPulseSpinner">
@@ -111,7 +111,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_wavelength"/>
+              <text resource-bundle="label_uk_UA" key="airspace_wavelength"/>
             </properties>
           </component>
           <component id="22986" class="javax.swing.JLabel">
@@ -120,7 +120,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_antennaDiameter"/>
+              <text resource-bundle="label_uk_UA" key="airspace_antennaDiameter"/>
             </properties>
           </component>
           <component id="772d1" class="javax.swing.JLabel">
@@ -129,7 +129,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_pulsePower"/>
+              <text resource-bundle="label_uk_UA" key="airspace_pulsePower"/>
             </properties>
           </component>
           <component id="8ee8" class="javax.swing.JSpinner" binding="waveLengthSpinner">
@@ -159,7 +159,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_reflectivityMeteoGoals"/>
+              <text resource-bundle="label_uk_UA" key="airspace_reflectivityMeteoGoals"/>
             </properties>
           </component>
           <component id="7094d" class="javax.swing.JLabel">
@@ -168,7 +168,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_attenuation"/>
+              <text resource-bundle="label_uk_UA" key="airspace_attenuation"/>
             </properties>
           </component>
           <component id="fe3d6" class="javax.swing.JLabel">
@@ -177,7 +177,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_radius"/>
+              <text resource-bundle="label_uk_UA" key="airspace_radius"/>
             </properties>
           </component>
           <component id="52eb1" class="javax.swing.JLabel">
@@ -186,7 +186,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="label" key="airspace_grainFactor"/>
+              <text resource-bundle="label_uk_UA" key="airspace_grainFactor"/>
             </properties>
           </component>
           <component id="45c28" class="javax.swing.JSpinner" binding="reflectivityMeteoGoalsSpinner">

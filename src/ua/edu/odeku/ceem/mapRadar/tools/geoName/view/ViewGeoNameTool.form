@@ -57,7 +57,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="strings" key="label_find-for-Name"/>
+                  <text resource-bundle="strings_uk_UA" key="label_find-for-Name"/>
                 </properties>
               </component>
               <component id="a7d5a" class="javax.swing.JTextField" binding="textField">
@@ -77,7 +77,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="strings" key="button_edit"/>
+                  <text resource-bundle="strings_uk_UA" key="button_edit"/>
                 </properties>
               </component>
             </children>
@@ -88,7 +88,7 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="strings" key="button_refresh"/>
+              <text resource-bundle="strings_uk_UA" key="button_refresh"/>
             </properties>
           </component>
           <grid id="921ea" layout-manager="FormLayout">
@@ -109,7 +109,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="strings" key="label_importGeoName_country"/>
+                  <text resource-bundle="strings_uk_UA" key="label_importGeoName_country"/>
                 </properties>
               </component>
               <component id="1fec5" class="javax.swing.JComboBox" binding="countryComboBox" custom-create="true">
@@ -140,7 +140,7 @@
                   <forms defaultalign-vert="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="strings" key="label_importGeoName_feature-class"/>
+                  <text resource-bundle="strings_uk_UA" key="label_importGeoName_feature-class"/>
                 </properties>
               </component>
               <component id="1ee3c" class="javax.swing.JComboBox" binding="featureClassComboBox" custom-create="true">
@@ -171,7 +171,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="strings" key="label_importGeoName_feature-code"/>
+                  <text resource-bundle="strings_uk_UA" key="label_importGeoName_feature-code"/>
                 </properties>
               </component>
               <component id="d35eb" class="javax.swing.JComboBox" binding="featureCodeComboBox" custom-create="true">
