@@ -23,7 +23,13 @@ class HandlerRadarParameterForm(val form: RadarParameterForm) {
       Settings.Program.Tools.Radar.stepAltitude)
     )
 
-
+    form.pulsePowerSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.pulsePower,-1000,1000,0.5) )
+    form.waveLengthSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.pulsePower, -1000.0, 1000, 0.5))
+    form.antennaDiameterSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.antennaDiameter, 0.1, 1000, 0.1))
+    form.reflectivityMeteoGoalsSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.reflectivityMeteoGoals, -1000, 1000, 0.5))
+    form.attenuationSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.attenuation, -1000.0, 1000.0, 0.5))
+    form.radiusSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.radius, 1.0, 1000000.0, 100))
+    form.grainFactorSpinner.setModel(new SpinnerNumberModel(Settings.Program.Tools.Radar.grainFactor, 1.0, 1000000, 100))
   }
 
   def name = form.nameTextField.getText

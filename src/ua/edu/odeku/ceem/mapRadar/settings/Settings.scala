@@ -28,7 +28,6 @@ object Settings {
 
     val localeProperty = new Property[Locale]("program.locale", new Locale("ru", "RU"), Some("Локаль прогрими"), nameResourceBundle, "program.locale")
     def locale = localeProperty.value
-    def locale_=(newLocale: Locale): Unit = localeProperty.value = newLocale
 
     val debugProperty = new Property[Boolean]("program.debug", true, Some("Отладка програми"), nameResourceBundle, "program.debug")
     def debug = debugProperty.value
@@ -62,30 +61,46 @@ object Settings {
       }
 
       object Radar {
-        val maxAltitudeForRadarProperty = new Property[Long]("program.tools.radar.altitude.max", 100000L, Some("Максимальна висота установка радара"), nameResourceBundle, "program.tools.radar.altitude.max")
+        private val prefix = "program.tools.radar"
+        val maxAltitudeForRadarProperty = new Property[Long](s"$prefix.altitude.max", 100000L, Some("Максимальна висота установка радара"), nameResourceBundle, s"$prefix.altitude.max")
         def maxAltitude = maxAltitudeForRadarProperty.value
-        def maxAltitude_=(value: Long): Unit = maxAltitudeForRadarProperty.value = value
 
-        val minAltitudeForRadarProperty = new Property[Long]("program.tools.radar.altitude.min", 0L, Some("Мінімальна висота установка радара"), nameResourceBundle, "program.tools.radar.altitude.min")
+        val minAltitudeForRadarProperty = new Property[Long](s"$prefix.altitude.min", 0L, Some("Мінімальна висота установка радара"), nameResourceBundle, s"$prefix.altitude.min")
         def minAltitude = minAltitudeForRadarProperty.value
-        def minAltitude_=(value: Long): Unit = minAltitudeForRadarProperty.value = value
 
-        val defaultAltitudeForRadarProperty = new Property[Long]("program.tools.radar.altitude.default", 10L, Some("Висота установка радара за замовчуванням"), nameResourceBundle, "program.tools.radar.altitude.default")
+        val defaultAltitudeForRadarProperty = new Property[Long](s"$prefix.altitude.default", 10L, Some("Висота установка радара за замовчуванням"), nameResourceBundle, s"$prefix.altitude.default")
         def defaultAltitude = defaultAltitudeForRadarProperty.value
-        def defaultAltitude_=(value: Long): Unit = defaultAltitudeForRadarProperty.value = value
 
-        val stepAltitudeForRadarProperty = new Property[Long]("program.tools.radar.altitude.step", 5L, Some("Крок зміни установки висоти радара"), nameResourceBundle, "program.tools.radar.altitude.step")
+        val stepAltitudeForRadarProperty = new Property[Long](s"$prefix.altitude.step", 5L, Some("Крок зміни установки висоти радара"), nameResourceBundle, s"$prefix.altitude.step")
         def stepAltitude = stepAltitudeForRadarProperty.value
-        def stepAltitude_=(value: Long): Unit = stepAltitudeForRadarProperty.value = value
 
-        val counterRadarProperty = new Property[Long]("program.tools.radar.counter", 1L, Some("Лічильник радарів"), nameResourceBundle, "program.tools.radar.counter")
+        val counterRadarProperty = new Property[Long](s"$prefix.counter", 1L, Some("Лічильник радарів"), nameResourceBundle, s"$prefix.counter")
         counterRadarProperty.editable = false
         def counterRadar = counterRadarProperty.inc
 
-        val viewToRadarHeightProperty = new Property[Long]("program.tools.radar.viewToRadarHeight", 100000L, Some("Висота на яку переміщається "), nameResourceBundle, "program.tools.radar.viewToRadarHeight")
+        val viewToRadarHeightProperty = new Property[Long](s"$prefix.viewToRadarHeight", 100000L, Some("Висота на яку переміщається "), nameResourceBundle, s"$prefix.viewToRadarHeight")
         def viewToRadarHeight = viewToRadarHeightProperty.value
-        def viewToRadarHeight_=(value: Long): Unit = viewToRadarHeightProperty.value = value
 
+        val pulsePowerProperty = new Property[Double](s"$prefix.pulsePower", 1.0, Some("Тривалість умпульсу"), nameResourceBundle, s"$prefix.pulsePower")
+        def pulsePower = pulsePowerProperty.value
+
+        val waveLengthProperty = new Property[Double](s"$prefix.waveLength", 1.0, Some("Довжина хвилі"), nameResourceBundle, s"$prefix.waveLength")
+        def waveLength = waveLengthProperty.value
+
+        val antennaDiameterProperty =new Property[Double](s"$prefix.antenna.diameter", 1.0, Some("Діаметер антени"), nameResourceBundle, s"$prefix.antenna.diameter")
+        def antennaDiameter = antennaDiameterProperty.value
+
+        val reflectivityMeteoGoalsProperty = new Property[Double](s"$prefix.reflectivity.Meteo.Goals", 1.0, Some("Отражаемості метео цілей"), nameResourceBundle, s"$prefix.reflectivity.Meteo.Goals")
+        def reflectivityMeteoGoals = reflectivityMeteoGoalsProperty.value
+
+        val attenuationProperty = new Property[Double](s"$prefix.attenuation", 1.0, Some("затухання"), nameResourceBundle, s"$prefix.attenuation")
+        def attenuation = attenuationProperty.value
+
+        val radiusProperty = new Property[Double](s"$prefix.radius", 1.0, Some("Радіус"), nameResourceBundle, s"$prefix.radius")
+        def radius = radiusProperty.value
+
+        val grainFactorProperty = new Property[Double](s"$prefix.grainFactor", 1.0, Some("Коєфіциент підсилення"), nameResourceBundle, s"$prefix.grainFactor")
+        def grainFactor = grainFactorProperty.value
       }
     }
 
