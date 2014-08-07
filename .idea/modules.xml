@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WorldWind.iml" filepath="$PROJECT_DIR$/WorldWind.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../serious-panda-settings/.idea/modules/serious-panda-settings.iml" filepath="$PROJECT_DIR$/../serious-panda-settings/.idea/modules/serious-panda-settings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../serious-panda-settings/.idea/modules/serious-panda-settings-build.iml" filepath="$PROJECT_DIR$/../serious-panda-settings/.idea/modules/serious-panda-settings-build.iml" />
     </modules>
   </component>
 </project>

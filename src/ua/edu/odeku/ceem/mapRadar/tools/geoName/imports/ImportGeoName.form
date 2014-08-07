@@ -25,13 +25,13 @@
           <component id="6a67d" class="javax.swing.JButton" binding="importButton">
             <constraints/>
             <properties>
-              <text resource-bundle="strings" key="button_geoName_import"/>
+              <text resource-bundle="strings_uk_UA" key="button_geoName_import"/>
             </properties>
           </component>
           <component id="50211" class="javax.swing.JButton" binding="cancelButton" default-binding="true">
             <constraints/>
             <properties>
-              <text resource-bundle="strings" key="button_cancel"/>
+              <text resource-bundle="strings_uk_UA" key="button_cancel"/>
             </properties>
           </component>
         </children>

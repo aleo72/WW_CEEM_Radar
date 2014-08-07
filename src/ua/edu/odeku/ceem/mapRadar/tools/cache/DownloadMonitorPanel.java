@@ -2,12 +2,13 @@ package ua.edu.odeku.ceem.mapRadar.tools.cache;
 
 import gov.nasa.worldwind.retrieve.BulkRetrievalThread;
 import gov.nasa.worldwind.retrieve.Progress;
-import ua.edu.odeku.ceem.mapRadar.resource.ResourceString;
+import ua.edu.odeku.ceem.mapRadar.settings.Settings;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 /**
  * User: Aleo skype: aleo72
@@ -23,6 +24,7 @@ public class DownloadMonitorPanel extends JPanel {
     protected JLabel descriptionLabel;
     protected JProgressBar progressBar;
     protected JButton cancelButton;
+    private java.util.ResourceBundle resourceBundle = ResourceBundle.getBundle("strings", Settings.Program$.MODULE$.locale());
 
     public DownloadMonitorPanel(BulkRetrievalThread thread) {
         this.thread = thread;
@@ -59,7 +61,7 @@ public class DownloadMonitorPanel extends JPanel {
         // Check for end of thread
         if (!this.thread.isAlive()) {
             // Thread is done
-            this.cancelButton.setText(ResourceString.get("Remove"));
+            this.cancelButton.setText(resourceBundle.getString("Remove"));
             this.cancelButton.setBackground(Color.GREEN);
             this.updateTimer.stop();
         }
@@ -71,7 +73,7 @@ public class DownloadMonitorPanel extends JPanel {
             // Cancel thread
             this.thread.interrupt();
             this.cancelButton.setBackground(Color.ORANGE);
-            this.cancelButton.setText(ResourceString.get("Remove"));
+            this.cancelButton.setText(resourceBundle.getString("Remove"));
             this.updateTimer.stop();
         } else {
             // Remove from monitor panel
@@ -103,7 +105,7 @@ public class DownloadMonitorPanel extends JPanel {
         progressBar.setPreferredSize(new Dimension(100, 16));
         progressPanel.add(progressBar);
         progressPanel.add(Box.createHorizontalStrut(8));
-        cancelButton = new JButton(ResourceString.get("Cancel"));
+        cancelButton = new JButton(resourceBundle.getString("Cancel"));
         cancelButton.setBackground(Color.RED);
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -118,7 +120,7 @@ public class DownloadMonitorPanel extends JPanel {
         String text = "";
         if (this.progress.getTotalCount() > 0) {
             int percent = (int) ((double) this.progress.getCurrentCount() / this.progress.getTotalCount() * 100d);
-            text = percent + "% " + ResourceString.get("of") + " ";
+            text = percent + "% " + resourceBundle.getString("of") + " ";
             text += CacheDownload.makeSizeDescription(this.progress.getTotalSize());
         }
         return text;

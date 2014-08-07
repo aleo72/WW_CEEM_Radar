@@ -6,7 +6,8 @@
 package ua.edu.odeku.ceem.mapRadar.tools
 
 import java.util.ResourceBundle
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 
 /**
  * User: Aleo Bakalov
@@ -15,14 +16,15 @@ import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
  */
 trait NamingTool {
 
-	def nameTool: String = this.getClass.getName
+  def nameTool: String = this.getClass.getName
 
-	def name: String = {
-		if(ResourceBundle.getBundle("tools", PropertyProgram.getCurrentLocale).containsKey(nameTool)){
-			ResourceBundle.getBundle("tools", PropertyProgram.getCurrentLocale).getString(nameTool)
-		} else {
-			nameTool
-		}
-	}
+  def name: String = {
+    val locale = Settings.Program.locale
+    if (ResourceBundle.getBundle("tools", locale).containsKey(nameTool)) {
+      ResourceBundle.getBundle("tools", locale).getString(nameTool)
+    } else {
+      nameTool
+    }
+  }
 
 }

@@ -6,7 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radar.models
 
 import gov.nasa.worldwind.geom.LatLon
-import ua.edu.odeku.ceem.mapRadar.settings.PropertyProgram
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 
 /**
  * Модель данных которая моделирует радар
@@ -44,6 +44,6 @@ case class Radar(var durationPulse: Double,
 object Radar {
   val EMPTY_RADAR = Radar(0, 0, 0, 0, 0, 0, 0, 0)
 
-  private def radarCounter: Long = PropertyProgram.radarCounter
+  private def radarCounter: Long = Settings.Program.Tools.Radar.counterRadar
 }
 
