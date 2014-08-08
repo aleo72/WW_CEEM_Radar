@@ -17,7 +17,7 @@
           <forms/>
         </constraints>
       </nested-form>
-      <nested-form id="6f042" form-file="ua/edu/odeku/ceem/mapRadar/tools/radar/panel/RadarParameterForm.form">
+      <nested-form id="6f042" form-file="ua/edu/odeku/ceem/mapRadar/tools/radar/panel/RadarParameterForm.form" binding="radarParameterForm">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>

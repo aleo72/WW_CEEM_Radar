@@ -22,9 +22,9 @@ import java.util.ResourceBundle;
  */
 public class RadarEditorForm {
     private JPanel panel1;
-    public JSpinner altitudeSpinner;
     public JTextField nameAirspaceTextField;
     public LocationForm locationForm = new LocationForm();
+    public RadarParameterForm radarParameterForm;
 
     public final HandlerRadarEditorFrom handler;
     public final JFrame parent;
@@ -60,8 +60,8 @@ public class RadarEditorForm {
         locationForm = new LocationForm();
         CellConstraints cc = new CellConstraints();
         panel1.add(locationForm.$$$getRootComponent$$$(), cc.xy(1, 3));
-        final RadarParameterForm nestedForm1 = new RadarParameterForm();
-        panel1.add(nestedForm1.$$$getRootComponent$$$(), cc.xy(1, 1));
+        radarParameterForm = new RadarParameterForm();
+        panel1.add(radarParameterForm.$$$getRootComponent$$$(), cc.xy(1, 1));
     }
 
     /**

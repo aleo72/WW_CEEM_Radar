@@ -12,7 +12,7 @@
     <colspec value="left:4dlu:noGrow"/>
     <colspec value="fill:max(d;4px):noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="778" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -39,7 +39,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="strings_uk_UA" key="button_create"/>
+              <text resource-bundle="strings" key="button_create"/>
             </properties>
           </component>
           <component id="64b58" class="javax.swing.JButton" binding="buttonRemove">
@@ -48,7 +48,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="strings_uk_UA" key="button_remove"/>
+              <text resource-bundle="strings" key="button_remove"/>
             </properties>
           </component>
           <component id="56351" class="javax.swing.JButton" binding="buttonClearSelection">
@@ -57,7 +57,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text resource-bundle="strings_uk_UA" key="button_clear_selection"/>
+              <text resource-bundle="strings" key="button_clear_selection"/>
             </properties>
           </component>
         </children>
@@ -68,7 +68,7 @@
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties>
-          <toolTipText resource-bundle="strings_uk_UA" key="table_radarManager_airspace_table_toolTip"/>
+          <toolTipText resource-bundle="strings" key="table_radarManager_airspace_table_toolTip"/>
         </properties>
         <border type="none"/>
         <children>

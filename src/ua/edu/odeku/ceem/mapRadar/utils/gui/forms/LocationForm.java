@@ -45,13 +45,13 @@ public class LocationForm {
         CellConstraints cc = new CellConstraints();
         panel1.add(panel2, cc.xy(1, 1));
         final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("label_uk_UA").getString("radarManager_airspace_edit_latitude"));
+        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("label").getString("radarManager_airspace_edit_latitude"));
         panel2.add(label1, cc.xy(1, 3, CellConstraints.DEFAULT, CellConstraints.FILL));
         latTextField = new JTextField();
         latTextField.setEditable(false);
         panel2.add(latTextField, cc.xy(3, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JLabel label2 = new JLabel();
-        this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("label_uk_UA").getString("radarManager_airspace_edit_longitude"));
+        this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("label").getString("radarManager_airspace_edit_longitude"));
         panel2.add(label2, cc.xy(5, 3, CellConstraints.DEFAULT, CellConstraints.FILL));
         lonTextField = new JTextField();
         lonTextField.setEditable(false);
@@ -63,10 +63,10 @@ public class LocationForm {
         locationNameComboBox.setEditable(true);
         panel3.add(locationNameComboBox, cc.xy(3, 2));
         final JLabel label3 = new JLabel();
-        this.$$$loadLabelText$$$(label3, ResourceBundle.getBundle("label_uk_UA").getString("radarManager_airspace_locationName"));
+        this.$$$loadLabelText$$$(label3, ResourceBundle.getBundle("label").getString("radarManager_airspace_locationName"));
         panel3.add(label3, cc.xy(1, 2));
         locationHelp = new JButton();
-        this.$$$loadButtonText$$$(locationHelp, ResourceBundle.getBundle("strings_uk_UA").getString("button_help-?"));
+        this.$$$loadButtonText$$$(locationHelp, ResourceBundle.getBundle("strings").getString("button_help-?"));
         panel3.add(locationHelp, cc.xy(5, 2));
     }
 

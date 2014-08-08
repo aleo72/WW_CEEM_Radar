@@ -36,7 +36,7 @@ class HandlerRadarParameterForm(val form: RadarParameterForm) {
 
   def altitude = form.altitudeSpinner.getValue.toString.toInt
 
-  def durationPulse = form.pulsePowerSpinner.getValue.toString.toDouble
+  def pulsePower = form.pulsePowerSpinner.getValue.toString.toDouble
 
   def waveLength = form.waveLengthSpinner.getValue.toString.toDouble
 
@@ -49,4 +49,6 @@ class HandlerRadarParameterForm(val form: RadarParameterForm) {
   def radius = form.radiusSpinner.getValue.toString.toDouble
 
   def grainFactor = form.grainFactorSpinner.getValue.toString.toDouble
+
+  def durationPulse
 }

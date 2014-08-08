@@ -27,6 +27,8 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
   private var methodOfController: AirspaceEntry => Unit = message.method
   // флаг на надобность сохранить как новый объект
   val handlerLocationForm = new HandlerLocationForm(form.locationForm)
+  val handlerRadarParameterForm = new HandlerRadarParameterForm(form.radarParameterForm)
+
   private var savedNewAirspaceEntry = true
 
   private val radar: Radar = message match {
@@ -56,7 +58,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
   }
 
   updateRadar()
-  initSpinners()
+  handlerRadarParameterForm.initSpinners()
   initTextField()
 
   handlerLocationForm.changeLocationListener.updateFields(airspaceEntry.location)
@@ -68,16 +70,6 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
   def createAirspaceEntry(message: CreateAirspaceEntryMessage): AirspaceEntry = {
     savedNewAirspaceEntry = false
     new AirspaceEntry(new CeemRadarAirspaceFactory(Radar.EMPTY_RADAR, message.wwd, false))
-  }
-
-  private def initSpinners() {
-    form.altitudeSpinner = new JSpinner(
-      new SpinnerNumberModel(
-        Settings.Program.Tools.Radar.defaultAltitude,
-        Settings.Program.Tools.Radar.minAltitude,
-        Settings.Program.Tools.Radar.maxAltitude,
-        Settings.Program.Tools.Radar.stepAltitude
-      ))
   }
 
   private def updateRadarLocation() {
@@ -106,7 +98,14 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
   }
 
   def updateRadarParameter() {
-    if (form.altitudeSpinner != null)
-      radar.altitude = form.altitudeSpinner.getValue.asInstanceOf[Int]
+    radar.altitude = handlerRadarParameterForm.altitude
+    radar.pulsePower = handlerRadarParameterForm.pulsePower
+    radar.antennaDiameter = handlerRadarParameterForm.antennaDiameter
+    radar.attenuation = handlerRadarParameterForm.attenuation
+    radar.durationPulse = handlerRadarParameterForm.durationPulse
+    radar.gainFactor = handlerRadarParameterForm.grainFactor
+    radar.wavelength = handlerRadarParameterForm.waveLength
+    radar.reflectivityMeteoGoals = handlerRadarParameterForm.reflectivityMeteoGoals
+    radar.radius = handlerRadarParameterForm.radius
   }
 }
