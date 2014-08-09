@@ -81,7 +81,7 @@ object Settings {
         val viewToRadarHeightProperty = new Property[Long](s"$prefix.viewToRadarHeight", 100000L, Some("Висота на яку переміщається "), nameResourceBundle, s"$prefix.viewToRadarHeight")
         def viewToRadarHeight = viewToRadarHeightProperty.value
 
-        val pulsePowerProperty = new Property[Double](s"$prefix.pulsePower", 1.0, Some("Тривалість умпульсу"), nameResourceBundle, s"$prefix.pulsePower")
+        val pulsePowerProperty = new Property[Double](s"$prefix.pulsePower", 1.0, Some("Сила умпульсу"), nameResourceBundle, s"$prefix.pulsePower")
         def pulsePower = pulsePowerProperty.value
 
         val waveLengthProperty = new Property[Double](s"$prefix.waveLength", 1.0, Some("Довжина хвилі"), nameResourceBundle, s"$prefix.waveLength")
@@ -101,6 +101,9 @@ object Settings {
 
         val grainFactorProperty = new Property[Double](s"$prefix.grainFactor", 1.0, Some("Коєфіциент підсилення"), nameResourceBundle, s"$prefix.grainFactor")
         def grainFactor = grainFactorProperty.value
+
+        val durationPulseProperty = new Property[Double](s"$prefix.durationPulse", 1.0, Some("Тривалість умпульсу"), nameResourceBundle, s"$prefix.durationPulse")
+        val durationPulse = durationPulseProperty.value
       }
     }
 

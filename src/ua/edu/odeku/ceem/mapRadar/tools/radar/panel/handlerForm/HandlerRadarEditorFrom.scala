@@ -58,10 +58,10 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
   }
 
   updateRadar()
-  handlerRadarParameterForm.initSpinners()
   initTextField()
 
   handlerLocationForm.changeLocationListener.updateFields(airspaceEntry.location)
+  handlerRadarParameterForm.updateFields(this.radar)
 
   VisibleUtils.packFrame(form.parent)
   VisibleUtils.setMinMaxSizeFrame(form.parent)

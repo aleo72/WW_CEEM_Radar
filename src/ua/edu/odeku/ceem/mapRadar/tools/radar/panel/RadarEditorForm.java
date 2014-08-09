@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class RadarEditorForm {
     private JPanel panel1;
     public JTextField nameAirspaceTextField;
-    public LocationForm locationForm = new LocationForm();
+    public LocationForm locationForm;
     public RadarParameterForm radarParameterForm;
 
     public final HandlerRadarEditorFrom handler;
@@ -32,19 +32,17 @@ public class RadarEditorForm {
     public RadarEditorForm(JFrame parent, AirspaceEntryMessage airspaceEntryMessage) {
         this.parent = parent;
         /*
-        Создаем обработчик что бы можно было инициализировать некоторые элименты
-         */
-        handler = new HandlerRadarEditorFrom(this, airspaceEntryMessage);
-
-        /*
         GUI
          */
         $$$setupUI$$$();
+
+        /*
+        Создаем обработчик что бы можно было инициализировать некоторые элименты
+         */
+        handler = new HandlerRadarEditorFrom(this, airspaceEntryMessage);
     }
 
     private void createUIComponents() {
-//        handler.initComboBoxes();
-//        handler.initSpinners();
     }
 
     /**
