@@ -42,6 +42,9 @@ class HandlerRadarParameterForm(val form: RadarParameterForm) {
   }
 
   def updateFields(radar: Radar) = {
+
+    form.nameTextField.setText(radar.name)
+
     form.altitudeSpinner.setValue(radar.altitude)
     form.pulsePowerSpinner.setValue(radar.pulsePower)
   }
