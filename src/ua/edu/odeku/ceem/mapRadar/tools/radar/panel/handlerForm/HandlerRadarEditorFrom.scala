@@ -57,6 +57,9 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
     }
   }
 
+  // Добавляем слушателя на перемещения радара, який буде змінювани показники у LocationForm
+  this.airspaceEntry.addAirspaceEditorListener(handlerLocationForm.changeLocationListener)
+
   updateRadar()
   initTextField()
 

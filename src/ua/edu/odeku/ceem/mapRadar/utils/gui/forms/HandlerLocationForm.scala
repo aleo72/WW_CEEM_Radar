@@ -5,8 +5,9 @@
 
 package ua.edu.odeku.ceem.mapRadar.utils.gui.forms
 
-import java.awt.event.{ActionEvent, ActionListener, KeyEvent, KeyListener}
+import java.awt.event._
 import java.text.DecimalFormat
+import javax.swing.JComboBox
 
 import gov.nasa.worldwind.geom.{LatLon, Position}
 import gov.nasa.worldwindx.examples.util.ShapeUtils
@@ -21,7 +22,9 @@ import ua.edu.odeku.ceem.mapRadar.utils.gui.forms.actions.AirspaceChangeLocation
  */
 class HandlerLocationForm(val form: LocationForm = new LocationForm) {
 
-  val positionDecimalFormat = new DecimalFormat("#.000000");
+  val positionDecimalFormat = new DecimalFormat("#.000000")
+
+  val position: Position = ShapeUtils.getNewShapePosition(AppCeemRadarFrame.wwd)
 
   val locationNameComboBoxKeyListener: KeyListener = new KeyListener {
 
@@ -38,17 +41,8 @@ class HandlerLocationForm(val form: LocationForm = new LocationForm) {
             if (text.trim.length >= 3) {
               val list = GeoNamesWithNameAndCoordinates.getSettlements(text.trim)
               println(list.size)
-
-              var proObject: GeoNamesWithNameAndCoordinates = null
-
               form.locationNameComboBox.removeAllItems()
-              for (settlement: GeoNamesWithNameAndCoordinates <- list) {
-                form.locationNameComboBox.addItem(settlement)
-
-                if(settlement.name.startsWith(text.trim)) proObject = settlement
-              }
-              form.locationNameComboBox.setSelectedItem(proObject)
-
+              list.foreach { settlement => form.locationNameComboBox.addItem(settlement)}
             } else {
               UserMessage.warning(form.$$$getRootComponent$$$(), "Введите больше двух символов")
             }
@@ -67,18 +61,31 @@ class HandlerLocationForm(val form: LocationForm = new LocationForm) {
 
   val changeLocationListener = new AirspaceChangeLocationOnFormListener(this.form)
 
+  val selectedItemListener = new ItemListener {
+    override def itemStateChanged(e: ItemEvent): Unit = {
+      if (e.getStateChange == ItemEvent.SELECTED) {
+        e.getItem match {
+          case x: GeoNamesWithNameAndCoordinates =>
+            val location = x.latlon
+            form.latTextField.setText(positionDecimalFormat.format(location.getLatitude.degrees))
+            form.lonTextField.setText(positionDecimalFormat.format(location.getLongitude.degrees))
+          case _ =>
+        }
+
+      }
+    }
+  }
+
   def latitude: Double = form.latTextField.getText.replace(',', '.').toDouble
 
   def longitude: Double = form.lonTextField.getText.replace(',', '.').toDouble
 
   def location: LatLon = LatLon.fromDegrees(latitude, longitude)
 
-  val position: Position = ShapeUtils.getNewShapePosition(AppCeemRadarFrame.wwd)
-
   form.latTextField.setText(positionDecimalFormat.format(position.getLatitude.degrees))
   form.lonTextField.setText(positionDecimalFormat.format(position.getLongitude.degrees))
 
   form.locationHelp.addActionListener(locationNameHelpButton)
   form.locationNameComboBox.getEditor.getEditorComponent.addKeyListener(locationNameComboBoxKeyListener)
-
+  form.locationNameComboBox.addItemListener(selectedItemListener)
 }
