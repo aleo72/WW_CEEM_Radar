@@ -104,6 +104,11 @@ object Settings {
 
         val durationPulseProperty = new Property[Double](s"$prefix.durationPulse", 1.0, Some("Тривалість умпульсу"), nameResourceBundle, s"$prefix.durationPulse")
         val durationPulse = durationPulseProperty.value
+
+        object Location {
+          val decimalFormatProperty = new Property[String](s"$prefix.location.decimalFormat", "#.000000", Some("Формат відображення координат"), nameResourceBundle, s"$prefix.location.decimalFormat")
+          val decimalFormat = decimalFormatProperty.value
+        }
       }
     }
 

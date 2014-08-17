@@ -7,12 +7,12 @@ package ua.edu.odeku.ceem.mapRadar.utils.gui.forms
 
 import java.awt.event._
 import java.text.DecimalFormat
-import javax.swing.JComboBox
 
 import gov.nasa.worldwind.geom.{LatLon, Position}
 import gov.nasa.worldwindx.examples.util.ShapeUtils
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates
+import ua.edu.odeku.ceem.mapRadar.settings.Settings
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage
 import ua.edu.odeku.ceem.mapRadar.utils.gui.forms.actions.AirspaceChangeLocationOnFormListener
 
@@ -22,7 +22,7 @@ import ua.edu.odeku.ceem.mapRadar.utils.gui.forms.actions.AirspaceChangeLocation
  */
 class HandlerLocationForm(val form: LocationForm = new LocationForm) {
 
-  val positionDecimalFormat = new DecimalFormat("#.000000")
+  val positionDecimalFormat = new DecimalFormat(Settings.Program.Tools.Radar.Location.decimalFormat)
 
   val position: Position = ShapeUtils.getNewShapePosition(AppCeemRadarFrame.wwd)
 
