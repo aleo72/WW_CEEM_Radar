@@ -6,16 +6,22 @@
 package ua.edu.odeku.ceem.mapRadar.utils.gui.forms
 
 import java.awt.event.{ActionEvent, ActionListener, KeyEvent, KeyListener}
+import java.text.DecimalFormat
 
-import gov.nasa.worldwind.geom.LatLon
+import gov.nasa.worldwind.geom.{LatLon, Position}
+import gov.nasa.worldwindx.examples.util.ShapeUtils
+import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage
 import ua.edu.odeku.ceem.mapRadar.utils.gui.forms.actions.AirspaceChangeLocationOnFormListener
 
 /**
+ * Обработчик форми локації
  * Created by Aleo on 27.07.2014.
  */
 class HandlerLocationForm(val form: LocationForm = new LocationForm) {
+
+  val positionDecimalFormat = new DecimalFormat("#.000000");
 
   val locationNameComboBoxKeyListener: KeyListener = new KeyListener {
 
@@ -35,7 +41,7 @@ class HandlerLocationForm(val form: LocationForm = new LocationForm) {
 
               form.locationNameComboBox.removeAllItems()
               for (settlement: GeoNamesWithNameAndCoordinates <- list) {
-//                form.locationNameComboBox.addItem(settlement.asInstanceOf[Object])
+                //                form.locationNameComboBox.addItem(settlement.asInstanceOf[Object])
               }
 
             } else {
@@ -56,10 +62,16 @@ class HandlerLocationForm(val form: LocationForm = new LocationForm) {
 
   val changeLocationListener = new AirspaceChangeLocationOnFormListener(this.form)
 
-  def location: LatLon = LatLon.fromDegrees(form.latTextField.getText.toDouble, form.lonTextField.getText.toDouble)
+  def latitude: Double = form.latTextField.getText.replace(',', '.').toDouble
 
-  form.latTextField.setText(LatLon.ZERO.getLatitude.degrees.toString)
-  form.lonTextField.setText(LatLon.ZERO.getLongitude.degrees.toString)
+  def longitude: Double = form.lonTextField.getText.replace(',', '.').toDouble
+
+  def location: LatLon = LatLon.fromDegrees(latitude, longitude)
+
+  val position: Position = ShapeUtils.getNewShapePosition(AppCeemRadarFrame.wwd)
+
+  form.latTextField.setText(positionDecimalFormat.format(position.getLatitude.degrees))
+  form.lonTextField.setText(positionDecimalFormat.format(position.getLongitude.degrees))
 
   form.locationHelp.addActionListener(locationNameHelpButton)
   form.locationNameComboBox.getEditor.getEditorComponent.addKeyListener(locationNameComboBoxKeyListener)

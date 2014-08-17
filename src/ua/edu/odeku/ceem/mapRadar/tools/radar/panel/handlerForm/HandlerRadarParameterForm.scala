@@ -12,6 +12,7 @@ import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar
 import ua.edu.odeku.ceem.mapRadar.tools.radar.panel.RadarParameterForm
 
 /**
+ * Обработчик форми з параметрами
  * Created by Aleo on 29.07.2014.
  */
 class HandlerRadarParameterForm(val form: RadarParameterForm) {
