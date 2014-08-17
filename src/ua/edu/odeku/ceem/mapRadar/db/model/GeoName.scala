@@ -344,11 +344,11 @@ object GeoNamesWithNameAndCoordinates {
 			  FROM
 			    $geoNameTable
 				WHERE
-					$featureClassColumn != 'A'
+					$featureClassColumn = 'P'
 			  	AND (
-						UPPER($nameColumn) LIKE '$text'
+						UPPER($nameColumn) LIKE '%${text.toUpperCase}%'
 							OR
-						UPPER($translateNameColumn) LIKE '$text'
+						UPPER($translateNameColumn) LIKE '%${text.toUpperCase}%'
 			  	)
 			  	ORDER BY
 			  				$nameColumn
