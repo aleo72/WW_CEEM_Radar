@@ -7,6 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.utils.gui.forms;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -20,7 +21,7 @@ public class LocationForm {
     private JPanel panel1;
     public JTextField latTextField;
     public JTextField lonTextField;
-    public JComboBox locationNameComboBox;
+    public JComboBox<GeoNamesWithNameAndCoordinates> locationNameComboBox;
     public JButton locationHelp;
 
     {

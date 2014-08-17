@@ -39,10 +39,15 @@ class HandlerLocationForm(val form: LocationForm = new LocationForm) {
               val list = GeoNamesWithNameAndCoordinates.getSettlements(text.trim)
               println(list.size)
 
+              var proObject: GeoNamesWithNameAndCoordinates = null
+
               form.locationNameComboBox.removeAllItems()
               for (settlement: GeoNamesWithNameAndCoordinates <- list) {
-                //                form.locationNameComboBox.addItem(settlement.asInstanceOf[Object])
+                form.locationNameComboBox.addItem(settlement)
+
+                if(settlement.name.startsWith(text.trim)) proObject = settlement
               }
+              form.locationNameComboBox.setSelectedItem(proObject)
 
             } else {
               UserMessage.warning(form.$$$getRootComponent$$$(), "Введите больше двух символов")
