@@ -27,7 +27,7 @@
       <sourceFolder url="file://$MODULE_DIR$/CeemResourceBundle" type="java-resource" />
     </content>
     <orderEntry type="library" name="jsobjectplugin" level="project" />
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jogl" level="project" />
     <orderEntry type="library" name="gdal" level="project" />

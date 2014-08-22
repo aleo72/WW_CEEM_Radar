@@ -6,6 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.imports
 
 import java.io.{FileOutputStream, ObjectOutputStream, File}
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models.{ProvinceBorder, Polygon, CountryBorder}
 import ua.edu.odeku.ceem.mapRadar.utils.thread.StopProcess
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage
 import scala.io.Source
@@ -19,7 +20,7 @@ import scala.collection.mutable
  *
  * Created by Aleo on 23.03.14.
  */
-object ImportAdmin0Countries {
+object ImporterAdminBorders {
 
 	private var countryFile: File = null
 	private var provincesFile: File = null
@@ -98,7 +99,44 @@ object ImportAdmin0Countries {
 		arrayBuffer.toArray
 	}
 
-	/**
+  def createCountryBorderPolygons(border: CountryBorder, listJsonCoordinates: List[List[List[List[Double]]]]): List[Polygon] = {
+    for(p <- listJsonCoordinates) yield Polygon(0L,PolygonJSON(p).toString, Some(border.id), None)
+  }
+
+  def createProvinceBorders(countryBorder: CountryBorder, header: Map[String, Int], option: Option[ArrayBuffer[Array[String]]]): List[(ProvinceBorder, List[Polygon])] = {
+    val arraySource = option.getOrElse( new ArrayBuffer[Array[String]]() )
+
+    val arrayBuffer = new ArrayBuffer[(ProvinceBorder, List[Polygon])]()
+
+    for (array <- arraySource) {
+      val name0 = array(header("name_0"))
+      val name1 = array(header("name_1"))
+      val iso = array(header("iso"))
+
+      val province = ProvinceBorder(0L, name0, name1, iso, countryBorder.id)
+
+      val jsonString = array(header(COORDINATES_JSON)).replace("\"\"", "\"")
+      val json: Map[String, Any] = JSON.parseFull(jsonString).get.asInstanceOf[Map[String, Any]]
+
+      val typePolygon: String = json("type").asInstanceOf[String]
+      val coordinates: List[List[List[List[Double]]]] = typePolygon match {
+        case "Polygon" => List(json("coordinates").asInstanceOf[List[List[List[Double]]]])
+        case "MultiPolygon" => json("coordinates").asInstanceOf[List[List[List[List[Double]]]]]
+      }
+
+      val provinceBorderPolygons = for(p <- coordinates) yield Polygon(0L,PolygonJSON(p).toString, None, Some(province.id))
+
+      arrayBuffer += ((province, provinceBorderPolygons))
+
+    }
+    arrayBuffer.toList
+  }
+
+  def save(countryBorder: CountryBorder, countryBorderPolygons: List[Polygon], provinceBorderPolygons: List[(ProvinceBorder, List[Polygon])]): Unit = {
+
+  }
+
+  /**
 	 * Обработка строки данных и сохранение их в файл
 	 * @param header информация о данных
 	 * @param array сами данные
@@ -117,7 +155,11 @@ object ImportAdmin0Countries {
 			case "Polygon" => List(json("coordinates").asInstanceOf[List[List[List[Double]]]])
 			case "MultiPolygon" => json("coordinates").asInstanceOf[List[List[List[List[Double]]]]]
 		}
-		saveToFile(name, admin, admin0a3, coordinates, createAdminBorders(headerProvinces, provincesMap.get(admin0a3)))
+
+    val countryBorder = CountryBorder(admin = admin, admin0a3 = admin0a3)
+    val countryBorderPolygons = createCountryBorderPolygons(countryBorder, coordinates)
+    val provinceBorders: List[(ProvinceBorder, List[Polygon])] = createProvinceBorders(countryBorder, headerProvinces, provincesMap.get(admin0a3))
+    save(countryBorder, countryBorderPolygons, provinceBorders)
 	}
 
 	/**
@@ -216,4 +258,26 @@ object ImportAdmin0Countries {
 		}
 		buffer.toArray
 	}
+}
+
+/**
+ * Класс для сериализации Polygon
+ *
+ * Created by Aleo on 23.03.2014.
+ */
+case class PolygonJSON(listCoordinates: Array[(Double, Double)]) {
+  override def toString = {
+    (for(coordinates <- listCoordinates) yield s"(${coordinates._1}|${coordinates._2})").mkString(" ")
+  }
+}
+
+object PolygonJSON {
+  def apply(listCoordinates: List[List[List[Double]]]): PolygonJSON = {
+    val buffer = new ArrayBuffer[(Double, Double)]
+    for (list <- listCoordinates.head) {
+      val latLon: (Double, Double) = (list(1), list(0))
+      buffer += latLon
+    }
+    new PolygonJSON(buffer.toArray)
+  }
 }
