@@ -112,7 +112,7 @@ object GeoNames extends CeemTableObject {
 
   implicit val getGeoNameResult = GetResult(r => GeoName(r.<<[Long], r.<<[String], r.<<[String], r.<<[String], r.<<[Double], r.<<[Double], r.<<[String], r.<<[String], r.<<[String], r.<<?[String]))
 
-  def tableName: String = this.objects.baseTableRow.tableName
+  val tableName: String = this.objects.baseTableRow.tableName
 
   def geoNameTable = tableName
 

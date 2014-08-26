@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models
 
-import ua.edu.odeku.ceem.mapRadar.db.CeemTableObject
+import ua.edu.odeku.ceem.mapRadar.db.{DB, CeemTableObject}
 
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
@@ -16,11 +16,11 @@ import scala.slick.lifted.ProvenShape
  * Модель класу який описує
  * Created by aleo on 17.08.14.
  */
-case class Polygon(id: Long, listCoordinates: String, countryBorder: Option[Long], provinceBorder: Option[Long])
+case class Polygon(id: Option[Long], listCoordinates: String, countryBorder: Option[Long], provinceBorder: Option[Long])
 
 class Polygons(tag: Tag) extends Table[Polygon](tag, "POLYGONS"){
 
-  def id = column[Long]("ID", O.PrimaryKey)
+  def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
 
   def listCoordinates = column[String]("LIST_COORDINATES", O.NotNull)
 
@@ -36,7 +36,7 @@ class Polygons(tag: Tag) extends Table[Polygon](tag, "POLYGONS"){
 
   def provinceBorderJoin = ProvinceBorders.objects.filter(_.id === provinceBorder)
 
-  override def * : ProvenShape[Polygon] = (id, listCoordinates, provinceBorder) <> (Polygon.tupled, Polygon.unapply)
+  override def * : ProvenShape[Polygon] = (id, listCoordinates, countryBorder, provinceBorder) <> (Polygon.tupled, Polygon.unapply)
 }
 
 object Polygons extends CeemTableObject {
@@ -53,6 +53,17 @@ object Polygons extends CeemTableObject {
         objects.ddl.create
       }
     }
-
   }
+
+  def += (polygon: Polygon) = DB.database withSession { implicit session => objects += polygon }
+
+  def ++= (polygons: Iterable[Polygon]) = DB.database withSession { implicit session => objects ++= polygons }
+
+  def <= (polygon: Polygon) = {
+    DB.database withSession { implicit session =>
+      val v = objects returning objects.map(_.id) += polygon
+      Polygon(v, polygon.listCoordinates, polygon.countryBorder, polygon.provinceBorder)
+    }
+  }
+
 }

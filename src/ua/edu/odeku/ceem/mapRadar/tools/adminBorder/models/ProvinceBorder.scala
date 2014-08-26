@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models
 
-import ua.edu.odeku.ceem.mapRadar.db.CeemTableObject
+import ua.edu.odeku.ceem.mapRadar.db.{DB, CeemTableObject}
 
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
@@ -15,11 +15,11 @@ import scala.slick.lifted.ProvenShape
 /**
  * Created by aleo on 17.08.14.
  */
-case class ProvinceBorder(id: Long, name: String, name1: String, iso: String, countryBorder: Long)
+case class ProvinceBorder(id: Option[Long], name: String, name1: String, iso: String, countryBorder: Long)
 
 class ProvinceBorders(tag: Tag) extends Table[ProvinceBorder](tag, "PROVINCE_BORDERS") {
 
-  def id = column[Long]("id", O.PrimaryKey)
+  def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc)
 
   def name = column[String]("name")
 
@@ -29,7 +29,7 @@ class ProvinceBorders(tag: Tag) extends Table[ProvinceBorder](tag, "PROVINCE_BOR
 
   def countryBorder = column[Long]("countryBorder", O.NotNull)
 
-  def countryBorderFK = foreignKey("countryBorder_fk", countryBorder, CountryBorders.objects)(_.id)
+  def countryBorderFK = foreignKey("countryBorder_fk", countryBorder, CountryBorders.objects)(_.id.get)
 
   def countryBorderJoin = CountryBorders.objects.filter(_.id === countryBorder)
 
@@ -37,6 +37,7 @@ class ProvinceBorders(tag: Tag) extends Table[ProvinceBorder](tag, "PROVINCE_BOR
 }
 
 object ProvinceBorders extends CeemTableObject {
+
 
   val objects = TableQuery[ProvinceBorders]
 
@@ -51,4 +52,14 @@ object ProvinceBorders extends CeemTableObject {
       }
     }
   }
+
+  def += (provinceBorder: ProvinceBorder) = DB.database withSession ( implicit session => objects += provinceBorder )
+
+  def <= (provinceBorder: ProvinceBorder) = {
+    DB.database withSession { implicit session =>
+      val v = (objects returning objects.map(_.id)) += provinceBorder
+      ProvinceBorder(v, provinceBorder.name, provinceBorder.name1, provinceBorder.iso, provinceBorder.countryBorder)
+    }
+  }
+
 }

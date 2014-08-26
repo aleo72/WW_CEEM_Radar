@@ -2,15 +2,12 @@
   <library name="scala-lib">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-actors-2.11.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-actors-migration_2.11-1.1.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/config-1.2.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/akka-actor_2.11-2.3.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/jline-2.11.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-continuations-library_2.11-1.0.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-continuations-plugin_2.11.1-1.0.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-parser-combinators_2.11-1.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-swing_2.11-1.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-xml_2.11-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-external/scala/lib/scala-parser-combinators_2.11-1.0.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

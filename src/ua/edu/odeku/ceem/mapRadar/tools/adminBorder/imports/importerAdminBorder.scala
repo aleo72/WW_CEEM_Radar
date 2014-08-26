@@ -38,7 +38,7 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 					importer.stopProcess = true
 
 				importer = new Importer(countryFile, provincesFile, tool)
-
+        importer.setPriority(Thread.MAX_PRIORITY)
 				importer.start()
 				viewStartImport()
 			}
@@ -104,7 +104,7 @@ private class ChooserFileButtonListener(val importer: ImporterAdminBorder, val t
 	}
 }
 
-private class Importer(val countryFile: File, val provincesFile: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
+protected class Importer(val countryFile: File, val provincesFile: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
 
 	stopProcess = false
 

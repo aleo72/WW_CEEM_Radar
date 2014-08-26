@@ -25,7 +25,7 @@ object MenuTools extends MenuCreator {
 	val tools = Array(
 		classOf[ImportGeoNameTool]
 		,classOf[ViewGeoNameTool]
-		//,classOf[ImportAdminBorderTool]
+		,classOf[ImportAdminBorderTool]
 		//,classOf[AdminBorderViewManagerTool]
 	)
 

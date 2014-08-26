@@ -9,9 +9,11 @@ import java.util.ResourceBundle
 
 import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames
 import ua.edu.odeku.ceem.mapRadar.settings.Settings
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models._
 
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.{simple => DatabaseH2}
+import scala.slick.jdbc.StaticQuery
 import scala.slick.jdbc.meta.MTable
 
 /**
@@ -49,6 +51,11 @@ object DB {
 			}
 
 			GeoNames.createIfNotExists(tableList, _db)
+
+      CountryBorders.createIfNotExists(tableList, _db)
+      ProvinceBorders.createIfNotExists(tableList, _db)
+      Polygons.createIfNotExists(tableList, _db)
+
 			_db
 		}
 	}
@@ -60,7 +67,14 @@ object DB {
 
 trait CeemTableObject {
 
+  val tableName: String
+
   val resourceBundle: ResourceBundle = ResourceBundle.getBundle("strings", Settings.Program.locale)
 
 	def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef = DB.database): Unit
+
+  def clear: Unit = DB.database withSession { implicit session=>
+    StaticQuery.updateNA(s"truncate table $tableName")
+  }
+
 }
