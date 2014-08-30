@@ -5,7 +5,7 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models
 
-import ua.edu.odeku.ceem.mapRadar.db.{DB, CeemTableObject}
+import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
 
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
@@ -66,4 +66,12 @@ object Polygons extends CeemTableObject {
     }
   }
 
+
+  def visiblePolygons {
+    DB.database withSession {
+      val res = for {
+        (poligon, countryBorders, provinceBorder) <- objects innerJoin TableQuery[CountryBorders] on (_.countryBorder === _.id) innerJoin TableQuery[ProvinceBorders] on (_._1.provinceBorder === _.id)
+      } yield poligon._1.listCoordinates
+    }
+  }
 }

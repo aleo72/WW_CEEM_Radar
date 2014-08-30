@@ -5,18 +5,20 @@
 
 package ua.edu.odeku.ceem.mapRadar.layers.adminBorder
 
-import gov.nasa.worldwind.WorldWindow
-import javax.swing.JCheckBoxMenuItem
-import gov.nasa.worldwind.layers.{RenderableLayer, AirspaceLayer}
-import gov.nasa.worldwind.render.airspaces.{Curtain, Airspace}
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.{Admin1, Polygon, Admin0}
-import scala.collection.mutable.ArrayBuffer
-import gov.nasa.worldwind.geom.LatLon
 import java.awt.Color
-import gov.nasa.worldwind.render._
-import java.util
 import java.awt.event.{ActionEvent, ActionListener}
+import java.util
+import javax.swing.JCheckBoxMenuItem
+
+import gov.nasa.worldwind.WorldWindow
+import gov.nasa.worldwind.geom.LatLon
+import gov.nasa.worldwind.layers.RenderableLayer
+import gov.nasa.worldwind.render._
+import gov.nasa.worldwind.render.airspaces.Airspace
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models.Polygons
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Объект для управлением за слоями отображеня границ
@@ -40,7 +42,7 @@ object AdminBorderLayerController {
 		}
 		menuItem.addActionListener(new ActionListener {
 			override def actionPerformed(e: ActionEvent): Unit = {
-				renderableLayer.removeAllRenderables();
+        renderableLayer.removeAllRenderables()
 				if (e.getSource.asInstanceOf[JCheckBoxMenuItem].isSelected) {
 					val collections: Array[Renderable] = createCollectionOfLines()
 					for (border <- collections) {
@@ -54,6 +56,8 @@ object AdminBorderLayerController {
 
 	def createCollectionOfLines(): Array[Renderable] = {
 		val arrayBuffer = new ArrayBuffer[Renderable]()
+
+    val visibleBorders = Polygons.visiblePolygons
 
 		for ((iso, enabled) <- AdminBorderManager.viewCountryBorder.filter(_._2)) {
 			val admin0: Admin0 = AdminBorderManager.admin(iso)

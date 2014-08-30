@@ -5,17 +5,18 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models
 
-import ua.edu.odeku.ceem.mapRadar.db.{DB, CeemTableObject}
+import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
 
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
+import scala.slick.jdbc.StaticQuery
 import scala.slick.jdbc.meta.MTable
 import scala.slick.lifted.ProvenShape
 
 /**
  * Created by aleo on 17.08.14.
  */
-case class ProvinceBorder(id: Option[Long], name: String, name1: String, iso: String, countryBorder: Long)
+case class ProvinceBorder(id: Option[Long], name: String, name1: String, iso: String, countryBorder: Long, visible: Boolean = false)
 
 class ProvinceBorders(tag: Tag) extends Table[ProvinceBorder](tag, "PROVINCE_BORDERS") {
 
@@ -31,9 +32,11 @@ class ProvinceBorders(tag: Tag) extends Table[ProvinceBorder](tag, "PROVINCE_BOR
 
   def countryBorderFK = foreignKey("countryBorder_fk", countryBorder, CountryBorders.objects)(_.id.get)
 
+  def visible = column[Boolean]("visible")
+
   def countryBorderJoin = CountryBorders.objects.filter(_.id === countryBorder)
 
-  override def * : ProvenShape[ProvinceBorder] = (id, name, name1, iso, countryBorder) <> (ProvinceBorder.tupled, ProvinceBorder.unapply)
+  override def * : ProvenShape[ProvinceBorder] = (id, name, name1, iso, countryBorder, visible) <>(ProvinceBorder.tupled, ProvinceBorder.unapply)
 }
 
 object ProvinceBorders extends CeemTableObject {
@@ -59,6 +62,43 @@ object ProvinceBorders extends CeemTableObject {
     DB.database withSession { implicit session =>
       val v = (objects returning objects.map(_.id)) += provinceBorder
       ProvinceBorder(v, provinceBorder.name, provinceBorder.name1, provinceBorder.iso, provinceBorder.countryBorder)
+    }
+  }
+
+  def apply(name: String, name1: String, iso: String): ProvinceBorder = {
+    DB.database withSession { implicit session =>
+      objects.filter(_.name === name).filter(_.name1 === name1).filter(_.iso === iso).first
+    }
+  }
+
+  def infoFields(): List[(String, String, String, Boolean)] = {
+    val sql = StaticQuery.queryNA[(String, String, String, Boolean)](
+      s"""
+        Select
+          ${table.name.toString()} ,
+          ${table.name1.toString()} ,
+          ${table.iso.toString()},
+          ${table.visible.toString()}
+        From
+          $tableName
+
+       """.stripMargin)
+    DB.database withSession { implicit session =>
+      sql.list
+    }
+  }
+
+  def updateVisibleBorders(borders: Iterable[(String, String, String, Boolean)]): Unit = {
+    DB.database withSession { implicit session =>
+      for (b <- borders) {
+        (for (o <- objects if o.name === b._1 && o.name1 === b._2 && o.iso === b._3) yield o.visible).update(b._4)
+      }
+    }
+  }
+
+  def visibleBorders: Iterable[ProvinceBorder] = {
+    DB.database withSession { implicit session =>
+      objects.filter(_.visible === true).list
     }
   }
 

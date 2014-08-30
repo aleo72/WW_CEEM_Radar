@@ -20,6 +20,9 @@ public class AdminBorderViewForm implements PanelTool {
     private JPanel panel1;
     public JTable table;
     public JButton saveButton;
+    private JTabbedPane tabbedPane;
+    public JTable countryBorderTable;
+    public JTable provinceBorderTable;
 
     @Override
     public JPanel rootPanel() {
@@ -48,14 +51,19 @@ public class AdminBorderViewForm implements PanelTool {
         CellConstraints cc = new CellConstraints();
         panel1.add(panel2, cc.xy(1, 3));
         saveButton = new JButton();
-        this.$$$loadButtonText$$$(saveButton, ResourceBundle.getBundle("button_uk_UA").getString("Save"));
+        this.$$$loadButtonText$$$(saveButton, ResourceBundle.getBundle("button").getString("Save"));
         panel2.add(saveButton);
+        tabbedPane = new JTabbedPane();
+        panel1.add(tabbedPane, cc.xy(1, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel1.add(scrollPane1, cc.xy(1, 1, CellConstraints.FILL, CellConstraints.FILL));
-        table = new JTable();
-        table.setAutoCreateRowSorter(true);
-        table.putClientProperty("Table.isFileList", Boolean.FALSE);
-        scrollPane1.setViewportView(table);
+        tabbedPane.addTab(ResourceBundle.getBundle("label").getString("countryBorder"), scrollPane1);
+        countryBorderTable = new JTable();
+        scrollPane1.setViewportView(countryBorderTable);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        tabbedPane.addTab(ResourceBundle.getBundle("label").getString("provinceBorder_title"), scrollPane2);
+        provinceBorderTable = new JTable();
+        provinceBorderTable.setToolTipText("");
+        scrollPane2.setViewportView(provinceBorderTable);
     }
 
     /**
