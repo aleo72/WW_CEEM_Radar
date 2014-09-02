@@ -16,7 +16,6 @@ import javax.swing.JPanel
 class AdminBorderViewManagerTool extends CeemRadarTool {
 
 	val form = new AdminBorderViewForm
-	val handler = new AdminBorderViewManagerFormHandler(this)
 
 	override def rootPanel: JPanel = form.rootPanel()
 
@@ -29,6 +28,6 @@ class AdminBorderViewManagerTool extends CeemRadarTool {
 	 * вызовется при мервом вызове, а не в помент создания
 	 */
 	override def init(): Unit = {
-		//none
+    val handler = new AdminBorderViewManagerFormHandler(this)
 	}
 }

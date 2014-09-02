@@ -9,6 +9,7 @@ import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
 
 import scala.slick.driver.H2Driver
 import scala.slick.driver.H2Driver.simple._
+import scala.slick.jdbc.StaticQuery
 import scala.slick.jdbc.meta.MTable
 import scala.slick.lifted.ProvenShape
 
@@ -67,11 +68,43 @@ object Polygons extends CeemTableObject {
   }
 
 
-  def visiblePolygons {
-    DB.database withSession {
-      val res = for {
-        (poligon, countryBorders, provinceBorder) <- objects innerJoin TableQuery[CountryBorders] on (_.countryBorder === _.id) innerJoin TableQuery[ProvinceBorders] on (_._1.provinceBorder === _.id)
-      } yield poligon._1.listCoordinates
+  def visibleCountryPolygons: Iterable[Array[(Double, Double)]] = {
+    val sql =
+      s"""
+        Select
+          ${table.listCoordinates}
+        From $tableName
+          inner join ${CountryBorders.tableName} on ${table.tableName}.${table.countryBorder} = ${CountryBorders.tableName}.${CountryBorders.table.id}
+        Where
+          ${CountryBorders.tableName}.${CountryBorders.table.visible} = true
+       """.stripMargin
+    val listCoordinates = DB.database withSession { implicit sesstion =>
+      StaticQuery.queryNA[String](sql).list
+    }
+
+    for(coordinates <- listCoordinates) yield for(coordinate <- coordinates.split(" ")) yield {
+      val sp = coordinate.split("|")
+      (sp(0).toDouble, sp(1).toDouble)
+    }
+  }
+
+  def visibleProvincesPolygons: Iterable[Array[(Double, Double)]] = {
+    val sql =
+      s"""
+        Select
+          ${table.listCoordinates}
+        From $tableName
+          inner join ${ProvinceBorders.tableName} on ${table.tableName}.${table.provinceBorder} = ${ProvinceBorders.tableName}.${ProvinceBorders.table.id}
+        Where
+          ${ProvinceBorders.tableName}.${ProvinceBorders.table.visible}  = true
+       """.stripMargin
+    val listCoordinates = DB.database withSession { implicit sesstion =>
+      StaticQuery.queryNA[String](sql).list
+    }
+
+    for(coordinates <- listCoordinates) yield for(coordinate <- coordinates.split(" ")) yield {
+      val sp = coordinate.split("|")
+      (sp(0).toDouble, sp(1).toDouble)
     }
   }
 }

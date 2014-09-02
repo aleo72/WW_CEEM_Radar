@@ -91,7 +91,7 @@ object CountryBorders extends CeemTableObject {
     }
   }
 
-  def visibleBorders: Iterable[ProvinceBorder] = {
+  def visibleBorders: Iterable[CountryBorder] = {
     DB.database withSession { implicit session =>
       objects.filter(_.visible === true).list
     }

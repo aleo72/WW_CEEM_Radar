@@ -15,10 +15,7 @@ import gov.nasa.worldwind.geom.LatLon
 import gov.nasa.worldwind.layers.RenderableLayer
 import gov.nasa.worldwind.render._
 import gov.nasa.worldwind.render.airspaces.Airspace
-import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.manager.AdminBorderManager
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models.Polygons
-
-import scala.collection.mutable.ArrayBuffer
 
 /**
  * Объект для управлением за слоями отображеня границ
@@ -27,113 +24,72 @@ import scala.collection.mutable.ArrayBuffer
  */
 object AdminBorderLayerController {
 
-	val renderableLayer = new RenderableLayer
-//	renderableLayer.setEnableBatchPicking(false)
-	val foregroundAttrs: ShapeAttributes = new BasicShapeAttributes
-	foregroundAttrs.setOutlineMaterial(new Material(Color.YELLOW))
-	foregroundAttrs.setOutlineStipplePattern(0xAAAA.asInstanceOf[Short])
-	foregroundAttrs.setOutlineStippleFactor(8)
+  val renderableLayer = new RenderableLayer
+  //	renderableLayer.setEnableBatchPicking(false)
+  val countryForegroundAttrs: ShapeAttributes = new BasicShapeAttributes {
+    setOutlineMaterial(new Material(Color.YELLOW))
+    setOutlineStipplePattern(0xAAAA.asInstanceOf[Short])
+    setOutlineStippleFactor(8)
+  }
 
-	def apply(world: WorldWindow, menuItem: JCheckBoxMenuItem) {
+  val polygonForegroundAttrs: ShapeAttributes = new BasicShapeAttributes {
+    setOutlineMaterial(new Material(Color.YELLOW))
+    setOutlineStipplePattern(0xAAAA.asInstanceOf[Short])
+    setOutlineStippleFactor(8)
+  }
 
-		// Добавим если не существует
-		if (!world.getModel.getLayers.contains(renderableLayer)) {
-			world.getModel.getLayers.add(world.getModel.getLayers.size(), renderableLayer)
-		}
-		menuItem.addActionListener(new ActionListener {
-			override def actionPerformed(e: ActionEvent): Unit = {
+  def apply(world: WorldWindow, menuItem: JCheckBoxMenuItem) {
+
+    // Добавим если не существует
+    if (!world.getModel.getLayers.contains(renderableLayer)) {
+      world.getModel.getLayers.add(world.getModel.getLayers.size(), renderableLayer)
+    }
+    menuItem.addActionListener(new ActionListener {
+      override def actionPerformed(e: ActionEvent): Unit = {
         renderableLayer.removeAllRenderables()
-				if (e.getSource.asInstanceOf[JCheckBoxMenuItem].isSelected) {
-					val collections: Array[Renderable] = createCollectionOfLines()
-					for (border <- collections) {
-						renderableLayer.addRenderable(border)
-					}
-				}
-				world.redraw()
-			}
-		})
-	}
+        if (e.getSource.asInstanceOf[JCheckBoxMenuItem].isSelected) {
+          for (border <- polygonsToArrayOfRenderable(Polygons.visibleCountryPolygons)) {
+            border.setAttributes(countryForegroundAttrs)
+            renderableLayer.addRenderable(border)
+          }
 
-	def createCollectionOfLines(): Array[Renderable] = {
-		val arrayBuffer = new ArrayBuffer[Renderable]()
+          for (border <- polygonsToArrayOfRenderable(Polygons.visibleCountryPolygons)) {
+            border.setAttributes(polygonForegroundAttrs)
+            renderableLayer.addRenderable(border)
+          }
 
-    val visibleBorders = Polygons.visiblePolygons
+        }
+        world.redraw()
+      }
+    })
+  }
 
-		for ((iso, enabled) <- AdminBorderManager.viewCountryBorder.filter(_._2)) {
-			val admin0: Admin0 = AdminBorderManager.admin(iso)
-			arrayBuffer ++= createBorders(admin0)
-		}
-		arrayBuffer.toArray
-	}
+  def polygonsToArrayOfRenderable(polygons: Iterable[Array[(Double, Double)]]) = {
+    polygons.map(createRenderableFromCoordinates _)
+  }
 
-	def createBorders(admins: Array[Admin1]): Array[Renderable] = {
-		val buffer = new ArrayBuffer[Renderable]()
-		for (admin <- admins) {
-			buffer ++= createSurfacePolylines(admin.polygons)
-			//buffer ++= createPolylines(admin.polygons)
-		}
-		buffer.toArray
-	}
+  def createRenderableFromCoordinates(coordinates: Array[(Double, Double)]) = {
+    val corners = new util.ArrayList[LatLon]()
+    for (coord <- coordinates) {
+      corners.add(LatLon.fromDegrees(coord._1, coord._2))
+    }
+    createSurfacePolyline(corners)
+  }
 
-	def createBorders(admin0: Admin0): Array[Renderable] = {
-		if (admin0.admin1Array.isEmpty) {
-			createSurfacePolylines(admin0.polygons) //++: createPolylines(admin0.polygons)
-		} else {
-			createBorders(admin0.admin1Array)
-		}
-	}
+  def createSurfacePolyline(corners: util.ArrayList[LatLon]) = {
+    val border = new SurfacePolyline
+    border.setLocations(corners)
+    border.setClosed(true)
+    border
+  }
 
-	def createSurfacePolylines(polygons: Array[Polygon]): Array[Renderable] = {
-		for {polygon <- polygons} yield createSurfacePolyline(polygon)
-	}
-
-	def createPolylines(polygons: Array[Polygon]): Array[Renderable] = {
-		for {polygon <- polygons} yield createPolyline(polygon)
-	}
-
-	def createSurfacePolyline(polygon: Polygon): Renderable = {
-		val border = new SurfacePolyline
-		border.setLocations(createLocations(polygon))
-		border.setClosed(true)
-		border.setAttributes(foregroundAttrs)
-		border
-	}
-
-	def createPolyline(polygon: Polygon): Renderable = {
-		val border = new Polyline(createLocations(polygon), 0)
-		border.setFollowTerrain(true)
-		border.setClosed(true)
-		border.setPathType(Polyline.RHUMB_LINE)
-		border.setColor(foregroundAttrs.getOutlineMaterial.getDiffuse)
-		border.setLineWidth(foregroundAttrs.getOutlineWidth)
-		border.setStipplePattern(foregroundAttrs.getOutlineStipplePattern)
-		border.setStippleFactor(foregroundAttrs.getOutlineStippleFactor)
-		border
-	}
-
-	def createLocations(polygon: Polygon): java.util.LinkedList[LatLon] = {
-		val list = new util.LinkedList[LatLon]()
-		for (coordinates <- polygon.listCoordinates) {
-			list.add(LatLon.fromDegrees(coordinates._1, coordinates._2))
-		}
-		list
-	}
-
-	def createLocationsForPolyLine(polygon: Polygon): java.util.LinkedList[LatLon] = {
-		val list = new util.LinkedList[LatLon]()
-		for (coordinates <- polygon.listCoordinates) {
-			list.add(LatLon.fromDegrees(coordinates._1, coordinates._2).add(LatLon.fromDegrees(2,0)))
-		}
-		list
-	}
-
-	private def setupDefaultMaterial(airspace: Airspace, color: Color) {
-		val attr = airspace.getAttributes
-		attr.setDrawOutline(true)
-		attr.setMaterial(new Material(color))
-		attr.setOutlineMaterial(new Material(color))
-		attr.setOpacity(0.8)
-		attr.setOutlineOpacity(0.5)
-		attr.setOutlineWidth(3.0)
-	}
+  private def setupDefaultMaterial(airspace: Airspace, color: Color) {
+    val attr = airspace.getAttributes
+    attr.setDrawOutline(true)
+    attr.setMaterial(new Material(color))
+    attr.setOutlineMaterial(new Material(color))
+    attr.setOpacity(0.8)
+    attr.setOutlineOpacity(0.5)
+    attr.setOutlineWidth(3.0)
+  }
 }
