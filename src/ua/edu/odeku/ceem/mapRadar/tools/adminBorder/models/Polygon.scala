@@ -25,13 +25,13 @@ class Polygons(tag: Tag) extends Table[Polygon](tag, "POLYGONS"){
 
   def listCoordinates = column[String]("LIST_COORDINATES", O.NotNull)
 
-  def countryBorder = column[Option[Long]]("country_border", O.Nullable)
+  def countryBorder = column[Option[Long]]("COUNTRY_BORDER", O.Nullable)
 
-  def provinceBorder = column[Option[Long]]("Province_Border", O.Nullable)
+  def provinceBorder = column[Option[Long]]("PROVINCE_BORDER", O.Nullable)
 
-  def countryBorderFK = foreignKey("country_Border_fk", countryBorder, CountryBorders.objects)(_.id)
+  def countryBorderFK = foreignKey("COUNTRY_BORDER_FK", countryBorder, CountryBorders.objects)(_.id)
 
-  def provinceBorderFK = foreignKey("province_border_fk", provinceBorder, ProvinceBorders.objects)(_.id)
+  def provinceBorderFK = foreignKey("PROVINCE_BORDER_FK", provinceBorder, ProvinceBorders.objects)(_.id)
 
   def countryBorderJoin = CountryBorders.objects.filter(_.id === countryBorder)
 
@@ -74,9 +74,9 @@ object Polygons extends CeemTableObject {
         Select
           ${table.listCoordinates}
         From $tableName
-          inner join ${CountryBorders.tableName} on ${table.tableName}.${table.countryBorder} = ${CountryBorders.tableName}.${CountryBorders.table.id}
+          inner join ${CountryBorders.tableName} on ${table.countryBorder} = ${CountryBorders.table.id}
         Where
-          ${CountryBorders.tableName}.${CountryBorders.table.visible} = true
+          ${CountryBorders.table.visible} = true
        """.stripMargin
     val listCoordinates = DB.database withSession { implicit sesstion =>
       StaticQuery.queryNA[String](sql).list
@@ -94,9 +94,9 @@ object Polygons extends CeemTableObject {
         Select
           ${table.listCoordinates}
         From $tableName
-          inner join ${ProvinceBorders.tableName} on ${table.tableName}.${table.provinceBorder} = ${ProvinceBorders.tableName}.${ProvinceBorders.table.id}
+          inner join ${ProvinceBorders.tableName} on ${table.provinceBorder} = ${ProvinceBorders.table.id}
         Where
-          ${ProvinceBorders.tableName}.${ProvinceBorders.table.visible}  = true
+          ${ProvinceBorders.table.visible}  = true
        """.stripMargin
     val listCoordinates = DB.database withSession { implicit sesstion =>
       StaticQuery.queryNA[String](sql).list

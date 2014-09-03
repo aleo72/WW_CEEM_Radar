@@ -20,19 +20,19 @@ case class ProvinceBorder(id: Option[Long], name: String, name1: String, iso: St
 
 class ProvinceBorders(tag: Tag) extends Table[ProvinceBorder](tag, "PROVINCE_BORDERS") {
 
-  def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc)
+  def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
 
-  def name = column[String]("name")
+  def name = column[String]("NAME")
 
-  def name1 = column[String]("name1")
+  def name1 = column[String]("NAME1")
 
-  def iso = column[String]("iso")
+  def iso = column[String]("ISO")
 
-  def countryBorder = column[Long]("countryBorder", O.NotNull)
+  def countryBorder = column[Long]("COUNTRYBORDER", O.NotNull)
 
-  def countryBorderFK = foreignKey("countryBorder_fk", countryBorder, CountryBorders.objects)(_.id.get)
+  def countryBorderFK = foreignKey("COUNTRYBORDER_FK", countryBorder, CountryBorders.objects)(_.id.get)
 
-  def visible = column[Boolean]("visible")
+  def visible = column[Boolean]("VISIBLE")
 
   def countryBorderJoin = CountryBorders.objects.filter(_.id === countryBorder)
 

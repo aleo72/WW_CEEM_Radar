@@ -21,15 +21,15 @@ case class CountryBorder(var id: Option[Long] = None, name: String, admin: Strin
 
 class CountryBorders(tag: Tag) extends Table[CountryBorder](tag, "COUNTRY_BORDER") {
 
-  def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc)
+  def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
 
-  def name = column[String]("name")
+  def name = column[String]("NAME")
 
-  def admin = column[String]("admin")
+  def admin = column[String]("ADMIN")
 
-  def admin0a3 = column[String]("admin0a3")
+  def admin0a3 = column[String]("ADMIN0A3")
 
-  def visible = column[Boolean]("visible")
+  def visible = column[Boolean]("VISIBLE")
 
   override def * : ProvenShape[CountryBorder] = (id, name, admin, admin0a3, visible) <>(CountryBorder.tupled, CountryBorder.unapply)
 }
