@@ -10,7 +10,7 @@
     <colspec value="fill:d:noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
-      <xy x="20" y="20" width="656" height="318"/>
+      <xy x="20" y="20" width="804" height="375"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -53,7 +53,7 @@
                   <font swing-font="TextPane.font"/>
                   <foreground swing-color="Button.foreground"/>
                   <inheritsPopupMenu value="false"/>
-                  <text resource-bundle="messages_uk_UA" key="importAdminBorder_importFileMessage"/>
+                  <text resource-bundle="messages" key="importAdminBorder_importFileMessage"/>
                 </properties>
               </component>
             </children>
@@ -81,7 +81,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="label_uk_UA" key="importAdminBorder_file_Country"/>
+                  <text resource-bundle="label" key="importAdminBorder_file_Country"/>
                 </properties>
               </component>
               <component id="c59f" class="javax.swing.JTextField" binding="fileCountry">
@@ -102,7 +102,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="button_uk_UA" key="chooserFile"/>
+                  <text resource-bundle="button" key="chooserFile"/>
                 </properties>
               </component>
               <component id="7c575" class="javax.swing.JLabel">
@@ -111,7 +111,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="label_uk_UA" key="importAdminBorder_file_Provinces"/>
+                  <text resource-bundle="label" key="importAdminBorder_file_Provinces"/>
                 </properties>
               </component>
               <component id="7621c" class="javax.swing.JTextField" binding="fileProvinces">
@@ -132,7 +132,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="button_uk_UA" key="chooserFile"/>
+                  <text resource-bundle="button" key="chooserFile"/>
                 </properties>
               </component>
             </children>
@@ -150,7 +150,7 @@
           <component id="86e3a" class="javax.swing.JButton" binding="importButton">
             <constraints/>
             <properties>
-              <text resource-bundle="button_uk_UA" key="import"/>
+              <text resource-bundle="button" key="import"/>
             </properties>
           </component>
           <component id="161e9" class="javax.swing.JButton" binding="cancelButton">
@@ -158,7 +158,7 @@
             <properties>
               <horizontalAlignment value="11"/>
               <horizontalTextPosition value="11"/>
-              <text resource-bundle="button_uk_UA" key="cancel"/>
+              <text resource-bundle="button" key="cancel"/>
             </properties>
           </component>
         </children>

@@ -22,30 +22,51 @@
           <component id="56c70" class="javax.swing.JButton" binding="saveButton">
             <constraints/>
             <properties>
-              <text resource-bundle="button_uk_UA" key="Save"/>
+              <text resource-bundle="button" key="Save"/>
             </properties>
           </component>
         </children>
       </grid>
-      <scrollpane id="fa145">
+      <tabbedpane id="1876a" binding="tabbedPane">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+          <forms defaultalign-vert="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="53da3" class="javax.swing.JTable" binding="table">
-            <constraints/>
-            <properties>
-              <autoCreateRowSorter value="true"/>
-            </properties>
-            <clientProperties>
-              <Table.isFileList class="java.lang.Boolean" value="false"/>
-            </clientProperties>
-          </component>
+          <scrollpane id="dddea">
+            <constraints>
+              <tabbedpane title-resource-bundle="label" title-key="countryBorder"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="a773f" class="javax.swing.JTable" binding="countryBorderTable">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="f9e6">
+            <constraints>
+              <tabbedpane title-resource-bundle="label" title-key="provinceBorder_title"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="191f8" class="javax.swing.JTable" binding="provinceBorderTable">
+                <constraints/>
+                <properties>
+                  <toolTipText value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
-      </scrollpane>
+      </tabbedpane>
     </children>
   </grid>
 </form>

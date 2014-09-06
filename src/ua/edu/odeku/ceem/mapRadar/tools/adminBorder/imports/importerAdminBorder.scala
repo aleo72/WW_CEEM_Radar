@@ -38,7 +38,7 @@ class ImporterAdminBorder(val tool: ImportAdminBorderTool) {
 					importer.stopProcess = true
 
 				importer = new Importer(countryFile, provincesFile, tool)
-
+        importer.setPriority(Thread.MAX_PRIORITY)
 				importer.start()
 				viewStartImport()
 			}
@@ -104,14 +104,14 @@ private class ChooserFileButtonListener(val importer: ImporterAdminBorder, val t
 	}
 }
 
-private class Importer(val countryFile: File, val provincesFile: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
+protected class Importer(val countryFile: File, val provincesFile: File, val tool: ImportAdminBorderTool) extends Thread with StopProcess {
 
 	stopProcess = false
 
 	override def run() {
 
 		if(countryFile.getName == MAP_COUNTRIES && (provincesFile == null || provincesFile.getName == STATES_PROVINCES_SHP )) {
-			ImportAdmin0Countries(countryFile, provincesFile, this)
+			ImporterAdminBorders(countryFile, provincesFile, this)
 			tool.endFunction.apply(tool.parentToolFrame)
 		} else {
 			tool.importer.viewStopImport()
