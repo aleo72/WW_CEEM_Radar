@@ -5,14 +5,15 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radar
 
-import java.lang.{StringBuilder, String}
-import gov.nasa.worldwind.render.airspaces.{Airspace, SphereAirspace, BasicAirspaceAttributes, AirspaceAttributes}
-import gov.nasa.worldwind.render.Material
 import java.awt.Color
-import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
-import gov.nasa.worldwind.geom.{Angle, Position, Vec4, LatLon}
+import java.lang.StringBuilder
+
 import gov.nasa.worldwind.SceneController
+import gov.nasa.worldwind.geom.{Angle, LatLon, Position, Vec4}
 import gov.nasa.worldwind.globes.Globe
+import gov.nasa.worldwind.render.Material
+import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import gov.nasa.worldwind.render.airspaces.{Airspace, AirspaceAttributes, BasicAirspaceAttributes}
 import gov.nasa.worldwind.view.orbit.BasicOrbitView
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 
@@ -54,6 +55,17 @@ package object airspace {
 		attributes.setOutlineWidth(2)
 		attributes
 	}
+
+  def defaultIsolineAttributes = {
+    val attributes = new BasicAirspaceAttributes()
+    attributes.setMaterial(new Material(Color.BLACK, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, 0.0f))
+    attributes.setOutlineMaterial(Material.BLACK)
+    attributes.setDrawOutline(true)
+    attributes.setOpacity(0f)
+    attributes.setOutlineOpacity(1f)
+    attributes.setOutlineWidth(2)
+    attributes
+  }
 
 	def setEditorAttributes(editor: AirspaceEditor) {
 		editor.setUseRubberBand(true)

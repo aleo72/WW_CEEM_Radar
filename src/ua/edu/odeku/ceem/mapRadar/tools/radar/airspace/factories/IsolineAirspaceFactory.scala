@@ -5,12 +5,9 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.factories
 
-import java.awt.Color
-
 import gov.nasa.worldwind.WorldWindow
 import gov.nasa.worldwind.avlist.AVKey
 import gov.nasa.worldwind.geom.{LatLon, Position}
-import gov.nasa.worldwind.render.Material
 import gov.nasa.worldwind.render.airspaces.Airspace
 import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
 import gov.nasa.worldwindx.examples.util.ShapeUtils
@@ -49,15 +46,7 @@ class IsolineAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport:
 	}
 
 	private def initAttribute(a: IsolineAirspace) = {
-		a.getAttributes.setDrawOutline(false)
-		a.getAttributes.setMaterial(new Material(Color.MAGENTA))
-		//		a.getAttributes.setOutlineMaterial(new Material(WWUtil.makeColorBrighter(Color.MAGENTA)))
-		a.getAttributes.setOpacity(1.0)
-		a.getAttributes.setOutlineOpacity(0.0)
-		a.getAttributes.setOutlineWidth(8.0)
-    a.getAttributes.setDrawOutline(true)
-    a.getAttributes.setOutlineMaterial(new Material(Color.BLACK))
-		a.getAttributes
+    defaultIsolineAttributes
 	}
 }
 

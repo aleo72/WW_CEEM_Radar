@@ -16,7 +16,6 @@ import gov.nasa.worldwind.globes.Globe
 import gov.nasa.worldwind.render.DrawContext
 import gov.nasa.worldwind.render.airspaces._
 import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
-import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.AirspaceMessage
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar
 
 import scala.beans.BeanProperty
@@ -109,7 +108,7 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val 
 
   private def intersecting(): Unit = {
 //    this.setAttributes(intersectionAttributes)
-    this.setAttributes(intersectionAttributes)
+    this.radarAirspace.setAttributes(intersectionAttributes)
   }
 
   def setDefaultAttributes(): Unit = {
