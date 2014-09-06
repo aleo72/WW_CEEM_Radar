@@ -97,6 +97,9 @@ class SettingsFrame extends JDialog {
     radarPanel.add(Settings.Program.Tools.Radar.grainFactorProperty.jLabel, ParagraphLayout.NEW_PARAGRAPH)
     radarPanel.add(Settings.Program.Tools.Radar.grainFactorProperty.editableComponent)
 
+    radarPanel.add(Settings.Program.Tools.Radar.Isolines.SanitaryStandards.radiationPowerProperty.jLabel, ParagraphLayout.NEW_PARAGRAPH)
+    radarPanel.add(Settings.Program.Tools.Radar.Isolines.SanitaryStandards.radiationPowerProperty.editableComponent)
+
     panel
   }
 }
