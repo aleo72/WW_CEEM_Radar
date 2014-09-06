@@ -22,7 +22,10 @@ class AdminBorderViewManagerFormHandler(val tool: AdminBorderViewManagerTool) {
   val provinceBorderModel = new ProvinceBorderTableModel
 
   form.countryBorderTable.setModel(countryBorderModel)
+  form.countryBorderTable.setAutoCreateRowSorter(true)
+
   form.provinceBorderTable.setModel(provinceBorderModel)
+  form.provinceBorderTable.setAutoCreateRowSorter(true)
 
 	form.saveButton.addActionListener(new ActionListener {
 		override def actionPerformed(e: ActionEvent): Unit = {

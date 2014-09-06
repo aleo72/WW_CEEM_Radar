@@ -11,6 +11,7 @@ import java.util
 import javax.swing.JCheckBoxMenuItem
 
 import gov.nasa.worldwind.WorldWindow
+import gov.nasa.worldwind.avlist.AVKey
 import gov.nasa.worldwind.geom.LatLon
 import gov.nasa.worldwind.layers.RenderableLayer
 import gov.nasa.worldwind.render._
@@ -29,11 +30,12 @@ object AdminBorderLayerController {
   val countryForegroundAttrs: ShapeAttributes = new BasicShapeAttributes {
     setOutlineMaterial(new Material(Color.YELLOW))
     setOutlineStipplePattern(0xAAAA.asInstanceOf[Short])
-    setOutlineStippleFactor(8)
+    setOutlineStippleFactor(0)
+    setOutlineWidth(3)
   }
 
   val polygonForegroundAttrs: ShapeAttributes = new BasicShapeAttributes {
-    setOutlineMaterial(new Material(Color.YELLOW))
+    setOutlineMaterial(new Material(Color.CYAN))
     setOutlineStipplePattern(0xAAAA.asInstanceOf[Short])
     setOutlineStippleFactor(8)
   }
@@ -48,15 +50,18 @@ object AdminBorderLayerController {
       override def actionPerformed(e: ActionEvent): Unit = {
         renderableLayer.removeAllRenderables()
         if (e.getSource.asInstanceOf[JCheckBoxMenuItem].isSelected) {
+
+
+          for (border <- polygonsToArrayOfRenderable(Polygons.visibleProvincesPolygons)) {
+            border.setAttributes(polygonForegroundAttrs)
+            renderableLayer.addRenderable(border)
+          }
+
           for (border <- polygonsToArrayOfRenderable(Polygons.visibleCountryPolygons)) {
             border.setAttributes(countryForegroundAttrs)
             renderableLayer.addRenderable(border)
           }
 
-          for (border <- polygonsToArrayOfRenderable(Polygons.visibleCountryPolygons)) {
-            border.setAttributes(polygonForegroundAttrs)
-            renderableLayer.addRenderable(border)
-          }
 
         }
         world.redraw()
@@ -64,22 +69,23 @@ object AdminBorderLayerController {
     })
   }
 
-  def polygonsToArrayOfRenderable(polygons: Iterable[Array[(Double, Double)]]) = {
+  def polygonsToArrayOfRenderable(polygons: Iterable[(Array[(Double, Double)], String)]) = {
     polygons.map(createRenderableFromCoordinates _)
   }
 
-  def createRenderableFromCoordinates(coordinates: Array[(Double, Double)]) = {
+  def createRenderableFromCoordinates(list: (Array[(Double, Double)], String)) = {
     val corners = new util.ArrayList[LatLon]()
-    for (coord <- coordinates) {
-      corners.add(LatLon.fromDegrees(coord._1, coord._2))
+    for (value <- list._1) {
+      corners.add(LatLon.fromDegrees(value._1, value._2))
     }
-    createSurfacePolyline(corners)
+    createSurfacePolyline(corners, list._2)
   }
 
-  def createSurfacePolyline(corners: util.ArrayList[LatLon]) = {
+  def createSurfacePolyline(corners: util.ArrayList[LatLon], name: String) = {
     val border = new SurfacePolyline
     border.setLocations(corners)
     border.setClosed(true)
+    border.setValue(AVKey.DISPLAY_NAME, name)
     border
   }
 

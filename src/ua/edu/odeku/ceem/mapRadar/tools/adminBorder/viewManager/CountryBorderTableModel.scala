@@ -20,7 +20,7 @@ class CountryBorderTableModel extends TableModel {
 
   override def getRowCount: Int = data.size
 
-  override def getColumnCount: Int = List(data.head).length
+  override def getColumnCount: Int = 4
 
   override def getColumnName(columnIndex: Int): String = {
     columnIndex match {
@@ -34,7 +34,7 @@ class CountryBorderTableModel extends TableModel {
 
   override def getColumnClass(columnIndex: Int): Class[_] = {
     columnIndex match {
-      case 0 => classOf[Boolean]
+      case 0 => classOf[java.lang.Boolean]
       case 1 => classOf[String]
       case 2 => classOf[String]
       case 3 => classOf[String]

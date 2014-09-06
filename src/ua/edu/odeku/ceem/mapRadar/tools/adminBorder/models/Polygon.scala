@@ -19,7 +19,7 @@ import scala.slick.lifted.ProvenShape
  */
 case class Polygon(id: Option[Long], listCoordinates: String, countryBorder: Option[Long], provinceBorder: Option[Long])
 
-class Polygons(tag: Tag) extends Table[Polygon](tag, "POLYGONS"){
+class Polygons(tag: Tag) extends Table[Polygon](tag, "POLYGONS") {
 
   def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
 
@@ -37,7 +37,7 @@ class Polygons(tag: Tag) extends Table[Polygon](tag, "POLYGONS"){
 
   def provinceBorderJoin = ProvinceBorders.objects.filter(_.id === provinceBorder)
 
-  override def * : ProvenShape[Polygon] = (id, listCoordinates, countryBorder, provinceBorder) <> (Polygon.tupled, Polygon.unapply)
+  override def * : ProvenShape[Polygon] = (id, listCoordinates, countryBorder, provinceBorder) <>(Polygon.tupled, Polygon.unapply)
 }
 
 object Polygons extends CeemTableObject {
@@ -49,18 +49,18 @@ object Polygons extends CeemTableObject {
   val tableName = table.tableName
 
   override def createIfNotExists(existsTables: List[MTable], db: H2Driver.backend.DatabaseDef): Unit = {
-    if(!existsTables.exists(_.name.name == tableName)){
+    if (!existsTables.exists(_.name.name == tableName)) {
       db withSession { implicit session =>
         objects.ddl.create
       }
     }
   }
 
-  def += (polygon: Polygon) = DB.database withSession { implicit session => objects += polygon }
+  def +=(polygon: Polygon) = DB.database withSession { implicit session => objects += polygon}
 
-  def ++= (polygons: Iterable[Polygon]) = DB.database withSession { implicit session => objects ++= polygons }
+  def ++=(polygons: Iterable[Polygon]) = DB.database withSession { implicit session => objects ++= polygons}
 
-  def <= (polygon: Polygon) = {
+  def <=(polygon: Polygon) = {
     DB.database withSession { implicit session =>
       val v = objects returning objects.map(_.id) += polygon
       Polygon(v, polygon.listCoordinates, polygon.countryBorder, polygon.provinceBorder)
@@ -68,43 +68,45 @@ object Polygons extends CeemTableObject {
   }
 
 
-  def visibleCountryPolygons: Iterable[Array[(Double, Double)]] = {
+  def visibleCountryPolygons = {
     val sql =
       s"""
         Select
-          ${table.listCoordinates}
+          ${table.listCoordinates},
+          ${CountryBorders.table.name}
         From $tableName
           inner join ${CountryBorders.tableName} on ${table.countryBorder} = ${CountryBorders.table.id}
         Where
           ${CountryBorders.table.visible} = true
        """.stripMargin
-    val listCoordinates = DB.database withSession { implicit sesstion =>
-      StaticQuery.queryNA[String](sql).list
+    val result = DB.database withSession { implicit sesstion =>
+      StaticQuery.queryNA[(String, String)](sql).list
     }
-
-    for(coordinates <- listCoordinates) yield for(coordinate <- coordinates.split(" ")) yield {
-      val sp = coordinate.split("|")
-      (sp(0).toDouble, sp(1).toDouble)
-    }
+    listCoordinatesToPupleDouble(result)
   }
 
-  def visibleProvincesPolygons: Iterable[Array[(Double, Double)]] = {
+  def visibleProvincesPolygons = {
     val sql =
       s"""
         Select
-          ${table.listCoordinates}
+          ${table.listCoordinates},
+          ${ProvinceBorders.table.name1}
         From $tableName
           inner join ${ProvinceBorders.tableName} on ${table.provinceBorder} = ${ProvinceBorders.table.id}
         Where
           ${ProvinceBorders.table.visible}  = true
        """.stripMargin
-    val listCoordinates = DB.database withSession { implicit sesstion =>
-      StaticQuery.queryNA[String](sql).list
+    val result: List[(String, String)] = DB.database withSession { implicit sesstion =>
+      StaticQuery.queryNA[(String, String)](sql).list
     }
+    listCoordinatesToPupleDouble(result)
+  }
 
-    for(coordinates <- listCoordinates) yield for(coordinate <- coordinates.split(" ")) yield {
-      val sp = coordinate.split("|")
-      (sp(0).toDouble, sp(1).toDouble)
-    }
+  def listCoordinatesToPupleDouble(list: Iterable[(String, String)]) = {
+    for (tuple <- list) yield
+      (for (coordinate <- tuple._1.split(" ")) yield {
+        val sp = coordinate.split('|')
+        (sp(0).toDouble, sp(1).toDouble)
+      }, tuple._2)
   }
 }
