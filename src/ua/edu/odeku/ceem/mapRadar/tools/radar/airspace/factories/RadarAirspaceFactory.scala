@@ -24,7 +24,7 @@ class RadarAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: B
 
 	def createAirspace(wwd: WorldWindow, fitShapeToViewport: Boolean): Airspace = {
 		val radarAirspace = new RadarAirspace
-		radarAirspace.setAttributes(getDefaultAttributes)
+		radarAirspace.setAttributes(defaultAttributes)
 		radarAirspace.setValue(AVKey.DISPLAY_NAME, this.toString + RadarAirspaceFactory.countEntry)
 		radarAirspace.setAltitude(0.0)
 		radarAirspace.setTerrainConforming(true)

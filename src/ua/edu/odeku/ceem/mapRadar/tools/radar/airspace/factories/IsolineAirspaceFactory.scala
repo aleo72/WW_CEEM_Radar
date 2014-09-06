@@ -52,9 +52,11 @@ class IsolineAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport:
 		a.getAttributes.setDrawOutline(false)
 		a.getAttributes.setMaterial(new Material(Color.MAGENTA))
 		//		a.getAttributes.setOutlineMaterial(new Material(WWUtil.makeColorBrighter(Color.MAGENTA)))
-		a.getAttributes.setOpacity(0.8)
-		a.getAttributes.setOutlineOpacity(0.9)
-		a.getAttributes.setOutlineWidth(3.0)
+		a.getAttributes.setOpacity(1.0)
+		a.getAttributes.setOutlineOpacity(0.0)
+		a.getAttributes.setOutlineWidth(8.0)
+    a.getAttributes.setDrawOutline(true)
+    a.getAttributes.setOutlineMaterial(new Material(Color.BLACK))
 		a.getAttributes
 	}
 }

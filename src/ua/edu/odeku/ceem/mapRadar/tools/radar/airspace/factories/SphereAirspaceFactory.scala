@@ -29,7 +29,7 @@ class SphereAirspaceFactory(radar: Radar, wwd: WorldWindow, fitShapeToViewport: 
 
 	def createAirspace(wwd: WorldWindow, fitShapeToViewport: Boolean): Airspace = {
 		val sphere: SphereAirspace = new SphereAirspace
-		sphere.setAttributes(getDefaultAttributes)
+		sphere.setAttributes(defaultAttributes)
 		sphere.setValue(AVKey.DISPLAY_NAME, getNextName(this.toString))
 		sphere.setAltitude(0.0)
 		sphere.setTerrainConforming(true)

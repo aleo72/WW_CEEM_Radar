@@ -16,6 +16,7 @@ import gov.nasa.worldwind.globes.Globe
 import gov.nasa.worldwind.render.DrawContext
 import gov.nasa.worldwind.render.airspaces._
 import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.AirspaceMessage
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar
 
 import scala.beans.BeanProperty
@@ -86,6 +87,34 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val 
   }
 
   def remove(): Unit = CeemRadarAirspace.remove(this)
+
+  def ! (message: Any): Unit = {
+    message match {
+      case AirspaceMessage.select => select()
+      case AirspaceMessage.selectAndIntersecting => selectAndIntersecting()
+      case AirspaceMessage.intersecting => intersecting()
+      case AirspaceMessage.setDefaultAttribute => setDefaultAttributes()
+    }
+  }
+
+  private def select(): Unit = {
+//    this.setAttributes(selectionAttributes)
+    this.radarAirspace.setAttributes(selectionAttributes)
+  }
+
+  private def selectAndIntersecting(): Unit = {
+//    this.setAttributes(selectionAndIntersectionAttributes)
+    this.radarAirspace.setAttributes(selectionAttributes)
+  }
+
+  private def intersecting(): Unit = {
+//    this.setAttributes(intersectionAttributes)
+    this.setAttributes(intersectionAttributes)
+  }
+
+  def setDefaultAttributes(): Unit = {
+    this.setAttributes(defaultAttributes)
+  }
 
   override def render(dc: DrawContext): Unit = airspaces.foreach(_.render(dc))
 
