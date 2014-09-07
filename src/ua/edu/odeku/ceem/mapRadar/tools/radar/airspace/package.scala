@@ -5,14 +5,15 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radar
 
-import java.lang.{StringBuilder, String}
-import gov.nasa.worldwind.render.airspaces.{Airspace, SphereAirspace, BasicAirspaceAttributes, AirspaceAttributes}
-import gov.nasa.worldwind.render.Material
 import java.awt.Color
-import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
-import gov.nasa.worldwind.geom.{Angle, Position, Vec4, LatLon}
+import java.lang.StringBuilder
+
 import gov.nasa.worldwind.SceneController
+import gov.nasa.worldwind.geom.{Angle, LatLon, Position, Vec4}
 import gov.nasa.worldwind.globes.Globe
+import gov.nasa.worldwind.render.Material
+import gov.nasa.worldwind.render.airspaces.editor.AirspaceEditor
+import gov.nasa.worldwind.render.airspaces.{Airspace, AirspaceAttributes, BasicAirspaceAttributes}
 import gov.nasa.worldwind.view.orbit.BasicOrbitView
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
 
@@ -44,7 +45,7 @@ package object airspace {
 		sb.toString
 	}
 
-	def getDefaultAttributes: AirspaceAttributes = {
+	def defaultAttributes: AirspaceAttributes = {
 		val attributes: AirspaceAttributes = new BasicAirspaceAttributes
 		attributes.setMaterial(new Material(Color.BLACK, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, 0.0f))
 		attributes.setOutlineMaterial(Material.DARK_GRAY)
@@ -55,30 +56,42 @@ package object airspace {
 		attributes
 	}
 
+  def defaultIsolineAttributes = {
+    val attributes = new BasicAirspaceAttributes()
+    attributes.setMaterial(new Material(Color.BLACK, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, 0.0f))
+    attributes.setOutlineMaterial(Material.BLACK)
+    attributes.setDrawOutline(true)
+    attributes.setOpacity(0f)
+    attributes.setOutlineOpacity(1f)
+    attributes.setOutlineWidth(2)
+    attributes
+  }
+
 	def setEditorAttributes(editor: AirspaceEditor) {
 		editor.setUseRubberBand(true)
 		editor.setKeepControlPointsAboveTerrain(true)
 	}
 
-	def getSelectionAndIntersectionAttributes: AirspaceAttributes = {
+	def selectionAndIntersectionAttributes: AirspaceAttributes = {
 		val attributes: AirspaceAttributes = new BasicAirspaceAttributes
 		attributes.setMaterial(Material.WHITE)
 		attributes.setOpacity(0.8)
 		attributes
 	}
 
-	def getSelectionAttributes = {
+	def selectionAttributes = {
 		val attributes: AirspaceAttributes = new BasicAirspaceAttributes
 		attributes.setMaterial(Material.GREEN)
 		attributes.setOutlineMaterial(Material.BLACK)
-		attributes.setDrawOutline(false)
+		attributes.setDrawOutline(true)
 		attributes.setOpacity(0.8)
 		attributes.setOutlineOpacity(0.8)
 		attributes.setOutlineWidth(2)
+    attributes.setDrawInterior(true)
 		attributes
 	}
 
-	def getIntersectionAttributes = {
+	def intersectionAttributes = {
 		val attributes: AirspaceAttributes = new BasicAirspaceAttributes
 		attributes.setMaterial(Material.WHITE)
 		attributes.setOpacity(0.8)

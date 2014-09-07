@@ -83,19 +83,18 @@ class AirspaceEntry(val factory: CeemRadarAirspaceFactory) extends WWObjectImpl 
 
 	def name_=(value: String): Unit = this.setValue(AVKey.DISPLAY_NAME, value)
 
-	def updateAttributes() {
+	private def updateAttributes() {
 		if (this.selected && this.intersecting) {
-			this.airspace.setAttributes(getSelectionAttributes)
+			this.airspace ! AirspaceMessage.selectAndIntersecting
 		}
-		else
-		if (this.selected) {
-			this.airspace.setAttributes(getSelectionAttributes)
+    else if (this.selected) {
+      this.airspace ! AirspaceMessage.select
 		}
 		else if (this.intersecting) {
-			this.airspace.setAttributes(getDefaultAttributes)
+      this.airspace ! AirspaceMessage.intersecting
 		}
 		else {
-			this.airspace.setAttributes(this.attributes)
+			this.airspace ! AirspaceMessage.setDefaultAttribute
 		}
 	}
 
