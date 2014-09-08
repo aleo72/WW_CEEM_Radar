@@ -59,19 +59,19 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate
             insertBeforePlacenames(this.getWwd(), this.analyticSurfaceLayer);
             this.getLayerPanel().update(this.getWwd());
 
-            createRandomAltitudeSurface(HUE_BLUE, HUE_RED, 40, 40, this.analyticSurfaceLayer);
+//            createRandomAltitudeSurface(HUE_BLUE, HUE_RED, 40, 40, this.analyticSurfaceLayer);
             createRandomColorSurface(HUE_BLUE, HUE_RED, 40, 40, this.analyticSurfaceLayer);
 
             // Load the static precipitation data. Since it comes over the network, load it in a separate thread to
             // avoid blocking the example if the load is slow or fails.
-            Thread t = new Thread(new Runnable()
-            {
-                public void run()
-                {
-                    createPrecipitationSurface(HUE_BLUE, HUE_RED, analyticSurfaceLayer);
-                }
-            });
-            t.start();
+//            Thread t = new Thread(new Runnable()
+//            {
+//                public void run()
+//                {
+//                    createPrecipitationSurface(HUE_BLUE, HUE_RED, analyticSurfaceLayer);
+//                }
+//            });
+//            t.start();
         }
     }
 
@@ -154,7 +154,7 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate
 
         BufferWrapper firstBuffer = randomGridValues(width, height, minValue, maxValue);
         BufferWrapper secondBuffer = randomGridValues(width, height, minValue * 2d, maxValue / 2d);
-        mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue, surface);
+        mixValuesOverTime(20000L, firstBuffer, firstBuffer, minValue, maxValue, minHue, maxHue, surface);
 
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
