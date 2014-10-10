@@ -10,7 +10,7 @@ import java.util
 import javax.swing.JProgressBar
 
 import ua.edu.odeku.ceem.mapRadar.db.DB
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.GeoNames
 import ua.edu.odeku.ceem.mapRadar.exceptions.db.models.GeoNameException
 import ua.edu.odeku.ceem.mapRadar.settings.Settings
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage

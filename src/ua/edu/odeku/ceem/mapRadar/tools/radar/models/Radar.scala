@@ -39,6 +39,10 @@ case class Radar(var durationPulse: Double,
 
   def name_=(value: String): Unit = _name = Some(value)
 
+  def power(length: Double) = {
+    pulsePower / length // TODO
+  }
+
 }
 
 object Radar {

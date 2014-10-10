@@ -7,13 +7,11 @@ package ua.edu.odeku.ceem.mapRadar.tools.radar.panel;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates;
 import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.entry.AirspaceEntryMessage;
 import ua.edu.odeku.ceem.mapRadar.tools.radar.panel.handlerForm.HandlerRadarEditorFrom;
 import ua.edu.odeku.ceem.mapRadar.utils.gui.forms.LocationForm;
 
 import javax.swing.*;
-import java.util.ResourceBundle;
 
 /**
  * User: Aleo Bakalov

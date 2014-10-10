@@ -7,7 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.geoName.layer
 
 import gov.nasa.worldwind.geom.Position
 import gov.nasa.worldwind.render.{GeographicText, UserFacingText, DrawContext}
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoName
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.GeoName
 import ua.edu.odeku.ceem.mapRadar.utils.CeemUtilsFunctions.stringToBoolean
 
 import scala.collection.mutable.ArrayBuffer

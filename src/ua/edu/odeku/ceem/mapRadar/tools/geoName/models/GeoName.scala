@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.db.model
+package ua.edu.odeku.ceem.mapRadar.tools.geoName.models
 
 import gov.nasa.worldwind.geom.LatLon
 import ua.edu.odeku.ceem.mapRadar.db.{CeemTableObject, DB}
@@ -327,7 +327,7 @@ case class GeoNamesWithNameAndCoordinates(name: String, latlon: LatLon) {
 
 object GeoNamesWithNameAndCoordinates {
 
-  import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames._
+  import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.GeoNames._
 
   def getSettlements(text: String): List[GeoNamesWithNameAndCoordinates] = {
 

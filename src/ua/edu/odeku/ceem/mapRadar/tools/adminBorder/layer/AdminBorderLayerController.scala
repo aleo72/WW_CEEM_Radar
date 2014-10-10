@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.layers.adminBorder
+package ua.edu.odeku.ceem.mapRadar.tools.adminBorder.layer
 
 import java.awt.Color
 import java.awt.event.{ActionEvent, ActionListener}

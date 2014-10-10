@@ -15,7 +15,7 @@ import gov.nasa.worldwind.layers.AbstractLayer
 import gov.nasa.worldwind.render.{DrawContext, GeographicText, UserFacingText}
 import gov.nasa.worldwind.util.Logging
 import gov.nasa.worldwind.{View, WorldWind}
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoName
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.GeoName
 import ua.edu.odeku.ceem.mapRadar.utils.CeemUtilsFunctions.NumberPower
 
 import scala.collection.mutable

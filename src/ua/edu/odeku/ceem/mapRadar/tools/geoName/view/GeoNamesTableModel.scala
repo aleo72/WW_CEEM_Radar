@@ -8,7 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.geoName.view
 import java.util.ResourceBundle
 import javax.swing.table.AbstractTableModel
 
-import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.{GeoName, GeoNames}
 import ua.edu.odeku.ceem.mapRadar.settings.Settings
 
 /**

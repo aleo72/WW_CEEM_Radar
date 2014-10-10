@@ -8,7 +8,7 @@ package ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs
 import java.awt.event.{ActionEvent, ActionListener, WindowAdapter, WindowEvent}
 import java.util.ResourceBundle
 
-import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.{GeoName, GeoNames}
 import ua.edu.odeku.ceem.mapRadar.settings.Settings
 import ua.edu.odeku.ceem.mapRadar.utils.geometry.LatitudeLongitudeUtils
 import ua.edu.odeku.ceem.mapRadar.utils.gui.UserMessage

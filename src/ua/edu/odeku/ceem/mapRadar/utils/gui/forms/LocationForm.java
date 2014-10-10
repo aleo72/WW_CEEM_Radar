@@ -7,7 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.utils.gui.forms;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoNamesWithNameAndCoordinates;
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.GeoNamesWithNameAndCoordinates;
 
 import javax.swing.*;
 import java.util.ResourceBundle;

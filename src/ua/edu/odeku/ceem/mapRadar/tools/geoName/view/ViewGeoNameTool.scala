@@ -11,7 +11,7 @@ import javax.swing.{JPanel, JTable}
 
 import gov.nasa.worldwind.geom.{LatLon, Position}
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame
-import ua.edu.odeku.ceem.mapRadar.db.model.{GeoName, GeoNames}
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.{GeoName, GeoNames}
 import ua.edu.odeku.ceem.mapRadar.tools.geoName.view.dialogs.HandlerEditGeoNameDialog
 import ua.edu.odeku.ceem.mapRadar.tools.{CeemRadarTool, ToolFrame}
 

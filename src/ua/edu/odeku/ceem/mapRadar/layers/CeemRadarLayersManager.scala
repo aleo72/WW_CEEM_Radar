@@ -11,7 +11,7 @@ import javax.swing.{JCheckBoxMenuItem, JMenu}
 
 import gov.nasa.worldwind.WorldWindow
 import gov.nasa.worldwind.layers.Layer
-import ua.edu.odeku.ceem.mapRadar.layers.adminBorder.AdminBorderLayerController
+import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.layer.AdminBorderLayerController
 import ua.edu.odeku.ceem.mapRadar.tools.geoName.GeoNamesFeatureClasses
 import ua.edu.odeku.ceem.mapRadar.tools.geoName.layer.{GeoNameLayer, GeoNameLayerFactory}
 

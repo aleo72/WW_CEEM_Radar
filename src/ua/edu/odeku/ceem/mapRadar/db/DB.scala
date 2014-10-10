@@ -7,7 +7,7 @@ package ua.edu.odeku.ceem.mapRadar.db
 
 import java.util.ResourceBundle
 
-import ua.edu.odeku.ceem.mapRadar.db.model.GeoNames
+import ua.edu.odeku.ceem.mapRadar.tools.geoName.models.GeoNames
 import ua.edu.odeku.ceem.mapRadar.settings.Settings
 import ua.edu.odeku.ceem.mapRadar.tools.adminBorder.models._
 
