@@ -52,14 +52,6 @@ object MenuRadar extends MenuCreator {
   }
 
   private def createIsolineMenuItem(): JMenuItem = {
-//    val isoLinesMenuItem = new JCheckBoxMenuItem(resourceBundle.getString("view_isoline"))
-//    isoLinesMenuItem.setAccelerator(KeyStroke.getKeyStroke('V', InputEvent.ALT_DOWN_MASK))
-//    isoLinesMenuItem.addActionListener(new ActionListener {
-//      override def actionPerformed(e: ActionEvent): Unit = {
-//        val item = e.getSource.asInstanceOf[JCheckBoxMenuItem]
-//        AirspaceEntry.showIsolineViewMode(item.getState)
-//      }
-//    })
     val isoLinesMenu = new JMenu(resourceBundle.getString("view_isoline"))
 
     val altitudes = Array(100, 300, 500, 800, 1000, 2000, 3000, 10000, 20000, 100000, 150000, 200000)

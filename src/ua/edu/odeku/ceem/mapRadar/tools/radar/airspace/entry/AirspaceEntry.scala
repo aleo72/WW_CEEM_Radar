@@ -13,6 +13,7 @@ import gov.nasa.worldwind.{WWObjectImpl, WorldWindow}
 import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace._
 import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.factories.CeemRadarAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radar.dialogs.CreateEditRadarFrame
+import ua.edu.odeku.ceem.mapRadar.tools.radar.distributionPowerDensity.DistributionPowerDensityManager
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar
 
 import scala.collection.mutable.ArrayBuffer
@@ -146,24 +147,25 @@ object AirspaceEntry {
    */
   private var altitudeIsolineView: Int = 0
 
-	def showIsolineViewMode(altituteIsoline: Int): Unit = {
-		if (altituteIsoline > 0) {
-      this.altitudeIsolineView = altituteIsoline
-			bufferOfAirspaceEntry.foreach(
-				(entry: AirspaceEntry) => {
-					entry.airspace.showIsolineAirspace(altitudeIsolineView)
-					entry.editor.setEnabled(false)
-				}
-			)
-		} else {
-			bufferOfAirspaceEntry.foreach(
-				(entry: AirspaceEntry) => {
-					entry.airspace.showRadarAirspace()
-					entry.editor.setEnabled(true)
-				}
-			)
-		}
-	}
+  def showIsolineViewMode(altitute: Int): Unit = {
+    if (altitute > 0) {
+      bufferOfAirspaceEntry.foreach(
+        (entry: AirspaceEntry) => {
+          entry.airspace.showRadarAirspace(flag = false)
+          entry.editor.setEnabled(false)
+        }
+      )
+      DistributionPowerDensityManager.show(altitute, bufferOfAirspaceEntry.map(entry => entry.radar).toArray)
+    } else {
+      bufferOfAirspaceEntry.foreach(
+        (entry: AirspaceEntry) => {
+          entry.airspace.showRadarAirspace(flag = true)
+          entry.editor.setEnabled(true)
+        }
+      )
+      DistributionPowerDensityManager.hiden()
+    }
+  }
 
 	def create(wwd: WorldWindow, methodOfController: AirspaceEntry => Unit) {
 		apply(wwd, methodOfController)

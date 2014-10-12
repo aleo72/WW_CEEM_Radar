@@ -68,9 +68,9 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val 
     }
   }
 
-  def showRadarAirspace() {
+  def showRadarAirspace(flag: Boolean) {
     this.setVisible(visible = false)
-    radarAirspace.setVisible(true)
+    radarAirspace.setVisible(flag)
   }
 
   def showIsolineAirspace(altitudeIsolineView: Int = 0) {

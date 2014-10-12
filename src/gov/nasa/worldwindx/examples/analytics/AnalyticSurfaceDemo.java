@@ -59,7 +59,7 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate
             insertBeforePlacenames(this.getWwd(), this.analyticSurfaceLayer);
             this.getLayerPanel().update(this.getWwd());
 
-//            createRandomAltitudeSurface(HUE_BLUE, HUE_RED, 40, 40, this.analyticSurfaceLayer);
+            createRandomAltitudeSurface(HUE_BLUE, HUE_RED, 40, 40, this.analyticSurfaceLayer);
             createRandomColorSurface(HUE_BLUE, HUE_RED, 40, 40, this.analyticSurfaceLayer);
 
             // Load the static precipitation data. Since it comes over the network, load it in a separate thread to

@@ -11,10 +11,13 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.globes.Earth;
 import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
+import scala.App;
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar;
+import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils;
 
 import java.util.LinkedList;
 
@@ -34,10 +37,26 @@ public class DistributionPowerDensityManager {
     private static final Angle SOUTH = Angle.fromDegrees(180);
     private static final Angle WEST = Angle.fromDegrees(180 + 90);
 
-    public static void main(String[] args) {
+    private static final RenderableLayer renderableLayer = new RenderableLayer() {{
+       setPickEnabled(false);
+        setName("DistributionPowerDensityManager layer");
+    }};
 
-//        createBufferWrapper(new Sector())
+    public static void show(int elevation, Radar[] radars) {
+        VisibleUtils.insertBeforeCompass(AppCeemRadarFrame.wwd(), renderableLayer);
+        renderableLayer.clearList();
 
+        DistributionPowerDensity distributionPowerDensity =
+                createDistributionPowerDensity(AppCeemRadarFrame.wwd().getModel().getGlobe().getElevationModel(), 100,
+                        elevation, radars);
+
+        distributionPowerDensity.clientLayer_$eq(renderableLayer);
+        renderableLayer.addRenderable(distributionPowerDensity);
+    }
+
+    public static void hiden() {
+        AppCeemRadarFrame.wwd().getModel().getLayers().remove(renderableLayer);
+        AppCeemRadarFrame.wwd().redraw();
     }
 
     /**
@@ -52,7 +71,7 @@ public class DistributionPowerDensityManager {
      * @param radars
      * @return
      */
-    public static Sector createSectorForAllRadar(Radar[] radars, double researchHeight) {
+    private static Sector createSectorForAllRadar(Radar[] radars, double researchHeight) {
         double minLat = 90.0;
         double minLon = 180.0;
         double maxLat = 0;
@@ -79,7 +98,7 @@ public class DistributionPowerDensityManager {
                 Angle.fromDegreesLongitude(minLon), Angle.fromDegreesLongitude(maxLon));
     }
 
-    public static DistributionPowerDensity createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
+    private static DistributionPowerDensity createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
         Sector sector = createSectorForAllRadar(radars, roof);
         LatLon[][] coordinates = createSectorCoordinates(sector, step);
         double[][] elevation = createElevationSector(coordinates, em);
@@ -98,7 +117,7 @@ public class DistributionPowerDensityManager {
     }
 
 
-    public static BufferWrapper createBufferWrapper(double[] value) {
+    private static BufferWrapper createBufferWrapper(double[] value) {
         int numValue = value.length;
         BufferFactory bufferFactory = new BufferFactory.DoubleBufferFactory();
         BufferWrapper bufferWrapper = bufferFactory.newBuffer(numValue);
@@ -133,7 +152,7 @@ public class DistributionPowerDensityManager {
      * @param radars      радары
      * @return сетка мощности
      */
-    public static double[][] gridPower(LatLon[][] coordinates, Radar[] radars) {
+    private static double[][] gridPower(LatLon[][] coordinates, Radar[] radars) {
         double[][] res = new double[coordinates.length][];
         for (int i = 0; i < coordinates.length; i++) {
             res[i] = new double[coordinates[i].length];
@@ -161,7 +180,7 @@ public class DistributionPowerDensityManager {
         return res;
     }
 
-    public static int[] findPosition(LatLon[][] mapCoordinates, LatLon position) {
+    private static int[] findPosition(LatLon[][] mapCoordinates, LatLon position) {
         double latitude = position.getLatitude().degrees;
         double longitude = position.getLongitude().degrees;
 
@@ -400,7 +419,7 @@ public class DistributionPowerDensityManager {
      * @param step             шаг в метрах
      * @return новый градус по указаной долготе
      */
-    public static double incLatitude(double longitudeDegrees, double latitudeDegrees, int step) {
+    private static double incLatitude(double longitudeDegrees, double latitudeDegrees, int step) {
         return latitudeDegrees + createLatitudeDegreesStep(longitudeDegrees, step);
     }
 
@@ -411,7 +430,7 @@ public class DistributionPowerDensityManager {
      * @param meter            шаг в метрах
      * @return шаг градусов широты для заданой долготы
      */
-    public static double createLatitudeDegreesStep(double longitudeDegrees, int meter) {
+    private static double createLatitudeDegreesStep(double longitudeDegrees, int meter) {
         return secondLatitudeInMeter(longitudeDegrees) / meter * Earth.NKOEF;
     }
 
@@ -422,7 +441,7 @@ public class DistributionPowerDensityManager {
      * @param step             шаг итерирования в метрах
      * @return следующая долгота в градусах
      */
-    public static double incLongitude(double longitudeDegrees, int step) {
+    private static double incLongitude(double longitudeDegrees, int step) {
         return longitudeDegrees + createLongitudeDegreesStep(step);
     }
 
@@ -432,7 +451,7 @@ public class DistributionPowerDensityManager {
      * @param meter прибавку в метрах
      * @return увелечение в градусах
      */
-    public static double createLongitudeDegreesStep(int meter) {
+    private static double createLongitudeDegreesStep(int meter) {
         return SECOND_LONGITUDE_IN_METER / meter * Earth.NKOEF;
     }
 
@@ -457,7 +476,7 @@ public class DistributionPowerDensityManager {
      * @param longitudeDegrees долгота в градусах
      * @return количество метров в одной секунде
      */
-    public static double secondLatitudeInMeter(double longitudeDegrees) {
+    private static double secondLatitudeInMeter(double longitudeDegrees) {
         return Math.cos(longitudeDegrees) * SECOND_LATITUDE_IN_METER;
     }
 
@@ -469,7 +488,7 @@ public class DistributionPowerDensityManager {
      * Returns the destination point from  point having travelled the given distance on the
      * given initial bearing (bearing normally varies around path followed).
      */
-    public static LatLon destinationPoint(LatLon pos, Angle azimuth, double dist) {
+    private static LatLon destinationPoint(LatLon pos, Angle azimuth, double dist) {
         if(dist == 0){
             return new LatLon(pos);
         }
