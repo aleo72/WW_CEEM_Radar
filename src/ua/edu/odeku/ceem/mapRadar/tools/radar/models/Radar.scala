@@ -43,11 +43,25 @@ case class Radar(var durationPulse: Double,
     pulsePower / length // TODO
   }
 
+  def radiusOnElevation(elevation: Double) : Double = Radar.radiusOnElevation(this, elevation)
 }
 
 object Radar {
   val EMPTY_RADAR = Radar(0, 0, 0, 0, 0, 0, 0, 0)
 
   private def radarCounter: Long = Settings.Program.Tools.Radar.counterRadar
+
+  /**
+   * Метод высчитывает радус изолиний на нужной высоте
+   *
+   * @param radius - реальный радиус который имеет сфера
+   * @param elevation - высота для которой высчитывается радиус отображения
+   * @return - радиус плоскости на данной высоте сферы
+   */
+  def radiusOnElevation(radius: Double, elevation: Double) : Double = {
+    Math.sqrt(radius * radius - elevation * elevation)
+  }
+
+  def radiusOnElevation(radar: Radar, elevation: Double) = radiusOnElevation(radar.radius, elevation)
 }
 
