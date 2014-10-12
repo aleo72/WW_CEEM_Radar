@@ -34,7 +34,7 @@ class CeemRadarAirspace(val radar: Radar, val radarAirspace: RadarAirspace, val 
 
   CeemRadarAirspace.listOfCeemRadarAirspace += this
 
-  showRadarAirspace()
+  showRadarAirspace(true)
 
   def radarAirspaceAs[T] = radarAirspace.asInstanceOf[T]
 
@@ -231,7 +231,7 @@ object CeemRadarAirspace {
 
   def showIsolineView(): Unit = listOfCeemRadarAirspace.foreach(_.showIsolineAirspace())
 
-  def showRadarView(): Unit = listOfCeemRadarAirspace.foreach(_.showRadarAirspace())
+  def showRadarView(): Unit = listOfCeemRadarAirspace.foreach(_.showRadarAirspace(true))
 
   def list: Array[CeemRadarAirspace] = listOfCeemRadarAirspace.toArray
 

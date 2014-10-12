@@ -62,6 +62,6 @@ object Radar {
     Math.sqrt(radius * radius - elevation * elevation)
   }
 
-  def radiusOnElevation(radar: Radar, elevation: Double) = radiusOnElevation(radar.radius, elevation)
+  def radiusOnElevation(radar: Radar, elevation: Double): Double = radiusOnElevation(radar.radius, elevation)
 }
 
