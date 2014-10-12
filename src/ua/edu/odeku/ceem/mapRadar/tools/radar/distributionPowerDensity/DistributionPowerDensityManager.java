@@ -5,16 +5,14 @@
 
 package ua.edu.odeku.ceem.mapRadar.tools.radar.distributionPowerDensity;
 
-import gov.nasa.worldwind.geom.Angle;
+import com.google.common.primitives.Doubles;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.globes.Earth;
 import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.globes.Globe;
+import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
-import gov.nasa.worldwind.util.PropertyAccessor;
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame;
-import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame$;
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar;
 
 import java.util.LinkedList;
@@ -24,45 +22,74 @@ import java.util.LinkedList;
  */
 public class DistributionPowerDensityManager {
 
+    protected static final double HUE_BLUE = 240d / 360d;
+    protected static final double HUE_RED = 0d / 360d;
+
     public static void main(String[] args) {
 
 //        createBufferWrapper(new Sector())
 
     }
 
-    public static BufferWrapper createBufferWrapper(Sector sector, ElevationModel em, int step, double roof, Radar[] radars) {
+    public static DistributionPowerDensity createDistributionPowerDensity(Sector sector, ElevationModel em, int step, double roof, Radar[] radars) {
         LatLon[][] coordinates = createSectorCoordinates(sector, step);
         double[][] elevation = createElevationSector(coordinates, em);
         double[][] gridPower = gridPower(coordinates, radars);
+        double[][] value = mergeElevationAndPower(elevation, gridPower);
+        double[] flatValue = flatDoubleArray(value);
+
+        DistributionPowerDensity distributionPowerDensity = new DistributionPowerDensity();
+        distributionPowerDensity.sector_$eq(sector);
+        distributionPowerDensity.altitude_$eq(400e3);
+        distributionPowerDensity.setDimension(coordinates[0].length, coordinates.length);
+
+        distributionPowerDensity.values_$eq(GridPointAttributesFactory.apply(createBufferWrapper(flatValue), 0, Doubles.max(flatValue), HUE_BLUE, HUE_RED));
+
+        return distributionPowerDensity;
+    }
 
 
+    public static BufferWrapper createBufferWrapper(double[] value) {
+        int numValue = value.length;
+        BufferFactory bufferFactory = new BufferFactory.DoubleBufferFactory();
+        BufferWrapper bufferWrapper = bufferFactory.newBuffer(numValue);
+        bufferWrapper.putDouble(0, value, 0, numValue);
+        return bufferWrapper;
+    }
 
-        return null;
+    private static double[] flatDoubleArray(double[][] array) {
+        double[] ret = new double[array.length * array[0].length];
+        for (int i = 0; i <= array.length; i++) {
+            System.arraycopy(array[i], 0, ret, (i * array[i].length), array[i].length + 1);
+        }
+        return ret;
     }
 
 
     /**
      * Метод должен совместить рельеф и
+     *
      * @param elevation
      * @param power
      * @return
      */
-    private double[][] mergeElevationAndPower(double[][] elevation, double[][] power){
+    private static double[][] mergeElevationAndPower(double[][] elevation, double[][] power) {
         return power; //TODO
     }
 
     /**
      * Метод должен создать сетку мощности
+     *
      * @param coordinates соординаты
-     * @param radars радары
+     * @param radars      радары
      * @return сетка мощности
      */
     public static double[][] gridPower(LatLon[][] coordinates, Radar[] radars) {
         double[][] res = new double[coordinates.length][];
-        for (int i = 0; i < coordinates.length; i++){
+        for (int i = 0; i < coordinates.length; i++) {
             res[i] = new double[coordinates[i].length];
 
-            for(int j = 0; j < coordinates[i].length; j++){
+            for (int j = 0; j < coordinates[i].length; j++) {
                 res[i][j] = findMax(powerFromRadar(coordinates[i][j], radars));
             }
         }
@@ -71,15 +98,15 @@ public class DistributionPowerDensityManager {
 
     private static double[] powerFromRadar(LatLon pos, Radar[] radars) {
         double[] res = new double[radars.length];
-        for (int i = 0; i < radars.length; i++){
+        for (int i = 0; i < radars.length; i++) {
             res[i] = radars[i].power(LatLon.ellipsoidalDistance(pos, radars[i].latLon(), Earth.WGS84_EQUATORIAL_RADIUS, Earth.WGS84_POLAR_RADIUS));
         }
         return res;
     }
 
-    private static double findMax(double[] doubles){
+    private static double findMax(double[] doubles) {
         double res = Double.MIN_VALUE;
-        for (double d: doubles){
+        for (double d : doubles) {
             res = Math.max(res, d);
         }
         return res;
