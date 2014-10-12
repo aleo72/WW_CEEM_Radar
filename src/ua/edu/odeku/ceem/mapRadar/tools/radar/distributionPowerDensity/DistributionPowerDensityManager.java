@@ -61,14 +61,14 @@ public class DistributionPowerDensityManager {
         for (Radar radar : radars) {
             double dist = radar.radiusOnElevation(researchHeight);
 
-            LatLon[] posions = new LatLon[]{
+            LatLon[] positions = new LatLon[]{
                     destinationPoint(radar.latLon(), NORTH, dist),
                     destinationPoint(radar.latLon(), EAST, dist),
                     destinationPoint(radar.latLon(), SOUTH, dist),
                     destinationPoint(radar.latLon(), WEST, dist)
             };
 
-            for (LatLon pos : posions) {
+            for (LatLon pos : positions) {
                 minLat = Math.min(minLat, pos.latitude.degrees);
                 minLon = Math.min(minLon, pos.longitude.degrees);
                 maxLat = Math.max(maxLat, pos.latitude.degrees);
@@ -79,7 +79,8 @@ public class DistributionPowerDensityManager {
                 Angle.fromDegreesLongitude(minLon), Angle.fromDegreesLongitude(maxLon));
     }
 
-    public static DistributionPowerDensity createDistributionPowerDensity(Sector sector, ElevationModel em, int step, double roof, Radar[] radars) {
+    public static DistributionPowerDensity createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
+        Sector sector = createSectorForAllRadar(radars, roof);
         LatLon[][] coordinates = createSectorCoordinates(sector, step);
         double[][] elevation = createElevationSector(coordinates, em);
         double[][] gridPower = gridPower(coordinates, radars);
