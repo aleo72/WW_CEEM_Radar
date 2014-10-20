@@ -6,6 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radar.distributionPowerDensity
 
 import java.awt.Color
+import java.nio.BufferOverflowException
 import java.util
 import javax.media.opengl.fixedfunc.{GLLightingFunc, GLPointerFunc}
 import javax.media.opengl.{GL, GL2, GL2ES1}
@@ -51,7 +52,7 @@ object DistributionPowerDensity {
    * @throws IllegalArgumentException if the iterable is null.
    */
   def computeExtremeValues(iterable: java.lang.Iterable[GridPointAttributes]): Array[Double] = {
-    assert(iterable == null, "iterable is null")
+    assert(iterable != null, "iterable is null")
     computeExtremeValues(iterable, Double.NaN)
   }
 
@@ -69,7 +70,7 @@ object DistributionPowerDensity {
    * @throws IllegalArgumentException if the iterable is null.
    */
   def computeExtremeValues(iterable: java.lang.Iterable[GridPointAttributes], missingDataSignal: Double): Array[Double] = {
-    assert(iterable == null, "iterable is null")
+    assert(iterable != null, "iterable is null")
     var minValue: Double = Double.MaxValue
     var maxValue: Double = -Double.MaxValue
 
@@ -155,10 +156,10 @@ class DistributionPowerDensity(
 
 
   def validateParameters(): Unit = {
-    assume(_sector == null, "sector == null")
-    assume(width <= 0, "width <= 0")
-    assume(height <= 0, "height <= 0")
-    assume(values == null, "values == 0")
+    assert(_sector != null, "sector == null")
+    assert(width > 0, "width <= 0")
+    assert(height > 0, "height <= 0")
+    assert(values != null, "values == 0")
   }
 
   def this(sector: Sector, altitude: Double, width: Int, height: Int) {
@@ -180,7 +181,7 @@ class DistributionPowerDensity(
   def sector = _sector
 
   def sector_=(value: Sector): Unit = {
-    assert(value == null, "sector is null")
+    assert(value != null, "sector is null")
     _sector = value
     this.expired = true
   }
@@ -202,8 +203,8 @@ class DistributionPowerDensity(
   def dimensions = Array(width, height)
 
   def setDimension(width: Int, height: Int): Unit = {
-    assert(width <= 0)
-    assert(height <= 0)
+    assert(width > 0)
+    assert(height > 0)
     this.width = width
     this.height = height
     this.expired = true
@@ -212,7 +213,7 @@ class DistributionPowerDensity(
   def values = _values
 
   def values_=(value: java.lang.Iterable[GridPointAttributes]): Unit = {
-    assert(value == null, "values is null")
+    assert(value != null, "values is null")
     this._values = value
     this.extremeValues = DistributionPowerDensity.computeExtremeValues(value)
     this.expired = true
@@ -257,7 +258,7 @@ class DistributionPowerDensity(
    * @throws IllegalArgumentException if attributes is null.
    */
   def attributes_=(value: DistributionPowerDensityAttributes): Unit = {
-    assert(value == null, "value is null")
+    assert(value != null, "value is null")
     this._attributes = value.copy()
     this.expired = true
   }
@@ -268,7 +269,7 @@ class DistributionPowerDensity(
    * @param dc
    */
   override def preRender(dc: DrawContext): Unit = {
-    assert(dc == null, "dc is null")
+    assert(dc != null, "dc is null")
     if (this.visible) {
       if (this.intersectsFrustum(dc)) {
         if (this.isExpired(dc)) {
@@ -303,7 +304,7 @@ class DistributionPowerDensity(
    * @param dc the <code>DrawContext</code> to be used
    */
   override def render(dc: DrawContext): Unit = {
-    assert(dc == null, "dc is null")
+    assert(dc != null, "dc is null")
     if (this.visible) {
       if (this.intersectsFrustum(dc)) {
         if (this.expired) {
@@ -342,7 +343,7 @@ class DistributionPowerDensity(
    * @throws IllegalArgumentException if the DrawContext is null.
    */
   def extent(dc: DrawContext): Extent = {
-    assert(dc == null)
+    assert(dc != null)
     if (this.altitudeMode == WorldWind.CLAMP_TO_GROUND) {
       Sector.computeBoundingBox(dc.getGlobe, dc.getVerticalExaggeration, this.sector)
     } else {

@@ -21,8 +21,8 @@ public class Earth extends EllipsoidalGlobe
 //    public static final double WGS84_POLAR_RADIUS = 6356752.3; // ellipsoid polar getRadius, in meters
 //    public static final double WGS84_ES = 0.00669437999013; // eccentricity squared, semi-major axis
 
-    public static final double KOEF = 4.0 / 3.0;
-    public static final double NKOEF = 3.0 / 4.0;
+    public static final double KOEF = 1;// 4.0 / 3.0;
+    public static final double NKOEF = 1; // 3.0 / 4.0;
 
     /*
         Данные изменения внесены так как нам для расчета работы РЛС необходим Эквивалентный радиус Земли = R * 4/3

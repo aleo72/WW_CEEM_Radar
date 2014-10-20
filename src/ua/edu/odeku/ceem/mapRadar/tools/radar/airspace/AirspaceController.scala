@@ -118,6 +118,7 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
 
   def airspaceMoved(e: AirspaceEditEvent): Unit = {
     this.updateShapeIntersection()
+    this.updateLocationAirspaceRadar(e)
   }
 
   def airspaceResized(e: AirspaceEditEvent): Unit = {
@@ -338,5 +339,12 @@ class AirspaceController(private val ceemTool: RadarManagerTool) extends WWObjec
     val elevation = selectedEntry.radar.altitude + 2 * selectedEntry.radar.radius + Settings.Program.Tools.Radar.maxAltitude
     val position = new Position(latLon, elevation)
     AppCeemRadarFrame.wwd.getView.goTo(position, elevation)
+  }
+
+  def updateLocationAirspaceRadar(event: AirspaceEditEvent): Unit = {
+    val selected = this.selectedEntry
+    if(event != null && selected != null) {
+      selected.radar.latLon = event.getAirspace.asInstanceOf[RadarAirspace].locationCenter
+    }
   }
 }

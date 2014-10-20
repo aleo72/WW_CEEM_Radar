@@ -3,7 +3,7 @@
  * Copyright (C) 2014
  */
 
-package ua.edu.odeku.ceem.mapRadar.tools.radar.distributionPowerDensity;
+package ua.edu.odeku.ceem.mapRadar.tools.radar.surface;
 
 import com.google.common.primitives.Doubles;
 import gov.nasa.worldwind.geom.Angle;
@@ -24,7 +24,7 @@ import java.util.LinkedList;
 /**
  * Created by Aleo on 20.09.2014.
  */
-public class DistributionPowerDensityManager {
+public class SurfaceDistributionPowerDensityManager {
 
     protected static final double HUE_BLUE = 240d / 360d;
     protected static final double HUE_RED = 0d / 360d;
@@ -46,15 +46,16 @@ public class DistributionPowerDensityManager {
         VisibleUtils.insertBeforeCompass(AppCeemRadarFrame.wwd(), renderableLayer);
         renderableLayer.clearList();
 
-        DistributionPowerDensity distributionPowerDensity =
+        AnalyticSurface distributionPowerDensity =
                 createDistributionPowerDensity(AppCeemRadarFrame.wwd().getModel().getGlobe().getElevationModel(), 1000,
                         elevation, radars);
 
-        distributionPowerDensity.clientLayer_$eq(renderableLayer);
+        distributionPowerDensity.setClientLayer(renderableLayer);
         renderableLayer.addRenderable(distributionPowerDensity);
     }
 
     public static void hiden() {
+        renderableLayer.removeAllRenderables();
         AppCeemRadarFrame.wwd().getModel().getLayers().remove(renderableLayer);
         AppCeemRadarFrame.wwd().redraw();
     }
@@ -99,7 +100,7 @@ public class DistributionPowerDensityManager {
                 Angle.fromDegreesLongitude(minLon), Angle.fromDegreesLongitude(maxLon));
     }
 
-    private static DistributionPowerDensity createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
+    private static AnalyticSurface createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
         Sector sector = createSectorForAllRadar(radars, roof);
         LatLon[][] coordinates = createSectorCoordinates(sector, step);
         double[][] elevation = createElevationSector(coordinates, em);
@@ -107,13 +108,13 @@ public class DistributionPowerDensityManager {
         double[][] value = mergeElevationAndPower(elevation, gridPower);
         double[] flatValue = flatDoubleArray(value);
 
-        DistributionPowerDensity distributionPowerDensity = new DistributionPowerDensity(sector, 400e3, coordinates.length, coordinates[0].length);
+        AnalyticSurface distributionPowerDensity = new AnalyticSurface(sector, 400e3, coordinates.length, coordinates[0].length);
 //        distributionPowerDensity.sector_$eq(sector);
 //        distributionPowerDensity.altitude_$eq(400e3);
 //        distributionPowerDensity.setDimension(coordinates[0].length, coordinates.length);
 
 
-        distributionPowerDensity.values_$eq(GridPointAttributesFactory.apply(createBufferWrapper(flatValue), 0, Doubles.max(flatValue), HUE_BLUE, HUE_RED));
+        distributionPowerDensity.setValues(AnalyticSurface.createColorGradientValues(createBufferWrapper(flatValue), Double.MAX_VALUE, 0, Doubles.max(flatValue), HUE_BLUE, HUE_RED));
 
         return distributionPowerDensity;
     }

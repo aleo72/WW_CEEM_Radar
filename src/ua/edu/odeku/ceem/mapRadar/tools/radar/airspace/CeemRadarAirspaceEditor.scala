@@ -48,7 +48,9 @@ class CeemRadarAirspaceEditor(val ceemRadarAirspace: CeemRadarAirspace) extends 
 
 	override def resizeAtControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.resizeAtControlPoint(wwd, controlPoint, mousePoint, previousMousePoint))
 
-	override def moveControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.moveControlPoint(wwd, controlPoint, mousePoint, previousMousePoint))
+	override def moveControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint, mousePoint: Point, previousMousePoint: Point): Unit = {
+    editors.foreach(_.moveControlPoint(wwd, controlPoint, mousePoint, previousMousePoint))
+  }
 
 	override def removeControlPoint(wwd: WorldWindow, controlPoint: AirspaceControlPoint): Unit = editors.foreach(_.removeControlPoint(wwd, controlPoint))
 
@@ -58,9 +60,13 @@ class CeemRadarAirspaceEditor(val ceemRadarAirspace: CeemRadarAirspace) extends 
 		v
 	}
 
-	override def moveAirspaceVertically(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.moveAirspaceVertically(wwd, airspace, mousePoint, previousMousePoint))
+	override def moveAirspaceVertically(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = {
+    editors.foreach(_.moveAirspaceVertically(wwd, airspace, mousePoint, previousMousePoint))
+  }
 
-	override def moveAirspaceLaterally(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = editors.foreach(_.moveAirspaceLaterally(wwd, airspace, mousePoint, previousMousePoint))
+	override def moveAirspaceLaterally(wwd: WorldWindow, airspace: Airspace, mousePoint: Point, previousMousePoint: Point): Unit = {
+    editors.foreach(_.moveAirspaceLaterally(wwd, airspace, mousePoint, previousMousePoint))
+  }
 
 	override def removeEditListener(listener: AirspaceEditListener): Unit = editors.foreach(_.removeEditListener(listener))
 

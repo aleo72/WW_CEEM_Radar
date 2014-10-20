@@ -13,8 +13,8 @@ import gov.nasa.worldwind.{WWObjectImpl, WorldWindow}
 import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace._
 import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.factories.CeemRadarAirspaceFactory
 import ua.edu.odeku.ceem.mapRadar.tools.radar.dialogs.CreateEditRadarFrame
-import ua.edu.odeku.ceem.mapRadar.tools.radar.distributionPowerDensity.DistributionPowerDensityManager
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar
+import ua.edu.odeku.ceem.mapRadar.tools.radar.surface.SurfaceDistributionPowerDensityManager
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -155,7 +155,7 @@ object AirspaceEntry {
           entry.editor.setEnabled(false)
         }
       )
-      DistributionPowerDensityManager.show(altitute, bufferOfAirspaceEntry.map(entry => entry.radar).toArray)
+      SurfaceDistributionPowerDensityManager.show(altitute, bufferOfAirspaceEntry.map(entry => entry.radar).toArray)
     } else {
       bufferOfAirspaceEntry.foreach(
         (entry: AirspaceEntry) => {
@@ -163,7 +163,7 @@ object AirspaceEntry {
           entry.editor.setEnabled(true)
         }
       )
-      DistributionPowerDensityManager.hiden()
+      SurfaceDistributionPowerDensityManager.hiden()
     }
   }
 

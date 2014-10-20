@@ -17,7 +17,7 @@ import gov.nasa.worldwind.util.WWMath
  */
 class RenderInfo(val gridWidth: Int, val gridHeight: Int) {
 
-  val numVertices: Int = gridWidth * gridHeight
+  val numVertices: Int = (gridWidth * gridHeight ) + 1
 
   val interiorIndexBuffer: IntBuffer = WWMath.computeIndicesForGridInterior(gridWidth, gridHeight)
   val outlineIndexBuffer: IntBuffer = WWMath.computeIndicesForGridOutline(gridWidth, gridHeight)

@@ -11,7 +11,7 @@ import gov.nasa.worldwind.render.Material
  * Created by aleo on 07.09.14.
  */
 class DistributionPowerDensityAttributes(val material: Material, val opacity: Double) {
-  assert(material == null, "material is null")
+  assert(material != null, "material is null")
 
   var drawInterior = true
   var drawOutline = true
@@ -45,28 +45,28 @@ class DistributionPowerDensityAttributes(val material: Material, val opacity: Do
   def interiorMaterial = _interiorMaterial
 
   def interiorMaterial_=(value: Material): Unit = {
-    assert(value == null, "material is null")
+    assert(value != null, "material is null")
     _interiorMaterial = value
   }
 
   def outlineMaterial = _outlineMaterial
 
   def outlineMaterial_=(value: Material) : Unit = {
-    assert(value == null , "material is null")
+    assert(value != null , "material is null")
     _outlineMaterial = value
   }
 
   def interiorOpacity = _interiorOpacity
 
   def interiorOpacity_=(value: Double): Unit = {
-    assert(value < 0 || value > 1)
+    assert(value > 0 || value < 1)
     _interiorOpacity = value
   }
 
   def outlineOpacity = _outlineOpacity
 
   def outlineOpacity_=(value: Double): Unit = {
-    assert(value < 0 || value > 1)
+    assert(value > 0 || value < 1)
     _outlineOpacity = value
   }
 
