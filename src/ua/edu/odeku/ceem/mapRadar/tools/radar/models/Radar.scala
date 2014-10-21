@@ -40,14 +40,14 @@ case class Radar(var durationPulse: Double,
   def name_=(value: String): Unit = _name = Some(value)
 
   def power(length: Double) = {
-    pulsePower / (length * 0.00000001) // TODO
+    pulsePower / (length * 0.0000002) // TODO
   }
 
   def radiusOnElevation(elevation: Double) : Double = Radar.radiusOnElevation(this, elevation)
 }
 
 object Radar {
-  val EMPTY_RADAR = Radar(0, 0, 0, 0, 0, 0, 0, 0)
+  def EMPTY_RADAR = Radar(0, 0, 0, 0, 0, 0, 0, 0)
 
   private def radarCounter: Long = Settings.Program.Tools.Radar.counterRadar
 
