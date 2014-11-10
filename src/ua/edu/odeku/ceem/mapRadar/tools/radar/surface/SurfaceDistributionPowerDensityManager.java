@@ -52,6 +52,7 @@ public class SurfaceDistributionPowerDensityManager {
 
         distributionPowerDensity.setClientLayer(renderableLayer);
         renderableLayer.addRenderable(distributionPowerDensity);
+        AppCeemRadarFrame.wwd().redraw();
     }
 
     public static void hiden() {
@@ -103,17 +104,15 @@ public class SurfaceDistributionPowerDensityManager {
     private static AnalyticSurface createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
         Sector sector = createSectorForAllRadar(radars, roof);
         LatLon[][] coordinates = createSectorCoordinates(sector, step);
-        double[][] elevation = createElevationSector(coordinates, em);
+        double[][] elevation = createElevationSector(coordinates, em, roof);
         double[][] gridPower = gridPower(coordinates, radars);
         double[][] value = mergeElevationAndPower(elevation, gridPower);
         double[] flatValue = flatDoubleArray(value);
 
-        AnalyticSurface distributionPowerDensity = new AnalyticSurface(sector, 400e3, coordinates.length, coordinates[0].length);
-//        distributionPowerDensity.sector_$eq(sector);
-//        distributionPowerDensity.altitude_$eq(400e3);
-//        distributionPowerDensity.setDimension(coordinates[0].length, coordinates.length);
+        AnalyticSurface distributionPowerDensity = new AnalyticSurface(sector, roof, coordinates.length, coordinates[0].length);
 
 
+        System.out.println(Doubles.max(flatValue));
         distributionPowerDensity.setValues(AnalyticSurface.createColorGradientValues(createBufferWrapper(flatValue), Double.MAX_VALUE, 0, Doubles.max(flatValue), HUE_BLUE, HUE_RED));
 
         return distributionPowerDensity;
@@ -145,6 +144,25 @@ public class SurfaceDistributionPowerDensityManager {
      * @return
      */
     private static double[][] mergeElevationAndPower(double[][] elevation, double[][] power) {
+        // сделаем границы. Обойдем матрицу и везде где есть elevation мощьность сделаем Double.NaN
+        for(int i = 0; i < power.length; i++){
+            for(int j = 0; j < power[i].length; j++){
+                if (elevation[i][j] > 0) {
+                    power[i][j] = Double.NaN;
+                }
+            }
+        }
+
+
+
+        // Нормализуем
+        for(int i = 0; i < power.length; i++){
+            for(int j = 0; j < power[i].length; j++){
+                if (power[i][j] == Double.NaN) {
+                    power[i][j] = 1000;
+                }
+            }
+        }
         return power; //TODO
     }
 
@@ -344,29 +362,6 @@ public class SurfaceDistributionPowerDensityManager {
      * @return карта координат
      */
     private static LatLon[][] createSectorCoordinates(Sector sector, int step) {
-//        LinkedList<LinkedList<LatLon>> array = new LinkedList<LinkedList<LatLon>>();
-//        for (int i = 0; true; i++) { // longitude
-//            double longitude = incLongitude(sector.getMinLongitude().degrees, i * step);
-//            if (longitude > sector.getMaxLongitude().degrees) {
-//                break;
-//            }
-//            LinkedList<LatLon> innerArray = new LinkedList<LatLon>();
-//            for (int j = 0; true; j++) { // latitude
-//                double latitude = incLatitude(longitude, sector.getMinLatitude().degrees, i * step);
-//                if (latitude > sector.getMaxLatitude().degrees) {
-//                    break;
-//                }
-//                innerArray.add(LatLon.fromDegrees(latitude, longitude));
-//            }
-//            array.add(innerArray);
-//        }
-//
-//        LatLon[][] sectorCoordinates = new LatLon[array.size()][];
-//        int i = 0;
-//        for (LinkedList<LatLon> listData : array) {
-//            sectorCoordinates[i++] = listData.toArray(new LatLon[listData.size()]);
-//        }
-//        return sectorCoordinates;
         LinkedList<LinkedList<LatLon>> array = new LinkedList<LinkedList<LatLon>>();
         LatLon[] cornersSector = sector.getCorners();
         LatLon northWestCorner = cornersSector[3];
@@ -413,7 +408,7 @@ public class SurfaceDistributionPowerDensityManager {
      * @param em                модель возвышеностей
      * @return карту где указаны возвышености
      */
-    private static double[][] createElevationSector(LatLon[][] sectorCoordinates, ElevationModel em) {
+    private static double[][] createElevationSector(LatLon[][] sectorCoordinates, ElevationModel em, double roof) {
         double[][] sectorElevation = new double[sectorCoordinates.length][];
         for (int i = 0, sectorCoordinatesLength = sectorCoordinates.length; i < sectorCoordinatesLength; i++) {
             LatLon[] line = sectorCoordinates[i];
@@ -421,7 +416,8 @@ public class SurfaceDistributionPowerDensityManager {
             for (int j = 0, lineLength = line.length; j < lineLength; j++) {
                 LatLon latLon = line[j];
                 if (latLon != null) {
-                    sectorElevation[i][j] = em.getElevation(latLon.latitude, latLon.longitude);
+                    double elevation = em.getElevation(latLon.latitude, latLon.longitude);
+                    sectorElevation[i][j] =  elevation < roof ? 0: elevation;
                 }
             }
         }

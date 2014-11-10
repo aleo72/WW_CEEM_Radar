@@ -18,7 +18,7 @@ import ua.edu.odeku.ceem.mapRadar.settings.Settings
  * @param antennaDiameter - Диаметр антены
  * @param pulsePower - Мощность в Вт = 10 &#94; 6 Вт
  * @param reflectivityMeteoGoals - Отражаемость метеоцелей 1/м
- * @param attenuation - Затухание
+ * @param attenuationFactor - Затухание
  * @param radius - Радиус в м
  * @param altitude - Высота установки радара в м
  * @param gainFactor - Коэффициент усиления
@@ -28,7 +28,7 @@ case class Radar(var durationPulse: Double,
                  var antennaDiameter: Double,
                  var pulsePower: Double,
                  var reflectivityMeteoGoals: Double,
-                 var attenuation: Double,
+                 var attenuationFactor: Double,
                  var radius: Double,
                  var altitude: Double,
                  var latLon: LatLon = LatLon.ZERO,
@@ -40,13 +40,24 @@ case class Radar(var durationPulse: Double,
   def name_=(value: String): Unit = _name = Some(value)
 
   def power(length: Double) = {
-    pulsePower / (length * 0.0000002) // TODO
+    (pulsePower * sq(gainFactor) * sq(wavelength) * Radar.lightVelocity * durationPulse * sq(antennaDiameter)) /
+      (Math.pow(4, 5) * sq(Math.PI) * Math.log(2)) * (reflectivityMeteoGoals / sq(length) * Math.pow(10, (-0.2 * attenuation(length))))
   }
+
+  def attenuation(length: Double) = attenuationFactor * length
+
+  private def sq(value: Double) = value * value
 
   def radiusOnElevation(elevation: Double) : Double = Radar.radiusOnElevation(this, elevation)
 }
 
 object Radar {
+
+  /**
+   * Скорость света
+   */
+  val lightVelocity = 299792458
+
   def EMPTY_RADAR = Radar(0, 0, 0, 0, 0, 0, 0, 0)
 
   private def radarCounter: Long = Settings.Program.Tools.Radar.counterRadar

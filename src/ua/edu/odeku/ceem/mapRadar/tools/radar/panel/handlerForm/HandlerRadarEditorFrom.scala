@@ -104,7 +104,7 @@ class HandlerRadarEditorFrom(val form: RadarEditorForm, private var message: Air
     radar.altitude = handlerRadarParameterForm.altitude
     radar.pulsePower = handlerRadarParameterForm.pulsePower
     radar.antennaDiameter = handlerRadarParameterForm.antennaDiameter
-    radar.attenuation = handlerRadarParameterForm.attenuation
+    radar.attenuationFactor = handlerRadarParameterForm.attenuation
     radar.durationPulse = handlerRadarParameterForm.durationPulse
     radar.gainFactor = handlerRadarParameterForm.grainFactor
     radar.wavelength = handlerRadarParameterForm.waveLength

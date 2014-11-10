@@ -14,12 +14,12 @@ import gov.nasa.worldwind.util.Logging;
 public class AnalyticSurfaceAttributes
 {
     protected boolean drawInterior = true;
-    protected boolean drawOutline = true;
+    protected boolean drawOutline = false;
     protected boolean drawShadow = true;
     protected Material interiorMaterial = Material.GRAY;
     protected Material outlineMaterial = Material.WHITE;
     protected double interiorOpacity = 1d;
-    protected double outlineOpacity = 1d;
+    protected double outlineOpacity = 0d;
     protected double shadowOpacity = 1d;
     protected double outlineWidth = 1d;
 

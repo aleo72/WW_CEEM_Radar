@@ -60,7 +60,7 @@ object DB {
 		}
 	}
 
-	def database = H2.db
+	def database: H2Driver.backend.DatabaseDef = H2.db
 
 	def database_memory = H2.db_memory
 }

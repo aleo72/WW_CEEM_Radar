@@ -96,15 +96,15 @@ object Settings {
 
         def viewToRadarHeight = viewToRadarHeightProperty.value
 
-        val pulsePowerProperty = new Property[Double](s"$prefix.pulsePower", 1.0, Some("Сила умпульсу"), nameResourceBundle, s"$prefix.pulsePower")
+        val pulsePowerProperty = new Property[Double](s"$prefix.pulsePower", Math.pow(10, 6) , Some("Сила умпульсу"), nameResourceBundle, s"$prefix.pulsePower")
 
         def pulsePower = pulsePowerProperty.value
 
-        val waveLengthProperty = new Property[Double](s"$prefix.waveLength", 1.0, Some("Довжина хвилі"), nameResourceBundle, s"$prefix.waveLength")
+        val waveLengthProperty = new Property[Double](s"$prefix.waveLength", 0.8 / 100, Some("Довжина хвилі"), nameResourceBundle, s"$prefix.waveLength")
 
         def waveLength = waveLengthProperty.value
 
-        val antennaDiameterProperty = new Property[Double](s"$prefix.antenna.diameter", 1.0, Some("Діаметер антени"), nameResourceBundle, s"$prefix.antenna.diameter")
+        val antennaDiameterProperty = new Property[Double](s"$prefix.antenna.diameter", 0.0263 , Some("Діаметер антени"), nameResourceBundle, s"$prefix.antenna.diameter")
 
         def antennaDiameter = antennaDiameterProperty.value
 
@@ -112,7 +112,7 @@ object Settings {
 
         def reflectivityMeteoGoals = reflectivityMeteoGoalsProperty.value
 
-        val attenuationProperty = new Property[Double](s"$prefix.attenuation", 1.0, Some("затухання"), nameResourceBundle, s"$prefix.attenuation")
+        val attenuationProperty = new Property[Double](s"$prefix.attenuationFactor", 0.8 / 100, Some("затухання"), nameResourceBundle, s"$prefix.attenuation")
 
         def attenuation = attenuationProperty.value
 
@@ -120,7 +120,7 @@ object Settings {
 
         def radius = radiusProperty.value
 
-        val grainFactorProperty = new Property[Double](s"$prefix.grainFactor", 1.0, Some("Коєфіциент підсилення"), nameResourceBundle, s"$prefix.grainFactor")
+        val grainFactorProperty = new Property[Double](s"$prefix.grainFactor", Math.pow(10, 4), Some("Коєфіциент підсилення"), nameResourceBundle, s"$prefix.grainFactor")
 
         def grainFactor = grainFactorProperty.value
 
