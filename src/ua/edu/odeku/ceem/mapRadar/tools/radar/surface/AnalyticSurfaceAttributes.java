@@ -18,7 +18,7 @@ public class AnalyticSurfaceAttributes
     protected boolean drawShadow = true;
     protected Material interiorMaterial = Material.GRAY;
     protected Material outlineMaterial = Material.WHITE;
-    protected double interiorOpacity = 1d;
+    protected double interiorOpacity = 2d;
     protected double outlineOpacity = 0d;
     protected double shadowOpacity = 1d;
     protected double outlineWidth = 1d;

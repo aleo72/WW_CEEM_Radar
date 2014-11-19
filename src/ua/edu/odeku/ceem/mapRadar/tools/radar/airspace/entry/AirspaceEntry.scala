@@ -147,7 +147,7 @@ object AirspaceEntry {
    */
   private var altitudeIsolineView: Int = 0
 
-  def showIsolineViewMode(altitute: Int): Unit = {
+  def showViewMode(viewModeType: String,altitute: Int): Unit = {
     if (altitute > 0) {
       bufferOfAirspaceEntry.foreach(
         (entry: AirspaceEntry) => {
@@ -155,7 +155,7 @@ object AirspaceEntry {
           entry.editor.setEnabled(false)
         }
       )
-      SurfaceDistributionPowerDensityManager.show(altitute, bufferOfAirspaceEntry.map(entry => entry.radar).toArray)
+      SurfaceDistributionPowerDensityManager.show(viewModeType, altitute, bufferOfAirspaceEntry.map(entry => entry.radar).toArray)
     } else {
       bufferOfAirspaceEntry.foreach(
         (entry: AirspaceEntry) => {

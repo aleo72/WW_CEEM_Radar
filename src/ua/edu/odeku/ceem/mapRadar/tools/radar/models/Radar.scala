@@ -39,9 +39,15 @@ case class Radar(var durationPulse: Double,
 
   def name_=(value: String): Unit = _name = Some(value)
 
-  def power(length: Double) = {
-    (pulsePower * sq(gainFactor) * sq(wavelength) * Radar.lightVelocity * durationPulse * sq(antennaDiameter)) /
-      (Math.pow(4, 5) * sq(Math.PI) * Math.log(2)) * (reflectivityMeteoGoals / sq(length) * Math.pow(10, (-0.2 * attenuation(length))))
+  def power(length: Double, elevation: Double) = {
+    val value = (pulsePower * sq(gainFactor) * sq(wavelength) * Radar.lightVelocity * durationPulse * sq(antennaDiameter)) /
+        (Math.pow(4, 5) * sq(Math.PI) * Math.log(2)) * (reflectivityMeteoGoals / sq(length) * Math.pow(10, (-0.2 * attenuation(length))))
+
+    if (value <= Radar.minPower) {
+      Radar.OpacityValuePower
+    } else {
+      value
+    }
   }
 
   def attenuation(length: Double) = attenuationFactor * length
@@ -57,6 +63,9 @@ object Radar {
    * Скорость света
    */
   val lightVelocity = 299792458
+
+  val OpacityValuePower = -987654321D
+  val minPower = 0.00000001
 
   def EMPTY_RADAR = Radar(0, 0, 0, 0, 0, 0, 0, 0)
 

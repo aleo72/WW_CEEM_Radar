@@ -29,6 +29,7 @@
     <orderEntry type="library" name="slick" level="project" />
     <orderEntry type="library" name="serious-panda-settings-assembly-0.3" level="project" />
     <orderEntry type="library" name="guava-18.0" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.11.0" level="application" />
     <orderEntry type="library" name="scala-sdk-2.11.1" level="application" />
   </component>
 </module>

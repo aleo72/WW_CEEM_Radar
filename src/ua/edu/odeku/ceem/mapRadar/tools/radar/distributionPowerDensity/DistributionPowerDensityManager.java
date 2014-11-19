@@ -168,7 +168,7 @@ public class DistributionPowerDensityManager {
     private static double[] powerFromRadar(LatLon pos, Radar[] radars) {
         double[] res = new double[radars.length];
         for (int i = 0; i < radars.length; i++) {
-            res[i] = pos != null ? radars[i].power(LatLon.ellipsoidalDistance(pos, radars[i].latLon(), Earth.WGS84_EQUATORIAL_RADIUS, Earth.WGS84_POLAR_RADIUS)) : 0;
+//            res[i] = pos != null ? radars[i].power(LatLon.ellipsoidalDistance(pos, radars[i].latLon(), Earth.WGS84_EQUATORIAL_RADIUS, Earth.WGS84_POLAR_RADIUS)) : 0;
         }
         return res;
     }

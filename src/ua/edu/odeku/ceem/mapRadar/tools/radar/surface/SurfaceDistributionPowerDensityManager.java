@@ -6,6 +6,7 @@
 package ua.edu.odeku.ceem.mapRadar.tools.radar.surface;
 
 import com.google.common.primitives.Doubles;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Sector;
@@ -14,8 +15,10 @@ import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
+import scala.Array;
 import ua.edu.odeku.ceem.mapRadar.AppCeemRadarFrame;
 import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar;
+import ua.edu.odeku.ceem.mapRadar.utils.CeemUtilsFunctions;
 import ua.edu.odeku.ceem.mapRadar.utils.gui.VisibleUtils;
 
 import java.util.Iterator;
@@ -37,18 +40,31 @@ public class SurfaceDistributionPowerDensityManager {
     private static final Angle SOUTH = Angle.fromDegrees(180);
     private static final Angle WEST = Angle.fromDegrees(270);
 
+    private static final int step = 100;
+
     private static final RenderableLayer renderableLayer = new RenderableLayer() {{
         setPickEnabled(false);
         setName("DistributionPowerDensityManager layer");
     }};
 
-    public static void show(int elevation, Radar[] radars) {
+    public static final String SHOW_TYPE_ISOLINE = "ISOLINE";
+    public static final String SHOW_TYPE_2D = "2D";
+    public static final String SHOW_TYPE_3D = "3D";
+
+    public static void show(String typeShow, int elevation, Radar[] radars) {
         VisibleUtils.insertBeforeCompass(AppCeemRadarFrame.wwd(), renderableLayer);
         renderableLayer.clearList();
 
-        AnalyticSurface distributionPowerDensity =
-                createDistributionPowerDensity(AppCeemRadarFrame.wwd().getModel().getGlobe().getElevationModel(), 1000,
-                        elevation, radars);
+        AnalyticSurface distributionPowerDensity = null;
+        if(typeShow.equals(SHOW_TYPE_3D)) {
+            distributionPowerDensity =
+                    createDistribution3DPowerDensity(AppCeemRadarFrame.wwd().getModel().getGlobe().getElevationModel(), step,
+                            elevation, radars);
+        } else if(typeShow.equals(SHOW_TYPE_2D)) {
+            distributionPowerDensity =
+                    createDistribution2DPowerDensity(AppCeemRadarFrame.wwd().getModel().getGlobe().getElevationModel(), step,
+                            elevation, radars);
+        }
 
         distributionPowerDensity.setClientLayer(renderableLayer);
         renderableLayer.addRenderable(distributionPowerDensity);
@@ -60,6 +76,8 @@ public class SurfaceDistributionPowerDensityManager {
         AppCeemRadarFrame.wwd().getModel().getLayers().remove(renderableLayer);
         AppCeemRadarFrame.wwd().redraw();
     }
+
+
 
     /**
      * Метод создает сектор который покроет все действие радаров.
@@ -101,19 +119,65 @@ public class SurfaceDistributionPowerDensityManager {
                 Angle.fromDegreesLongitude(minLon), Angle.fromDegreesLongitude(maxLon));
     }
 
-    private static AnalyticSurface createDistributionPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
+    private static AnalyticSurface createDistribution3DPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
         Sector sector = createSectorForAllRadar(radars, roof);
         LatLon[][] coordinates = createSectorCoordinates(sector, step);
         double[][] elevation = createElevationSector(coordinates, em, roof);
-        double[][] gridPower = gridPower(coordinates, radars);
+        double[][] gridPower = gridPower(coordinates, radars, roof);
         double[][] value = mergeElevationAndPower(elevation, gridPower);
         double[] flatValue = flatDoubleArray(value);
 
         AnalyticSurface distributionPowerDensity = new AnalyticSurface(sector, roof, coordinates.length, coordinates[0].length);
 
+        AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
+        attr.setDrawShadow(true);
+        attr.setInteriorOpacity(1.0);
+        attr.setOutlineWidth(3);
 
-        System.out.println(Doubles.max(flatValue));
-        distributionPowerDensity.setValues(AnalyticSurface.createColorGradientValues(createBufferWrapper(flatValue), Double.MAX_VALUE, 0, Doubles.max(flatValue), HUE_BLUE, HUE_RED));
+        distributionPowerDensity.setSurfaceAttributes(attr);
+
+        distributionPowerDensity.setValues(
+                AnalyticSurface.createColorGradientValues(
+                        createBufferWrapper(flatValue),
+                        0.0, //Double.MAX_VALUE,
+                        Doubles.min(flatValue) / 25_000,
+                        Doubles.max(flatValue),
+                        HUE_BLUE,
+                        HUE_RED
+                )
+        );
+        return distributionPowerDensity;
+    }
+
+    private static AnalyticSurface createDistribution2DPowerDensity(ElevationModel em, int step, double roof, Radar[] radars) {
+        Sector sector = createSectorForAllRadar(radars, roof);
+        LatLon[][] coordinates = createSectorCoordinates(sector, step);
+        double[][] elevation = createElevationSector(coordinates, em, roof);
+        double[][] gridPower = gridPower(coordinates, radars, roof);
+        double[][] value = mergeElevationAndPower(elevation, gridPower);
+        double[] flatValue = flatDoubleArray(value);
+
+        AnalyticSurface distributionPowerDensity = new AnalyticSurface(sector, roof, coordinates.length, coordinates[0].length);
+        distributionPowerDensity.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+
+
+        AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
+        attr.setDrawShadow(false);
+        attr.setInteriorOpacity(0.6);
+        attr.setOutlineWidth(3);
+
+        distributionPowerDensity.setSurfaceAttributes(attr);
+
+        distributionPowerDensity.setValues(
+                AnalyticSurface.createColorGradientValues(
+                        createBufferWrapper(flatValue),
+                        0.0, //Double.MAX_VALUE,
+                        Doubles.min(flatValue) / 10_000,
+                        Doubles.max(flatValue) ,
+                        HUE_BLUE,
+                        HUE_RED
+                )
+        );
 
         return distributionPowerDensity;
     }
@@ -130,9 +194,20 @@ public class SurfaceDistributionPowerDensityManager {
     private static double[] flatDoubleArray(double[][] array) {
         double[] ret = new double[array.length * array[0].length];
         for (int i = 0; i < array.length; i++) {
-            System.arraycopy(array[i], 0, ret, i * array.length, array[i].length);
+            try{
+                System.arraycopy(
+                        array[i],
+                        0,
+                        ret,
+                        i * array.length,
+                        array[i].length
+                );
+            } catch (Exception e) {
+                System.out.println(i);
+            }
         }
         return ret;
+//        return CeemUtilsFunctions.flatArray(array);
     }
 
 
@@ -173,27 +248,41 @@ public class SurfaceDistributionPowerDensityManager {
      * @param radars      радары
      * @return сетка мощности
      */
-    private static double[][] gridPower(LatLon[][] coordinates, Radar[] radars) {
+    private static double[][] gridPower(LatLon[][] coordinates, Radar[] radars, double elevation) {
         double[][] res = new double[coordinates.length][];
         for (int i = 0; i < coordinates.length; i++) {
             res[i] = new double[coordinates[i].length];
             for (int j = 0; j < coordinates[i].length; j++) {
-                res[i][j] = findMax(powerFromRadar(coordinates[i][j], radars));
+                if(coordinates[i][j] != null){
+                    res[i][j] = findMax(powerFromRadar(coordinates[i][j], radars, elevation));
+                } else {
+                    res[i][j] = 0;
+                }
+
+//                if (res[i][j] < 0) {
+//                    res[i][j] = 0.0;
+//                }
             }
         }
         return res;
     }
 
-    private static double[] powerFromRadar(LatLon pos, Radar[] radars) {
+    private static double[] powerFromRadar(LatLon pos, Radar[] radars, double elevation) {
         double[] res = new double[radars.length];
+        double minLength = Double.MAX_VALUE;
         for (int i = 0; i < radars.length; i++) {
-            res[i] = pos != null ? radars[i].power(LatLon.ellipsoidalDistance(pos, radars[i].latLon(), Earth.WGS84_EQUATORIAL_RADIUS, Earth.WGS84_POLAR_RADIUS)) : 0;
+            double length = LatLon.ellipsoidalDistance(pos, radars[i].latLon(), Earth.WGS84_EQUATORIAL_RADIUS, Earth.WGS84_POLAR_RADIUS);
+            res[i] = pos != null ? radars[i].power(length, elevation) : Radar.OpacityValuePower();
+            minLength = Math.min(minLength, length);
+        }
+        if(minLength < 1_000) {
+            int x = 0;
         }
         return res;
     }
 
     private static double findMax(double[] doubles) {
-        double res = 0.0;
+        double res = Radar.OpacityValuePower();
         for (double d : doubles) {
             res = Math.max(res, d);
         }

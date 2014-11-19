@@ -6,6 +6,8 @@
 package ua.edu.odeku.ceem.mapRadar.menu
 
 import javax.swing.{JMenu, JCheckBoxMenuItem, KeyStroke, JMenuItem}
+import ua.edu.odeku.ceem.mapRadar.tools.radar.surface.SurfaceDistributionPowerDensityManager
+
 import scala.collection.mutable.ArrayBuffer
 import java.awt.event.{ActionEvent, ActionListener, InputEvent}
 import ua.edu.odeku.ceem.mapRadar.tools.radar.RadarManagerTool
@@ -19,14 +21,16 @@ import ua.edu.odeku.ceem.mapRadar.tools.radar.airspace.entry.AirspaceEntry
   * *********************************************************************************************************************/
 object MenuRadar extends MenuCreator {
 
-	override def nameMenu: String = resourceBundle.getString("radar")
+  override def nameMenu: String = resourceBundle.getString("radar")
 
-	override def menuItems: Array[JMenuItem] = {
+  override def menuItems: Array[JMenuItem] = {
     Array(
       createRadarManagerMenuItem(),
-      createIsolineMenuItem()
+      createIsolineMenuItem(),
+      create2DGraf(),
+      create3DGraf()
     )
-	}
+  }
 
   private def createRadarManagerMenuItem() = {
     // Создание пункта меню "Менеджер радаров"
@@ -37,7 +41,7 @@ object MenuRadar extends MenuCreator {
         val toolName = classOf[RadarManagerTool].getName
         val tool = AppCeemRadarFrame.toolsComponents.get(toolName)
         if (tool.isEmpty) {
-          val frame = new ToolFrame(toolName)//, resourceBundle.getString("radar_manager"))
+          val frame = new ToolFrame(toolName) //, resourceBundle.getString("radar_manager"))
           frame.setVisible(true)
           AppCeemRadarFrame.toolsComponents.put(toolName, frame)
         } else {
@@ -56,16 +60,17 @@ object MenuRadar extends MenuCreator {
 
     val altitudes = Array(100, 300, 500, 800, 1000, 2000, 3000, 10000, 20000, 100000, 150000, 200000)
     val menuItems = new ArrayBuffer[JCheckBoxMenuItem]()
-    for(altitude <- altitudes) {
+    for (altitude <- altitudes) {
       val item = new JCheckBoxMenuItem()
       item.setText(s"$altitude m")
       item.setState(false)
       item.addActionListener(new ActionListener {
         val alt: Int = altitude
+
         override def actionPerformed(e: ActionEvent): Unit = {
           val item = e.getSource.asInstanceOf[JCheckBoxMenuItem]
           val state = item.getState
-          AirspaceEntry.showIsolineViewMode(if (state) alt else 0)
+          AirspaceEntry.showViewMode(SurfaceDistributionPowerDensityManager.SHOW_TYPE_ISOLINE, if (state) alt else 0)
           menuItems.foreach(_.setState(false))
           item.setState(state)
         }
@@ -74,5 +79,57 @@ object MenuRadar extends MenuCreator {
       menuItems.+=(item)
     }
     isoLinesMenu
+  }
+
+  private def create2DGraf(): JMenuItem = {
+    val menu = new JMenu(resourceBundle.getString("view_2D_graf"))
+
+    val altitudes = Array(100, 300, 500, 800, 1000, 2000, 3000, 10000, 20000, 100000, 150000, 200000)
+    val menuItems = new ArrayBuffer[JCheckBoxMenuItem]()
+    for (altitude <- altitudes) {
+      val item = new JCheckBoxMenuItem()
+      item.setText(s"$altitude m")
+      item.setState(false)
+      item.addActionListener(new ActionListener {
+        val alt: Int = altitude
+
+        override def actionPerformed(e: ActionEvent): Unit = {
+          val item = e.getSource.asInstanceOf[JCheckBoxMenuItem]
+          val state = item.getState
+          AirspaceEntry.showViewMode(SurfaceDistributionPowerDensityManager.SHOW_TYPE_2D, if (state) alt else 0)
+          menuItems.foreach(_.setState(false))
+          item.setState(state)
+        }
+      })
+      menu.add(item)
+      menuItems.+=(item)
+    }
+    menu
+  }
+
+  private def create3DGraf(): JMenuItem = {
+    val menu = new JMenu(resourceBundle.getString("view_3D_graf"))
+
+    val altitudes = Array(100, 300, 500, 800, 1000, 2000, 3000, 10000, 20000, 100000, 150000, 200000)
+    val menuItems = new ArrayBuffer[JCheckBoxMenuItem]()
+    for (altitude <- altitudes) {
+      val item = new JCheckBoxMenuItem()
+      item.setText(s"$altitude m")
+      item.setState(false)
+      item.addActionListener(new ActionListener {
+        val alt: Int = altitude
+
+        override def actionPerformed(e: ActionEvent): Unit = {
+          val item = e.getSource.asInstanceOf[JCheckBoxMenuItem]
+          val state = item.getState
+          AirspaceEntry.showViewMode(SurfaceDistributionPowerDensityManager.SHOW_TYPE_3D, if (state) alt else 0)
+          menuItems.foreach(_.setState(false))
+          item.setState(state)
+        }
+      })
+      menu.add(item)
+      menuItems.+=(item)
+    }
+    menu
   }
 }

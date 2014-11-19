@@ -11,6 +11,7 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.pick.PickSupport;
 import gov.nasa.worldwind.render.*;
 import gov.nasa.worldwind.util.*;
+import ua.edu.odeku.ceem.mapRadar.tools.radar.models.Radar;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -57,15 +58,30 @@ import java.util.List;
 public class AnalyticSurface implements Renderable, PreRenderable
 {
     /** GridPointAttributes defines the properties associated with a single grid point of an AnalyticSurface. */
-    public interface GridPointAttributes
+    public static final class GridPointAttributes
     {
+        private double value;
+        private Color color;
+
+        GridPointAttributes(double value, Color color) {
+            this.value = value;
+            if(Double.compare(value, Radar.OpacityValuePower()) == 0) {
+                this.color = new Color(0,0,0,0);
+            } else {
+                this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 255);
+            }
+            this.color = color;
+        }
+
         /**
          * Returns the scalar value associated with a grid point. By default, AnalyticSurface interprets this value as
          * the grid point's height relative to the AnalyticSurface's base altitude, both in meters.
          *
          * @return the grid point's scalar value.
          */
-        double getValue();
+        double getValue(){
+            return value;
+        }
 
         /**
          * Returns the {@link java.awt.Color} associated with a grid point. By default, AnalyticSurface interprets this
@@ -73,7 +89,9 @@ public class AnalyticSurface implements Renderable, PreRenderable
          *
          * @return the grid point's RGB color components.
          */
-        Color getColor();
+        Color getColor(){
+            return color;
+        }
     }
 
     protected static final double DEFAULT_ALTITUDE = 0d;
@@ -717,18 +735,7 @@ public class AnalyticSurface implements Renderable, PreRenderable
      */
     public static GridPointAttributes createGridPointAttributes(final double value, final Color color)
     {
-        return new AnalyticSurface.GridPointAttributes()
-        {
-            public double getValue()
-            {
-                return value;
-            }
-
-            public Color getColor()
-            {
-                return color;
-            }
-        };
+        return new AnalyticSurface.GridPointAttributes(value, color);
     }
 
     /**
@@ -1430,7 +1437,7 @@ public class AnalyticSurface implements Renderable, PreRenderable
                 // Set the outline color.
                 Color color = this.analyticSurface.surfaceAttributes.getOutlineMaterial().getDiffuse();
                 // Convert the floating point opacity from the range [0, 1] to the unsigned byte range [0, 255].
-                int alpha = (int) (255 * this.analyticSurface.surfaceAttributes.getOutlineOpacity() + 0.5);
+                int alpha =  (int) (255 * this.analyticSurface.surfaceAttributes.getOutlineOpacity() + 0.5);
                 GL2 gl = dc.getGL().getGL2(); // GL initialization checks for GL2 compatibility.
                 gl.glColor4ub((byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue(), (byte) alpha);
             }
